@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 9A: Grep</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 9A: Grep</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#grep">Grep</a>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#count-and-invert">Count and Invert</a></li>
+<li><a href="#word">Word</a></li>
+<li><a href="#recursive">Recursive</a></li>
+</ul></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</nav>
+<h2 id="grep">Grep</h2>
+<p>As mentioned before, <code>grep</code> is a great tool for searching. This lecture is going to cover more use-cases for grep, and introduce the idea of regular expressions!</p>
+<p><a href="https://youtu.be/NTfOnGZUZDk">The Origin of Grep</a> Basically, <em>Global/(Regular Expression)/Print</em></p>
+<p><strong>Grep returns zero if a match is found.</strong> We will talk more about exit codes when we discuss Bash scripting. Grep also has lots of options. Some common ones:</p>
+<ul>
+<li><code>-c</code> - counts matched lines instead of printing them</li>
+<li><code>-i</code> - ignores case <em>This one is very important!</em></li>
+<li><code>-n</code> - precedes each line with a line number</li>
+<li><code>-v</code> - reverses sense of test, eg. finds lines not matching pattern</li>
+<li><code>-r</code> - performs a recursive search</li>
+<li><code>-w</code> - ignores results where pattern is contained inside a larger word</li>
+</ul>
+<p>We are going to work with a file called <code>cars</code>. You might want to copy this file into your home folder:</p>
+<p><code>cp ~eric.brauer/uli101/cars ~</code></p>
+<h3 id="introduction">Introduction</h3>
+<p>Now, let’s try our command. We’re going to use the ‘cars’ file to test grep. For reference, this is what’s in the ‘cars’ file:</p>
+<p><code>cat cars</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ex">chevy</span>   nova    79      60      3000</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">ford</span>    mustang 65      45      17000</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ex">volvo</span>   gl      78      102     9850</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ex">honda</span>   civic   98      112     3200</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ex">ford</span>    ltd     83      15      10500</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ex">Chevy</span>   nova    80      50      3500</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ex">honda</span>   accord  81      30      6000</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ex">toyota</span>  tercel  82      180     750</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="ex">toyota</span>  rav4    08      65      12000</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="ex">chevy</span>   impala  65      85      1550</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="ex">ford</span>    thndbd  70     110      8005</span></code></pre></div>
+<p>First, we’ll search for ‘chevy.’</p>
+<p><code>grep 'chevy' cars</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">chevy</span>   nova    79      60      3000</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ex">chevy</span>   impala  65      85      1550</span></code></pre></div>
+<p>Turn on line numbers:</p>
+<p><code>grep -n 'chevy' cars</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">2</span>:chevy   nova    79      60      3000</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="ex">11</span>:chevy   impala  65      85      1550</span></code></pre></div>
+<p>Now let’s try something else.</p>
+<p><code>grep -n 'Chevy' cars</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">6</span>:Chevy   nova    80      50      3500</span></code></pre></div>
+<p>Notice that this returned a completely different line, since grep is by default case specific. This can be tricky, since often I’ve found with grep that you want to search broadly for an expression, and then get more specific. If you want grep to ignore case by default, you could use an alias. But let’s leave it for now.</p>
+<p>So let’s try this:</p>
+<p><code>grep -i 'chevy' cars</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ex">2</span>:chevy   nova    79      60      3000</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="ex">6</span>:Chevy   nova    80      50      3500</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="ex">11</span>:chevy   impala  65      85      1550</span></code></pre></div>
+<p>Now since we used <code>-i</code> to ask grep to <code>--ignore-case</code>, we are getting both <code>Chevy</code> and <code>chevy</code>.</p>
+<hr />
+<h3 id="count-and-invert">Count and Invert</h3>
+<p>Here’s the count option.</p>
+<p><code>grep -ic 'chevy' cars</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ex">3</span></span></code></pre></div>
+<p>That makes sense, right? Instead of printing the whole line, just count the number of results you find. Finally if you want to in<strong>V</strong>ert your search:</p>
+<p><code>grep -v 'chevy' cars</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">plym</span>    fury    77      73      2500</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">ford</span>    mustang 65      45      17000</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="ex">volvo</span>   gl      78      102     9850</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="ex">ford</span>    ltd     83      15      10500</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="ex">fiat</span>    600     65      115     450</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="ex">honda</span>   accord  81      30      6000</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="ex">ford</span>    thundbd 84      10      17000</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="ex">toyota</span>  tercel  82      180     750</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="ex">ford</span>    bronco  83      25      9525</span></code></pre></div>
+<p>This returns all the lines that <em>don’t</em> match the pattern.</p>
+<hr />
+<h3 id="word">Word</h3>
+<p>For the next example, let’s use our <code>frankenstein.txt</code> example.</p>
+<p><code>grep -i 'eat' frankenstein.txt</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">heart.</span>  Unable to endure the aspect of the being I had created, I</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="ex">the</span> hue of death<span class="kw">;</span> <span class="ex">her</span> features appeared to change, and I thought that I</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="ex">created.</span>  He held up the curtain of the bed<span class="kw">;</span> <span class="ex">and</span> his eyes, if eyes they</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="ex">during</span> the rest of the night, walking up and down in the greatest</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="ex">I</span> passed the night wretchedly.  Sometimes my pulse beat so quickly and</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="ex">he</span>, “how great was the difficulty to persuade my father that all</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="ex">answer</span> to my unwearied entreaties was the same as that of the Dutch</span></code></pre></div>
+<p>Notice that these lines ds <em>not</em> contain ‘eat’, but words like ‘created’, ‘death’, and ‘greatest’. <strong>One important thing to note is that <code>grep</code> will return the pattern if it is contained in another word.</strong></p>
+<p>Let’s limit our results so that we only find the word ‘eat’, and not any word that contain the letters <em>eat</em>. We will use the <code>-w</code> option to limit our results to the <em>word</em> eat. A better way to say this, is that we will match ‘eat’ <em>as long as it is surrounded by space characters</em>. This includes spaces but also tabs, newlines, and so on.</p>
+<p><code>grep -iw 'eat' frankenstein.txt</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="ex">a</span> year without Greek, I eat heartily without Greek.’ But his</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="ex">eat.</span>  The meal was quickly dispatched.  The young woman was again</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>‘<span class="ex">monster</span>! Ugly wretch! You wish to eat me and tear me to pieces. You</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="ex">you</span> follow not too tardily, a dead hare<span class="kw">;</span> <span class="ex">eat</span> and be refreshed. Come on, my</span></code></pre></div>
+<hr />
+<h3 id="recursive">Recursive</h3>
+<p>Finally, let’s look at recursive searches. Like we saw last week, a recursive grep command can take a very long time to complete. But it lets you search in many files at a time. Let’s use <code>cd ..</code> to return to the top of our sample_dir1 directory. Since we’re following a symbolic link, we should see this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="ex">.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="kw">|</span><span class="ex">--</span> gen_ed -<span class="op">&gt;</span> sample_dir/stenton/gen_ed/</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="kw">`</span><span class="ex">--</span> sample_dir</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> admin</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> cambridge</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> cafeteria</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">`</span><span class="ex">--</span> library</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>    <span class="kw">|</span>       <span class="kw">`</span><span class="ex">--</span> dir_practice</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> faculty</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> history.exe</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> markham</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> annex</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> annex2</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> building1</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">`</span><span class="ex">--</span> parking</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> outline.doc</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a>    <span class="kw">|</span><span class="ex">--</span> oxford</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> outline.doc</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> programming</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">`</span><span class="ex">--</span> report.pdf</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a>    <span class="kw">|</span>   <span class="kw">`</span><span class="ex">--</span> security</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a>    <span class="kw">`</span><span class="ex">--</span> stenton</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a>        <span class="kw">|</span><span class="ex">--</span> gen_ed</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a>        <span class="kw">|</span>   <span class="kw">`</span><span class="ex">--</span> cars</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a>        <span class="kw">|</span><span class="ex">--</span> lib_arts</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> english.txt</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true"></a>        <span class="kw">|</span>   <span class="kw">`</span><span class="ex">--</span> match.doc</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true"></a>        <span class="kw">`</span><span class="ex">--</span> parking2</span></code></pre></div>
+<p>So we are at <code>.</code> looking down, and we see many searchable files. Try this command: <code>grep -ir 'chevy' .</code> Remember, <code>-i</code> to ignore case. <code>-r</code> to perform a recursive search. <code>.</code> indicates that we want to start in our current directory (sample_dir1) and repeat the search in every subdirectory.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/gen_ed</span>/cars:<span class="ex">chevy</span>   nova    79      60      3000</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/gen_ed</span>/cars:<span class="ex">Chevy</span>   nova    80      50      3500</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/gen_ed</span>/cars:<span class="ex">chevy</span>   impala  65      85      1550</span></code></pre></div>
+<p>We are finding those three results that we saw before in ‘cars’, however none of those other files contain either ‘Chevy’ or ‘chevy.’ Here’s another view, this time using <code>-c</code>:</p>
+<p><code>grep -irc 'chevy' .</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="ex">./sample_dir/cambridge/library</span>/dir_practice:<span class="ex">0</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="ex">./sample_dir</span>/history.exe:<span class="ex">0</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="ex">./sample_dir/markham</span>/annex:<span class="ex">1</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="ex">./sample_dir/markham</span>/building1:<span class="ex">0</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="ex">./sample_dir/markham</span>/parking:<span class="ex">0</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="ex">./sample_dir/markham</span>/annex2:<span class="ex">0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="ex">./sample_dir/oxford</span>/outline.doc:<span class="ex">0</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="ex">./sample_dir/oxford/programming</span>/report.pdf:<span class="ex">0</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/gen_ed</span>/cars:<span class="ex">3</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/lib_arts</span>/english.txt:<span class="ex">0</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/lib_arts</span>/match.doc:<span class="ex">0</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a><span class="ex">./sample_dir/stenton</span>/parking2:<span class="ex">0</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a><span class="ex">./sample_dir</span>/outline.doc:<span class="ex">0</span></span></code></pre></div>
+<p>This gives us a long list of results: we see <em>every file</em> in the location along with the number of ‘chevies’ that the file contains. If we want to <em>exclude</em> the files with zero results, we can use pipes to do this:</p>
+<p><code>grep -irc 'chevy' . | grep -v ':0'</code></p>
+<p>The <em>first</em> grep command is matching with the word ‘chevy’ and creating that long output that we saw before. We are then piping that output into a <em>second</em> grep, and <em>excluding</em> the results that contain ‘:0’.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="ex">./sample_dir/markham</span>/annex:<span class="ex">1</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="ex">./sample_dir/stenton/gen_ed</span>/cars:<span class="ex">3</span></span></code></pre></div>
+<p>This gives us a nice summary of results. What about a different word? Let’s use the word ‘help’, let’s ignore case and search in our home directory.</p>
+<p><code>ps -ef | grep firefox</code></p>
+<p>…will return the process ID for Firefox, if you have it running.</p>
+<hr />
+<h1 id="summary">Summary</h1>
+<ul>
+<li><code>grep</code>
+<ul>
+<li><code>-c</code>: counts matched lines instead of printing them</li>
+<li><code>-i</code>: ignores case <em>This one is very important!</em></li>
+<li><code>-n</code>: precedes each line with a line number</li>
+<li><code>-v</code>: reverses sense of test, eg. finds lines not matching pattern</li>
+<li><code>-r</code>: performs a recursive search</li>
+<li><code>-w</code>: word search: ignores matches contained in larger words</li>
+</ul></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 3A: Filename Expansions</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 3A: Filename Expansions</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction-to-expansions">Introduction to Expansions</a></li>
+<li><a href="#matching-any-single-character">Matching Any Single Character</a></li>
+<li><a href="#matching-a-single-specified-character">Matching a Single Specified Character</a></li>
+<li><a href="#inverting-a-single-specified-character">Inverting A Single Specified Character</a></li>
+<li><a href="#selecting-a-single-character-with-a-range">Selecting A Single Character With A Range</a></li>
+<li><a href="#selecting-zero-to-many-characters">Selecting Zero-To-Many Characters</a></li>
+<li><a href="#practical-applications">Practical Applications</a></li>
+<li><a href="#find-part-ii">find Part II</a></li>
+<li><a href="#head-and-tail">Head and Tail</a></li>
+<li><a href="#learning-about-a-file">Learning About a File</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</nav>
+<p><em>There is a directory available to you where you can practice filename expansions.</em></p>
+<p><code>cp -r ~eric.brauer/uli101/wordlist ~</code></p>
+<p><code>cd ~/wordlist</code></p>
+<p><code>less 0README</code></p>
+<hr />
+<h2 id="introduction-to-expansions">Introduction to Expansions</h2>
+<p>The shell not only accepts specific filenames. You can also use ‘expansions’ to capture more than one file.</p>
+<p><code>touch bat bet bit bot boat bath &amp;&amp; ls</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">bat</span> bet bit bot boat bath</a></code></pre></div>
+<p>Aside: We can combine two commands on one line using <code>&amp;&amp;</code> like you see above. The second command will only run if the first completed with no errors.</p>
+<p>If we type in <code>ls -l bat</code>, we will get back long list information about only that specific file, identified by three <em>explicit</em> characters: b, a, and t.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bat</a></code></pre></div>
+<hr />
+<h2 id="matching-any-single-character">Matching Any Single Character</h2>
+<p>Ok, so here’s the first expansion symbol:</p>
+<ul>
+<li>? : matches a single character</li>
+</ul>
+<p><code>ls -l b?t</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bat</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bet</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bit</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bot</a></code></pre></div>
+<p>Here, all the matches are lower case letters. But keep in mind that <em>character</em> refers to any <em>letter, number, or symbol that can be used to name a file</em>.</p>
+<hr />
+<h2 id="matching-a-single-specified-character">Matching a Single Specified Character</h2>
+<p>That last example was very <em>greedy</em>, because any single character between the ‘b’ and the ‘t’ would be accepted. Let’s say that instead, we want to specify which single character we want to match. Let’s only match files with ‘a’ or ‘o’. To do this, we will use square brackets.</p>
+<p><code>ls -l b[ao]t</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bat</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bot</a></code></pre></div>
+<p>So we have matched two filenames. Both filenames are three letters long, and both start with ‘b’ and end with ‘t’. The single character in the middle is either ‘a’ or ‘o’.</p>
+<p><strong>Note #1:</strong> Notice that we <em>didn’t</em> match the filename <code>boat</code>! Remember that square brackets only match a <em>single</em> character!</p>
+<hr />
+<h2 id="inverting-a-single-specified-character">Inverting A Single Specified Character</h2>
+<p>We can invert our previous match by putting an exclamation mark <em>inside</em> the square brackets:</p>
+<p><code>ls -l b[!ao]t</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bet</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep  8 15:22 bit</a></code></pre></div>
+<p>This is matching any filename that is three characters long, starting with ‘b’ and ending with ‘t’ as long as the middle character <em>isn’t</em> an ‘a’ or an ‘o’.</p>
+<p><strong>Note #2:</strong> A common mistake by students is to put single characters between square brackets, ie. <code>b[o]t</code>. <em>There is no difference between <code>b[o]t</code> and <code>bot</code></em>, except that using a single character will lose you marks on a test. However, <code>b[!o]t</code> will match any character that isn’t ‘o’ and is therefore acceptable.</p>
+<hr />
+<h2 id="selecting-a-single-character-with-a-range">Selecting A Single Character With A Range</h2>
+<p>As well specifying characters inside square brackets, we can use ranges. All of the below are acceptable:</p>
+<p><code>ls -l [A-B]at</code> <code>ls -l [A-Za-z]at</code> <code>ls -l lecture[0-9]</code> <code>ls -l abc[a-z0-9-_]</code></p>
+<hr />
+<h2 id="selecting-zero-to-many-characters">Selecting Zero-To-Many Characters</h2>
+<p>Using either the <code>?</code> or <code>[ ]</code> will match only a single character (and never zero characters). Our next symbol will do this:</p>
+<ul>
+<li>* : matches zero to many of any character</li>
+</ul>
+<p>Let’s demonstrate this by removing our old files and creating new files:</p>
+<p><code>rm *</code> <code>touch .f f foo foot footprint &amp;&amp; ls</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">f</span> foo foot footprint</a></code></pre></div>
+<p>Notice that <code>.f</code> seems to be missing. Any file or directory that begins with ‘.’ will be considered a <em>hidden</em> file. To view them you will have to use:</p>
+<p><code>ls -a</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="bu">.</span> <span class="ex">..</span> .f foo foot footprint</a></code></pre></div>
+<p>Notice we are also seeing ‘.’ and ‘..’, which represent the current directory and the parent directory.</p>
+<p><code>ls f*</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">f</span> foo foot footprint</a></code></pre></div>
+<p>We are matching any filename that starts with ‘f’, but then after that we match with zero characters, we match with two characters (oo), we match with three characters (oot), and with even more characters (ootprint). Basically, we are saying we don’t care about how many characters come after ‘f’, just as long as that ‘f’ is there at the beginning.</p>
+<p><strong>Note #3:</strong> Notice that we <em>didn’t</em> match with the hidden file <code>.f</code>!</p>
+<p><code>ls f*t</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">foot</span> footprint</a></code></pre></div>
+<p>This time, we don’t care how many characters are in between ‘f’ and ‘t’, just as long as our filename begins with ‘f’ and ends with ‘t’.</p>
+<hr />
+<h2 id="practical-applications">Practical Applications</h2>
+<p>We’ve been using expansions with <code>ls</code>, but that doesn’t have to be the case.</p>
+<p><code>cp *.jpg images/</code></p>
+<p>This is going to match any filename that ends with ‘.jpg’, and copy those files into a directory called images. This is useful if you are reorganizing a web project.</p>
+<p><code>rm 2018-0[1-5]-*.c</code></p>
+<p>Let’s say that you’re sick of looking at your old source code from the Winter semester of 2018. (And you named all of your source code with dates!) Any date that matches between the month of 01 and 05 will get deleted.</p>
+<p><code>cat lecture3?.md &gt; lecture3.md</code></p>
+<p>Maybe at some point I will decide that instead of having two lectures a week, I want to create one big markdown file for each week. <code>cat</code> will combine two textfiles into one.</p>
+<hr />
+<h2 id="find-part-ii">find Part II</h2>
+<p>File expansions get <em>very</em> useful with the <code>find</code> command, since usually we lost something because we typed it in wrong. The first thing we can do to expand our search is to <em>ignore case</em>. This is easy to do.</p>
+<p>Instead of this command:</p>
+<p><code>find ~ -name report.pdf</code></p>
+<p>Use this command:</p>
+<p><code>find ~ -iname report.pdf</code></p>
+<p>For every alphabetic character, the find command will include all upper and lower case possibilities.</p>
+<p>But you will also benefit sometimes from using expansions such as ’report*’ in your search.</p>
+<p>We aren’t limited to just searching by name, either. We can combine a ‘name’ or ‘iname’ search with other conditions. For example, we might want to limit our search to only <em>files</em> or only <em>directories</em>.</p>
+<p><code>find ~ -iname report* -type f</code></p>
+<p><code>find ~ -iname oxford -type d</code></p>
+<p>You can combine this with filtering your search by <em>time</em>. You can specify that you want to see when files were <em>changed</em>, and when they were <em>accessed</em>.</p>
+<p>Try this. We are going to use the file called ‘friendly’ from last week. If you don’t have this file, no problem. The command below will create it:</p>
+<p><code>echo "This is a test" &gt;&gt; friendly</code></p>
+<p><code>find . -mmin -20</code></p>
+<p>You will see testfile show up in results. <code>-mmin</code> stands for <em>modification</em> + <em>minutes</em>. <code>-20</code> sets the search for less than 20. So this search should return all files that have had their contents changed less than 20 minutes ago. <strong>Note: Timestamps in Linux are weird. <a href="https://www.unixtutorial.org/atime-ctime-mtime-in-unix-filesystems">More info</a>.</strong></p>
+<p>Finally, one more useful search. This is for size.</p>
+<p><code>find ~ -size +1G</code></p>
+<p>This will return all files <em>larger</em> than 1 Gigabyte. G = Gigabyte, M = Megabyte, k = kilobyte.</p>
+<p><code>find</code> is an complicated tool. By default, it will use <code>ls</code> to list the positive results, but you can even specify other commands to run on the results. I encourage you to search through examples and options online and through the man pages.</p>
+<hr />
+<h2 id="head-and-tail">Head and Tail</h2>
+<p>If you want to only see the first ten lines of a file, use <code>head</code>. If you want to only see the last ten lines of a file, use <code>tail</code>. You can also specify the number of lines with an argument:</p>
+<p><code>head -3 Acceptable-Use-Policy</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">Please</span> refer to http://www.senecac.on.ca/policies/itau.html for the latest and </a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">up</span> to date copy of the Information Technology Acceptable Use.</a></code></pre></div>
+<hr />
+<h2 id="learning-about-a-file">Learning About a File</h2>
+<p>The most common way to learn about files is to use <code>ls -l</code>, which you’ve seen before. But there are more options.</p>
+<p>Let’s use an image from last week:</p>
+<p><code>ls -l lecture2a-nautilus.png</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="ex">-rw-r--r--</span> 1 eric eric 70K Sep  9 21:21 lecture2a-nautilus.png</a></code></pre></div>
+<p>Let’s learn more about this with the <code>file</code> command.</p>
+<p><code>file lecture2a-nautilus.png</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">lecture2a-nautilus.png</span>: PNG image data, 1242 x 696, 8-bit/color RGBA, non-interlaced</a></code></pre></div>
+<p>In Windows, traditionally the <em>extension</em> of the file was very important. If you took an image called ‘file.jpg’ and renamed it ‘file.txt’, it would probably cause notepad.exe to choke on that file. In Linux, extensions aren’t required, and we mostly keep them around by convention.</p>
+<p><code>cp lecture2a-nautilus.png test.txt</code></p>
+<p><code>file test.txt</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">test.txt</span>: PNG image data, 1242 x 696, 8-bit/color RGBA, non-interlaced</a></code></pre></div>
+<hr />
+<h1 id="summary">Summary</h1>
+<blockquote>
+<h2 id="commands">Commands</h2>
+<ul>
+<li>find, continued: type, size, amin, cmin</li>
+<li>file: Information about files</li>
+<li>head: Show first X lines</li>
+<li>tail: Show last X lines</li>
+<li>history: Show history</li>
+</ul>
+<h2 id="expansions">Expansions</h2>
+<ul>
+<li>*: Zero or more characters</li>
+<li>?: One character</li>
+<li>[ ]: Match <em>one</em> character of whatever’s inside the brackets</li>
+<li>[! ]: Exclude <em>one</em> character of whatever’s inside the brackets</li>
+</ul>
+</blockquote>
+</body>
+</html>

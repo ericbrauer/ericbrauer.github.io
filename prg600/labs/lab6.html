@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab6</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-6-file-objects-and-exceptions">Lab 6: File Objects and Exceptions</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#file-objects">6.1 File Objects</a>
+<ul>
+<li><a href="#task-create-readme.txt">TASK: Create readme.txt</a></li>
+<li><a href="#creating-a-file-object">Creating a File Object</a></li>
+</ul></li>
+<li><a href="#what-exactly-is-an-object">6.2 What Exactly Is An Object?</a>
+<ul>
+<li><a href="#back-to-file-objects">Back To File Objects</a></li>
+</ul></li>
+<li><a href="#task-file-writing">6.3 TASK: File Writing</a></li>
+<li><a href="#string-functions">6.4 String Functions</a></li>
+<li><a href="#task-reverse-reading">6.5 TASK: Reverse Reading</a>
+<ul>
+<li><a href="#sample-output">Sample Output</a></li>
+</ul></li>
+<li><a href="#exceptions">6.6 Exceptions</a></li>
+<li><a href="#task-a-simple-grep">6.7 TASK: A Simple Grep</a>
+<ul>
+<li><a href="#sample-output-1">Sample Output</a></li>
+</ul></li>
+<li><a href="#task-text-parser">6.8 TASK: Text Parser</a></li>
+<li><a href="#challenge-task-last-letter">CHALLENGE TASK: Last Letter</a>
+<ul>
+<li><a href="#sample-output-2">Sample Output</a></li>
+</ul></li>
+<li><a href="#deliverables">Deliverables</a></li>
+<li><a href="#glossary">Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-6-file-objects-and-exceptions">Lab 6: File Objects and Exceptions</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<p>In this lab, we will:</p>
+<ul>
+<li>learn about opening text files</li>
+<li>read and write data to and from files</li>
+<li>learn more about objects and methods</li>
+<li>learn how to handle exceptions gracefully.</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>In this lab we will be opening external files and working with the data that they contain. Working with files brings its own challenges, as a lot of things can go wrong with opening files as we will see. Filenames can be wrong, they can have incorrect permissions and so on. It’s important to handle these issues gracefully, and so we will also introduce the concept of exception handling.</p>
+<h2 id="file-objects">6.1 File Objects</h2>
+<p>By ‘files’, we are going to be referring (at first) to <em>plain text</em> files. In Windows, you often see these files labelled with a <code>.txt</code> suffix. Other types of files (such as Word documents) can be opened by Python as well, but have a specific encoding and usually require an external module. Believe it or not, plain text files are widely used to manage system configuration and many types of system data.</p>
+<p>Opening and working with files is a three-step process:</p>
+<ol type="1">
+<li>We need to specify the filename, and create a <em>file object</em>.</li>
+<li>With the <em>file object</em>, we have many methods at our disposal for reading and/or writing data.</li>
+<li>Finally, we need to <em>close</em> the file object.</li>
+</ol>
+<h3 id="task-create-readme.txt">TASK: Create readme.txt</h3>
+<p>Use a program like notepad to create a file. It should look like this:</p>
+<pre><code>hello world
+this is the second line.
+this is the third line.
+I would just like to say hello again!
+and goodbye.</code></pre>
+<p>Make sure this file is called <code>readme.txt</code> and is in your current directory. You can also download it from <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/readme.txt">here</a>. A reminder: you should probably be creating a directory called <code>lab6</code> for all your work.</p>
+<h3 id="creating-a-file-object">Creating a File Object</h3>
+<p>The code to create a file object looks like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;readme.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span></code></pre></div>
+<p>The function <code>open()</code> takes two arguments: a filename, and a string to tell it what type of file operation we are going to perform.</p>
+<dl>
+<dt>‘r’</dt>
+<dd>Read operation. No change to the contents of the file.
+</dd>
+<dt>‘w’</dt>
+<dd>Write operation. <strong>This will overwrite whatever was in the file</strong>.
+</dd>
+<dt>‘a’</dt>
+<dd>Append operation. This will preserve the contents of the file and add data to the tail.
+</dd>
+</dl>
+<p><code>open()</code> returns a special datatype called a file object. The file object contains many useful <em>methods</em> for reading and writing data. By ‘method’, we mean a function that belongs to an object. We will use a method called <code>.read()</code> to accomplish our second step…</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;readme.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>filestring <span class="op">=</span> f.read()</span></code></pre></div>
+<p>…and another method called <code>.close()</code> to accomplish our third step.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;readme.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>filestring <span class="op">=</span> f.read()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>f.close()</span></code></pre></div>
+<p>At this point, our file is closed and its contents are saved in a string.</p>
+<pre><code>hello world\nthis is the second line.\nthis is the third line.\nI would just like to say hello again!\nand goodbye.</code></pre>
+<p>The <code>\n</code> are called <em>newline characters</em> and define when we will move to the next line. Each <code>\n</code> is equivalent to pressing the Enter key. The <code>print()</code> function should recognize these characters and print the string in the correct format.</p>
+<h2 id="what-exactly-is-an-object">6.2 What Exactly Is An Object?</h2>
+<p>With that simple example out of the way, perhaps we should define what <code>f</code> is in our example.</p>
+<p><em>Objects</em> are ways to organize code. When the age of computing was just getting underway, it was enough to organize our code in the way we have started: write code line-by-line, creating variables as we need them. As programs became more complex, it became necessary to start using functions. Objects are the next step in this progression: objects contain their own private variables and their own functions (called methods).</p>
+<p><em>Object-Oriented Programming</em> (OOP) is a very large topic, one that we won’t get into here. Suffice to say, you have already been working with objects – everything in Python is an object!</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>mystring <span class="op">=</span> <span class="st">&#39;hello world!&#39;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>mystring.upper()</span></code></pre></div>
+<pre><code>HELLO WORLD!</code></pre>
+<p>In older programming languages, a string is <em>just a string</em>: an array of characters. To convert to capitals, to reverse the letters, to search for a specific character, you would have to write your own functions to accomplish any of this. This takes a lot more work, but your programs can run faster.</p>
+<p>Python takes a different approach from these early languages. We are less concerned with raw speed, and more interested in providing useful features to the programmer. <code>mystring</code> is not a string, but a <em>string object</em>. Not only does it contain the character array <code>hello world!</code>, but it comes with several useful methods such as <code>.upper()</code>. We are not forced to create our function to accomplish this, the code has already been written and is already contained inside our string object. The full set of features contained in the string object are hidden from us by default, but we can make use of them if we need to. This is the advantage of OOP.</p>
+<hr />
+<p><strong>Note:</strong> We use periods (<code>.</code>) to indicate that something is <em>contained inside</em> something else. We use this for both <em>methods contained inside of objects</em> (for example: <code>mystring.upper()</code>, and <em>functions or variables contained inside a module</em> (for example: <code>sys.argv</code>).</p>
+<hr />
+<h3 id="back-to-file-objects">Back To File Objects</h3>
+<p>In the interpreter, create a new file object using <code>readme.txt</code>, and then use Python’s built-in <code>help()</code> function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;readme.txt&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="bu">help</span>(f)</span></code></pre></div>
+<p>You will get a help document related to <code>TextIOWrapper</code> objects. Again, you can scroll past the technical description to the methods contained. Check the following:</p>
+<ul>
+<li>Close</li>
+<li>Read</li>
+<li>Write</li>
+<li>Readlines</li>
+<li>Writelines</li>
+</ul>
+<p>Before moving on to the next section, try and predict how these methods work.</p>
+<h2 id="task-file-writing">6.3 TASK: File Writing</h2>
+<p>Create a file called <code>lab6a.py</code>. We will use this to test file write operations.</p>
+<p>Writing to a file is slightly different. Instead of calling <code>.read()</code> and getting a return value, we call <code>write()</code> with an argument. A number of characters is returned, but this can be ignored.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;testing.txt&#39;</span>, <span class="st">&#39;w&#39;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>f.write(<span class="st">&#39;This is a test sentence.&#39;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>f.close()</span></code></pre></div>
+<p>Run your script and verify that it works.</p>
+<p>Now modify your script so that it looks like this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>f <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;testing.txt&#39;</span>, <span class="st">&#39;w&#39;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>f.write(<span class="st">&#39;This is a new test sentence!&#39;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>f.write(<span class="st">&#39;This is the second line(?)&#39;</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>f.close()</span></code></pre></div>
+<p>Run this new script again. What do you notice?</p>
+<p>Add this line to the top of your script:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>data_to_write <span class="op">=</span> [<span class="st">&#39;First Line!&#39;</span>, <span class="st">&#39;Second Line!!&#39;</span>, <span class="st">&#39;Third Line!!!&#39;</span>, <span class="st">&#39;...and so on!&#39;</span>]</span></code></pre></div>
+<p>Remember that using <code>w</code> will <strong>overwrite the contents of a file.</strong> Each time that you run your script, the previous data is lost.</p>
+<p>To complete this task, use what you’ve learned about file operations, newline characters, and for loops to put each element of <code>data_to_write</code> on a new line in the ‘testing.txt’ file. The contents should look like this:</p>
+<pre><code>First Line!
+Second Line!!
+Third Line!!!
+...and so on!</code></pre>
+<p>Include <code>lab6a.py</code> in your lab submission.</p>
+<h2 id="string-functions">6.4 String Functions</h2>
+<p>Hopefully you’ve figured out a way to <em>add</em> newline characters to your output. Let’s explore ways of <em>removing</em> them. Open the interpreter and search through <code>help</code> for a string again. In particular, look at the following methods:</p>
+<ul>
+<li>replace</li>
+<li>split</li>
+<li>strip</li>
+</ul>
+<p>By default, <code>.strip()</code> with no arguments will remove newline characters from the beginning and end of a string. So a string like <code>'hello\n'.strip()'</code> will become <code>'hello'</code>.</p>
+<p>The method <code>.split('\n')</code> will act on all newline characters inside a string, and will return a list:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>newlist <span class="op">=</span> <span class="st">&#39;One</span><span class="ch">\n</span><span class="st">Two</span><span class="ch">\n</span><span class="st">Three&#39;</span>.split(<span class="st">&#39;</span><span class="ch">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="bu">print</span>(newlist)</span></code></pre></div>
+<pre><code>[&#39;One&#39;, &#39;Two&#39;, &#39;Three&#39;]</code></pre>
+<p>The argument for <code>.split()</code> is the character that will define the <em>delimiter</em>, which is another way of defining where one element ends and another begins. Notice how each newline character defines the boundary between elements in the list.</p>
+<p><code>.replace()</code> isn’t related to working with newline characters, but is incredibly useful since finding and replacing strings is such a common task. The optional argument <code>1</code> here defines the number of substitutions to perform; by default it will make every substitution possible.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;What is old is new&#39;</span>.replace(<span class="st">&#39;is&#39;</span>, <span class="st">&#39;was&#39;</span>, <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>What was old is new.</code></pre>
+<p>If you merely want to check if a string exists inside a bigger string without replacing it, this can be accomplished without a method:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>teststring <span class="op">=</span> <span class="st">&#39;Alphabet Soup&#39;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="cf">if</span> <span class="st">&#39;Soup&#39;</span> <span class="kw">in</span> testring:</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;Soup found&#39;</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;No soup for you!&#39;</span>)</span></code></pre></div>
+<p>Remember that <code>help()</code> is a powerful tool when trying to solve programming problems!</p>
+<h2 id="task-reverse-reading">6.5 TASK: Reverse Reading</h2>
+<ul>
+<li>Create <code>lab6b.py</code>.</li>
+<li>This program should open a file that is defined by a <em>command line argument</em>. Make sure you import the <code>sys</code> module in order to do this.</li>
+<li>If the user doesn’t specify a file, use <code>readme.txt</code>.</li>
+<li>Read the contents of the filename specified.</li>
+<li>Print the contents of the file, but each line should be in <em>reverse order</em>. So the last line of the file should be printed first, then the second-last, and so on.</li>
+</ul>
+<h3 id="sample-output">Sample Output</h3>
+<p><code>python3 lab6b.py testing.txt</code></p>
+<pre><code>...and so on!
+Third Line!!!
+Second Line!!
+First Line!</code></pre>
+<p><code>python3 lab6b.py</code></p>
+<pre><code>and goodbye.
+I would just like to say hello again!
+This is the third line.
+This is the second line.
+Hello World!</code></pre>
+<h2 id="exceptions">6.6 Exceptions</h2>
+<p>By now you have no doubt encountered exceptions as you write programs. Exceptions can be triggered by error in <em>Syntax</em>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="cf">if</span> condition <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;True&quot;</span>)</span></code></pre></div>
+<pre><code>File &quot;&lt;stdin&gt;&quot;, line 2
+    print(&#39;true&#39;)
+    ^
+IndentationError: expected an indented block</code></pre>
+<p>or when you are attempting to do something that will seem to trigger undefined behaviour.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a>mylist <span class="op">=</span> [<span class="st">&#39;A&#39;</span>, <span class="st">&#39;B&#39;</span>, <span class="st">&#39;C&#39;</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="bu">print</span>(mylist[<span class="dv">4</span>])</span></code></pre></div>
+<pre><code>Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+IndexError: list index out of range</code></pre>
+<p>As we have mentioned, exceptions are actually the best outcome in this sorts of situations. Exceptions identify code that could trigger ambiguous outcomes. In programming, ambiguity is our enemy. We want to specify our preferred behaviour as much as possible. The hardest types of problems to debug and solve are ones that occur quietly or inconsistently. Exceptions are <em>loud</em>, because they prevent us from proceeding until we have solved their root cause.</p>
+<p>However, not all exceptions can be prevented in our code. Sometimes, believe or not, we are not the ones at fault! Since we are working with files in this lab, we should be aware of all the ways that reading files can fail:</p>
+<ul>
+<li>The filename can be incorrect, or the file could be missing.</li>
+<li>Our user might not have permission to read the file contents, or it could be a read-only file.</li>
+<li>There might be a hardware issue that otherwise prevents us from reading the file.</li>
+</ul>
+<p>In each of these cases, the user’s ‘plan A’ will not succeed, and we will need to execute a ‘plan B’. This alternative set of code should <em>only</em> run if an exception is encountered. For the moment, our ‘plan B’ should only be to print simple message to the user, and halt the program.</p>
+<p>For this example we will put our file operations into a function. The function argument will be the filename, and the return value will be the file contents as a string.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>filename <span class="op">=</span> <span class="st">&#39;missing.txt&#39;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a><span class="kw">def</span> read_file(filename):</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>    <span class="co">&quot;read a file, halt if missing&quot;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>    <span class="cf">try</span>:</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true"></a>        f <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true"></a>        string <span class="op">=</span> f.read()</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true"></a>        f.close()</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true"></a>    <span class="cf">except</span>:</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="st">&quot;ERROR!&quot;</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true"></a>    <span class="cf">return</span> string</span></code></pre></div>
+<p>The code inside the <code>try:</code> block is ‘risky’ code. We think that an exception might possibly occur here. If an exception does occur, we run the code defined in the <code>except:</code> code block.</p>
+<p>Notice that the error message here is not very useful. That’s because we have no idea what <em>type</em> of exception has occurred, and so our error message is hopelessly vague. This code breaks the first principle of exception handling, which is to <strong>specify the type of exception to handle.</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>filename <span class="op">=</span> <span class="st">&#39;missing.txt&#39;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>line_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a><span class="kw">def</span> read_file(filename):</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a>    <span class="co">&quot;read a file, halt if missing&quot;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a>    <span class="cf">try</span>:</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true"></a>        f <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true"></a>        string <span class="op">=</span> f.read()</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true"></a>        result <span class="op">=</span> max_lines <span class="op">/</span> count</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true"></a>        f.close()</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true"></a>    <span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="ss">f&quot;ERROR: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss"> was not found.&quot;</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true"></a>    string <span class="op">=</span> f.read()</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true"></a>    f.close()</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true"></a>    <span class="cf">return</span> string</span></code></pre></div>
+<p>We have now specified the <code>FileNotFoundError</code> as a specific exception to handle, and we can specify a more useful message for the user. However, notice now that we have another issue: inside our <code>try</code> block we are going to cause a divide by zero error. This brings us another guideline: <strong>make your try blocks as short as possible</strong>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a>filename <span class="op">=</span> <span class="st">&#39;missing.txt&#39;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>line_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a><span class="kw">def</span> read_file(filename):</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a>    <span class="co">&quot;read a file, halt if missing&quot;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true"></a>    <span class="cf">try</span>:</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true"></a>        f <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true"></a>    <span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="ss">f&quot;ERROR: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss"> was not found.&quot;</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true"></a>    <span class="cf">except</span> <span class="pp">PermissionError</span>:</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="ss">f&quot;You do not have permission to open </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">.&quot;</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true"></a>    string <span class="op">=</span> f.read()</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true"></a>    f.close()</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true"></a>    <span class="cf">return</span> string</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true"></a></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true"></a><span class="kw">def</span> divide_max_by_count():</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true"></a>    <span class="cf">try</span>:</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true"></a>        result <span class="op">=</span> max_lines <span class="op">/</span> count</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="st">&quot;Can&#39;t divide by zero.&quot;</span>)</span></code></pre></div>
+<p>It didn’t make sense to perform the max_lines by count calculation inside that function (remember, functions should do only one thing!) so we have put that into a new function with its own exception handling. This will make the life of the user much easier. In addition, we are handling another possible issue: a permission error.</p>
+<p>Nevertheless, we can’t predict every possible thing that can go wrong. In this case, we can introduce another guideline: <strong>use a default except block to catch any other error you haven’t already handled.</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>filename <span class="op">=</span> <span class="st">&#39;missing.txt&#39;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>line_count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a><span class="kw">def</span> read_file(filename):</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a>    <span class="co">&quot;read a file, halt if missing&quot;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true"></a>    <span class="cf">try</span>:</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true"></a>        f <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&#39;r&#39;</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true"></a>    <span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="ss">f&quot;ERROR: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss"> was not found.&quot;</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true"></a>    <span class="cf">except</span> <span class="pp">PermissionError</span>:</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="ss">f&quot;You do not have permission to open </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">.&quot;</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true"></a>        sys.exit(<span class="dv">1</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true"></a>    <span class="cf">except</span>:</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="st">&quot;Something has gone wrong, but we know it isn&#39;t a permission error or file not found error.&quot;</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true"></a>        sys.exit(<span class="dv">2</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true"></a>    string <span class="op">=</span> f.read()</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true"></a>    f.close()</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true"></a>    <span class="cf">return</span> string</span></code></pre></div>
+<p>Remember that exception handling will work like the <code>if/elif/else</code> pattern: if the first condition is false, the interpreter will test each successive condition in turn. If all conditions are false, the <code>else</code> code block runs as a last resort. Similarly, here we want to start with specific exceptions and then define the most broad exceptions at the end. The error in <code>except:</code> is vague, but with luck we should almost never encounter this error.</p>
+<p>A full list of exception types can be found in the <a href="https://docs.python.org/3/library/exceptions.html">official documentation</a>. However, you will become very familiar with many of the common types of exception as you progress.</p>
+<h2 id="task-a-simple-grep">6.7 TASK: A Simple Grep</h2>
+<p><code>grep</code> is a tool installed on most *Nix systems. It will search for a particular keyword inside of a file.</p>
+<p>Inside the file <code>readme.txt</code>:</p>
+<pre><code>hello world
+this is the second line.
+this is the third line.
+I would just like to say hello again!
+and goodbye.</code></pre>
+<pre><code>eric@Archie ~ $ grep hello readme.txt
+hello world
+I would just like to say hello again!</code></pre>
+<p>Your task will be to re-create this basic functionality.</p>
+<ol type="1">
+<li>Name this file <code>lab6c.py</code> and include it in your lab submission.</li>
+<li>Your program should handle command line arguments. <strong>Do not use input()</strong>. The first argument is the keyword to search, and the second is the filename.</li>
+<li>If the user doesn’t have two arguments, print a sensible usage message.</li>
+<li>Open the filename. Your script should handle <code>FileNotFoundError</code> exceptions at the very least. If the file is missing, print a sensible error message and halt.</li>
+<li>Save the contents of the file as a <em>list</em>.</li>
+<li>For each line of the list, search for the keyword. If the keyword is found, print the entire line <strong>including a line number</strong>. If it is not, do nothing.</li>
+<li>Make sure to close the file before your program exits.</li>
+</ol>
+<p>Use the command prompt to test your code with both valid files and with bad filenames.</p>
+<h3 id="sample-output-1">Sample Output</h3>
+<p>Lines with <code>&gt;&gt;</code> are executed by the user. All other lines indicate program output.</p>
+<pre><code>&gt;&gt; python lab6c.py
+Usage: lab6c.py keyword filename
+&gt;&gt; python lab6c.py hello readme.txt
+1: hello world
+4: I would just like to say hello again!
+&gt;&gt; python lab6c.py line readme.txt
+2: this is the second line.
+3: this is the third line.
+&gt;&gt; python lab6c.py toaster readme.txt
+&gt;&gt; python lab6c.py line missing.txt
+ERROR: missing.txt not found.</code></pre>
+<h2 id="task-text-parser">6.8 TASK: Text Parser</h2>
+<p>For this task, you can use a file called <code>letters-and-numbers.txt</code>, which can be <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/letters-and-numbers.txt">downloaded from here</a>. The contents of the file look something like the following:</p>
+<pre><code>a e 12 o 3.5 i
+g 4 c 7 12 mn </code></pre>
+<p>Your task will be to open this file, remove all the numbers, and save the contents of the file. Your script should also <strong>print</strong> the sum of all numbers on each line. So for the example above, the script should print:</p>
+<pre><code>15.5
+23.0</code></pre>
+<p>and the contents of <code>letters-and-numbers.txt</code> will be:</p>
+<pre><code>a e o i
+g c mn</code></pre>
+<ol type="1">
+<li>Name this file <code>lab6d.py</code>.</li>
+<li>As before, this script should command line arguments to specify the file to open.<br />
+</li>
+<li>If the user doesn’t provide an argument, print a sensible usage message. It should start with the word <code>Usage:</code>.</li>
+<li>Open the filename. Your script should handle <code>FileNotFoundError</code> exceptions at the very least. If the file is missing, print a sensible error message and halt. It should start with <code>ERROR:</code> and include the invalid filename.</li>
+<li>When you have read the file, you should have a <em>list of strings</em> that looks like this: <code>['a e 12 o 3.5 i', 'g 4 c 7 12 mn']</code>.</li>
+<li>In order to separate numbers from non-letters, use a <code>.split()</code> function.</li>
+<li>Notice that you will need to handle both <em>int</em> and <em>float</em> values. We have learned an easier way to do this. Using <code>float('3.5')</code> will succeed, but <code>float('a')</code> will cause an exception. You can use exception handling to deal with non-numeric strings.</li>
+<li>Save the strings (with numbers removed) into a new list of strings. <strong>Be sure to remove any trailing spaces.</strong></li>
+<li>In order to update the file, you can simply rewrite to the target file with the new list of strings. You may wish to back up the <code>letters-and-numbers.txt</code> file as you are testing.<br />
+</li>
+<li>Submit <code>lab6d.py</code> with the rest of your lab files.</li>
+</ol>
+<h2 id="challenge-task-last-letter">CHALLENGE TASK: Last Letter</h2>
+<ul>
+<li>Call this file <code>challenge6.py</code>.</li>
+<li>Open a file using a command line argument, with exception handling for FileNotFoundError.</li>
+<li>For each line of the file contents:
+<ul>
+<li>iterate through each character of the line. Find the alphabetical character (a-z) that comes closest to the <em>end of the alphabet.</em></li>
+<li>In other words, you want to find the letter that is closest to ‘z’ on each line. Print that character only.</li>
+<li>Also be sure to <em>ignore case</em>. So capital letters should work just like lower-case letters. You can simply convert all capitals to lower case to do this.</li>
+</ul></li>
+</ul>
+<h3 id="sample-output-2">Sample Output</h3>
+<p><code>python3 challenge6.py readme.txt</code></p>
+<pre><code>w
+t
+t
+y
+y</code></pre>
+<p><code>python3 challenge6.py testing.txt</code></p>
+<pre><code>t
+s
+t
+s</code></pre>
+<h2 id="deliverables">Deliverables</h2>
+<p>The check script can <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab6.py">downloaded from here</a>.</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+lab6a.py</li>
+<li><input type="checkbox" disabled="" />
+lab6b.py</li>
+<li><input type="checkbox" disabled="" />
+lab6c.py</li>
+<li><input type="checkbox" disabled="" />
+lab6d.py</li>
+<li><input type="checkbox" disabled="" />
+challenge6.py</li>
+<li><input type="checkbox" disabled="" />
+lab6-check-output.txt</li>
+</ul>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li>Object</li>
+<li>Method</li>
+<li>Newline character</li>
+<li>Delimiter</li>
+</ul>
+</body>
+</html>

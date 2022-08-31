@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 10B: Introduction to Bash Scripting II</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 10B: Introduction to Bash Scripting II</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#environmental-variables">Environmental Variables</a>
+<ul>
+<li><a href="#the-path-variable">The PATH Variable</a></li>
+<li><a href="#some-useful-environment-variables">Some Useful Environment Variables</a></li>
+</ul></li>
+<li><a href="#exit-codes">Exit Codes</a>
+<ul>
+<li><a href="#application-of-exit-codes-grep">Application Of Exit Codes: Grep</a></li>
+</ul></li>
+<li><a href="#file-checking">File Checking</a></li>
+<li><a href="#shell-arithemtic-and-comparators">Shell Arithemtic and Comparators</a></li>
+<li><a href="#summary">Summary</a>
+<ul>
+<li><a href="#be-sure-to-remember-the-syntax-for">Be sure to remember the syntax for:</a></li>
+<li><a href="#variables">Variables:</a></li>
+<li><a href="#file-checks">File checks</a></li>
+<li><a href="#comparisons-numeric">Comparisons (Numeric):</a></li>
+</ul></li>
+</ul>
+</nav>
+<p>**Note: If you are using vi(m), you can turn on line numbers by entering command mode with <code>:</code>, and then entering <code>set number</code>. Do this before showing your scripts to the professor. You can make this persistent by adding the line <code>set number</code> to the file <code>.vimrc</code>.</p>
+<h1 id="environmental-variables">Environmental Variables</h1>
+<p>In the previous lecture, we discussed some <em>builtin variables</em>, that is, variables that exist without the having to create them or assign them value. There exist quite a few more <em>environment variables</em>. We don’t have to use a script to see these variables, we can call them directly from the shell.</p>
+<p><code>echo "Hello $USER.</code></p>
+<p>You didn’t need to assign your username to this variable, it was already stored in memory. To see a full list of environment variables, use this command:</p>
+<p><code>env</code></p>
+<p>This should return a long list of variables. You won’t be interacting with most of these, but you might recognize the value for some of these.</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-HOME.sh</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb1-3"><a href="#cb1-3"></a>     <span class="ex">3</span>  <span class="co"># Notice that we don&#39;t assign values to any variables. These are all environment.</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>     <span class="ex">4</span>  </span>
+<span id="cb1-5"><a href="#cb1-5"></a>     <span class="ex">5</span>  echo <span class="st">&quot;Hello </span><span class="va">$USER</span><span class="st">.&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>     <span class="ex">6</span>  </span>
+<span id="cb1-7"><a href="#cb1-7"></a>     <span class="ex">7</span>  if [ <span class="va">$PWD</span> = <span class="va">$HOME</span> ]</span>
+<span id="cb1-8"><a href="#cb1-8"></a>     <span class="ex">8</span>  then</span>
+<span id="cb1-9"><a href="#cb1-9"></a>     <span class="ex">9</span>      echo <span class="st">&quot;Welcome home!&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="ex">10</span>  else</span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="ex">11</span>      echo <span class="st">&quot;You might be lost! Use &#39;cd ~&#39; to get back home.&quot;</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="ex">12</span>  fi</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="ex">13</span>  </span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="ex">14</span>  <span class="co"># Now copy this script elsewhere to see if it works.</span></span></code></pre></div>
+<h2 id="the-path-variable">The PATH Variable</h2>
+<p>The PATH is a variable that contains all the paths where the shell expects to find programs or commands. For example, it contains the path <code>/bin/</code>. If you look there, you’ll find a lot of the important commands you’ve been using, such as <code>rm</code>, <code>cp</code>, and so on. On *nix systems we want to limit where scripts can be run as a security measure. Most likely, your current directory is your home, and thats probably not in $PATH. There’s a couple ways we can resolve this. We can move our script into one of the directories included in PATH, we can add our current location to PATH (which is what you will do in Assignment 3), or you can <em>specify your current location when calling the script</em>.</p>
+<p><code>./test.sh</code></p>
+<p>It works with ./ because POSIX specifies that a command name that contain a / will be used as a filename directly, overriding whatever’s in $PATH. You could have used absolute path for the exact same effect, but ./ is shorter and easier to write.</p>
+<p>One thing you’ll see on Matrix if you <code>echo $PATH</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>:<span class="ex">.</span>:</span></code></pre></div>
+<p>Each directory is delimited by colons. <code>.</code> here means your current directory. So by default on Matrix, your current directory is always an accepted location for scripts. <strong>Note that this isn’t common, and in most cases if you try to run a script without adding it to PATH, you will get a "file not found error!</strong></p>
+<h2 id="some-useful-environment-variables">Some Useful Environment Variables</h2>
+<ul>
+<li>PS1 - primary prompt</li>
+<li>PWD - present working directory</li>
+<li>HOME - absolute path to user’s home directory, similar to ~</li>
+<li>HOST - name of host</li>
+<li>USER - name of current user</li>
+</ul>
+<hr />
+<p>Let’s review a previous example:</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-IF-ELSE.sh</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb3-3"><a href="#cb3-3"></a>     <span class="ex">3</span>  condition=1</span>
+<span id="cb3-4"><a href="#cb3-4"></a>     <span class="ex">4</span>  </span>
+<span id="cb3-5"><a href="#cb3-5"></a>     <span class="ex">5</span>  if [ <span class="va">$condition</span> = 1 ]</span>
+<span id="cb3-6"><a href="#cb3-6"></a>     <span class="ex">6</span>  then</span>
+<span id="cb3-7"><a href="#cb3-7"></a>     <span class="ex">7</span>          echo <span class="st">&quot;The condition is true.&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>     <span class="ex">8</span>          echo <span class="st">&quot;Action 1.&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>     <span class="ex">9</span>  else</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="ex">10</span>          echo <span class="st">&quot;The condition is false.&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="ex">11</span>          echo <span class="st">&quot;Action 2.&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="ex">12</span>  fi</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="ex">13</span>  </span>
+<span id="cb3-14"><a href="#cb3-14"></a>    <span class="ex">14</span>  echo <span class="st">&quot;Open this script in Vim or Nano, and change the value of &#39;condition&#39;.&quot;</span></span></code></pre></div>
+<p>Recall that we either run <code>Action 1</code> or <code>Action 2</code> but not both. However, we will always reach the echo command on line 14.</p>
+<p>Compare that example with this one:</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-EXIT-CODES.sh</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb4-3"><a href="#cb4-3"></a>     <span class="ex">3</span>  echo -n <span class="st">&quot;Is everything alright? (y/n) &quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>     <span class="ex">4</span>  </span>
+<span id="cb4-5"><a href="#cb4-5"></a>     <span class="ex">5</span>  read response</span>
+<span id="cb4-6"><a href="#cb4-6"></a>     <span class="ex">6</span>  </span>
+<span id="cb4-7"><a href="#cb4-7"></a>     <span class="ex">7</span>  if [ <span class="va">$response</span> = <span class="st">&quot;y&quot;</span> ]</span>
+<span id="cb4-8"><a href="#cb4-8"></a>     <span class="ex">8</span>  then</span>
+<span id="cb4-9"><a href="#cb4-9"></a>     <span class="ex">9</span>          echo <span class="st">&quot;Good to hear!&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="ex">10</span>          exit 0</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    <span class="ex">11</span>  else</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="ex">12</span>          echo <span class="st">&quot;Sounds like an error!&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>    <span class="ex">13</span>          exit 1</span>
+<span id="cb4-14"><a href="#cb4-14"></a>    <span class="ex">14</span>  fi</span>
+<span id="cb4-15"><a href="#cb4-15"></a>    <span class="ex">15</span>  </span>
+<span id="cb4-16"><a href="#cb4-16"></a>    <span class="ex">16</span>  echo <span class="st">&quot;We will never reach this line.&quot;</span></span></code></pre></div>
+<p>Try running to verify whether or not you will reach line 16. You shouldn’t.</p>
+<p>When you try running this, you will see output like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">Is</span> everything alright? (y/n) <span class="ex">n</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">Sounds</span> like an error!</span></code></pre></div>
+<ul>
+<li>The first observation to make is this: when your script reaches an <code>exit</code> statement, it halts immediately. It will no longer continue.</li>
+<li>The second observation is that <code>exit</code> statements have a number associated with them. This number is invisible, but we can read it with another builtin variable: <code>$?</code>. Try running this script again, but immediately after running it, type in <code>echo $?</code> and see what gets printed.</li>
+</ul>
+<h1 id="exit-codes">Exit Codes</h1>
+<p><code>$?</code> will return the <em>exit code</em> of whatever command just completed. We’ve just seen exit codes in our script, but exit codes are returned by every Linux command that you’ve learned. By convention, an exit code of <strong>zero</strong> means no errors were encountered and a <strong>non-zero</strong> exit code means that something went wrong, or didn’t behave the way we expected it to. The exit codes and what they mean are chosen by the programmer. Often <strong>man</strong> pages will indicate different error codes.</p>
+<p>Again, Summarising Exit codes: - 0: Everything’s alright - not 0: Somethings’s wrong - All Linux commands return exit codes - The meaning of exit codes is something chosen by programmers, and they often document exit codes in <code>man</code> pages - <code>$?</code> will return the exit code of <em>the most recent command</em>.</p>
+<h2 id="application-of-exit-codes-grep">Application Of Exit Codes: Grep</h2>
+<p><code>grep</code> indicates to us that <em>nothing</em> was returned with a <em>1</em>, and a <em>0</em> will indicate that there was a positive match.</p>
+<p><code>grep "ford" cars</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">ford</span>    mustang 65      45      17000</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">ford</span>    ltd     83      15      10500</span></code></pre></div>
+<p><code>echo $?</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">0</span></span></code></pre></div>
+<p><code>grep ferrari cars</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"></code></pre></div>
+<p><code>echo $?</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">1</span></span></code></pre></div>
+<p>We can use exit codes in our scripts to make sure that commands are succeeding. This is an important concept to understand for real-world situations.</p>
+<p>Here’s an example of an <strong>IF</strong> statement using grep:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">grep</span> -i <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> cars <span class="co"># Bonus: what happens if you replace &quot;&quot; with &#39;&#39;?</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">!=</span> 0<span class="bu"> ]</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="kw">then</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="bu">echo</span> <span class="st">&quot;Sorry, </span><span class="va">$1</span><span class="st"> is not in the cars file&quot;</span> <span class="op">&gt;&amp;2</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="kw">fi</span></span></code></pre></div>
+<p>In this example, we run a grep command using the first argument passed to our script. <em>Anything other than success</em> will get caught by our <strong>if</strong> statement, and it will print out the “Sorry, nothing found” statement. The exit code that our script will return is 1, which is bad.</p>
+<hr />
+<h1 id="file-checking">File Checking</h1>
+<p>Bash has many file-checking operators that are very useful for the types of jobs that we perform with scripts. For example, <code>-f</code> will return TRUE if a file exists.</p>
+<p><strong>Note</strong>: using <code>!=</code> reverses the logic, and means “does not equal.”</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-FILE.sh</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>     <span class="ex">2</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>     <span class="ex">3</span>  fileInQuestion=<span class="va">$1</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>     <span class="ex">4</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>     <span class="ex">5</span>  if [ <span class="va">$#</span> != 1 ]</span>
+<span id="cb11-6"><a href="#cb11-6"></a>     <span class="ex">6</span>  then</span>
+<span id="cb11-7"><a href="#cb11-7"></a>     <span class="ex">7</span>                  echo <span class="st">&quot;Please enter only one argument.&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>     <span class="ex">8</span>                  exit 1</span>
+<span id="cb11-9"><a href="#cb11-9"></a>     <span class="ex">9</span>  fi</span>
+<span id="cb11-10"><a href="#cb11-10"></a>    <span class="ex">10</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>    <span class="ex">11</span>  if [ -f <span class="va">$fileInQuestion</span> ]  <span class="co"># check if the file exists yet.</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a>    <span class="ex">12</span>  then</span>
+<span id="cb11-13"><a href="#cb11-13"></a>    <span class="ex">13</span>                  echo <span class="st">&quot;</span><span class="va">$fileInQuestion</span><span class="st"> exists.&quot;</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a>    <span class="ex">14</span>  else</span>
+<span id="cb11-15"><a href="#cb11-15"></a>    <span class="ex">15</span>                  echo <span class="st">&quot;</span><span class="va">$fileInQuestion</span><span class="st"> does not exist.&quot;</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a>    <span class="ex">16</span>                  touch <span class="va">$fileInQuestion</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>    <span class="ex">17</span>                  echo <span class="st">&quot;...but now it does.&quot;</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>    <span class="ex">18</span>  fi</span>
+<span id="cb11-19"><a href="#cb11-19"></a>    <span class="ex">19</span>  exit 0</span></code></pre></div>
+<p>Notice that the filename we are checking is being passed in as an argument from the user. If the number of arguments does not equal 1, then the script encounters an <code>exit 1</code> statement. Remember that a non-zero exit code indicates an error. Otherwise, we are assigning the variable <code>fileInQuestion</code> with the value from the first argument.</p>
+<p>At line 11, we run a file check on <code>$fileInQuestion</code>. That check is either true or false, and observe what happens when the condition is false.</p>
+<p>other test options:</p>
+<ul>
+<li>f - check if file is an ordinary file</li>
+<li>d - check if directory exists</li>
+<li>s - check if file exists, with file size greater than 0</li>
+<li>r - check if file exists, and you have read permission</li>
+<li>w - check if file exists, and you have write permission</li>
+<li>x - check if file exists, and you have execute permission</li>
+<li>z - check if string has zero length</li>
+</ul>
+<hr />
+<h1 id="shell-arithemtic-and-comparators">Shell Arithemtic and Comparators</h1>
+<p>Unlike C/C++ for example, Bash scripts aren’t usually used to do math. There are better languages for this purpose.</p>
+<p>There are many ways to do math from the shell, but probably the easiest is to put your expression inside of a <code>$(( ))</code>.</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-MATH.sh</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb12-3"><a href="#cb12-3"></a>     <span class="ex">3</span>  x=10</span>
+<span id="cb12-4"><a href="#cb12-4"></a>     <span class="ex">4</span>  y=5</span>
+<span id="cb12-5"><a href="#cb12-5"></a>     <span class="ex">5</span>  </span>
+<span id="cb12-6"><a href="#cb12-6"></a>     <span class="ex">6</span>  result=<span class="va">$((</span> <span class="va">$x</span> + <span class="va">$y</span> <span class="va">))</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>     <span class="ex">7</span>  </span>
+<span id="cb12-8"><a href="#cb12-8"></a>     <span class="ex">8</span>  echo <span class="va">$result</span></span></code></pre></div>
+<p>Similarly, doing math comparisons is different from other programming languages. <code>=</code> and <code>!=</code> work fine for strings, but to test for greater or less than, we use:</p>
+<ul>
+<li><code>-eq</code>: equal to</li>
+<li><code>-ne</code>: not equal to</li>
+<li><code>-gt</code>: greater than</li>
+<li><code>-ge</code>: greater than or equal to</li>
+<li><code>-lt</code>: less than</li>
+<li><code>-le</code>: less than or equal to</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb13-3"><a href="#cb13-3"></a>     <span class="ex">3</span>  x=10</span>
+<span id="cb13-4"><a href="#cb13-4"></a>     <span class="ex">4</span>  y=5</span>
+<span id="cb13-5"><a href="#cb13-5"></a>     <span class="ex">5</span>  </span>
+<span id="cb13-6"><a href="#cb13-6"></a>     <span class="ex">6</span>  result=<span class="va">$((</span> <span class="va">$x</span> + <span class="va">$y</span> <span class="va">))</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>     <span class="ex">7</span>  if [ <span class="va">$result</span> -gt 10 ]</span>
+<span id="cb13-8"><a href="#cb13-8"></a>     <span class="ex">8</span>  then</span>
+<span id="cb13-9"><a href="#cb13-9"></a>     <span class="ex">9</span>      echo <span class="st">&quot;The sum is greater than 10.&quot;</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>    <span class="ex">10</span>  fi</span></code></pre></div>
+<h1 id="summary">Summary</h1>
+<h2 id="be-sure-to-remember-the-syntax-for">Be sure to remember the syntax for:</h2>
+<ul>
+<li>exit codes</li>
+<li>math</li>
+</ul>
+<h2 id="variables">Variables:</h2>
+<ul>
+<li>$?: exit code of previous command</li>
+<li>$PATH: allowed paths for scripts</li>
+</ul>
+<h2 id="file-checks">File checks</h2>
+<ul>
+<li>-f: check if file exists and is an ordinary file</li>
+<li>-d: check if directory exists</li>
+<li>!: reverses the check: ( <code>[ ! -d "$path" ]</code>: if directory <code>$path</code> doesn’t exist…)</li>
+</ul>
+<h2 id="comparisons-numeric">Comparisons (Numeric):</h2>
+<ul>
+<li>lt: less than</li>
+<li>le: less than or equal to</li>
+<li>eq: equal to</li>
+<li>gt: greater than</li>
+<li>ge: greater than or equal to</li>
+<li>ne: not equal to</li>
+</ul>
+</body>
+</html>

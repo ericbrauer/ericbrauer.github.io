@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 5A: Filter Utilities</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header>
+<h1 class="title">Lecture 5A: Filter Utilities</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#how-many-registrations-have-there-been">How Many Registrations Have There Been?</a></li>
+<li><a href="#which-registrants-are-vegetarians">Which Registrants Are Vegetarians?</a></li>
+<li><a href="#how-many-vegetarians-are-there">How Many Vegetarians Are There?</a></li>
+<li><a href="#introducing-pipes">Introducing Pipes</a></li>
+<li><a href="#preparing-name-tags">Preparing Name Tags</a></li>
+<li><a href="#sorting-the-list">Sorting The List</a></li>
+<li><a href="#who-gets-in-first">Who Gets In First?</a></li>
+<li><a href="#who-wins-the-raffle">Who Wins The Raffle?</a></li>
+<li><a href="#how-many-people-will-be-attending">How Many People Will Be Attending?</a></li>
+<li><a href="#summary">Summary</a><ul>
+<li><a href="#filter-commands">Filter Commands</a></li>
+</ul></li>
+</ul>
+</nav>
+<h2 id="introduction">Introduction</h2>
+<p>We have a lot of ways of working with data using the shell. Let’s introduce a few important utilities that we will be using.</p>
+<p>But first our sample data:</p>
+<p><code>cat fsoss-example</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">Brauer</span>,Eric, volunteer,0.00, regular,M</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">De</span> Boer,Vincent,attendee,50.00,regular,L</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ex">de</span> Boer,Vincent,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="ex">Hong</span>,Bruce,attendee,50.00, gluten free,S</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="ex">Hernandez</span>,Mark,speaker,0.00, regular,M</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,m</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="ex">Siegel</span>,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="ex">Toombs</span>,Laura,attendee,50.00,vegan,S</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="ex">Patel</span>,Ami,speaker,0.00,vegan,S</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR,250.00,VEGAN,S</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="ex">Wentz</span>,Markus,volunteer,0.00,vegetarian,XXL</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="ex">Leung</span>,Bruce,volunteer,0.00,regular,M</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,L</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="ex">Johnson</span>,Michael,speaker,0.00,beef <span class="kw">&amp;</span> <span class="ex">yogurt</span>,L</a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="ex">McBoatface</span>,Boaty,attendee,50.00,diesel,XXXXL</a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="ex">Smith</span>,Tyler,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="ex">Liu</span>,Glaser,volunteer,0.00,vegetarian,M</a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="ex">kim</span>,jaeHyun,attendee,50.00,regular,M</a></code></pre></div>
+<p>Every year Seneca hosts a conference on Free Software. This event brings in hundreds of people from industry and academia, as well as students and enthusiasts.</p>
+<p>This sample data is based on conference information we receive from an online registration web form. You can see that we have some regular attendees who have paid $50 to attend the conference, as well special contributors who pay a little more to show their support. Volunteers and Speakers get in free. In addition, we need to make note of people’s dietary requirements and T-shirt size. Also note that some names are repeated. Some people have more than one role, or they may have forgotten that they already registered.</p>
+<hr />
+<h2 id="how-many-registrations-have-there-been">How Many Registrations Have There Been?</h2>
+<p>Let’s count how many times people have registered. Each registration is one line. To count things, we use <code>wc</code>.</p>
+<p><code>wc fsoss-example</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"> <span class="ex">18</span>  32 694 fsoss-example</a></code></pre></div>
+<p>The numbers we get are number of lines, number of words, number of characters. To get <em>only the number of lines</em>, use:</p>
+<p><code>wc -l fsoss-example</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">18</span> fsoss-example</a></code></pre></div>
+<p>So only 18 registrations so far… but assume that this file could be hundreds of lines long.</p>
+<hr />
+<h2 id="which-registrants-are-vegetarians">Which Registrants Are Vegetarians?</h2>
+<p>What we need to do here is to print only the lines that contain the word ‘vegetarian.’ We have a fantastic tool called <code>grep</code> which will return lines that contain a search pattern, sort of like using Ctrl+F in your browser.</p>
+<p><code>grep &quot;vegetarian&quot; fsoss-example</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">Siegel</span>,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="ex">Wentz</span>,Markus,volunteer,0.00,vegetarian,XXL</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="ex">Liu</span>,Glaser,volunteer,0.00,vegetarian,M</a></code></pre></div>
+<p>Note that the <code>-i</code> option is used to ignore case. For example:</p>
+<p><code>grep -i &quot;contributor&quot; fsoss-example</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">Siegel</span>,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR,250.00,VEGAN,S</a></code></pre></div>
+<hr />
+<h2 id="how-many-vegetarians-are-there">How Many Vegetarians Are There?</h2>
+<p>Instead of printing a list of names, we need to get a <em>number</em> of vegetarians so that we can organize meals during the conference. We know that <code>grep</code> will return a list of lines containing the word ‘vegetarian’, and we know that <code>wc -l</code> will return a number of lines. What we need is a way of connecting the <em>output</em> of a grep command into the <em>input</em> of a wc command.</p>
+<h2 id="introducing-pipes">Introducing Pipes</h2>
+<p>The <strong>|</strong> symbol indicates a <em>pipe</em>. A pipe connects commands together in a simple way. Let’s try it with our example.</p>
+<p><code>grep &quot;vegetarian&quot; fsoss-example | wc -l</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">3</span></a></code></pre></div>
+<p>The lines we are counting here are from the output of the grep command, not from the file! Piping is incredibly useful. We should use similar commands to count the other types of meals required at our conference.</p>
+<hr />
+<h2 id="preparing-name-tags">Preparing Name Tags</h2>
+<p>In order to print name tags, we require people’s names and their status in a csv file. We want to omit the money they spent, their dietary requirements and their shirt sizes since some people might be sensitive about that type of information.</p>
+<p>With the <code>cut</code> command we can specify which <em>fields</em> we want to display. We will also need to specify a <em>delimiter</em>. The comma (<strong>,</strong>) is used to distinguish one field from another. We want to print fields 1-3.</p>
+<p><code>cut -f 1-3 -d',' fsoss-example</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">Brauer</span>,Eric, volunteer</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="ex">De</span> Boer,Vincent,attendee</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="ex">de</span> Boer,Vincent,speaker</a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="ex">Hong</span>,Bruce,attendee</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="ex">Hernandez</span>,Mark,speaker</a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="ex">hernandez</span>,mark,VIP</a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="ex">Siegel</span>,Les,contributor</a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="ex">Toombs</span>,Laura,attendee</a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="ex">Patel</span>,Ami,speaker</a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR</a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="ex">Wentz</span>,Markus,volunteer</a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="ex">Leung</span>,Bruce,volunteer</a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="ex">hernandez</span>,mark,VIP</a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="ex">Johnson</span>,Michael,speaker</a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="ex">McBoatface</span>,Boaty,attendee</a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="ex">Smith</span>,Tyler,speaker</a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="ex">Liu</span>,Glaser,volunteer</a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="ex">kim</span>,jaeHyun,attendee</a></code></pre></div>
+<p>Let’s also use a redirection to put this into a separate file:</p>
+<p><code>cut -f 1-3 -d',' fsoss-example &gt; nametags.csv</code></p>
+<hr />
+<h2 id="sorting-the-list">Sorting The List</h2>
+<p>Right now it kind of seems like the list of registrations has no particular order. Let’s put it into alphabetical order. We can use the <code>sort</code> command for this.</p>
+<p><code>sort fsoss-example</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">Brauer</span>,Eric, volunteer,0.00, regular,M</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="ex">De</span> Boer,Vincent,attendee,50.00,regular,L</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="ex">de</span> Boer,Vincent,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="ex">Hernandez</span>,Mark,speaker,0.00, regular,M</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,L</a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,m</a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="ex">Hong</span>,Bruce,attendee,50.00, gluten free,S</a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="ex">Johnson</span>,Michael,speaker,0.00,beef <span class="kw">&amp;</span> <span class="ex">yogurt</span>,L</a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="ex">kim</span>,jaeHyun,attendee,50.00,regular,M</a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="ex">Leung</span>,Bruce,volunteer,0.00,regular,M</a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="ex">Liu</span>,Glaser,volunteer,0.00,vegetarian,M</a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="ex">McBoatface</span>,Boaty,attendee,50.00,diesel,XXXXL</a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR,250.00,VEGAN,S</a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="ex">Patel</span>,Ami,speaker,0.00,vegan,S</a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="ex">Siegel</span>,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="ex">Smith</span>,Tyler,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="ex">Toombs</span>,Laura,attendee,50.00,vegan,S</a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="ex">Wentz</span>,Markus,volunteer,0.00,vegetarian,XXL</a></code></pre></div>
+<p>By default, the <code>sort</code> command will sort by alphabetical order, starting from the beginning of the line to the end. Depending on the version of <code>sort</code>, you might find that Upper and Lower case are separated.</p>
+<p><strong>Note:</strong> If your output doesn’t match this, try using <code>sort -f</code> to ignore case.</p>
+<p>Let’s also give each registration a number, something that we can use for a primary key if we have to. <code>cat</code> can provide us with line numbers with the <code>-n</code> option.</p>
+<p><code>sort -f fsoss-example | cat -n</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">     <span class="ex">1</span>  Brauer,Eric, volunteer,0.00, regular,M</a>
+<a class="sourceLine" id="cb9-2" title="2">     <span class="ex">2</span>  De Boer,Vincent,attendee,50.00,regular,L</a>
+<a class="sourceLine" id="cb9-3" title="3">     <span class="ex">3</span>  de Boer,Vincent,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb9-4" title="4">     <span class="ex">4</span>  Hernandez,Mark,speaker,0.00, regular,M</a>
+<a class="sourceLine" id="cb9-5" title="5">     <span class="ex">5</span>  hernandez,mark,VIP,0.00, regular,L</a>
+<a class="sourceLine" id="cb9-6" title="6">     <span class="ex">6</span>  hernandez,mark,VIP,0.00, regular,m</a>
+<a class="sourceLine" id="cb9-7" title="7">     <span class="ex">7</span>  Hong,Bruce,attendee,50.00, gluten free,S</a>
+<a class="sourceLine" id="cb9-8" title="8">     <span class="ex">8</span>  Johnson,Michael,speaker,0.00,beef <span class="kw">&amp;</span> <span class="ex">yogurt</span>,L</a>
+<a class="sourceLine" id="cb9-9" title="9">     <span class="ex">9</span>  kim,jaeHyun,attendee,50.00,regular,M</a>
+<a class="sourceLine" id="cb9-10" title="10">    <span class="ex">10</span>  Leung,Bruce,volunteer,0.00,regular,M</a>
+<a class="sourceLine" id="cb9-11" title="11">    <span class="ex">11</span>  Liu,Glaser,volunteer,0.00,vegetarian,M</a>
+<a class="sourceLine" id="cb9-12" title="12">    <span class="ex">12</span>  McBoatface,Boaty,attendee,50.00,diesel,XXXXL</a>
+<a class="sourceLine" id="cb9-13" title="13">    <span class="ex">13</span>  PATEL,AMI, CONTRIBUTOR,250.00,VEGAN,S</a>
+<a class="sourceLine" id="cb9-14" title="14">    <span class="ex">14</span>  Patel,Ami,speaker,0.00,vegan,S</a>
+<a class="sourceLine" id="cb9-15" title="15">    <span class="ex">15</span>  Siegel,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb9-16" title="16">    <span class="ex">16</span>  Smith,Tyler,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb9-17" title="17">    <span class="ex">17</span>  Toombs,Laura,attendee,50.00,vegan,S</a>
+<a class="sourceLine" id="cb9-18" title="18">    <span class="ex">18</span>  Wentz,Markus,volunteer,0.00,vegetarian,XXL</a></code></pre></div>
+<hr />
+<h2 id="who-gets-in-first">Who Gets In First?</h2>
+<p>Let’s sort by the amount of money that people paid, from highest to lowest. That way we can let those people in first. <code>sort</code> can do this. We can use <code>-k</code> to specify a <em>key</em>, <code>-nr</code> to do a numerical sort in reverse order, and <code>-t','</code> to specify the comma as our delimiter. Why does <code>cut</code> use <code>-d</code> and <code>sort</code> uses <code>-t</code>? I don’t know ask the programmers.</p>
+<p><code>sort -t',' -nr -k4 fsoss-example</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">Siegel</span>,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR,250.00,VEGAN,S</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="ex">Toombs</span>,Laura,attendee,50.00,vegan,S</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="ex">McBoatface</span>,Boaty,attendee,50.00,diesel,XXXXL</a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="ex">kim</span>,jaeHyun,attendee,50.00,regular,M</a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="ex">Hong</span>,Bruce,attendee,50.00, gluten free,S</a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="ex">De</span> Boer,Vincent,attendee,50.00,regular,L</a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="ex">Wentz</span>,Markus,volunteer,0.00,vegetarian,XXL</a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="ex">Smith</span>,Tyler,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="ex">Patel</span>,Ami,speaker,0.00,vegan,S</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="ex">Liu</span>,Glaser,volunteer,0.00,vegetarian,M</a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="ex">Leung</span>,Bruce,volunteer,0.00,regular,M</a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="ex">Johnson</span>,Michael,speaker,0.00,beef <span class="kw">&amp;</span> <span class="ex">yogurt</span>,L</a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,m</a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,L</a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="ex">Hernandez</span>,Mark,speaker,0.00, regular,M</a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="ex">de</span> Boer,Vincent,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="ex">Brauer</span>,Eric, volunteer,0.00, regular,M</a></code></pre></div>
+<hr />
+<h2 id="who-wins-the-raffle">Who Wins The Raffle?</h2>
+<p>Each registration earns the registrant a chance to win the big raffle. Fortunately we can also do this using <code>sort</code>. Using <code>-R</code> will sort the lines in a <em>random</em> order. Then we can use <code>head</code> to specify the first name on the list.</p>
+<p><code>sort -R fsoss-example | head -1</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="ex">Patel</span>,Ami,speaker,0.00,vegan,S</a></code></pre></div>
+<p>Congratulations, Ami! You win!</p>
+<hr />
+<h2 id="how-many-people-will-be-attending">How Many People Will Be Attending?</h2>
+<p>Let’s remove all the repeated names in our list, so we get a clearer picture about people who are attending. <code>uniq</code> will print only unique lines, that is, it will remove the second instance of a line if they are the same and next to each other.</p>
+<p><code>sort -f fsoss-example | uniq</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">Brauer</span>,Eric, volunteer,0.00, regular,M</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ex">De</span> Boer,Vincent,attendee,50.00,regular,L</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="ex">de</span> Boer,Vincent,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="ex">Hernandez</span>,Mark,speaker,0.00, regular,M</a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="ex">hernandez</span>,mark,VIP,0.00, regular,m</a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="ex">Hong</span>,Bruce,attendee,50.00, gluten free,S</a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="ex">Johnson</span>,Michael,speaker,0.00,beef <span class="kw">&amp;</span> <span class="ex">yogurt</span>,L</a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="ex">kim</span>,jaeHyun,attendee,50.00,regular,M</a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="ex">Leung</span>,Bruce,volunteer,0.00,regular,M</a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="ex">Liu</span>,Glaser,volunteer,0.00,vegetarian,M</a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="ex">McBoatface</span>,Boaty,attendee,50.00,diesel,XXXXL</a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR,250.00,VEGAN,S</a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="ex">Patel</span>,Ami,speaker,0.00,vegan,S</a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="ex">Siegel</span>,Les,contributor,250.00,vegetarian,L</a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="ex">Smith</span>,Tyler,speaker,0.00,regular,L</a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="ex">Toombs</span>,Laura,attendee,50.00,vegan,S</a>
+<a class="sourceLine" id="cb12-17" title="17"><span class="ex">Wentz</span>,Markus,volunteer,0.00,vegetarian,XXL</a></code></pre></div>
+<p>This only removed one line, the second instance of ‘hernandez,mark’. Let’s use <code>cut</code> to specify only the first and last names.</p>
+<p><code>sort -f fsoss-example | cut -d',' -f1,2 | uniq</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">Brauer</span>,Eric</a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="ex">De</span> Boer,Vincent</a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="ex">de</span> Boer,Vincent</a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="ex">Hernandez</span>,Mark</a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="ex">hernandez</span>,mark</a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="ex">Hong</span>,Bruce</a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="ex">Johnson</span>,Michael</a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="ex">kim</span>,jaeHyun</a>
+<a class="sourceLine" id="cb13-9" title="9"><span class="ex">Leung</span>,Bruce</a>
+<a class="sourceLine" id="cb13-10" title="10"><span class="ex">Liu</span>,Glaser</a>
+<a class="sourceLine" id="cb13-11" title="11"><span class="ex">McBoatface</span>,Boaty</a>
+<a class="sourceLine" id="cb13-12" title="12"><span class="ex">PATEL</span>,AMI</a>
+<a class="sourceLine" id="cb13-13" title="13"><span class="ex">Patel</span>,Ami</a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="ex">Siegel</span>,Les</a>
+<a class="sourceLine" id="cb13-15" title="15"><span class="ex">Smith</span>,Tyler</a>
+<a class="sourceLine" id="cb13-16" title="16"><span class="ex">Toombs</span>,Laura</a>
+<a class="sourceLine" id="cb13-17" title="17"><span class="ex">Wentz</span>,Markus</a></code></pre></div>
+<p>Closer, but not good enough. Since we got our list from a web form, it isn’t very “clean”. Some people left their Caps Lock on, some didn’t capitalise their name. We can <code>tr</code> to <code>translate</code> letters upper case or lower case only. I’ll choose upper case.</p>
+<p><strong>Note</strong>: <code>tr</code> can’t take filenames the same way our other utilities can. (Why not? Ask the programmer, etc.). One way around that is to use <code>cat</code>, then pipe that into <code>tr</code>, then everything else.</p>
+<p>For example:</p>
+<p><code>cat fsoss-example | tr 'a-z' 'A-Z'</code> OR</p>
+<p><code>tr 'a-z' 'A-Z' &lt; fsoss-example</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="ex">BRAUER</span>,ERIC, VOLUNTEER,0.00, REGULAR,M</a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="ex">DE</span> BOER,VINCENT,ATTENDEE,50.00,REGULAR,L</a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="ex">DE</span> BOER,VINCENT,SPEAKER,0.00,REGULAR,L</a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="ex">HONG</span>,BRUCE,ATTENDEE,50.00, GLUTEN FREE,S</a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="ex">HERNANDEZ</span>,MARK,SPEAKER,0.00, REGULAR,M</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="ex">HERNANDEZ</span>,MARK,VIP,0.00, REGULAR,M</a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="ex">SIEGEL</span>,LES,CONTRIBUTOR,250.00,VEGETARIAN,L</a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="ex">TOOMBS</span>,LAURA,ATTENDEE,50.00,VEGAN,S</a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="ex">PATEL</span>,AMI,SPEAKER,0.00,VEGAN,S</a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="ex">PATEL</span>,AMI, CONTRIBUTOR,250.00,VEGAN,S</a>
+<a class="sourceLine" id="cb14-11" title="11"><span class="ex">WENTZ</span>,MARKUS,VOLUNTEER,0.00,VEGETARIAN,XXL</a>
+<a class="sourceLine" id="cb14-12" title="12"><span class="ex">LEUNG</span>,BRUCE,VOLUNTEER,0.00,REGULAR,M</a>
+<a class="sourceLine" id="cb14-13" title="13"><span class="ex">HERNANDEZ</span>,MARK,VIP,0.00, REGULAR,M</a>
+<a class="sourceLine" id="cb14-14" title="14"><span class="ex">JOHNSON</span>,MICHAEL,SPEAKER,0.00,BEEF <span class="kw">&amp;</span> <span class="ex">YOGURT</span>,L</a>
+<a class="sourceLine" id="cb14-15" title="15"><span class="ex">MCBOATFACE</span>,BOATY,ATTENDEE,50.00,DIESEL,XXXXL</a>
+<a class="sourceLine" id="cb14-16" title="16"><span class="ex">SMITH</span>,TYLER,SPEAKER,0.00,REGULAR,L</a>
+<a class="sourceLine" id="cb14-17" title="17"><span class="ex">LIU</span>,GLASER,VOLUNTEER,0.00,VEGETARIAN,M</a>
+<a class="sourceLine" id="cb14-18" title="18"><span class="ex">KIM</span>,JAEHYUN,ATTENDEE,50.00,REGULAR,M</a></code></pre></div>
+<p>Behold! This is an example STDIN redirection.</p>
+<p>Now to plus this into our chain:</p>
+<p><code>sort -f fsoss-example | tr 'a-z' 'A-Z' | cut -d',' -f1,2 | uniq</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="ex">BRAUER</span>,ERIC</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="ex">DE</span> BOER,VINCENT</a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="ex">HERNANDEZ</span>,MARK</a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="ex">HONG</span>,BRUCE</a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="ex">JOHNSON</span>,MICHAEL</a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="ex">KIM</span>,JAEHYUN</a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="ex">LEUNG</span>,BRUCE</a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="ex">LIU</span>,GLASER</a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="ex">MCBOATFACE</span>,BOATY</a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="ex">PATEL</span>,AMI</a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="ex">SIEGEL</span>,LES</a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="ex">SMITH</span>,TYLER</a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="ex">TOOMBS</span>,LAURA</a>
+<a class="sourceLine" id="cb15-14" title="14"><span class="ex">WENTZ</span>,MARKUS</a></code></pre></div>
+<p>And finally, use <code>wc -l</code> to count the unique visitors to the conference.</p>
+<hr />
+<h1 id="summary">Summary</h1>
+<h2 id="filter-commands">Filter Commands</h2>
+<ul>
+<li><p><code>head &lt;-#&gt;</code>: <strong>Prints number of lines from the beginning of a file, specified by ‘#’. Default is 10.</strong></p></li>
+<li><p><code>tail &lt;-#&gt;</code>: <strong>Prints number of lines from the end of a file, specified by ‘#’. Default is 10.</strong></p></li>
+<li><p><code>uniq</code>: Prints only unique lines. Use after <code>sort</code>.</p></li>
+<li><code>wc</code>: Word Count. Counts lines, words, or characters. Default is all three.
+<ul>
+<li><code>-l</code>: <strong>count lines</strong></li>
+<li><code>-w</code>: count words (delimited by whitespace)</li>
+<li><code>-m</code>: count characters</li>
+<li><code>-c</code>: count bytes</li>
+</ul></li>
+<li><code>tr</code> ‘X’ ‘Y’: Translates any instance of X into Y. Here are some examples:
+<ul>
+<li>`tr ‘a-z’ ‘A-Z’: <strong>Converts lower case to upper case.</strong></li>
+<li><code>tr -s ' ' '\t'</code>: Converts one or more spaces into only one tab. <code>-s</code> means ‘squeeze SET1’.</li>
+</ul></li>
+<li><code>cut</code>: Selects fields or characters from files or standard input. Default delimiter is the <em>tab</em>. Here’s a complete list of how we can use <code>cut</code>:
+<ul>
+<li>1–10: first 10</li>
+<li>3–8: 3rd to 8th</li>
+<li>–10: up to 10th</li>
+<li>2–: from 2nd until the end of line</li>
+<li>1–3,4,10–: combination of above</li>
+<li><code>-c</code>: cut characters</li>
+<li><code>-f</code>: <strong>cut fields</strong></li>
+<li><code>-d&quot;X&quot;</code>: <strong>specify a delimiter (X)</strong></li>
+</ul></li>
+<li><code>sort</code>: Sorts single files or standard input. This will also merge and sort multiple files.
+<ul>
+<li><code>-f</code>: <strong>ignore case in comparisons</strong></li>
+<li><code>-n</code>: <strong>numeric sort</strong></li>
+<li><code>-h</code>: human readable sort, such as file sizes (10M, 1G, 4k)</li>
+<li><code>-u</code>: display unique entries</li>
+<li><code>-r</code>: <strong>reverse sort</strong></li>
+<li><code>-k</code>: <strong>specify a key to use to sort. This works the same way as the <code>-f</code> in the <code>cut</code> command, but the default delimiter here is the space.</strong></li>
+<li><code>-t</code>: <strong>specify a delimiter</strong></li>
+</ul></li>
+</ul>
+<p><strong>Note</strong>: You can access fsoss-example to help you practice. Use this command:</p>
+<p><code>cp ~eric.brauer/uli101/fsoss-example ~</code></p>
+</body>
+</html>

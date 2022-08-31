@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 12: Bash Scripting Part II</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 12: Bash Scripting Part II</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#for-loops">For Loops</a></li>
+<li><a href="#while-loops">While Loops</a></li>
+<li><a href="#example-say-hi-to-version-2.0">Example: <em>Say Hi To</em> version 2.0</a></li>
+<li><a href="#command-substitution">Command Substitution</a></li>
+<li><a href="#example-create-directories">Example: Create directories</a></li>
+<li><a href="#example-how-much-reading-have-you-done">Example: How Much Reading Have You Done?</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#bash-shell-debugging">Bash Shell Debugging</a></li>
+</ul>
+</nav>
+<hr />
+<h1 id="for-loops">For Loops</h1>
+<p>Consider doing the laundry.</p>
+<p>You have a big pile of clean clothes back from the dryer, and you want to fold, hang, or otherwise put away each of those articles of clothing. The easiest way to handle this job is to pick each article of clothing in the pile, handle it however you want, and then move on to the next until there is no more clothing left in the pile.</p>
+<p>Consider this example like a programmer. There are two variables that we are working with: the <em>pile</em>, and the <em>individual article of clothing</em>. We are performing actions on the article, not on the pile.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">for</span> <span class="ex">article</span> in pile</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-3" title="3">   <span class="ex">put</span> away <span class="va">$article</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">done</span></a></code></pre></div>
+<p>The <em>for loop</em> allows us to repeat a set of actions for each element in our pile, whatever that may be. <code>article</code> here is a new variable, you can name it whatever you like. Notice also that for loops are useful when we don’t know how many elements we need to deal with. We just know that there is lots of laundry in our pile, and we’re going to keep working with it until it’s all gone.</p>
+<p>We have a useful variable that we can use when dealing with our “pile of arguments” from the user. It looks like this: <code>$@</code>. This variable contains all arguments passed to the script, separated by whitespace. We can use this variable in our example to handle each name individually. For the moment, the action we want to take is to simply echo each name:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">for</span> <span class="ex">name</span> in <span class="va">$@</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="bu">echo</span> <span class="st">&quot;Hello &quot;</span><span class="va">$name</span><span class="st">&quot;!&quot;</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">done</span></a></code></pre></div>
+<p>Keep in mind that there’s very few actions we can do with our “pile.” We want to handle each element individually.</p>
+<h1 id="while-loops">While Loops</h1>
+<p>These work exactly how you would expect them to. We will combine the <code>do ... done</code> block from our for loop with the <code>[ condition ]</code> from our if statement.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="va">counter=</span>0</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">while</span><span class="bu"> [</span> <span class="va">$counter</span> <span class="ot">-lt</span> 10<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="bu">echo</span> <span class="va">$counter</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="va">counter=$(($counter</span>+1<span class="va">))</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="kw">done</span></a></code></pre></div>
+<h1 id="example-say-hi-to-version-2.0">Example: <em>Say Hi To</em> version 2.0</h1>
+<p>If you remember, in the first version of that script, we had a script that would basically work correctly if you had either one or two arguments:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co"># This is a test script! :)</span></a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-lt</span> 2<span class="bu"> ]</span> <span class="co"># If the number of arguments is less than two...</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb4-6" title="6">    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span> <span class="co"># Say hi to one person. Otherwise...</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st"> and </span><span class="va">$2</span><span class="st">!&quot;</span> <span class="co"># Say hi to two people.</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="bu">echo</span> <span class="st">&quot;Number of arguments: </span><span class="va">$#</span><span class="st">&quot;</span> <span class="co"># print the number of names that were given.</span></a></code></pre></div>
+<p>This script has a lot of limitations. If you give more than two names, it will say hello to the first two and ignore the rest. It also doesn’t handle a case where the user gives <em>zero</em> arguments. We can improve this script by using a better <em>if.. elif.. else</em> format.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">if</span><span class="bu"> [</span> condition<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="ex">action</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw">elif</span><span class="bu"> [</span> second condition<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="ex">second</span> action</a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="ex">default</span> action</a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="kw">fi</span></a></code></pre></div>
+<p>In this next example, we don’t need to think about numerical comparisons such as <em>less than</em> <code>-lt</code> or <em>greater than</em> <code>-gt</code>. We can treat the value of <code>$#</code> like a string. So let’s specify a condition for <em>zero</em> arguments, a condition for <em>one</em> argument, and a default case for everything else:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co"># Always comment your code.</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">==</span> 0<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb6-6" title="6">    <span class="bu">echo</span> Usage: please include at least one person to greet. <span class="op">1&gt;&amp;2</span></a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="kw">elif</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">==</span> 1<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb6-10" title="10">    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb6-12" title="12">    <span class="bu">echo</span> <span class="st">&quot;Wow, there are a lot of people in here...&quot;</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="bu">exit</span> 0</a></code></pre></div>
+<p>So one thing to note about our exit codes: in the first condition we specify an exit code of 1. Once we hit an exit, the program is finished. If there are no arguments, we take the first set of actions and never get to the bottom of the script. We never encounter <code>exit 0</code>. However, if either one argument or many arguments are encountered, we <em>do</em> reach <code>exit 0</code>. This is good: <em>0</em> means everything was working properly. <em>1</em> means there was an error. We consider the script to be running normally if one or more names have been entered.</p>
+<p>The next thing to think about is how to deal with the case where we have many names? How can we handle this case in a way that looks nice? Well, let’s try a loop. We want to deal with each name in the arguments list <code>$*</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">for</span> <span class="ex">variable</span> in list</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-3" title="3">    <span class="ex">repeated</span> actions</a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw">done</span></a></code></pre></div>
+<p>So now our script might look like this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co"># say hi to version 2</span></a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">==</span> 0<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="bu">echo</span> Usage: please include at least one person to greet. <span class="op">1&gt;&amp;2</span></a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="kw">elif</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">==</span> 1<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb8-11" title="11">    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb8-13" title="13">    <span class="kw">for</span> <span class="ex">name</span> in <span class="va">$*</span></a>
+<a class="sourceLine" id="cb8-14" title="14">    <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-15" title="15">        <span class="bu">echo</span> <span class="va">$name</span></a>
+<a class="sourceLine" id="cb8-16" title="16">    <span class="kw">done</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="bu">exit</span> 0</a></code></pre></div>
+<p>Please note that you can also use <code>$@</code> and you get roughly the same output. For the scope of this course, we can say that both <code>$*</code> and <code>$@</code> will return all arguments as an <em>array</em>. Please note though that <a href="https://unix.stackexchange.com/questions/129072/whats-the-difference-between-and">there are some differences between the two</a>.</p>
+<p>This script now handles 0 arguments by complaining to the user, it handles 1 argument by saying “Hello User!” and it handles 2 or more arguments by simply listing those names, each on a new line:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">Eric</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="ex">Sarah</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="ex">Yoko</span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="ex">Nate</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="ex">Paul</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="ex">...</span></a></code></pre></div>
+<p>This isn’t what we want. We want our script to respond to us by saying hello in a way that is somewhat closer to real communication.</p>
+<p>First, let’s make it so that before we enter the loop, we say Hello, and using <code>-n</code> to suppress the newline…</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">    <span class="bu">echo</span> -n <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">&quot;</span></a></code></pre></div>
+<p>…then inside our loop we insert “and” and a name…</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1">    <span class="bu">echo</span> -n <span class="st">&quot; and </span><span class="va">$name</span><span class="st">&quot;</span></a></code></pre></div>
+<p>…and after iterating through each name in our argument list, we finish with an “!” to make it match up with our output before. This time, we <em>do</em> want to finish with a newline, because this is the end of our script.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="bu">echo</span> <span class="st">&#39;!&#39;</span> <span class="co"># Notice the single quotes here!</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co"># We don&#39;t want this ! to be interpreted as anything other than punctuation.</span></a></code></pre></div>
+<p>(If you don’t understand why we want a newline, go ahead and try this script with a <code>-n</code> flag and see how it looks!)</p>
+<p>There’s one last piece of the puzzle: If I run this script with arguments like this:</p>
+<p><code>./say-hi-to2 Eric Sarah Yoko Nate Paul</code></p>
+<p>…My output looks like this:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">Hello</span> Eric and Eric and Sarah and Yoko and Nate and Paul!</a></code></pre></div>
+<p>…So we can conclude that the value of <code>$1</code> and the <em>first</em> value of <code>$*</code> are the same. What we want to do is discard the first value of our argument list and to <em>shift</em> all of our arguments up one:</p>
+<p><strong>Before Shift:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>$1</th>
+<th>$2</th>
+<th>$3</th>
+<th>$4</th>
+<th>$5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Eric</td>
+<td>Sarah</td>
+<td>Yoko</td>
+<td>Nate</td>
+<td>Paul</td>
+</tr>
+</tbody>
+</table>
+<p><strong>After Shift:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>$1</th>
+<th>$2</th>
+<th>$3</th>
+<th>$4</th>
+<th>$5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sarah</td>
+<td>Yoko</td>
+<td>Nate</td>
+<td>Paul</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p>Conveniently enough, the name of this command is <code>shift</code>. We will call it after saying “Hello”:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="co"># say hi to version 2</span></a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">==</span> 0<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb14-7" title="7">    <span class="bu">echo</span> Usage: please include at least one person to greet. <span class="op">1&gt;&amp;2</span></a>
+<a class="sourceLine" id="cb14-8" title="8">    <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="kw">elif</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">==</span> 1<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb14-11" title="11">    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span></a>
+<a class="sourceLine" id="cb14-12" title="12"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb14-13" title="13">    <span class="bu">echo</span> -n <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb14-14" title="14">    <span class="bu">shift</span> <span class="co"># discard the value $1, and shift all arguments up</span></a>
+<a class="sourceLine" id="cb14-15" title="15">    <span class="kw">for</span> <span class="ex">name</span> in <span class="va">$*</span></a>
+<a class="sourceLine" id="cb14-16" title="16">    <span class="kw">do</span></a>
+<a class="sourceLine" id="cb14-17" title="17">        <span class="bu">echo</span> -n <span class="st">&quot; and </span><span class="va">$name</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb14-18" title="18">    <span class="kw">done</span></a>
+<a class="sourceLine" id="cb14-19" title="19">    <span class="bu">echo</span> <span class="st">&#39;!&#39;</span></a>
+<a class="sourceLine" id="cb14-20" title="20"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb14-21" title="21"><span class="bu">exit</span> 0</a></code></pre></div>
+<p><em>Bonus:</em> If you are looking for practice, I challenge you to create <em>say-hi-to3</em>. Instead of separating names with the word ‘and’, separate them with commas, until you reach the last name, which should have an ‘and’ preceding it.</p>
+<p><code>./say-hi-to3 Eric Sarah Yoko Nate</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="ex">Hello</span> Eric, Sarah, Yoko and Nate!</a></code></pre></div>
+<hr />
+<h1 id="command-substitution">Command Substitution</h1>
+<p>Let’s say that you want to assign the output of a command to a new variable. For example, running <code>date -I'date'</code> will give you this output:</p>
+<pre><code>2019-07-29</code></pre>
+<p>(note: your output may vary from mine).</p>
+<p>Now perhaps you want to use that output in a script. For example, maybe you want to put a timecode into a log file, or create files with today’s date as the name. You essentially want to run:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"><span class="fu">touch</span> <span class="va">$today</span></a></code></pre></div>
+<p>…where the value of <code>$today</code> is <code>2019-07-29</code>. This is where we can perform <em>command substitution</em>. Instead of setting a variable from user input, we can set it from a command:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="va">today=$(</span><span class="fu">date</span> -I<span class="st">&#39;date&#39;</span><span class="va">)</span></a>
+<a class="sourceLine" id="cb18-2" title="2"></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="bu">echo</span> <span class="va">$today</span></a></code></pre></div>
+<p>Everything inside <code>$(   )</code> is going to be sent into its own <em>non-interactive shell</em>. This means that a second shell is going to be opened, that command will run, and <code>$(   )</code> will be replaced with whatever the standard output of that command was.</p>
+<p>See the last example for another way to use command substitution.</p>
+<hr />
+<h1 id="example-create-directories">Example: Create directories</h1>
+<p>Let’s try an example that is slightly closer to a real-world example. At Seneca, we need to prepare Matrix accounts for each new student. The list of new students is coming from the Admissions office, and we are receiving that in a file called <code>roster.txt</code>.</p>
+<p>Now, let’s also assume that we have a bunch of existing students listed in <code>roster.txt</code>. Maybe they are repeating a class. For these students, we want to move whatever is in their directory into a backup.</p>
+<p>The first challenge is to be reading from a file in our script. There’s a couple ways to do it, but let’s take this moment to talk about a while loop:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">while</span> <span class="ex">condition</span> is true</a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb19-3" title="3">    <span class="ex">actions</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="kw">done</span></a></code></pre></div>
+<p>Now, how can we use this to read a file? Basically we want to take each line as input, and deal with it separately. When there are no longer any lines in the file to read, we are finished and want to exit the loop. Here’s what we might have so far:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb20-2" title="2"></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="co"># Create directories for each student.</span></a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="va">attendance=</span>roster.txt</a>
+<a class="sourceLine" id="cb20-6" title="6"></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="bu">echo</span> <span class="st">&quot;Reading from &quot;</span><span class="va">$attendance</span><span class="st">&quot;...&quot;</span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="kw">while</span> <span class="bu">read</span> <span class="va">input</span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb20-10" title="10">    <span class="bu">echo</span> <span class="st">&quot;I found &quot;</span><span class="va">$input</span><span class="st">&quot;.&quot;</span></a>
+<a class="sourceLine" id="cb20-11" title="11"></a>
+<a class="sourceLine" id="cb20-12" title="12"><span class="kw">done</span> <span class="op">&lt;</span> <span class="va">$attendance</span></a></code></pre></div>
+<p>I like to put important variables like filenames at the very top of a script, so that they are easy to find and edit later.</p>
+<p>What does <code>&lt; $attendance1</code> do in this case? It is accepting input from our file. As long as there is something to <code>read</code> from <code>$attendance1</code>, our condition is true. <code>input</code> is a variable name, and it could be anything we choose to name it.</p>
+<p>If this syntax is confusing for you, don’t sweat it. It’s not too common in Bash, but it has some important use cases. This is one of them.</p>
+<p>I’m going to name this script <code>create_users.sh</code>. Then I can run it: <code>./create_users.sh</code></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" title="1"><span class="ex">Reading</span> from roster.txt...</a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="ex">I</span> found mhuang.</a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="ex">I</span> found ebrau.</a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="ex">I</span> found cjohnson.</a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="ex">I</span> found mfernandes.</a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="ex">I</span> found rpatel.</a></code></pre></div>
+<p>So far, so good. The confusing syntax for file reading works. Now, for each line of roster.txt, we want to check if that user’s directory exists yet. If it doesn’t, then we should create it. And one more thing: let’s change the hardcoded value for <code>attendance</code> to accept an argument. To be safe, let’s also run a check to make sure that roster.txt exists.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb22-2" title="2"></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="co"># Create directories for each student.</span></a>
+<a class="sourceLine" id="cb22-4" title="4"></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="va">attendance=</span>roster.txt</a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-f</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span><span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb22-8" title="8">    <span class="va">attendance=$1</span></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb22-10" title="10"></a>
+<a class="sourceLine" id="cb22-11" title="11"><span class="bu">echo</span> <span class="st">&quot;Reading from &quot;</span><span class="va">$attendance</span><span class="st">&quot;...&quot;</span></a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="kw">while</span> <span class="bu">read</span> <span class="va">input</span></a>
+<a class="sourceLine" id="cb22-13" title="13"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb22-14" title="14">    <span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-d</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span><span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb22-15" title="15">    <span class="kw">then</span></a>
+<a class="sourceLine" id="cb22-16" title="16">        <span class="fu">mkdir</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb22-17" title="17">        <span class="bu">echo</span> <span class="st">&quot;Created &quot;</span><span class="va">$input</span><span class="st">&quot;.&quot;</span></a>
+<a class="sourceLine" id="cb22-18" title="18">    <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb22-19" title="19"><span class="kw">done</span> <span class="op">&lt;</span> <span class="va">$attendance</span></a></code></pre></div>
+<p>Remember: - -f: True if <em>file</em> exists. - -d: True if <em>directory</em> exists. - !: Inverts the logic.</p>
+<p>The first <em>if</em> statement is allowing us to have a default argument, which can be overridden if the user specifies a valid filename. <code>$1</code> is the first argument. If there is no first argument or it isn’t a file that exists, we will skip <code>attendance=$1</code>.</p>
+<p><code>./create_users.sh newfile.txt</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" title="1"><span class="ex">Reading</span> from newfile.txt...</a></code></pre></div>
+<p><code>./create_users.sh</code></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" title="1"><span class="ex">Reading</span> from roster.txt...</a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="ex">Created</span> mhuang.</a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="ex">Created</span> ebrau.</a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="ex">Created</span> cjohnson.</a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="ex">Created</span> mfernandes.</a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="ex">Created</span> rpatel.</a></code></pre></div>
+<p>If we run this script again, nothing would happen because all directories have already been created. Our script would simply skip over each student that already has a directory. But what we really want to do is to make a backup of that directory, and then re-create a clean directory for that user. Essentially:</p>
+<pre><code>    For each line of our attendance:
+        if that directory already exists:
+            move that directory to a backup.
+        then:
+            create an empty directory.</code></pre>
+<p>One more step, and this will introduce another important piece of syntax. As we make backups, we want those backups to be sorted by <em>date</em>. Essentially, we want to assign today’s date to a variable.</p>
+<p>First, let’s set variables for our directories, so that we can change them easily later.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" title="1"><span class="va">attendance=</span><span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="va">user_dir=</span><span class="st">&quot;users&quot;</span> <span class="co"># In the real world, we create these in /home!</span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="va">backup_dir=</span><span class="st">&quot;backup&quot;</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="va">today=</span><span class="st">&quot;&quot;</span> <span class="co"># </span><span class="al">TODO</span><span class="co">: set this to today&#39;s date.</span></a></code></pre></div>
+<p>To set the value of <code>today</code>, we can use <code>$( ... )</code> or ‘''’ to call another command, and to assign its output to a variable. In Bash, you do it like this:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb27-1" title="1"><span class="va">today=$(</span><span class="fu">date</span> <span class="st">&#39;+%Y-%m-%d&#39;</span><span class="va">)</span></a></code></pre></div>
+<p>It’s not necessary to memorize the ‘+%Y-%m-%d’! All that’s important to remember is that you are basically running that command (<code>date '+%Y-%m-%d'</code>) in a new shell. When the command completes, the output is assigned to <code>today</code>.</p>
+<p>Finally, we have some default files that we want every user to start with, such as ‘Acceptable-Use-Policy’ and ‘.bashrc’. We can put these into an <em>array</em>.</p>
+<p>Here’s the current version of the script:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb28-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb28-2" title="2"></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="co"># Create directories for each student.</span></a>
+<a class="sourceLine" id="cb28-4" title="4"></a>
+<a class="sourceLine" id="cb28-5" title="5"><span class="va">attendance=</span><span class="st">&quot;roster.txt&quot;</span></a>
+<a class="sourceLine" id="cb28-6" title="6"><span class="va">user_dir=</span><span class="st">&quot;users&quot;</span> <span class="co"># In the real world, we create these in /home!</span></a>
+<a class="sourceLine" id="cb28-7" title="7"><span class="va">backup_dir=</span><span class="st">&quot;backup&quot;</span></a>
+<a class="sourceLine" id="cb28-8" title="8"><span class="va">default_files=(</span> <span class="st">&quot;Acceptable-Use-Policy&quot;</span> <span class="st">&quot;.bashrc&quot;</span> <span class="va">)</span></a>
+<a class="sourceLine" id="cb28-9" title="9"><span class="va">today=$(</span><span class="fu">date</span> <span class="st">&#39;+%Y-%m-%d&#39;</span><span class="va">)</span> <span class="co"># Don\&#39;t worry about remembering this! It\&#39;s just an example..</span></a>
+<a class="sourceLine" id="cb28-10" title="10"><span class="bu">echo</span> <span class="st">&quot;Today is: &quot;</span><span class="va">$today</span><span class="st">&quot;.&quot;</span></a>
+<a class="sourceLine" id="cb28-11" title="11"></a>
+<a class="sourceLine" id="cb28-12" title="12"><span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-d</span> <span class="st">&quot;</span><span class="va">$backup_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$today</span><span class="st">&quot;</span><span class="bu"> ]</span> <span class="co"># if today&#39;s backup doesn&#39;t exist... </span></a>
+<a class="sourceLine" id="cb28-13" title="13"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb28-14" title="14">    <span class="fu">mkdir</span> <span class="st">&quot;</span><span class="va">$backup_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$today</span><span class="st">&quot;</span> <span class="co"># ...create it.</span></a>
+<a class="sourceLine" id="cb28-15" title="15"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb28-16" title="16"></a>
+<a class="sourceLine" id="cb28-17" title="17"><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-f</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span><span class="bu"> ]</span> <span class="co"># if the user enters an argument that is a file that exists...</span></a>
+<a class="sourceLine" id="cb28-18" title="18"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb28-19" title="19">    <span class="va">attendance=$1</span> <span class="co"># ...use it instead of the default.</span></a>
+<a class="sourceLine" id="cb28-20" title="20"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb28-21" title="21"></a>
+<a class="sourceLine" id="cb28-22" title="22"><span class="bu">echo</span> <span class="st">&quot;Reading from &quot;</span><span class="va">$attendance</span><span class="st">&quot;...&quot;</span></a>
+<a class="sourceLine" id="cb28-23" title="23"><span class="kw">while</span> <span class="bu">read</span> <span class="va">input</span></a>
+<a class="sourceLine" id="cb28-24" title="24"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb28-25" title="25">    <span class="kw">if</span><span class="bu"> [</span> <span class="ot">-d</span> <span class="st">&quot;</span><span class="va">$user_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span><span class="bu"> ]</span> <span class="co"># if the user&#39;s directory already exists...</span></a>
+<a class="sourceLine" id="cb28-26" title="26">    <span class="kw">then</span></a>
+<a class="sourceLine" id="cb28-27" title="27">        <span class="fu">mv</span> <span class="st">&quot;</span><span class="va">$user_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$backup_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$today</span><span class="st">&quot;</span> <span class="co"># ...move it to our backup.</span></a>
+<a class="sourceLine" id="cb28-28" title="28">    <span class="kw">fi</span></a>
+<a class="sourceLine" id="cb28-29" title="29">    <span class="fu">mkdir</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span> <span class="co"># Create a fresh directory.</span></a>
+<a class="sourceLine" id="cb28-30" title="30">    <span class="bu">echo</span> <span class="st">&quot;Created &quot;</span><span class="va">$input</span><span class="st">&quot;.&quot;</span></a>
+<a class="sourceLine" id="cb28-31" title="31">    <span class="kw">for</span> <span class="fu">file</span> in <span class="st">&quot;</span><span class="va">$default_files</span><span class="st">&quot;</span> <span class="co"># for every file specified in our default_files array...</span></a>
+<a class="sourceLine" id="cb28-32" title="32">    <span class="kw">do</span></a>
+<a class="sourceLine" id="cb28-33" title="33">        <span class="fu">cp</span> <span class="va">$file</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span> <span class="co"># copy them into the fresh user directory.</span></a>
+<a class="sourceLine" id="cb28-34" title="34">    <span class="kw">done</span></a>
+<a class="sourceLine" id="cb28-35" title="35"><span class="kw">done</span> <span class="op">&lt;</span> <span class="va">$attendance</span></a>
+<a class="sourceLine" id="cb28-36" title="36"><span class="bu">exit</span> 0</a></code></pre></div>
+<p><code>./create_users.sh roster.txt</code></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" title="1"><span class="ex">Today</span> is: 2018-08-04.</a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="ex">Reading</span> from roster.txt...</a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="ex">Created</span> mhuang.</a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="ex">Created</span> ebrau.</a>
+<a class="sourceLine" id="cb29-5" title="5"><span class="ex">Created</span> cjohnson.</a>
+<a class="sourceLine" id="cb29-6" title="6"><span class="ex">Created</span> mfernandes.</a>
+<a class="sourceLine" id="cb29-7" title="7"><span class="ex">Created</span> rpatel.</a>
+<a class="sourceLine" id="cb29-8" title="8"><span class="ex">Created</span> sam.</a></code></pre></div>
+<p><code>tree</code></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb30-1" title="1"><span class="ex">.</span></a>
+<a class="sourceLine" id="cb30-2" title="2">├── <span class="ex">backup</span></a>
+<a class="sourceLine" id="cb30-3" title="3">│   └── <span class="ex">2018-08-04</span></a>
+<a class="sourceLine" id="cb30-4" title="4">│       ├── <span class="ex">cjohnson</span></a>
+<a class="sourceLine" id="cb30-5" title="5">│       ├── <span class="ex">ebrau</span></a>
+<a class="sourceLine" id="cb30-6" title="6">│       │   └── <span class="ex">test.txt</span></a>
+<a class="sourceLine" id="cb30-7" title="7">│       ├── <span class="ex">mfernandes</span></a>
+<a class="sourceLine" id="cb30-8" title="8">│       ├── <span class="ex">mhuang</span></a>
+<a class="sourceLine" id="cb30-9" title="9">│       └── <span class="ex">rpatel</span></a>
+<a class="sourceLine" id="cb30-10" title="10">├── <span class="ex">create_users.sh</span></a>
+<a class="sourceLine" id="cb30-11" title="11">├── <span class="ex">roster.txt</span></a>
+<a class="sourceLine" id="cb30-12" title="12">└── <span class="fu">users</span></a>
+<a class="sourceLine" id="cb30-13" title="13">    ├── <span class="ex">cjohnson</span></a>
+<a class="sourceLine" id="cb30-14" title="14">    ├── <span class="ex">ebrau</span></a>
+<a class="sourceLine" id="cb30-15" title="15">    ├── <span class="ex">mfernandes</span></a>
+<a class="sourceLine" id="cb30-16" title="16">    ├── <span class="ex">mhuang</span></a>
+<a class="sourceLine" id="cb30-17" title="17">    ├── <span class="ex">rpatel</span></a>
+<a class="sourceLine" id="cb30-18" title="18">    └── <span class="ex">sam</span></a>
+<a class="sourceLine" id="cb30-19" title="19"></a>
+<a class="sourceLine" id="cb30-20" title="20"><span class="ex">15</span> directories, 4 files</a></code></pre></div>
+<p>As you can see, I made a test.txt file in ebrau’s folder. I also added ‘sam’ to my roster.txt and then ran the script. My test.txt file was copied to the backup, and sam’s folder was created.</p>
+<p>Feel free to grab these two scripts for reference and modification:</p>
+<ul>
+<li><code>wget https://matrix.senecacollege.ca/~eric.brauer/uli101/say-hi-to2.sh</code></li>
+<li><code>wget https://matrix.senecacollege.ca/~eric.brauer/uli101/create_users.sh</code></li>
+</ul>
+<p><strong>Note</strong>: I said that this was a real-world example, but this isn’t quite true. In Linux, we don’t simply use the <code>mkdir</code> command for new users. Each new user will have a folder, but inside that home folder there should be some standard files like .bashrc and Acceptable-Use-Policy. We would also need to set a low level of permissions, so that students don’t have the ability to <code>rm -rf /</code>! And we need to set up quotas so that students don’t fill the Matrix hard drives with Gigabytes of their personal data. We also need to set passwords based off of Blackboard.</p>
+<h1 id="example-how-much-reading-have-you-done">Example: How Much Reading Have You Done?</h1>
+<p>Here’s a third example that will output the average words per lecture for each of our twelve weeks.</p>
+<p>Start with a shebang and comment:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb31-2" title="2"></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="co"># return statistics about the lecture notes: total words and average words per lecture.</span></a></code></pre></div>
+<p>To solve this problem, you’d need to know something about how I have named my files. I have been using Markdown to create lecture notes. Here’s how it looks on my computer:</p>
+<p><code>ls lecture[0-9]*.md</code></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb32-1" title="1"><span class="ex">lecture10.md</span></a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="ex">lecture11a.md</span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="ex">lecture11b.md</span></a>
+<a class="sourceLine" id="cb32-4" title="4"><span class="ex">lecture11.md</span></a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="ex">lecture12.md</span></a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="ex">lecture2a.md</span></a>
+<a class="sourceLine" id="cb32-7" title="7"><span class="ex">lecture2b.md</span></a>
+<a class="sourceLine" id="cb32-8" title="8"><span class="ex">lecture3a.md</span></a>
+<a class="sourceLine" id="cb32-9" title="9"><span class="ex">lecture3b.md</span></a>
+<a class="sourceLine" id="cb32-10" title="10"><span class="ex">lecture4a.md</span></a>
+<a class="sourceLine" id="cb32-11" title="11"><span class="ex">lecture4b.md</span></a>
+<a class="sourceLine" id="cb32-12" title="12"><span class="ex">lecture5a.md</span></a>
+<a class="sourceLine" id="cb32-13" title="13"><span class="ex">lecture5b.md</span></a>
+<a class="sourceLine" id="cb32-14" title="14"><span class="ex">lecture6.md</span></a>
+<a class="sourceLine" id="cb32-15" title="15"><span class="ex">lecture7.md</span></a>
+<a class="sourceLine" id="cb32-16" title="16"><span class="ex">lecture8.md</span></a>
+<a class="sourceLine" id="cb32-17" title="17"><span class="ex">lecture9.md</span></a></code></pre></div>
+<p>So we have one tool which will return number of words in a file, if you’ll remember: <code>wc</code> with the <code>-w</code> option. We will need to run that command for each file.</p>
+<p><code>wc -w lecture10.md</code></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb33-1" title="1"><span class="ex">2245</span> lecture10.md</a></code></pre></div>
+<p>We also need to parse this result. We will want to sum these numbers, so we need to strip the filename from the result. Let’s use <code>awk</code> to do this. We can then store this in a variable.</p>
+<p><code>sum=$(wc -w lecture10.md | awk '{print $1}')</code></p>
+<p><code>echo $sum</code></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb34-1" title="1"><span class="ex">2245</span></a></code></pre></div>
+<p>Here is our script so far…</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb35-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb35-2" title="2"></a>
+<a class="sourceLine" id="cb35-3" title="3"><span class="co"># return statistics about the lecture notes: total words and average words per lecture.</span></a>
+<a class="sourceLine" id="cb35-4" title="4"></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="va">sum=</span>0</a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="va">count=</span>0</a>
+<a class="sourceLine" id="cb35-7" title="7"></a>
+<a class="sourceLine" id="cb35-8" title="8"><span class="kw">for</span> <span class="ex">files</span> in <span class="va">$(</span><span class="fu">ls</span> lecture[0-9]*.md<span class="va">)</span></a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb35-10" title="10">    <span class="va">sum=$((</span> <span class="va">$(</span><span class="fu">wc</span> -w <span class="va">$files</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $1}&#39;</span><span class="va">)</span> + <span class="va">$sum</span> <span class="va">))</span></a>
+<a class="sourceLine" id="cb35-11" title="11">    <span class="va">count=$((</span> <span class="va">$count</span> + 1 <span class="va">))</span></a>
+<a class="sourceLine" id="cb35-12" title="12"><span class="kw">done</span></a></code></pre></div>
+<p>Finally, we do some basic error checking and output the results. The final product:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb36-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb36-2" title="2"></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="co"># return statistics about the lecture notes: total words and average words per lecture.</span></a>
+<a class="sourceLine" id="cb36-4" title="4"></a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="va">sum=</span>0</a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="va">count=</span>0</a>
+<a class="sourceLine" id="cb36-7" title="7"></a>
+<a class="sourceLine" id="cb36-8" title="8"><span class="kw">for</span> <span class="ex">files</span> in <span class="va">$(</span><span class="fu">ls</span> lecture[0-9]*.md<span class="va">)</span></a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="kw">do</span></a>
+<a class="sourceLine" id="cb36-10" title="10">    <span class="va">sum=$((</span> <span class="va">$(</span><span class="fu">wc</span> -w <span class="va">$files</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $1}&#39;</span><span class="va">)</span> + <span class="va">$sum</span> <span class="va">))</span></a>
+<a class="sourceLine" id="cb36-11" title="11">    <span class="va">count=$((</span> <span class="va">$count</span> + 1 <span class="va">))</span></a>
+<a class="sourceLine" id="cb36-12" title="12"><span class="kw">done</span></a>
+<a class="sourceLine" id="cb36-13" title="13"></a>
+<a class="sourceLine" id="cb36-14" title="14"><span class="bu">echo</span> <span class="st">&quot;Total words: </span><span class="va">$sum</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb36-15" title="15"></a>
+<a class="sourceLine" id="cb36-16" title="16"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$count</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb36-17" title="17"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb36-18" title="18">    <span class="bu">echo</span> <span class="st">&quot;Average length of a lecture: </span><span class="va">$((</span> <span class="va">$sum</span> / <span class="va">$count</span> <span class="va">))</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb36-19" title="19"><span class="kw">fi</span></a></code></pre></div>
+<p>And here is the result of the script…</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb37-1" title="1"><span class="ex">Total</span> words: 29123</a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="ex">Average</span> length of a lecture: 1456</a></code></pre></div>
+<p>That’s a lot of words! I hope it’s been worth it… :smile: That’s all folks!</p>
+<h1 id="summary">Summary</h1>
+<ul>
+<li>for <em>var</em> in <em>array</em>; do … done</li>
+<li>$#: number of arguments</li>
+<li>$*: all arguments</li>
+<li>$( ): performs command substitution</li>
+</ul>
+<hr />
+<h1 id="bash-shell-debugging">Bash Shell Debugging</h1>
+<p>There are a couple of ways that we can modify Bash options to help us solve problems. To do this, we need to call bash explicitly so that we can give it some options.</p>
+<p>Let’s use our example <code>say-hi-to2.sh</code> to show how a <em>trace</em> might work.</p>
+<p><code>bash -x say-hi-to2.sh</code></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" title="1"><span class="ex">+</span> <span class="st">&#39;[&#39;</span> 0 = 0 <span class="st">&#39;]&#39;</span></a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="ex">+</span> echo Usage: please include at least one person to greet.</a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="ex">Usage</span>: please include at least one person to greet.</a>
+<a class="sourceLine" id="cb38-4" title="4"><span class="ex">+</span> exit 1</a></code></pre></div>
+<p>Here we can see exactly how the interpreter is performing substitutions line-by-line. I didn’t run this script with any arguments, so the value of <code>$#</code> is <code>0</code>. <code>[ 0 = 0 ]</code>, so we proceed into all the lines after <code>then</code>.</p>
+<p>Feel free to use this tool on the scripts you are creating for the assignment, in order to understand how they are working.</p>
+<p>Another tool you might want to consider is <a href="https://www.shellcheck.net/">shellcheck</a>. Shellcheck is a tool that you can install if you have your own Linux system, but it isn’t installed by default on Matrix. Fortunately we can use it in the browser.</p>
+<p>Shellcheck will tend to generate a lot of warnings that are outside the scope of our course, but useful when you start creating more complex scripts. It’s a good to learn some best practices.</p>
+</body>
+</html>

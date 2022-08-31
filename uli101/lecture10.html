@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 10: Bash Scripting</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 10: Bash Scripting</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction-to-scripting">Introduction to Scripting</a><ul>
+<li><a href="#example">Example:</a></li>
+</ul></li>
+<li><a href="#variables">Variables</a><ul>
+<li><a href="#notes-on-quotes">Notes on Quotes</a></li>
+</ul></li>
+<li><a href="#read">Read</a></li>
+<li><a href="#passing-in-arguments">Passing In Arguments</a></li>
+<li><a href="#scripting-if-statements">Scripting: If Statements</a></li>
+<li><a href="#exit-codes">Exit Codes</a></li>
+<li><a href="#file-checking">File Checking</a></li>
+<li><a href="#shell-arithemtic">Shell Arithemtic</a><ul>
+<li><a href="#what-are-our-alternatives">What are our alternatives?</a></li>
+</ul></li>
+<li><a href="#summary">Summary</a><ul>
+<li><a href="#be-sure-to-remember-the-syntax-for">Be sure to remember the syntax for:</a></li>
+<li><a href="#quotes">Quotes:</a></li>
+<li><a href="#variables-1">Variables:</a></li>
+<li><a href="#file-checks">File checks</a></li>
+<li><a href="#comparisons-numeric">Comparisons (Numeric):</a></li>
+<li><a href="#comparisons-string">Comparisons (String):</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><strong>Note: All relevant examples can be copied from: <code>~eric.brauer/uli101</code></strong></p>
+<h1 id="introduction-to-scripting">Introduction to Scripting</h1>
+<p>So far we’ve been talking about Bash as being our shell, a place where we type in commands, press Enter, and have them executed. In this section we will discuss Bash as a <em>scripting language</em>. Bash lacks many features of more dedicated programming languages– for example there are no classes or objects– but it is a fantastic tool for many jobs.</p>
+<ul>
+<li>Bash is interpreted at runtime. The interpreter will try its best to figure what you want it to do.</li>
+<li>Unlike C, there is no compiler. There is no real way to know if the script has errors until you try running it.</li>
+<li>Bash scripts are basically plaintext documents that include any of the shell commands that you already know.</li>
+<li>For that reason, it is best practice to define how we want our script interpreted. We do this by including a <em>shebang</em> at the top of the script.</li>
+<li>Best to have a shebang at the top that defines how it’s run (but not necessary)</li>
+<li>The shebang will include the absolute path to the Bash interpreter. (You can use <code>which bash</code> to check this)</li>
+<li>Our shebang on Matrix (and in 99% of cases) will be: <code>#!/bin/bash</code></li>
+<li>It is also best practice to include a file suffix so that people will recognize your scripts. It’s best to use either <code>.sh</code> or <code>.bash</code>.</li>
+</ul>
+<h2 id="example">Example:</h2>
+<p>Follow these steps to create your very first script:</p>
+<ol type="1">
+<li>Run command: <code>echo "Hello World!"</code> What happens?</li>
+<li>Let’s contain this command in another <code>echo</code> command and redirect it to a new file: <code>echo 'echo "Hello World!"' &gt; test.sh</code></li>
+<li>Run <code>cat test.sh</code> What’s inside?</li>
+<li>Let’s give this file execute permission: <code>chmod +x test.sh</code></li>
+<li>Use <code>ls -l</code> check the permissions</li>
+<li>Try running it. Type in: <code>test.sh</code>. What happens?</li>
+<li>You’ll see <code>test.sh: command not found</code>. This is to be expected, since there is one more step to follow.</li>
+<li>Try looking for it in $PATH: <code>echo $PATH</code>.</li>
+</ol>
+<p>The PATH is a variable that contains all the paths where the shell expects to find programs or commands. For example, it contains the path <code>/bin/</code>. If you look there, you’ll find a lot of the important commands you’ve been using, such as <code>rm</code>, <code>cp</code>, and so on. On *nix systems we want to limit where scripts can be run as a security measure. Most likely, your current directory is your home, and thats probably not in $PATH. There’s a couple ways we can resolve this. We can move our script into one of the directories included in PATH, we can add our current location to PATH (which is what you will do in Assignment 3), or you can <em>specify your current location when calling the script</em>.</p>
+<p><code>./test.sh</code></p>
+<p>It works with ./ because POSIX specifies that a command name that contain a / will be used as a filename directly, overriding whatever’s in $PATH. You could have used absolute path for the exact same effect, but ./ is shorter and easier to write.</p>
+<p>Notice that running the script works without a shebang works in this case, but it’s better to include it just to be safe. Let’s open the file in vi(m).</p>
+<p>**Note: If you are using vi(m), you can turn on line numbers by entering command mode with <code>:</code>, and then entering <code>set number</code>. Do this before showing your scripts to the professor. You can make this persistent by adding the line <code>set number</code> to the file <code>.vimrc</code>.</p>
+<h1 id="variables">Variables</h1>
+<p>After opening your file in vim and adding the shebang, follow these steps:</p>
+<ol type="1">
+<li>Add <code>name=Eric</code> <em>no spaces between the equals sign!</em></li>
+<li>Change <code>Hello world</code> to <code>Hello $name</code>. Does it work?</li>
+</ol>
+<p>That first line will create a variable called <code>name</code> and assign a it a <em>value</em> of <code>Eric</code>. Note that variables in Bash are treated like strings, and don’t need to be declared.</p>
+<p>With the second line, we want the user to be seeing the <em>value</em> of the variable, not the name of the variable. In order for the interpreter to understand that we want this substitution to occur, we use <code>$</code> followed by the variable. (It’s also acceptable to put the variable name in <code>{ }</code>s like this: <code>${name}</code>.</p>
+<h2 id="notes-on-quotes">Notes on Quotes</h2>
+<ol type="1">
+<li>Change the line to <code>name=Eric Brauer</code>. What happens?</li>
+<li>You’ll see: <code>Brauer: command not found</code>.</li>
+<li>Change to “Eric Brauer”. It works.</li>
+</ol>
+<p>The space isn’t being interpreted as the contents of the variable, but as a separate command. We need to make it clear where the assignment of the variable begins and ends, and to do this we will use double quotes.</p>
+<p><strong>Note:</strong> Enclosing characters in double quotes (") preserves the literal value of all characters within the quotes, with the exception of $, `, \, and, when history expansion is enabled, !.</p>
+<p><strong>Another Special Note:</strong></p>
+<ol start="4" type="1">
+<li>Change to <code>'Hello $name'</code> What does it do?</li>
+</ol>
+<p>Single quotes: everything is literal. Double quotes: everything is literal except for “$ ! ` \”</p>
+<p>So the takeaway is: double quotes are best used when you need to use special characters like <code>$</code>s to perform substitutions.</p>
+<h1 id="read">Read</h1>
+<ol type="1">
+<li>Add <code>echo -n "Please enter your name: "</code> -n will avoid newline.</li>
+<li>Add <code>read name</code></li>
+</ol>
+<p>We can use <code>read</code> to assign user input to the <code>name</code> variable instead of hardcoding it in the script. But there’s an even better, more *nixy way to do this.</p>
+<h1 id="passing-in-arguments">Passing In Arguments</h1>
+<ol type="1">
+<li>Let’s give this a more accurate name: <code>mv test.sh say-hi-to.sh</code>.</li>
+<li>Change that line now to: “Hello $1!”</li>
+<li>Type <code>./say-hi-to.sh Eric</code></li>
+<li>We are now passing in an argument when we call the script. We can pass in up to nine arguments like this: $1 $2… $9. This should be enough for most scripts.</li>
+<li>Another builtin variable is <code>$#</code>. This will return the number of arguments.</li>
+<li>$? to get the exit code for the last command. <em>super useful!</em></li>
+</ol>
+<p><strong>And more very useful environment variables:</strong></p>
+<ul>
+<li>PS1 - primary prompt</li>
+<li>PWD - present working directory</li>
+<li>HOME - absolute path to user’s home directory, similar to ~</li>
+<li>HOST - name of host</li>
+<li>USER - name of current user</li>
+</ul>
+<hr />
+<h1 id="scripting-if-statements">Scripting: If Statements</h1>
+<p><strong>Review: <code>$1</code> First argument. <code>$2</code> Second argument.</strong></p>
+<p><code>./say-hi-to Eric Sarah</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">Hello</span> Eric and Sarah!</span></code></pre></div>
+<p><code>cat say-hi-to</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># This is a test script! :)</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st"> and </span><span class="va">$2</span><span class="st">!&quot;</span></span></code></pre></div>
+<p><strong><code>$#</code> Number of Arguments</strong> Let’s edit our script:</p>
+<p><code>vim say-hi-to</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># This is a test script! :)</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st"> and </span><span class="va">$2</span><span class="st">!&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="bu">echo</span> <span class="st">&quot;Number of arguments: </span><span class="va">$#</span><span class="st">.&quot;</span></span></code></pre></div>
+<p><code>./say-hi-to Eric Sarah</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">Hello</span> Eric and Sarah!</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">Number</span> of arguments: 2.</span></code></pre></div>
+<p>What if we did this? <code>./say-hi-to Eric</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">Hello</span> Eric and !</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">Number</span> of arguments: 1</span></code></pre></div>
+<p>This doesn’t look nice at all, does it? More importantly, if we are doing something practical with files, this could cause significant problems. Time to introduce <em>if</em> staments. <code>vim say-hi-to</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># This is a test script! :)</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">-lt</span> 2<span class="bu"> ]</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">then</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">else</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st"> and </span><span class="va">$2</span><span class="st">!&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="kw">fi</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="bu">echo</span> <span class="st">&quot;Number of arguments: </span><span class="va">$#</span><span class="st">&quot;</span></span></code></pre></div>
+<p>Let’s parse this a bit. We are a conditional: <strong>if [ ]</strong>. Since we are comparing two numbers, we want to do a numerical comparison. To do this we use <strong>-lt</strong> which stands for <em>less than</em>. The next line has a <strong>then</strong> to indicate the end of what we are testing for, and what to do in the event that the condition is met. We could have an <strong>else</strong> statement but it’s not necessary. Finally, we end with <strong>fi</strong>.</p>
+<p>That does it for syntax. What about the specific conditions we have entered?</p>
+<p>We know that <strong>$#</strong> will return the number of arguments passed to our script. We are checking if this is less than 2. If it <em>is</em> than 2, then we echo a response that makes sense. We say hello to one person. Else, if there are 2 or more people, we say hello to the first two people. For now, anyone past the second person get ignored. ;~; I’ll leave that to you to try and fix. After the if statement has been closed with <strong>fi</strong>, we print the number of arguments.</p>
+<h1 id="exit-codes">Exit Codes</h1>
+<p>We talked about <code>$?</code>: it will return the <em>exit code</em> of whatever command just completed. By convention, an exit code of <strong>zero</strong> means no errors were encountered and a <strong>non-zero</strong> exit code could mean many different things. Usually <strong>man</strong> pages will indicate different error codes. As humans, we are probably less interested in the error codes and more interested in what STDERR will tell us. This can be a mistake though, often error codes will give us a better idea of what has happened than whatever’s printed from STDERR.</p>
+<p><code>grep</code> indicates to us that <em>nothing</em> was returned with a <em>1</em>, and a <em>0</em> will indicate that there was a positive match.</p>
+<p>Usually: - 0: Everything’s alright - 1+: Somethings’s wrong</p>
+<p>Depends how you feel about grep. Usually if nothing’s returned, I feel like I’ve written my request wrong. But this is a human perspective. As long as you remember what grep’s exit codes mean, they can be very useful.</p>
+<p>Here’s an example of an <strong>IF</strong> statement using grep:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">grep</span> -i <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> cars <span class="co"># Bonus: what happens if you replace &quot;&quot; with &#39;&#39;?</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">!=</span> 0<span class="bu"> ]</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">then</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>    <span class="bu">echo</span> <span class="st">&quot;Sorry, </span><span class="va">$1</span><span class="st"> is not in the cars file&quot;</span> <span class="op">&gt;&amp;2</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="kw">fi</span></span></code></pre></div>
+<p>In this example, we run a grep command using the first argument passed to our script. <em>Anything other than success</em> will get caught by our <strong>if</strong> statement, and it will print out the “Sorry, nothing found” statement. The exit code that our script will return is 1, which is bad.</p>
+<hr />
+<h1 id="file-checking">File Checking</h1>
+<p>Let’s use a more practical example. Let’s assume we want to write a script that will <em>back up</em> a certain directory. <strong>You should always be backing things up. In a professional setting, if you lose your data, you will expected to re-create it.</strong> That means unpaid overtime, usually. It is not fun! So it’s better to make backups and use your free time to decompress or learn new skills! Let’s create a very simple backup script:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="va">backup=</span><span class="st">&quot;/media/your-external-hard-drive/&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-d</span> <span class="va">$1</span><span class="bu"> ]</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="kw">then</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>    <span class="bu">echo</span> <span class="st">&quot;The first argument </span><span class="va">$1</span><span class="st"> is not a directory&quot;</span> <span class="op">&gt;&amp;2</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="kw">else</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>    <span class="fu">cp</span> -r <span class="va">$1</span> <span class="va">$backup</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>    <span class="bu">exit</span> 0</span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Okay, let’s assume that you mounted your hard drive correctly. The <strong>if</strong> statement is using two things that are new: <strong>!</strong> and <strong>-d</strong>. The exclamation mark is used to <strong>invert</strong> the logic of a statement. <strong>-d</strong> will return <strong>True</strong> if the next argument is a directory. By inverting this test, the if statement will return <strong>True</strong> if the argument is <em>not</em> a directory. If the argument passed by the user is <em>not</em> a directory, the if statement is <em>true</em>. If this is the case, we definitely don’t want to proceed with the rest of the script! We don’t want to be backing up something that’s undefined, that will just waste our external hard drive space..!</p>
+<p>Read this pseudocode in a Yoda voice, if you must:</p>
+<pre><code>if [ _not_ _a_directory_ is  &lt;your_argument&gt; ]
+then
+    &quot;You messed up, user. Try again.&quot;
+    Indicate an error for any scripts that are listening in.
+else
+    &quot;Okay, copy everything from the directory that the user specified to the location where we know backups should go.&quot;
+    Indicate everything is OK for any scripts that are listening in.
+fi</code></pre>
+<p>Exiting with a value is very important to make things work well together. Another things that people often do is to link commands together with <code>&amp;&amp;</code>. What this means is this: If the first command returns <strong>zero</strong> (succeeds), then please, continue with the second one. But if the first one fails, (<strong>returns 1 or 10 or 7 but definitely not zero</strong>), cancel the whole thing.</p>
+<p>other test options:</p>
+<ul>
+<li>f - check if file is an ordinary file</li>
+<li>d - check if directory exists</li>
+<li>s - check if file exists, with file size greater than 0</li>
+<li>r - check if file exists, and you have read permission</li>
+<li>w - check if file exists, and you have write permission</li>
+<li>x - check if file exists, and you have execute permission</li>
+<li>z - check if string has zero length to compare numbers, can use -lt -le -gt -ge -eq -ne eg. if [ $salary -gt 45000 ] eg. if test $salary -gt 45000</li>
+</ul>
+<p>We’ll be getting into that in the next section….</p>
+<hr />
+<h1 id="shell-arithemtic">Shell Arithemtic</h1>
+<p>Have a look at this…</p>
+<p><code>expr 2 + 3</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">5</span></span></code></pre></div>
+<p>OK, great. Now I want to give you a look at history.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">eric@eric-NeoMex</span> ~ $ expr (2 + 3)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">bash</span>: syntax error near unexpected token <span class="st">&#39;2&#39;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="ex">eric@eric-NeoMex</span> ~ $ expr <span class="dt">\(</span>2 + 3)</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="ex">bash</span>: syntax error near unexpected token <span class="st">&#39;)&#39;</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="ex">eric@eric-NeoMex</span> ~ $ expr <span class="dt">\(</span>2 + 3<span class="dt">\)</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="ex">expr</span>: non-integer argument</span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="ex">eric@eric-NeoMex</span> ~ $ expr <span class="dt">\(</span>2 + 3 <span class="dt">\)</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="ex">expr</span>: non-integer argument</span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="ex">eric@eric-NeoMex</span> ~ $ expr <span class="dt">\(</span> 2 + 3 <span class="dt">\)</span> <span class="dt">\*</span> 5</span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="ex">25</span></span></code></pre></div>
+<p>OK, so the takeaway is this: I want you to try and re-create what I did here. Learning the tools of Bash is to also to get used to their limitations. Basically, what happens here is that to put a statement in parentheses (2 + 3) doesn’t get accepted until we multiply it by 5: (2 + 3) * 5. And we require escape characters for <strong>(</strong>, <strong>)</strong>, and *****.</p>
+<h2 id="what-are-our-alternatives">What are our alternatives?</h2>
+<p><code>let</code> performs arithmetic.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">eric@eric-NeoMex</span> ~ $ let x=(2+3)<span class="ex">*5</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">eric@eric-NeoMex</span> ~ $ echo <span class="va">$x</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="ex">25</span></span></code></pre></div>
+<p>Or use (( )).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">eric@eric-NeoMex</span> ~ $ ((x=(2+3)<span class="ex">*6</span>))</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="ex">eric@eric-NeoMex</span> ~ $ echo <span class="va">$x</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="ex">30</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="ex">eric@eric-NeoMex</span> ~ $ x=<span class="va">$((</span> x + 1 <span class="va">))</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="ex">31</span></span></code></pre></div>
+<p>Keep in mind: up until now, we’ve been preferring human readable stuff. With computer conditionals, it’s probably better to use the rawest, un-parsed values of everything.</p>
+<p>For example, the most obvious reasons to be doing arithmetic in Bash are to compare bytes or times. For example, in our backup script we might want to compare available space on a disk with the size of the directory we want to back up. It’s much easier to perform operations on “2000000” than on “200k”. Or we might want to know how recently a backup has been made. For time, convert to a seconds since epoch time and then perform operations on that, rather than try to parse “2018-07-20”.</p>
+<p>You are not required to do these kinds of calculations in ULI101, but it’s something to keep in mind in the future!</p>
+<h1 id="summary">Summary</h1>
+<h2 id="be-sure-to-remember-the-syntax-for">Be sure to remember the syntax for:</h2>
+<ul>
+<li>print output</li>
+<li>read input</li>
+<li>read arguments</li>
+<li>if statements</li>
+<li>for loops</li>
+<li>exit codes</li>
+<li>math</li>
+</ul>
+<h2 id="quotes">Quotes:</h2>
+<ul>
+<li>"": weak quotes (substitution of $ occurs)</li>
+<li>’’: strong quotes (substitution of $ does not occur)</li>
+<li>\: escape character</li>
+</ul>
+<h2 id="variables-1">Variables:</h2>
+<ul>
+<li>$?: exit code of previous command</li>
+<li>$PATH: allowed paths for scripts</li>
+</ul>
+<h2 id="file-checks">File checks</h2>
+<ul>
+<li>-f: check if file exists and is an ordinary file</li>
+<li>-d: check if directory exists</li>
+<li>!: reverses the check: ( <code>[ ! -d "$path" ]</code>: if directory <code>$path</code> doesn’t exist…)</li>
+</ul>
+<h2 id="comparisons-numeric">Comparisons (Numeric):</h2>
+<ul>
+<li>lt: less than</li>
+<li>le: less than or equal to</li>
+<li>eq: equal to</li>
+<li>gt: greater than</li>
+<li>ge: greater than or equal to</li>
+<li>ne: not equal to</li>
+</ul>
+<h2 id="comparisons-string">Comparisons (String):</h2>
+<ul>
+<li>==: string is same as</li>
+<li>!=: string is not same as</li>
+</ul>
+</body>
+</html>

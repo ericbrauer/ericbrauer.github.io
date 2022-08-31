@@ -1,0 +1,100 @@
+:root {
+    --theme-cyan: hsl(187, 47%, 55%); 
+    --theme-blue: hsl(207, 82%, 66%);
+    --theme-purple: hsl(286, 60%, 67%);
+    --theme-green:  hsl( 95, 38%, 62%);
+    --theme-red1: hsl(355, 65%, 65%);
+    --theme-red2: hsl(  5, 48%, 51%);
+    --theme-orange1: hsl( 29, 54%, 61%); 
+    --theme-orange2: hsl( 39, 67%, 69%); 
+    --theme-bg: #2a384c;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    /*margin: 25px;*/
+}
+
+.sourceCode {
+    background-color: var(--theme-bg);
+    font-family: Consolas, monospace;
+    font-size: 15px;
+    border: 2px;
+    border-color: hsl(220, 13%, 12%);
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    font-weight: normal;
+    /*padding-left: 5px;*/
+}
+
+/*
+p {
+    color: white;
+    margin-left: 25px;
+}
+*/
+
+a {
+    color: var(--theme-blue);
+}
+
+table.header {
+	border-collapse: collapse;
+	border: 5px solid lightgrey;
+}
+
+table, tr, td {
+	border: 2px solid hsl(220, 12%, 24%);
+	border-collapse: collapse;
+	padding: 8px;
+	text-align: center;
+}
+
+th {
+	background-color: #e0e0e0;
+	padding: 6px;
+}
+
+code {
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    background-color: var(--theme-bg);
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+code span.kw { color: var(--theme-purple); font-weight: bold; } /* Keyword */
+code span.dt { color: var(--theme-red1); } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.bn { color: #40a070; } /* BaseN */
+code span.fl { color: #40a070; } /* Float */
+code span.ch { color: var(--theme-green); } /* Char */
+code span.st { color: var(--theme-green); } /* String */
+code span.co { color: var(--theme-blue); font-style: italic; } /* Comment */
+code span.ot { color: var(--theme-orange2); } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: var(--theme-orange2); } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.wa { color: var(--default-bg); font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: var(--theme-red1); } /* Variable */
+code span.cf { color: #d33680; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { color: var(--theme-orange1); } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: var(--theme-blue); font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: var(--theme-blue); font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: var(--theme-blue); font-weight: bold; font-style: italic; } /* Information */
+
+
+pre {
+	background-color: var(--theme-bg);
+}

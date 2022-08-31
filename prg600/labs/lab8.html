@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab8</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-8-regular-expressions-shell-commands">Lab 8: Regular Expressions, Shell Commands</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#introducing-regular-expressions">8.1 Introducing Regular Expressions</a>
+<ul>
+<li><a href="#making-use-of-online-resources">Making Use Of Online Resources</a></li>
+</ul></li>
+<li><a href="#introducing-the-re-module-using-search">8.2 Introducing The <code>re</code> Module: Using Search</a>
+<ul>
+<li><a href="#specifying-a-number-of-digits">Specifying A Number Of Digits</a></li>
+</ul></li>
+<li><a href="#task-create-regexes">8.3 TASK: Create Regexes</a></li>
+<li><a href="#using-findall">8.4 Using FindAll</a></li>
+<li><a href="#ranges-of-symbols">8.5 Ranges Of Symbols</a></li>
+<li><a href="#task-validate-variable-names">8.6 TASK: Validate Variable Names</a></li>
+<li><a href="#task-match-phone-numbers-in-a-file">8.7 TASK: Match Phone Numbers In A File</a></li>
+<li><a href="#calling-shell-commands">8.8 Calling Shell Commands</a>
+<ul>
+<li><a href="#os.system">os.system</a></li>
+<li><a href="#os.popen">os.popen</a></li>
+</ul></li>
+<li><a href="#task-system-status">8.9 TASK: System Status</a>
+<ul>
+<li><a href="#sample-output">Sample Output</a></li>
+</ul></li>
+<li><a href="#exploring-os.path">8.10 Exploring <code>os.path</code></a></li>
+<li><a href="#task-explore-the-os-module-using-help">8.11 TASK: Explore the <code>os</code> Module Using <code>help()</code></a></li>
+<li><a href="#a-recursive-listing-of-directory-contents">8.12 A Recursive Listing of Directory Contents</a>
+<ul>
+<li><a href="#using-os.path-methods">Using <code>os.path</code> Methods</a></li>
+<li><a href="#using-os.walk">Using ‘os.walk’</a></li>
+</ul></li>
+<li><a href="#task-backup-script">8.13 TASK: Backup Script</a></li>
+<li><a href="#deliverables">Deliverables</a></li>
+<li><a href="#glossary">Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-8-regular-expressions-shell-commands">Lab 8: Regular Expressions, Shell Commands</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<ul>
+<li>The re module</li>
+<li>os.popen to run shell commands</li>
+<li>os.path to test files and directories</li>
+<li>os.walk to traverse files and directories</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>In this lab, we will be introducing two very important modules in the standard library: <code>re</code> and <code>os</code>. <code>re</code> contains functions to implement <em>regular expressions</em>, whereas <code>os</code> is used to interact with your computer in various ways. Remember that the Python standard library is extensive and contains many useful modules for a variety of tasks. You can view a listing of the modules <a href="https://docs.python.org/3/library/index.html">here</a>.</p>
+<p>While we can’t predict everything you’ll eventually do with Python, chances are that the tools we introduce here will be of some use to you at some point. Python is a generalist’s language, and generalists often need to perform pattern matching and general organisation/maintenance of their operating systems.</p>
+<h2 id="introducing-regular-expressions">8.1 Introducing Regular Expressions</h2>
+<p>Regular expressions are a way of matching not just a specific word, but a pattern of characters. For example, an email address, a date, or a telephone number.In each case, the specific numbers or characters will be different, but we will expect to a see these characters in a particular pattern. A Canadian date often is in the pattern DD-MM-YYYY, where DD indicates the date, MM the month, and YYYY the year. The pattern we see is two digits plus a dash, two digits plus a dash, and then four digits.</p>
+<p>Consider next a telephone number. In Canada we often drop the international country code and will recognize both XXX-XXX-XXXX or (XXX) XXX-XXXX as valid telephone numbers.</p>
+<p>In applications such as browsers or word processors, searching for a specific date is easy, but searching for something that <em>looks</em> like a date is much more difficult. Regular expressions are an excellent way to pattern match.</p>
+<h3 id="making-use-of-online-resources">Making Use Of Online Resources</h3>
+<p>For regular expressions (or regex), it can often be useful to use online tools to help visualise what’s going on. I often recommend <a href="https://regex101.com/">Regex 101</a> as a good place to start. Regex has its own syntax which you must learn, but once you’ve learned it you can apply it in more places than you think!</p>
+<ol type="1">
+<li>Visit <a href="https://regex101.com/">Regex101.com</a>.</li>
+<li>In the “Test String” window below, enter your telephone number (or a fake) and today’s date.</li>
+</ol>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/regex1.png" /></p>
+<ol start="3" type="1">
+<li>In the “Regular Expression” text box, start by entering a dash. You should see this character highlighted in the “Test String” below. You can experiment by entering <em>literals</em> in the regex box.</li>
+<li>By “literals” we refer to specific numbers. This is how we do most searches: we look up the numbers that we know. But now instead of matching literals, we will match <em>digits</em>. Clear the “regular expression” text box and enter <code>\d</code>.</li>
+<li>You should now see every character between 0 and 9 with a highlight. In other words, we have matched every number and excluded each dash. Add two more <code>\d</code>s followed by the literal <code>-</code>.</li>
+</ol>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/regex2.png" /></p>
+<ol start="6" type="1">
+<li>Make sure that your Regex 101 screen matches mine. We have matched this pattern: three digits followed by a dash. Complete the pattern for a telephone number in the format XXX-XXX-XXXX. Remember that the highlight for your telephone number should be <strong>all one colour</strong>. We want our pattern to match with the complete telephone number, not a partial one.</li>
+</ol>
+<hr />
+<p><strong>Note:</strong></p>
+<p>There are other symbols to indicate <em>word symbols</em> (usually a-z), <em>whitespace symbols</em>, (usually a space or a newline character), and a symbol to define boundaries of words.</p>
+<ul>
+<li><code>\w</code>: includes alphabetical characters</li>
+<li><code>\s</code>: includes spaces and the end of a line</li>
+<li><code>\d</code>: includes numbers</li>
+<li><code>\b</code>: specifies the boundary of a word</li>
+</ul>
+<p>You can also <strong>exclude</strong> these characters by specifying the capital:</p>
+<ul>
+<li><code>\W</code>: any character that’s <em>not</em> alphabetical</li>
+<li><code>\W</code>: any character that’s <em>not</em> a whitespace</li>
+<li><code>\D</code>: excludes numbers</li>
+</ul>
+<p>The boundary character will help filter out situations where your regular expression is matching characters inside of a larger word.</p>
+<ul>
+<li>Using Regex101, in the test string field, enter both ‘Al’, ‘Albert’ and ‘Alexandria’. In the regular expression field, enter the characters <code>Al</code>.</li>
+<li>You will see that your Regex is matching symbols inside all three names. Now add <code>\b</code> to the end of your regular expression.</li>
+<li>Now you have excluded all matches where there are characters that appear immediately after the <code>l</code>. This can be useful if you’re only searching for Al.</li>
+</ul>
+<hr />
+<h2 id="introducing-the-re-module-using-search">8.2 Introducing The <code>re</code> Module: Using Search</h2>
+<p>Now we are going to use this regex pattern inside Python. Enter the following into a new file called <code>lab8a.py</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="im">import</span> re</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>tel_num <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>mo <span class="op">=</span> tel_num.search(<span class="st">&#39;My telephone number is 555-877-5678. Or you can reach me on my cell: 555-212-0771. Call me!&#39;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;Found phone number: &#39;</span> <span class="op">+</span> mo.group())</span></code></pre></div>
+<ul>
+<li><code>compile</code> will take our regex pattern and create an object. <code>search</code> is a method for this regex object that contains our “Test String”. <code>group</code> will display the entire match.</li>
+<li>You may have noticed that there is an <code>r</code> in front of the regex pattern we pass to <code>compile</code>. This indicates that the string is ‘raw’. As you probably saw when we worked with newline characters, <code>\</code> has a special meaning outside of regex. It’s an <em>escape character</em>. In order to print the backslash that we need, we could omit the <code>r</code> and type in <code>\\</code> for each digit. But as you can probably see, it’s much easier to use the <code>r</code>.</li>
+<li>You may <em>also</em> have noticed that only the first match of our telephone regex was returned. To find all instances of the pattern, we need to use a different method.</li>
+</ul>
+<h3 id="specifying-a-number-of-digits">Specifying A Number Of Digits</h3>
+<p>You will probably find that using <code>\d\d\d-\d\d\d-\d\d\d\d</code> is quite awkward. Instead of repeating the <code>\d</code> symbol for each digit, we can re-write our regular expression to use a <em>quantifier</em>. Following your symbol with a number inside curly braces <code>{}</code> will specify the number of times that the symbol preceding should be found.</p>
+<p>The first part of our phone contains three digits. We can replace <code>\d\d\d</code> with <code>\d{3}</code>.</p>
+<hr />
+<p><strong>Note</strong>:</p>
+<p>You can expect to see a lot of ways of specifying quantities of symbols. Here are a few:</p>
+<ul>
+<li><code>{1,3}</code>: This specifies a range, from one character to three characters. Please note that by default it will try to match the maximum number of chracters.</li>
+<li><code>?</code>: 0 to 1 characters</li>
+<li><code>+</code>: 1 or more characters</li>
+<li><code>*</code>: 0 or more characters</li>
+</ul>
+<hr />
+<h2 id="task-create-regexes">8.3 TASK: Create Regexes</h2>
+<p>It’s recommended that you use Regex101 to help you complete the following task. Put the regular expressions into a file called <code>regex.txt</code>. Include a regular expression that will match:</p>
+<ol type="1">
+<li>A date in YYYY-MM-DD format.</li>
+<li>A time in HH:MM:SS format.</li>
+<li>Any word that begins with a lower case ‘a’.</li>
+<li>Any number that’s between 1000 and 99999. (exclude longer numbers!)</li>
+<li>Any three-letter word that ends in ‘e’.</li>
+</ol>
+<p>In addition, for each of these regular expressions, include some test input that you used to test. You should using test input that should <em>pass</em> (ie. it will match), and input that should <em>fail</em>.</p>
+<h2 id="using-findall">8.4 Using FindAll</h2>
+<p>As you noted before, re’s <code>.search</code> method will only return the first match it finds. In order to match <em>all</em> instances of the pattern, we will use a different method: <code>findall</code>. The difference between these methods is what they return: <code>findall</code> a list of all matches.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="im">import</span> re</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>tel_num <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r&#39;\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{3}</span><span class="vs">-\d</span><span class="sc">{4}</span><span class="vs">&#39;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>mo <span class="op">=</span> tel_num.findall(<span class="st">&#39;My telephone number is 555-877-5678. Or you can reach me on my cell: 555-212-0771. Call me!&#39;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="cf">for</span> match <span class="kw">in</span> mo:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  <span class="bu">print</span>(<span class="st">&#39;Found phone number: &#39;</span> <span class="op">+</span> match)</span></code></pre></div>
+<h2 id="ranges-of-symbols">8.5 Ranges Of Symbols</h2>
+<p>So far our regex has included <em>literals</em> (has to be an exact match) and <em>classes of symbols</em> (number, letter, or whitespace). We can also specify certain symbols by enclosing them inside of square brackets <code>[]</code>. For example:</p>
+<ul>
+<li><code>[aA]</code>: matches a <em>single character</em> that is either a small ‘a’ or a capital ‘A’.</li>
+<li><code>[a-z]</code>: matches a <em>single character</em> that is between ‘a’ to ‘z’.</li>
+<li><code>[a-zA-Z-_]</code>: matches, again, a <em>single character</em> that could be an alphabetical letter, or a dash, or an underscore.</li>
+</ul>
+<p>You can invert the logic of the square brackets (ie. exluding characters) by putting a <code>^</code> inside your brackets at the very beginning. In addition, you often see these ranges used with a <em>quantifier</em> which you have already learned.</p>
+<ul>
+<li><code>[^aA]</code>: matches a <em>single character</em> that is <strong>not</strong> an ‘a’ or an ‘A’.</li>
+<li><code>[^0-9]{3}</code>: matches <em>three symbols</em> which are <strong>not</strong> numeric.</li>
+<li><code>[aeiou]+</code>: matches one or more vowels.</li>
+</ul>
+<h2 id="task-validate-variable-names">8.6 TASK: Validate Variable Names</h2>
+<p>Open your <code>regex.txt</code> file and append one new regex to the end of it. This regex should match only with Python variable names that abide with best practices. As a reminder:</p>
+<ul>
+<li>Python variable names should start with an alphabetical letter but <strong>lower case only</strong>.</li>
+<li>Python variable names can include lower case letters, numbers and underscores.</li>
+<li>Python variable names should be descriptive, but not too long as to be awkward. So we can assume that a good variable name can be anywhere between 3 and 16 characters long.</li>
+</ul>
+<p>As before, include test input that you used to test this regex.</p>
+<h2 id="task-match-phone-numbers-in-a-file">8.7 TASK: Match Phone Numbers In A File</h2>
+<p>For this task, you will be creating a script called <code>lab8b.py</code>. We will provide you with a sample file to be searching.</p>
+<ul>
+<li>Your script should take a filename as a command line argument.</li>
+<li>Open the file specified using the method you’ve learned. It’s probably easiest to save the contents of the file as a string, rather than working line by line.</li>
+<li>Use <code>findall</code> to match all phone numbers contained inside the file.</li>
+<li>Print the <em>number of results found</em>. Ask the user if they would like to see the results.</li>
+<li>If the user presses either ‘y’ or Enter, print each phone number found. If the user presses ‘n’, terminate the program without doing anything else.</li>
+</ul>
+<p><strong>A test file for this assignment can be downloaded <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/regex-test.txt">here</a>.</strong></p>
+<h2 id="calling-shell-commands">8.8 Calling Shell Commands</h2>
+<p>By this point you’ve become familiar with many shell commands for your preferred platform: Windows uses Command Prompt or Powershell, and Mac/Linux will most often use the Bourne-Again Shell (BASH). For example, I am using Linux, and this is how I would get my current username:</p>
+<pre><code>eric@archie ~ $ whoami
+eric</code></pre>
+<p>Oftentimes using shell commands such as these are easier than using a graphical user interface. Occasionally they are the <em>only</em> way of performing a certain task. There are two methods by which we can easily execute shell commands inside of a Python script.</p>
+<h3 id="os.system">os.system</h3>
+<p>The first method is useful when we require no output from the command, except to maybe ensure that it was successful. For example, in Linux I can use the <code>cp</code> command to make a copy of an important file. If the command is successful, there is not message printed to standard output.</p>
+<pre><code>eric@archie ~ $ cp lab8a.py lab8a.py.backup
+eric@archie ~ $</code></pre>
+<p>We can accomplish this in Python using <code>os.system</code>. Remember that we will need to <em>import os</em> before this works.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>x <span class="op">=</span> os.system(<span class="st">&#39;cp lab8a.py lab8a.py.backup&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="bu">print</span>(x)</span></code></pre></div>
+<ul>
+<li>If you are using Windows, you will have to substitute <code>cp</code> with the appropriate Windows command. Shell commands are not <em>portable</em>. In other words, a shell command will only work on the platform it was designed for.</li>
+<li>This script will have to be run in the directory where you saved <code>lab8a.py</code>, since we are using <em>relative filepaths</em>. It’s always preferable, when possible, to use <em>absolute filepaths</em>, since it won’t matter where your script has been saved.</li>
+<li>If this command is successful, the value of <code>x</code> should be <em>zero</em>. This is because the value that <code>os.system</code> is returning contains the <em>exit code</em> of the command that you ran. Remember that exit codes are returned by all of the important shell commands of all platforms. <strong>zero</strong> indicates success, and <strong>non-zero</strong> usually indicates a failure of some kind.</li>
+<li>Replace the command with something that is going to fail. For example: <code>cp gorilla.txt</code>. This should fail either because <code>gorilla.txt</code> doesn’t exist in this directory, or because your command is missing an argument. Check the value of <code>x</code>.</li>
+<li>For me, the value of <code>x</code> was <strong>256</strong>, and not <strong>1</strong>. This is because the output value contains more information that just the exit code. For now, it’s enough to know that <code>x</code> will equal <strong>0</strong> when the command succeeds, but <strong>non-zero</strong> when it fails. This zero/non-zero pattern will allow us to use <code>x</code> as if it were a True/False <em>boolean</em> value.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="cf">if</span> x:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;Command failed.&#39;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;Command succeeded.&#39;</span>)</span></code></pre></div>
+<h3 id="os.popen">os.popen</h3>
+<p>One limitation of <code>os.system</code> is that we cannot use the output of a command inside of our Python script. While you will see messages printed to your terminal, they are not ‘visible’ to the Python interpreter.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>x <span class="op">=</span> os.system(<span class="st">&#39;whoami&#39;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="bu">print</span>(x)  <span class="co"># only 0 gets printed, not my username.</span></span></code></pre></div>
+<p>In order to use the output from a shell command, we need to use <code>os.popen</code>. There is one additional step: <code>os.popen</code> returns an object, and we can only view the output when we call the <code>.read()</code> method on that object.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>f <span class="op">=</span> os.popen(<span class="st">&#39;whoami&#39;</span>)  <span class="co"># f is an object, not a readable datatype.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>output <span class="op">=</span> f.read()  <span class="co"># will contain the output from the command.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> output <span class="op">+</span> <span class="st">&quot;!&quot;</span>)  <span class="co"># Hello eric!</span></span></code></pre></div>
+<h2 id="task-system-status">8.9 TASK: System Status</h2>
+<ul>
+<li>Call this file <code>lab8c.py</code>.</li>
+<li>The first thing you will want to test is internet connectivity. Use a command called <code>ping</code> to test this. On Linux/Mac, you can use <code>-c 4</code> to limit this to only four pings before quitting. On Windows, use <code>\n 4</code>.</li>
+<li>In addition, <code>ping</code> will require an IP address to test. We can usually rely on Google to be reachable, 99.9% of the time, if this ping fails, it’s because there is a connectivity issue on our own end, rather than Google’s!</li>
+<li>Test this command on your shell, then use it in your Python script. <code>ping</code> will return zero if all pings succeed, and non-zero if there were failures. Print an appropriate message based on what gets returned.</li>
+<li>Next, we will greet the user using the name they have used to log in. On all platforms, we can use <code>whoami</code> to get this.</li>
+<li>Finally, we can use more shell commands to print relevant system information. Let’s demonstrate this with <code>uptime</code> on Linux, or <code>systeminfo</code> on Windows.</li>
+</ul>
+<h3 id="sample-output">Sample Output</h3>
+<pre><code>Welcome, eric.
+The Internet is UP.
+uptime is:
+17:58:43 up 19 days,  2:47,  1 user,  load average: 0.36, 0.39, 0.45</code></pre>
+<p>Note that your uptime output will vary depending on your platform.</p>
+<h2 id="exploring-os.path">8.10 Exploring <code>os.path</code></h2>
+<p>As you have noticed, running shell commands are most useful when you can guarantee that your script will only be run on a certain platform. However, as much as possible we want our scripts to be platform-agnostic. This means we should limit the use of shell commands when we have other alternatives at our disposal.</p>
+<p>The <code>os</code> module contains a lot of additonal tools for working with files and directories in particular. These commands should work regardless of the operating system that you are using.</p>
+<p>Consider the method of getting your current working directory on either Windows or Linux. We can replace this shell command with an <code>os</code> function, as seen below.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="im">import</span> os </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="bu">print</span>(os.getcwd())</span></code></pre></div>
+<h2 id="task-explore-the-os-module-using-help">8.11 TASK: Explore the <code>os</code> Module Using <code>help()</code></h2>
+<p>Recall further the types of file operations we often perform using shell commands:</p>
+<ul>
+<li>Making files and directories</li>
+<li>Deleting files and directories</li>
+<li>Copying files and directories</li>
+<li>Moving (or renaming) files and directories</li>
+<li>Changing permissions for files and directories</li>
+</ul>
+<p>In the interpreter, import <code>os</code>, then run the command <code>help(os)</code>. You will see that the documentation of <code>os</code> and all of its submodules is quite long. Enter <code>/</code> and enter a search pattern: for example enter <code>/mkdir</code> and see if the module contains a function to create a directory.</p>
+<ul>
+<li>Using search patterns, make a note of functions to replace the shell commands in the list above. Where a function doesn’t exist, leave the entry blank.</li>
+</ul>
+<h2 id="a-recursive-listing-of-directory-contents">8.12 A Recursive Listing of Directory Contents</h2>
+<p>One of the most common things we need to do in the shell is look at the contents of our current directory. In Windows, we use <code>dir</code> and on Linux/Mac we use <code>ls</code>. We often refer to this when we are going to modify files or directories.</p>
+<p>When writing a script, we often want to see a list of all files or directories, in order that we can automate certain tasks we want to perform on them. For this type of task it is useful to use <code>os.walk</code>. This method will list the contents of a directory we specify in a <em>recursive</em> manner. That is, it won’t just display the files or directories in the current location. It will display files for the current directory, and then for each <em>subdirectory</em> in the current location, it will display the files in the subdirectory, then for each sub-subdirectory, it will display the files there, and so on. Recursion is an important concept in computing. Here, it means that we are repeating an action for each subsequent object.</p>
+<p>Let’s consider an example. Currently I am using Linux, and my current directory looks like this:</p>
+<pre><code>lab8.md
+https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/</code></pre>
+<p><code>lab8.md</code> is a file, and <code>https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/</code> is a directory. If I move up to the parent directory and type <code>ls</code>, I will see this:</p>
+<pre><code>eric.css
+html/
+lab1/
+lab2/
+lab3/
+lab4/
+lab5/
+lab6/
+lab7/
+lab8/
+testing.py
+update_script.sh
+word-counts</code></pre>
+<p>Notice that we don’t see <code>lab8.md</code> anymore, since it is contained in the subdirectory <code>lab8/</code>.</p>
+<p>Recursive traversing of filepaths is incredibly useful whenever we want to organise a location, search for certain types of files, and countless other maintenance jobs that are common in the workplace.</p>
+<h3 id="using-os.path-methods">Using <code>os.path</code> Methods</h3>
+<p>Save the following file as <code>lab8d.py</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="im">import</span> os</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>course_dir <span class="op">=</span> <span class="st">&#39;.&#39;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;Your current directory is: &#39;</span> <span class="op">+</span> course_dir)</span></code></pre></div>
+<p>Run the script. You will get the output:</p>
+<pre><code>Your current directory is: .</code></pre>
+<p>Right now we are using a <em>relative path</em>, using the <code>.</code> symbol which in Linux represents our current directory We should consider converting this into an <em>absolute filepath</em> since this will be safer in most cases.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a><span class="im">import</span> os</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>course_dir <span class="op">=</span> <span class="st">&#39;.&#39;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;Your current directory is: &#39;</span> <span class="op">+</span> os.path.abspath(course_dir))</span></code></pre></div>
+<pre><code>Your current directory is: /home/eric/prg600/labs/lab8</code></pre>
+<p>For Windows, your absolute filepath would look similar to this:</p>
+<pre><code>Your current directory is: C:\Users\eric\prg600\labs\lab8</code></pre>
+<h3 id="using-os.walk">Using ‘os.walk’</h3>
+<p>The <code>os.walk</code> method takes a target directory as its argument and returns a 3-tuple, which for our purposes means we have 3 results to work with.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="im">import</span> os</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>course_dir <span class="op">=</span> <span class="st">&#39;.&#39;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a><span class="cf">for</span> root, directories, filenames <span class="kw">in</span> os.walk(course_dir):</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>    <span class="cf">pass</span></span></code></pre></div>
+<p>Here we are using our current directory, which in Linux is represented by <code>.</code>. The method returns <code>root</code>, <code>directories</code>, and <code>filenames</code>.</p>
+<p>You will notice that we are not doing anything in the loop at the moment. Make the following changes to your script:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="im">import</span> os</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>course_dir <span class="op">=</span> <span class="st">&#39;..&#39;</span> <span class="co"># changing to the parent directory</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a><span class="cf">for</span> root, directories, filenames <span class="kw">in</span> os.walk(course_dir):</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a>    <span class="cf">for</span> directory <span class="kw">in</span> directories:</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a>        <span class="bu">print</span>(directory)</span></code></pre></div>
+<p>I have changed the course_dir variable to <code>..</code> so that I can see the <code>lab1, lab2 ...</code> subdirectories. You may wish to change this variable to a location where many subdirectories exist, so that you can see this loop works. Refer back to my example above to understand the output here.</p>
+<pre><code>lab3
+html
+lab8
+lab1
+lab7
+lab6
+lab4
+lab5
+lab2
+resources
+resources
+resources
+resources
+resources
+resources
+resources
+resources
+resources</code></pre>
+<p>What we are seeing here is not only the subdirectories in this location, but the sub-subdirectories as well. Recall that <code>lab8</code> has a <code>resources</code> directory in it, what you are seeing is that each of my <code>lab</code> directories has a similar pattern.</p>
+<p>This output is confusing, since we have so many directories named <code>resources</code>. We will combine <code>root</code> and <code>directory</code> using another method called <code>path.join</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="im">import</span> os</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>course_dir <span class="op">=</span> <span class="st">&#39;..&#39;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a><span class="cf">for</span> root, directories, filenames <span class="kw">in</span> os.walk(course_dir):</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a>    <span class="cf">for</span> directory <span class="kw">in</span> directories:</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a>        <span class="bu">print</span>(os.path.join(root, directory))</span></code></pre></div>
+<p>Output:</p>
+<pre><code>../lab3
+../html
+../lab8
+../lab1
+../lab7
+../lab6
+../lab4
+../lab5
+../lab2
+../lab3/resources
+../html/resources
+../lab8/resources
+../lab1/resources
+../lab7/resources
+../lab6/resources
+../lab4/resources
+../lab5/resources
+../lab2/resources</code></pre>
+<p>Finally, let’s explore how <code>os.walk</code> will list our files. Make these last changes to <code>lab8d.py</code> and remember to submit it with your lab:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="im">import</span> os</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>course_dir <span class="op">=</span> <span class="st">&#39;..&#39;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;Your current directory is: &#39;</span> <span class="op">+</span> os.path.abspath(course_dir))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a><span class="cf">for</span> root, directories, filenames <span class="kw">in</span> os.walk(course_dir):</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> filenames:</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>        <span class="bu">print</span>(os.path.join(root, <span class="bu">file</span>))</span></code></pre></div>
+<p>Which yields:</p>
+<pre><code>Your current directory is: /home/eric/prg600/labs
+../word-counts
+../eric.css
+../average-words-per-lecture.sh
+../lab3/lab3.md
+../lab3/lab3.html
+../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode5.png
+../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode3.png
+../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode2.png
+../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode1.png
+../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode4.png
+...
+&lt;very long output is truncated&gt;</code></pre>
+<p>Try removing the <code>root</code> from each filepath, and see what remains.</p>
+<h2 id="task-backup-script">8.13 TASK: Backup Script</h2>
+<ul>
+<li>Name this file <code>lab8e.py</code>.</li>
+<li>This script should expect one command line argument from the user. This command line argument should be the name of a directory. If this is not a valid directory, print an appropriate error message and exit. <strong>HINT:</strong> explore the <code>os.path</code> module for ways to check if a string is a valid directory.</li>
+<li>First, save the <em>absolute</em> filepath that corresponds to the user-defined directory.</li>
+<li>Your script should verify that a directory called <code>backups</code> exists as a subdirectory of the user-defined filepath. If it doesn’t exist, create it.</li>
+<li>Use the <em>absolute</em> filepath inside <code>os.walk</code>.</li>
+<li>For each file, check if the file is a Python script (ends in <code>.py</code>). Use whatever method you like to verify this.</li>
+<li>If the file is a python script, make a copy of it in the <code>backups</code> directory.</li>
+<li>If the file is not a python script, ignore it and move on.</li>
+</ul>
+<p>Some things to keep in mind:</p>
+<ul>
+<li>You will notice that <em>copy</em> is not on the list of functions that <code>os</code> provides to you. You will need to research the <code>shutil</code> module, which contains more functions. A function called <code>copy()</code> can be found there. As always, take at least a few minutes to <a href="https://docs.python.org/3/library/shutil.html#shutil.copy">read the docs!</a></li>
+<li>Your script should work on Windows, Mac or Linux. <strong>Avoid using <code>os.system</code></strong> for this task.</li>
+<li>As you copy files into your backups directory, the contents of your target directory will start to change. <strong>You will need to exclude</strong> any file that is found inside the backups directory itself!</li>
+<li>What if your target directory has <strong>several files with the same name?</strong> This is a situation we’d have to address in a more fully-formed project, but for now you might want to consider renaming those files or moving them to another location. You might want to read the docs to discover what will happen when you try copying to a location that already contains a file with that name.</li>
+<li>Remember to check the existing methods inside <code>os</code> for help!</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<p>As always, you can check your work using <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab8.py">the provided check script</a>.</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+regex.txt</li>
+<li><input type="checkbox" disabled="" />
+lab8a.py</li>
+<li><input type="checkbox" disabled="" />
+lab8b.py</li>
+<li><input type="checkbox" disabled="" />
+lab8c.py</li>
+<li><input type="checkbox" disabled="" />
+lab8d.py</li>
+<li><input type="checkbox" disabled="" />
+lab8e.py</li>
+<li><input type="checkbox" disabled="" />
+lab8-check-output.txt</li>
+</ul>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li>Literals</li>
+<li>Quantifiers</li>
+<li>Absolute Filepath</li>
+<li>Relative Filepath</li>
+<li>Recursion</li>
+<li>Traversal</li>
+<li>Subdirectory</li>
+<li>Whitespace</li>
+<li>Portability</li>
+</ul>
+</body>
+</html>

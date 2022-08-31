@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab5</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-5-lists-determinate-loops-command-line-interaction">LAB 5: Lists, Determinate Loops, Command Line Interaction</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#lists">5.1 Lists</a></li>
+<li><a href="#for-loops">5.2 For Loops</a></li>
+<li><a href="#task-summing-a-list-without-a-builtin-function">5.3 TASK: Summing a List Without a Builtin Function</a></li>
+<li><a href="#using-range-for-looping">5.4 Using Range for Looping</a></li>
+<li><a href="#indexes-and-slicing">5.3 Indexes and Slicing</a></li>
+<li><a href="#task-every-second-animal">5.4 TASK: Every Second Animal</a></li>
+<li><a href="#searching-for-items-inside-lists">5.5 Searching For Items Inside Lists</a></li>
+<li><a href="#task-word-game">5.6 TASK: Word Game</a>
+<ul>
+<li><a href="#sample-output">Sample Output</a></li>
+</ul></li>
+<li><a href="#working-with-command-line-arguments">5.7 Working With Command Line Arguments</a>
+<ul>
+<li><a href="#sys.argv-explained">Sys.argv Explained</a></li>
+</ul></li>
+<li><a href="#sys.exit">5.8 <code>sys.exit</code></a></li>
+<li><a href="#using-help-to-look-under-the-hood">5.9 Using <code>help()</code> To Look ‘Under The Hood’</a></li>
+<li><a href="#task-average-calculator">5.10 TASK: Average Calculator</a>
+<ul>
+<li><a href="#sample-output-1">Sample Output</a></li>
+</ul></li>
+<li><a href="#challenge-task-word-game-improved">CHALLENGE TASK: Word Game Improved</a>
+<ul>
+<li><a href="#sample-output-2">Sample Output</a></li>
+</ul></li>
+<li><a href="#deliverables">Deliverables</a></li>
+<li><a href="#glossary">Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-5-lists-determinate-loops-command-line-interaction">LAB 5: Lists, Determinate Loops, Command Line Interaction</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<p>In this lab, you will:</p>
+<ul>
+<li>learn about using lists to collect relevant data,</li>
+<li>use for loops to iterate through lists,</li>
+<li>use indexes to select elements of lists and other iterables,</li>
+<li>implement command line arguments in your scripts,</li>
+<li>use <code>help()</code> to discover useful methods,</li>
+<li>discover string functions to handle newline characters.</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>In this lab we will introduce a new datatype, which contains many other pieces of data. Lists are the first type of <em>iterable</em> that we will discuss. Typically we use a new type of loop to <em>iterate</em> through lists: the for loop. This is a different type of loop, since we know beforehand how many times we will need to iterate. As you will see, using lists and loops allows us to work with a dynamic set of data.</p>
+<h2 id="lists">5.1 Lists</h2>
+<p>Lists are a new datatype. In short, a list can contain a collection of things, under one variable name. A list can contain any combination of integers, floats, strings and even other lists.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>my_list <span class="op">=</span> []  <span class="co"># square brackets indicate that this is a list</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>my_list2 <span class="op">=</span> [<span class="dv">3</span>, <span class="fl">3.14</span>, [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">&#39;potato&#39;</span>]  <span class="co"># this list contains a combination of datatypes</span></span></code></pre></div>
+<p>Lists are particularly important when dealing with a collection of data, and we don’t know how long the list is going to be. Consider our last example using the while loop:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;SUMMING CALCULATOR&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    user_input <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter a number to add to your sum. Pressing Enter will exit. &quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    <span class="cf">if</span> user_input <span class="op">==</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>        <span class="cf">break</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    <span class="cf">else</span>: </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>        <span class="bu">sum</span> <span class="op">+=</span> <span class="bu">int</span>(user_input)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Thank you for using summing calculator. The final sum was &quot;</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">sum</span>) <span class="op">+</span> <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
+<p>In this example, we only have sum, and we are re-calculating this every time we iterate the loop. The variable <code>user_input</code> is being overwritten each time we run the loop, so the actual user input is lost to us. However, by using a list with its built-in functions <code>append()</code> and <code>sum()</code>, we will be able to save each integer as a separate element.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>user_numbers <span class="op">=</span> []</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;SUMMING CALCULATOR&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>    user_input <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter a number to add to your sum. Pressing Enter will exit. &quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    <span class="cf">if</span> user_input <span class="op">==</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>        <span class="cf">break</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>    <span class="cf">else</span>: </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>        user_numbers.append(<span class="bu">int</span>(user_input))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="bu">print</span>(user_numbers)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Thank you for using summing calculator. The final sum was &quot;</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">sum</span>(user_numbers)) <span class="op">+</span> <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
+<p>Enter this code into VSCode and save the file as <code>lab5a.py</code>. Run the code.</p>
+<ul>
+<li><em>Append</em> means to add to the end. Each new item in our list will be added to the end. Lists keep track of order, which will become more important later on.</li>
+<li><em>Sum</em> does exactly what you think it does, it sums every number in a list! There are many more built-in functions as will see.</li>
+</ul>
+<p>Let’s assume now that instead of summing, we need to return an average. This means we will need the sum of the numbers, but also the number of numbers. We could accomplish this using a counter inside our while loop, but let’s instead use the built-in function <code>len()</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>    user_numbers <span class="op">=</span> []</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;AVERAGE CALCULATOR&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>        user_input <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter a number to add to your sum. Pressing Enter will exit. &quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>        <span class="cf">if</span> user_input <span class="op">==</span> <span class="st">&quot;&quot;</span>:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>            <span class="cf">break</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>        <span class="cf">else</span>: </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>            user_numbers.append(<span class="bu">int</span>(user_input))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>    num_sum <span class="op">=</span> <span class="bu">sum</span>(user_numbers)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>    num_length <span class="op">=</span> <span class="bu">len</span>(user_numbers)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>    average <span class="op">=</span> num_sum <span class="op">/</span> num_length</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Total sum is: </span><span class="sc">{</span>num_sum<span class="sc">}</span><span class="ss">. Total count is: </span><span class="sc">{</span>num_length<span class="sc">}</span><span class="ss">. Average for this list is: </span><span class="sc">{</span>average<span class="sc">}</span><span class="ss">.&quot;</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;Thank you for using average calculator.&quot;</span>)</span></code></pre></div>
+<p>Save this file as <code>lab5a.py</code> once again. On that second-to-last line, the <code>f""</code> is important. This is a new Python tool called <em>f-strings</em>. It is slightly easier way of printing variables as it doesn’t need type coversion or <strong>+</strong> signs.</p>
+<p>While f-strings are far easier to work with, we started off using the old way of printing because it was necessary to introduce the concept of datatype conversion. In the future, use whatever you like.</p>
+<p>So lists have useful tools already built-in, but we have not yet covered ways of working with the individual elements of a list. We will cover two approaches now.</p>
+<h2 id="for-loops">5.2 For Loops</h2>
+<p>While loops are useful when we don’t know, <em>at run-time</em>, how many times we are going to need to iterate. There exists another type of loop which is commonly used when we <em>do</em> know beforehand how many times we be iterating. This is called <em>definite iteration</em>, as opposed to <em>indefinite iteration</em>. The <em>for loop</em> is very often used with lists, for example.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>animals <span class="op">=</span> [<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;tiger&#39;</span>, <span class="st">&#39;gorilla&#39;</span>, <span class="st">&#39;capybara&#39;</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="cf">for</span> animal <span class="kw">in</span> animals:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>animal<span class="sc">}</span><span class="ss"> will make an excellent pet.&quot;</span>)</span></code></pre></div>
+<p>Run this code and you will see:</p>
+<pre><code>cat will make an excellent pet.
+tiger will make an excellent pet.
+gorilla will make an excellent pet.
+capybara will make an excellent pet.</code></pre>
+<p>When we start the program, Python ‘knows’ that there are four items in the <code>animals</code> list, and that the for loop will run four times.</p>
+<p>There is a special variable called <code>animal</code> that contains the value of successive element in the list. You can think of it as an arrow pointing to wherever we are in the list:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">CAT</th>
+<th style="text-align: center;">TIGER</th>
+<th style="text-align: center;">GORILLA</th>
+<th style="text-align: center;">CAPYBARA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">^ <code>animal</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>The next time we run through the loop, <code>animal</code> moves to the next item:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">CAT</th>
+<th style="text-align: center;">TIGER</th>
+<th style="text-align: center;">GORILLA</th>
+<th style="text-align: center;">CAPYBARA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">^ <code>animal</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>…and so on.</p>
+<p><code>animals</code>, by the way, is called an <em>iterable</em> because we are <em>able</em> to <em>iterate</em> through it. Strings are also an iterable:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>animal <span class="op">=</span> <span class="st">&#39;gorilla&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="cf">for</span> letter <span class="kw">in</span> animal:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="ss">f&quot;GIVE ME A </span><span class="sc">{</span>letter<span class="sc">.</span>upper()<span class="sc">}</span><span class="ss">!&quot;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="bu">print</span>(<span class="ss">f&quot;WHAT&#39;S THAT SPELL? </span><span class="sc">{</span>animal<span class="sc">.</span>upper()<span class="sc">}</span><span class="ss">!!&quot;</span>)</span></code></pre></div>
+<h2 id="task-summing-a-list-without-a-builtin-function">5.3 TASK: Summing a List Without a Builtin Function</h2>
+<ul>
+<li>Open your <code>lab5a.py</code> file.</li>
+<li>Replace the <code>sum()</code> function call with <code>my_sum()</code>.</li>
+<li>You will need to create this function. It should take a list as a parameter, and return an integer.</li>
+<li>Use a for loop to do this!</li>
+<li>Make sure that the function definition is at the top of your script, and <em>not</em> in main.</li>
+</ul>
+<h2 id="using-range-for-looping">5.4 Using Range for Looping</h2>
+<p>There are a few built-in functions that can create iterables for looping. You may need to generate a sequence of numbers. To do this, you can use <code>range()</code>. This works similar to <code>random.randint</code>, in that the sequence of numbers starts at the first value and ends just before the last value:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;</span>     <span class="bu">print</span>(i)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="dv">1</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="dv">2</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="dv">3</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="dv">4</span></span></code></pre></div>
+<p>Notice that the last value to be printed is <em>not</em> 5, but the value before it. You can also include another argument which will define the <em>step</em> for your range. In other words, are we incrementing by one, or by another value?</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">2</span>):  <span class="co"># start at 1, add 2 to each increment.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;&gt;</span>     <span class="bu">print</span>(i)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="dv">1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="dv">3</span></span></code></pre></div>
+<h2 id="indexes-and-slicing">5.3 Indexes and Slicing</h2>
+<p>We have seen that you can iterate through a list using a for loop. The <em>loop variable</em> will first equal the first element, then the second element, and so on until it reaches the last element.</p>
+<p>We can also access these values directly by specifying the <em>index</em>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>animals <span class="op">=</span> [<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;tiger&#39;</span>, <span class="st">&#39;gorilla&#39;</span>, <span class="st">&#39;capybara&#39;</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>first_element <span class="op">=</span> animal[<span class="dv">0</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>first_element<span class="sc">}</span><span class="ss"> comes before all others.&quot;</span>)</span></code></pre></div>
+<pre><code>cat comes before all others.</code></pre>
+<p>Indexes start at <code>0</code>, meaning the value of <code>first_element</code> is “cat”. Enter this code into VSCode or your interpreter, and change the index.</p>
+<p>With negative numbers, you can work from “right-to-left”, or from the last element to the first. This is useful when you don’t know how many elements you can expect beforehand.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>last_element <span class="op">=</span> animal[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="bu">print</span>(last_element)</span></code></pre></div>
+<pre><code>capybara</code></pre>
+<p>Finally, you can perform <em>slices</em> by specifying two numbers separated by a <code>:</code>. We can create a new list which is a <em>subset</em> of our original.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>middle_boys <span class="op">=</span> animals[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div>
+<pre><code>[&#39;tiger&#39;, &#39;gorilla&#39;]</code></pre>
+<p>Note that the number <em>before</em> the <code>:</code> will indicate where to start the slice, and will be included in the subset. But the number <em>after</em> the <code>:</code> will indicate the first element to be <em>excluded</em> from the subset.</p>
+<p>Finally, by including the <code>:</code> but omitting one of the numbers, the slice will include all of the rest.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>slice1 <span class="op">=</span> animals[<span class="dv">2</span>:]  <span class="co"># start at &#39;gorilla&#39;, continue to the end of the list</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>slice2 <span class="op">=</span> animals[:<span class="dv">2</span>]  <span class="co"># start at beginning, continue until you reach &#39;gorilla&#39;</span></span></code></pre></div>
+<p>Slicing also works with strings.</p>
+<h2 id="task-every-second-animal">5.4 TASK: Every Second Animal</h2>
+<ul>
+<li>Create <code>lab5b.py</code>.</li>
+<li>Enter the following list into it:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>animals <span class="op">=</span> [<span class="st">&#39;snake&#39;</span>, <span class="st">&#39;hamster&#39;</span>, <span class="st">&#39;scorpion&#39;</span>, <span class="st">&#39;beaver&#39;</span>, <span class="st">&#39;mosquito&#39;</span>, <span class="st">&#39;camel&#39;</span>, <span class="st">&#39;vulture&#39;</span>, <span class="st">&#39;horse&#39;</span>, <span class="st">&#39;python&#39;</span>, <span class="st">&#39;capybara&#39;</span> ]</span></code></pre></div>
+<ul>
+<li>Use a for loop to print only the <em>even-numbered</em> elements in this list. Use <code>range</code> to help you do this.</li>
+<li>If all is well, you should notice that only <em>mammals</em> are being printed, not reptiles bird or insects.</li>
+<li>No need to create a main block for this script (skip the <code>if __name__</code>…).</li>
+<li>As always, include your script in your lab submission.</li>
+</ul>
+<h2 id="searching-for-items-inside-lists">5.5 Searching For Items Inside Lists</h2>
+<p>We can easily test to see if a list contains a particular item:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>animals <span class="op">=</span> [<span class="st">&#39;snake&#39;</span>, <span class="st">&#39;hamster&#39;</span>, <span class="st">&#39;scorpion&#39;</span>, <span class="st">&#39;beaver&#39;</span>, <span class="st">&#39;mosquito&#39;</span>, <span class="st">&#39;camel&#39;</span>, <span class="st">&#39;vulture&#39;</span>, <span class="st">&#39;horse&#39;</span>, <span class="st">&#39;python&#39;</span>, <span class="st">&#39;capybara&#39;</span> ]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a><span class="cf">if</span> <span class="st">&#39;snail&#39;</span> <span class="kw">in</span> animals:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;snail found!&#39;</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;No snail found.&#39;</span>)</span></code></pre></div>
+<p>This pattern can also be used in other iterables such as strings:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="cf">if</span> <span class="st">&#39;i&#39;</span> <span class="kw">in</span> <span class="st">&#39;snail&#39;</span>:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;The letter i is in this word.&#39;</span>)</span></code></pre></div>
+<h2 id="task-word-game">5.6 TASK: Word Game</h2>
+<ul>
+<li>Name this file <code>lab5c.py</code>.</li>
+<li>Copy the <code>animals</code> list into this file.</li>
+<li>import <code>random</code>. You should use a <code>random</code> function to choose <em>one</em> of the strings in the <code>animals</code> list for guessing. Save this in a variable called <code>secret</code>.</li>
+<li>You can use <code>randint</code> or <a href="https://docs.python.org/3/library/random.html">read the docs</a> to find an easier way.</li>
+<li>Use <code>input</code> to get guesses from the user. If they guess the correct animal, print “You win!” and end the game.</li>
+<li>If they guess a letter that’s inside <code>secret</code>, print “Yes, my word contains that letter.”</li>
+<li>If they guess a letter that is not inside <code>secret</code>, print “Sorry, my word doesn’t contain that letter.”</li>
+<li>Finally, pressing Enter without any guess or letter should quit.</li>
+</ul>
+<h3 id="sample-output">Sample Output</h3>
+<pre><code>I&#39;m thinking of an animal. Can you guess what it is?
+Enter a letter or a guess. Press enter to quit: kangaroo
+Sorry, that&#39;s not it.
+Enter a letter or a guess. Press enter to quit: a
+Yes, my word contains that letter.
+Enter a letter or a guess. Press enter to quit: z
+Sorry, my word doesn&#39;t contain that letter.
+Enter a letter or a guess. Press enter to quit: m
+Yes, my word contains that letter.
+Enter a letter or a guess. Press enter to quit: c
+Yes, my word contains that letter.
+Enter a letter or a guess. Press enter to quit: camel
+You win!</code></pre>
+<h2 id="working-with-command-line-arguments">5.7 Working With Command Line Arguments</h2>
+<p>So far we have been working with user prompts using the <code>input()</code> function. This is, however, not ideal in many cases. In order for a program to work with <code>input()</code>, you need to have a human user in front of the keyboard, entering the values manually at each prompt. Oftentimes we write scripts that can be run automatically on a schedule.</p>
+<p>Consider an example: a small business needs to make backups on their web server. It does this late at night, when web traffic is low. The backup script needs to know a couple of things: what files to back up and where. Are you going to force an employee to wake up at 3AM in order to respond to the scripts prompts?</p>
+<p>A much better solution is to use <em>command line arguments</em>. These are very similar to <em>function arguments</em>, in that we are defining different input for a similar set of instructions.</p>
+<p>In your other courses, you have already learned about using command line applications, and most likely you have used different arguments with these applications already. This is how you copy a directory in Bash:</p>
+<pre><code>eric@Archie ~ $ cp -r ~/database /mnt/nfs/backups</code></pre>
+<p>The two filepaths <code>~/database</code> and <code>/mnt/nfs/backups</code> are both arguments. We can use these arguments in our scripts by importing a module called <code>sys</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="im">import</span> sys</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a><span class="bu">print</span>(sys.argv)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a><span class="bu">print</span>(<span class="ss">f&quot;The name of the file you are running is: </span><span class="sc">{</span>sys<span class="sc">.</span>argv[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">.&quot;</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;No arguments found.&quot;</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a>    <span class="cf">for</span> arg <span class="kw">in</span> sys.argv[<span class="dv">1</span>:]:  <span class="co"># start from the second item in the list</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Argument found: </span><span class="sc">{</span>arg<span class="sc">}</span><span class="ss">.&quot;</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Complete.&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Save this file as <code>lab5d.py</code>. Make a note of its location, you will need to navigate there using a terminal.</li>
+<li>Open a terminal. On Windows, use <strong>Command prompt</strong> or <strong>Powershell</strong>. On Linux or Mac, you will use <strong>Bash</strong>. We’ll assume for now you’re using Windows, but the steps will remain essentially the same on all operating systems.</li>
+<li>To get the filepath of <code>lab5d.py</code>, open your file explorer, right-click the file and select “Properties”. The complete filepath will be listed as “Location”.</li>
+<li>To start Command Prompt, click the Start menu and type “cmd”.</li>
+<li>Type <code>cd &lt;Location&gt;</code> and press Enter. Your current location should now be the directory that contains <code>lab5d.py</code>. You can confirm this by typing <code>dir</code> (for Linux/Mac use <code>ls</code> instead). <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/cmd1.png" alt="cmd1" /></li>
+<li>Type the following and press Enter: <code>python lab5d.py</code>. You should see some output. If you receive an error about Python not being recognized as internal or external command, follow the <a href="https://www.wikihow.com/Use-Windows-Command-Prompt-to-Run-a-Python-File">instructions here</a>.</li>
+<li>Use the up arrow key to see your command again. This time enter some command line arguments: <code>python lab5d.py This is a test</code></li>
+<li>Verify that you are seeing these arguments in the script’s output. <strong>Note:</strong> if you have issues, let your instructor know! We will be using the Command Prompt for future labs.</li>
+</ul>
+<h3 id="sys.argv-explained">Sys.argv Explained</h3>
+<p><code>sys.argv</code> is a list that contains the name of the current file, and then all arguments that were entered by the user. With command line arguments, we don’t need to rely on prompts to accomplish things. If the user has entered no arguments, then the length of the list is <strong>1</strong>.</p>
+<p>Longer lists mean that there are arguments. <strong>Always use an if statement to check the length of the list</strong>. If you try the access, for example, the second element in a list that’s only one element long, you will get an <code>IndexError</code> exception.</p>
+<h2 id="sys.exit">5.8 <code>sys.exit</code></h2>
+<p>Using command line arguments is a common pattern in computer science, and users appreciate consistency when they are working with the tools that you create. As programmers we should strive to create tools that are intuitive and consistent with the habits and practices that our users are already used to. There is another habit that we should implement: that of the <em>exit code</em>.</p>
+<p>Exit codes (again) are similar to return values in our functions. This is an integer that is returned by the program. Normal users don’t usually look at the exit code, but often they are used by other programs to see if a command succeeded or not. Your program should be returning an exit code whenever you think it’s going to be used as part of a greater workflow. Fortunately, it is very simple to implement.</p>
+<p>The convention of exit codes are as follows:</p>
+<ul>
+<li><code>0</code> means success.</li>
+<li>any non-zero number indicates an error.</li>
+</ul>
+<p>Sometimes programmers can use specific numbers to indicate different types of errors. For us, however, it will be enough to return a <code>1</code> to indicate any type of error.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="im">import</span> sys</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;Usage: Please enter an argument.&#39;</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a>    sys.exit(<span class="dv">1</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;Thank you! Program succeeded.&#39;</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a>    sys.exit(<span class="dv">0</span>)</span></code></pre></div>
+<p>Much like the <code>return</code> instruction inside a function, when Python encounters <code>sys.exit</code> it will terminate the program on that line. This is a good way to stop running a program if something unexpected has occurred.</p>
+<h2 id="using-help-to-look-under-the-hood">5.9 Using <code>help()</code> To Look ‘Under The Hood’</h2>
+<p>When you buy or rent a car, you don’t have to know everything that’s going on with the engine. As long as the gas pedal and the brake pedal are working, you can get around just fine. But some enthusiasts like to peek ‘under the hood’ to see what’s going on. Let’s do that now.</p>
+<ol type="1">
+<li>Open up your <em>Python Interpreter</em>. We won’t be creating a script here, just interacting with the Python language. You can do this from the Command Prompt in Windows by typing <code>python</code>.</li>
+<li>Type the following: <code>mystring = 'hello'</code>.</li>
+<li>Type <code>type(mystring)</code>.</li>
+</ol>
+<pre><code>str</code></pre>
+<p>Python will return the datatype of <code>mystring</code>, very useful when debugging <code>TypeError</code> issues. Let’s learn more about strings:</p>
+<ol start="4" type="1">
+<li>Type <code>help(str)</code></li>
+</ol>
+<pre><code>Help on class str in module builtins:
+
+class str(object)
+ |  str(object=&#39;&#39;) -&gt; str
+ |  str(bytes_or_buffer[, encoding[, errors]]) -&gt; str
+ |  
+ |  Create a new string object from the given object. If encoding or
+ |  errors is specified, then the object must expose a data buffer
+ |  that will be decoded using the given encoding and error handler.
+ |  Otherwise, returns the result of object.__str__() (if defined)
+ |  or repr(object).
+ |  encoding defaults to sys.getdefaultencoding().
+ |  errors defaults to &#39;strict&#39;.
+ |  
+ |  Methods defined here:</code></pre>
+<p>It’s not necessary to understand everything about encoding and buffers, we are more interested in learning about the methods contained in all string objects.</p>
+<ol start="5" type="1">
+<li>Use the up/down arrow keys to scroll through the list of methods. The first bunch of methods are called <em>dunders</em> because they start and end with double-underscores. These are special methods used by the Python programming language and we won’t discuss these here. Scroll past the dunder methods and you will find useful methods:</li>
+</ol>
+<pre><code> |  
+ |  upper(self, /)
+ |      Return a copy of the string converted to uppercase.
+ |  
+ |  zfill(self, width, /)
+ |      Pad a numeric string with zeros on the left, to fill a field of the given width.
+ |      
+ |      The string is never truncated.</code></pre>
+<p><code>.upper()</code> you are already familiar with. Make sure you understand the description. Take a moment to read some of the other method descriptions; often when trying to solve programming puzzles you can save time by seeing if there’s already a method for something you’re trying to do.</p>
+<ol start="6" type="1">
+<li>When you are done, press <code>q</code> to exit out of the help document and return to the interpreter.</li>
+</ol>
+<h2 id="task-average-calculator">5.10 TASK: Average Calculator</h2>
+<ul>
+<li>Create a new file called <code>lab5e.py</code>.</li>
+<li>Your script will be using command line arguments rather than user input.</li>
+<li>The user must be able to enter one or more numbers as command line arguments. (Use <code>sys.argv</code>).</li>
+<li>If the user doesn’t enter any arguments, the script should print a usage message and stop (Use <code>sys.exit</code>).</li>
+<li>Each command line argument is considered to be an integer.</li>
+<li>If a command line argument is <em>not numeric</em>, print an error message and skip it.</li>
+<li>Keep in mind that the first element of <code>sys.argv</code> is filename! Make sure you skip this when doing your calculations, otherwise you will get ValueError exceptions.</li>
+</ul>
+<h3 id="sample-output-1">Sample Output</h3>
+<p><code>python lab5e.py</code></p>
+<pre><code>Usage: Enter one or more command line arguments.</code></pre>
+<p><code>python lab5e.py 2 ten 17 39</code></p>
+<pre><code>Number found: 2.
+Error: ten is not a number.
+Number found: 17.
+Number found: 39.
+Average for 3 numbers: 19.3</code></pre>
+<hr />
+<p><strong>Note:</strong></p>
+<p>You will probably want to use VSCode to test your code. To do this with command line arguments takes one extra step. Open (or create) your <code>launch.json</code> file.</p>
+<p>You will see a default configuration like the one below:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Python: Current File&quot;</span><span class="fu">,</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;python&quot;</span><span class="fu">,</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>    <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a>    <span class="dt">&quot;program&quot;</span><span class="fu">:</span> <span class="st">&quot;${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a>    <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>We want to <em>add</em> another configuration that will include some sample arguments. We will use “args” to do this. Copy the default configuration, change the name and add “args” to the end. <strong>Please note the commas that I’ve added, these are needed.</strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Python: Current File&quot;</span><span class="fu">,</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;python&quot;</span><span class="fu">,</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>    <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a>    <span class="dt">&quot;program&quot;</span><span class="fu">:</span> <span class="st">&quot;${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>    <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a><span class="fu">}</span><span class="er">,</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Python: Current File with args&quot;</span><span class="fu">,</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;python&quot;</span><span class="fu">,</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true"></a>    <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true"></a>    <span class="dt">&quot;program&quot;</span><span class="fu">:</span> <span class="st">&quot;${file}&quot;</span><span class="fu">,</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true"></a>    <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span><span class="fu">,</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true"></a>    <span class="dt">&quot;args&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;2&quot;</span><span class="ot">,</span> <span class="st">&quot;ten&quot;</span><span class="ot">,</span> <span class="st">&quot;17&quot;</span><span class="ot">,</span> <span class="st">&quot;39&quot;</span><span class="ot">]</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>Save the <code>launch.json</code> file and you should be able to select “current file with args” from the drop-down menu next to the run button.</p>
+<h2 id="challenge-task-word-game-improved">CHALLENGE TASK: Word Game Improved</h2>
+<ul>
+<li>Copy <code>lab5c.py</code> and name the copy <code>challenge5.py</code>.</li>
+<li>Create a new list of words (can be some other category, not animals!) to choose from.</li>
+<li>Instead of simply telling the user to enter guesses, your program should print an underscore (<code>_</code>) for each unguessed letter.</li>
+<li>When the user enters a correct guess, replace the underscore with the letter.</li>
+<li>There are a couple of ways to prevent newline characters from being printed. You can append characters to a string using <code>+=</code> and then print the string, or <a href="https://docs.python.org/3/library/functions.html">read the docs</a> for <code>print</code> to discover a way to suppress newline characters.</li>
+</ul>
+<h3 id="sample-output-2">Sample Output</h3>
+<pre><code>Your word:
+_ _ _ _ _
+Enter your guess: e
+_ _ _ e _
+Enter your guess: m
+_ _ m e _
+Enter your guess: a
+_ a m e _
+Enter your guess: camel
+You win!</code></pre>
+<h2 id="deliverables">Deliverables</h2>
+<p>You can use the <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab5.py">check script</a> to check your work.</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+<code>lab5a.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab5b.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab5c.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab5d.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab5e.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>challenge5.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab5-check-output.txt</code></li>
+</ul>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li>Iterable</li>
+<li>Append</li>
+<li>Definite/Indefinite Iteration</li>
+</ul>
+</body>
+</html>

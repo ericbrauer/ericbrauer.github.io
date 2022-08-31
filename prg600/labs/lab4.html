@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab4</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-4-logical-operators-input-validation-functions">Lab 4: Logical Operators, Input Validation, Functions</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#input-validation">4.1 Input Validation</a></li>
+<li><a href="#logical-operators">4.2 Logical Operators</a></li>
+<li><a href="#task-guessing-game-improved.">4.3 TASK: Guessing Game Improved.</a>
+<ul>
+<li><a href="#sample-output">Sample Output</a></li>
+</ul></li>
+<li><a href="#what-is-a-function">4.4 What Is A Function?</a>
+<ul>
+<li><a href="#calling-a-function">Calling a Function</a></li>
+<li><a href="#guidelines-for-using-functions">Guidelines For Using Functions</a></li>
+</ul></li>
+<li><a href="#task-function-examples">4.5 TASK: Function Examples</a></li>
+<li><a href="#portable-functions">4.6 Portable Functions</a></li>
+<li><a href="#arguments-versus-parameters">4.7 Arguments Versus Parameters</a>
+<ul>
+<li><a href="#what-is-scope">What is Scope?</a></li>
+</ul></li>
+<li><a href="#task-circle-area-calculator">4.8 TASK: Circle Area Calculator</a>
+<ul>
+<li><a href="#sample-output-1">Sample Output</a></li>
+</ul></li>
+<li><a href="#challenge-task-calculate-trend">CHALLENGE TASK: Calculate Trend</a>
+<ul>
+<li><a href="#sample-output-2">Sample Output</a></li>
+</ul></li>
+<li><a href="#deliverables">Deliverables</a></li>
+<li><a href="#glossary">Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-4-logical-operators-input-validation-functions">Lab 4: Logical Operators, Input Validation, Functions</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<p>In this lab, you will:</p>
+<ul>
+<li>learn about input validation,</li>
+<li>use logical operators to test more than on condition on a line,</li>
+<li>learn to create functions,</li>
+<li>be exposed to the concept of scope.</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>What is the goal of programming? A lot of times we create programs in order to automate repetitive tasks. To that end, in this lab we will introduce <em>functions</em>, which are used to organize code that will be run several times. Additionally we will look at other methods of writing code that is meant to be easily automated.</p>
+<p>Of course, automation is a double-edged sword. Automating tasks means that we can also automate mistakes. In this lab we will also look at ways of testing conditions and ensuring that we are working with good input.</p>
+<h2 id="input-validation">4.1 Input Validation</h2>
+<p>Let’s break the guessing game that we created in the last lab. Run <code>lab3d.py</code> and try the following:</p>
+<pre><code>Guess a number between 1 and 10: gorilla
+Traceback (most recent call last):
+  File &quot;/home/eric/PRG600/labs/lab3d.py&quot;, line 11, in &lt;module&gt;
+    ...                                                         
+ValueError: invalid literal for int() with base 10: &#39;gorilla&#39;</code></pre>
+<p>When we try to convert “gorilla” into an integer, Python gets confused and assumes that there has been an error. We have not used <em>input validation</em> to test our user’s input. In the real world input validation is incredibly important whenever we are working with user-facing input. Not only will users try silly things like ‘gorilla’, but oftentimes hackers will be testing for vulnerabilities.</p>
+<p>Right now what we want to do is avoid all exceptions, if possible. Which means that valid input for this game must adhere to the following rules:</p>
+<ol type="1">
+<li>It must be numeric. (No gorillas allowed)</li>
+<li>It must be greater than 0.</li>
+<li>It must be less than 11.</li>
+</ol>
+<p>For the first test, we’re in luck: there’s a method to check this contained in each string.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>user_input <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter a number: &quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="cf">if</span> user_input.isnumeric():</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;This only contains characters between 0 and 9.&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;This will cause an exception if we try to convert to an integer.&quot;</span>)</span></code></pre></div>
+<p>This function is different from <code>print()</code> and <code>round()</code>, instead of entering something inside the parentheses we attach it to our string with a <code>.</code>. This is because <code>isnumeric()</code> is a <em>method</em> of the string <em>object</em>. As you progress with programming, you will learn more about objects. For now, just know that the syntax is slightly different.</p>
+<p>For rules 2 and 3, we can simply use comparisons like we have already learned. So three criteria must be met before we try to accept this user input. You might be tempted to use three nested if statements like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="cf">if</span> user_input.isnumeric():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>    <span class="cf">if</span> <span class="bu">int</span>(user_input) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>        <span class="cf">if</span> <span class="bu">int</span>(user_input) <span class="op">&lt;</span> <span class="dv">11</span>:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>            <span class="bu">print</span>(<span class="st">&quot;This is valid input.&quot;</span>)</span></code></pre></div>
+<p>There is a better way.</p>
+<h2 id="logical-operators">4.2 Logical Operators</h2>
+<p>Let’s introduce some programming logic: we can link two conditions together by using <code>and</code> between them. <code>and</code> requires that <strong>both</strong> be true before it will return true. This table is called a <em>Truth Table</em> and is widely used to explain boolean logic.</p>
+<p><strong>AND</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">First Condition</th>
+<th style="text-align: center;">Second Condition</th>
+<th style="text-align: center;">Final Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>Notice the only way that ‘Final Result’ can become ‘1’ is if both conditions equal 1.</p>
+<p>Now consider every ‘0’ to be <code>False</code>, and every ‘1’ to be <code>True</code>.</p>
+<p><strong>AND</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">First Condition</th>
+<th style="text-align: center;">Second Condition</th>
+<th style="text-align: center;">Final Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">False</td>
+<td style="text-align: center;">False</td>
+<td style="text-align: center;">False</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">False</td>
+<td style="text-align: center;">True</td>
+<td style="text-align: center;">False</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">True</td>
+<td style="text-align: center;">False</td>
+<td style="text-align: center;">False</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">True</td>
+<td style="text-align: center;">True</td>
+<td style="text-align: center;">True</td>
+</tr>
+</tbody>
+</table>
+<p>This is perfect for our input validation, since we only want to accept the user’s guess if it’s both a number <em>and</em> greater than 0 <em>and</em> less than 11.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="cf">if</span> user_input <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> user_input <span class="op">&lt;</span> <span class="dv">11</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;Input accepted.&quot;</span>)</span></code></pre></div>
+<p>If you <em>really</em> want to be fancy, you can use one of Python’s improved numerical comparisons as well: <code>0 &lt; x &lt; 11</code>. Note that this usually doesn’t work in other languages.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="cf">if</span> user_input.isnumeric() <span class="kw">and</span> <span class="dv">0</span> <span class="op">&lt;</span> <span class="bu">int</span>(user_input) <span class="op">&lt;</span> <span class="dv">11</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;Input accepted.&quot;</span>)</span></code></pre></div>
+<p>here are many other logical operators, but most of what we do can be accomplished with <code>and</code>, <code>or</code> and <code>not</code>.</p>
+<p><strong>OR</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">First Condition</th>
+<th style="text-align: center;">Second Condition</th>
+<th style="text-align: center;">Final Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>Using <code>or</code> will return a ‘true’ if any of the conditions are true.</p>
+<p><strong>NOT</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">First Condition</th>
+<th style="text-align: center;">Final Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p><code>not</code> will invert a true/false.</p>
+<h2 id="task-guessing-game-improved.">4.3 TASK: Guessing Game Improved.</h2>
+<ul>
+<li>Copy your <code>lab3d.py</code> file and rename it to <code>lab4a.py</code></li>
+<li>Ensure that the guessing game will validate input from the user. Each guess needs to be a number between 1 and 10.</li>
+<li>Print a useful error message for the user if the input is not a number, or if the input is numeric but is out of bounds.</li>
+</ul>
+<h3 id="sample-output">Sample Output</h3>
+<pre><code>Enter a number between 1 and 10: 1
+Sorry, try again. 
+Enter a number between 1 and 10: hamburger
+Error: not a number or out of bounds.
+Enter a number between 1 and 10: 100
+Error: not a number or out of bounds.
+Enter a number between 1 and 10: 6
+Correct! You win</code></pre>
+<h2 id="what-is-a-function">4.4 What Is A Function?</h2>
+<p>Functions in programming are derived from functions in mathematics. You are probably familiar with the following syntax:</p>
+<p><span class="math inline"><em>f</em>(<em>x</em>) = <em>x</em><sup>2</sup> + 3<em>x</em> + 1</span></p>
+<p>The idea with this is that we can define <strong>x</strong> differently and get a different value returned in each case.</p>
+<p><span class="math inline"><em>f</em>(3) = (3)<sup>2</sup> + 3(3) + 1</span></p>
+<p><span class="math inline"><em>f</em>(3) = 19</span></p>
+<p>The input changes, and the output changes. But the relationship between input and output, defined by the equation, does not change.</p>
+<p><img src="data:image/png;base64,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" alt="" /></p>
+<p>In programming, we are often performing identical processing on many different inputs. Consider an example where we are processing many files in a similar way.</p>
+<p>Another example would be in computer graphics, where we need to perform many complex calculations in order to correctly render light reflecting off a window. Each frame of animation is going to need to run this function, with a different result each time.</p>
+<p>This is where we would make use of a function. To implement the example above, we would enter it like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">def</span> calculation(x):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>    <span class="co">&quot;an example of a calculation&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>    <span class="cf">return</span> x <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> (<span class="dv">3</span> <span class="op">*</span> x) <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+<ul>
+<li>The <code>def</code> line is called a <em>function definition</em>. Here we can name the function, and name its <em>parameters</em>.</li>
+<li>The next line is a <em>function-level docstring</em>. This is a comment that defines what the function will do. Just like the the in-line comments that you’ve already seen, this is not executed but is useful for people reading your code.</li>
+<li>The <code>return</code> line defines what data your function will produce. As soon as Python encounters a <code>return</code> instruction, it will stop running code in your function!</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">def</span> calculation(x):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>    <span class="co">&quot;an example of a calculation&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>    <span class="cf">return</span> x <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> (<span class="dv">3</span> <span class="op">*</span> x) <span class="op">+</span> <span class="dv">1</span>  <span class="co"># after this line, we exit the function and return to the main script.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&quot;This will never get printed.&quot;</span>)</span></code></pre></div>
+<h3 id="calling-a-function">Calling a Function</h3>
+<p>Once you’ve defined a function, you’re only halfway finished. You will have to <em>call</em> the function inside your code. Here is an example of this using the Python interpreter. We have already typed in our function definition.</p>
+<pre><code>&gt;&gt;&gt;&gt; y = calculation(3)
+&gt;&gt;&gt;&gt; print(y)
+19
+&gt;&gt;&gt;&gt; print(calculation(4))
+29</code></pre>
+<p>In the first example, we are storing the output <em>returned</em> by the function into a variable called <code>y</code>. The second example combines both calling the function and printing its return value into one step. This sort of combination of steps is common, but can lead to confusion. When things go wrong, be sure to break your instructions into more steps (or use the debugger).</p>
+<h3 id="guidelines-for-using-functions">Guidelines For Using Functions</h3>
+<p>The code that you eventually create will be doing different things, so it’s hard to provide ‘golden rules’ that are always going to be relevant. However, There are some general good practices that you should follow:</p>
+<ul>
+<li>Functions don’t have to be mathematical! Whenever you have one or more lines of code that will be repeated, you can put these into a function.</li>
+<li>Functions should be short, and as much as possible should do <strong>one thing well</strong>.</li>
+<li>Function names should contain a verb. Functions <em>do things</em>. Functions should use lower-case words and underscores.</li>
+<li>Functions can contain many parameters, or none. Functions can return either one piece of data, or nothing.</li>
+<li>Functions do not return multiple values. Generally, if you are in the situation where you want a function to return two variables, you should consider creating more functions.</li>
+</ul>
+<h2 id="task-function-examples">4.5 TASK: Function Examples</h2>
+<p>Look at the following code below. Each function is adhering to general best practices. For each function:</p>
+<ol type="1">
+<li>provide a <em>function-level docstring</em> so that a Python beginner will be able to understand what the function is doing.</li>
+<li>use an <em>in-line comment</em> at the function definition to tell me how many parameters there are, and if there is a return value.</li>
+<li>call the function using your own <em>arguments</em>. Test the code and makes sure you don’t have any exceptions.</li>
+</ol>
+<p>When you’re finished, save your code as <code>lab4b.py</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="im">from</span> random <span class="im">import</span> randint</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="kw">def</span> rtrn_area(length, width):  <span class="co"># Put your in-line comment here</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>    <span class="co">&quot;Put your function level docstring here&quot;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>    <span class="cf">return</span> length <span class="op">*</span> width</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>rect <span class="op">=</span> rtrn_area(<span class="dv">5</span>, <span class="dv">3</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co"># call the function again with new values</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a><span class="kw">def</span> print_all_caps(name, age):  <span class="co"># Put your in-line comment here</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>    <span class="co">&quot;Put your function level docstring here&quot;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>    cap_name <span class="op">=</span> name.upper()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;THIS PERSON</span><span class="ch">\&#39;</span><span class="st">S NAME IS &#39;</span> <span class="op">+</span> cap_name <span class="op">+</span> <span class="st">&#39; AND THEY ARE &#39;</span> <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> <span class="st">&#39; YEARS OLD!!!&#39;</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a>print_all_caps(<span class="st">&#39;eric&#39;</span>, <span class="dv">41</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a>print_all_caps(<span class="st">&#39;melissa&#39;</span>, <span class="dv">40</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a><span class="co"># call the function again with new values</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true"></a><span class="kw">def</span> get_rando():  <span class="co"># Put your in-line comment here</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true"></a>    <span class="co">&quot;Put your function level docstring here&quot;</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true"></a>    <span class="cf">return</span> randint(<span class="dv">1</span>, <span class="dv">101</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true"></a>lucky_num <span class="op">=</span> get_rando()</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true"></a><span class="co"># call the function again with new values</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true"></a><span class="kw">def</span> is_odd(num):  <span class="co"># Put your in-line comment here</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true"></a>    <span class="co">&quot;Put your function level docstring here&quot;</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true"></a>    <span class="cf">if</span> num <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true"></a>        <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true"></a>    <span class="cf">else</span>: </span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true"></a><span class="bu">print</span>(is_odd(<span class="dv">13</span>))</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true"></a><span class="bu">print</span>(is_odd(get_rando()))</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true"></a><span class="co"># call the function again with new values</span></span></code></pre></div>
+<h2 id="portable-functions">4.6 Portable Functions</h2>
+<p><em>Portability</em> refers to being able to run functions in a new Python program, by importing functions in much the same way we would import functions from the standard library.</p>
+<p>In a new file called <code>importer.py</code>, enter the following code. Make sure that <code>importer</code> and <code>lab4b</code> are in the <strong>same directory</strong>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="im">from</span> lab4b <span class="im">import</span> is_odd</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="bu">print</span>(is_odd(<span class="dv">27</span>))</span></code></pre></div>
+<p>What you will notice, however, is all of the print statements and function calls you created in lab4b.py are run when you imported the file. What we need is a way to prevent code from running when the file is being <em>imported</em> versus when it is <em>executed</em>.</p>
+<p>Open <code>lab4b.py</code> again. After the functions definitions, put the following line:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>    <span class="bu">print</span>(is_odd(<span class="dv">13</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>    <span class="co"># put the rest of your function calls here.</span></span></code></pre></div>
+<ul>
+<li>Save and run <code>lab4b.py</code> again. You will notice that when you run the script as a standalone file, the lines inside <code>__name__ == "__main__"</code> are executed. We can call this block <em>main</em>.</li>
+<li>Close <code>lab4b.py</code> and run <code>importer.py</code> again. You should see no output printed to the screen whatsoever. Check that function calls are now in <em>main</em>.</li>
+</ul>
+<p>The other aspect of making functions portable is making sure they can be run without needed to access any variables that are <em>global</em>, that is, declared outside of the function itself. Any variables used inside the function should be passed in as arguments.</p>
+<h2 id="arguments-versus-parameters">4.7 Arguments Versus Parameters</h2>
+<p>You might be confused about these terms, they both seem to refer to the ‘input’ of functions. Are they the same?</p>
+<p>No. Parameters are part of the <em>function definition</em>, and define variables <em>inside</em> the function. Parameters are considered <em>local</em>. In the example below, <code>diameter</code> is considered a parameter. (Also note that we are importing the value of Pi from another useful Python module).</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="im">import</span> math</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="kw">def</span> circle_area(diameter):</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>    <span class="cf">return</span> math.pi <span class="op">*</span> diameter <span class="op">**</span> <span class="dv">2</span></span></code></pre></div>
+<p>Arguments are part of a <em>function call</em>. Their scope is considered <em>global</em>. These are values that are outside the function. In the example below, the number <code>26</code> is considered an argument.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>area <span class="op">=</span> circle_area(<span class="dv">26</span>)</span></code></pre></div>
+<p>This introduces us to an important concept called <em>scope</em>.</p>
+<h3 id="what-is-scope">What is Scope?</h3>
+<p>Scope refers to where a variable exists. Functions are ‘born’ when they are called, and ‘die’ when they return a value or reach the end of their code block. The ‘scope’ of their parameters is inside the function, and when the function ‘dies’ the value of those parameters are lost. Similarly, when you define variables outside of functions, they are considered to have <em>global</em> scope. The value of those variables are lost only when the program exits.</p>
+<p>One confusing issue is that local and global variables can have the same name, but still be considered completely different variables with different values. To illustrate this, be sure to use VSCode to run the example below. Put a <strong>breakpoint</strong> on the line with <code>area = 0</code> and step through the code as we demonstrated in the last lab.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>area <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>length <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>width <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a><span class="kw">def</span> get_rect_area(length, width)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a>    area <span class="op">=</span> length <span class="op">*</span> width</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a>    <span class="cf">return</span> area</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a>rect1_area <span class="op">=</span> get_rect_area(<span class="dv">5</span>,<span class="dv">6</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Complete&quot;</span>)</span></code></pre></div>
+<p>As you step through the code, you will see <code>area</code>, <code>length</code> and <code>width</code> defined in the ‘Variables’ box.</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope1.png" /></p>
+<p>When you reach the function call, make sure to use the <strong>Step Into</strong> button rather than Step Over. “Step Into” will enter into a function, whereas “Step Over” will skip over it.</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope2.png" /></p>
+<p>In the Variables box, you will see that the values for <code>length</code> and <code>width</code> have changed. What happened to the previous values? The answer is that they are still there, only they aren’t visible at the moment. Click on the “Globals” Drop-Down.</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope3.png" /></p>
+<p>There exist <strong>two</strong> <code>lengths</code>: one local (equals 5) and one global (equals 3). What happens inside the function, stays inside the function. Go ahead and use “Step Over” or “Step Through” to finish running the code.</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope4.png" /></p>
+<p>Once we exit the function, the local version of <code>length</code> <code>width</code> and <code>area</code> revert to their previous values. The function has died, and the paramter values are lost. Only the return value is preserved, and this is assigned to the variable <code>rect1_area</code>.</p>
+<p>What should we learn from this example?</p>
+<ul>
+<li>Scope is important.</li>
+<li>Debuggers are useful.</li>
+<li>It’s always better to give variables <em>descriptive names</em>. When you have ten different variables all called <code>x</code>, debugging your code becomes a nightmare.</li>
+</ul>
+<h2 id="task-circle-area-calculator">4.8 TASK: Circle Area Calculator</h2>
+<p>Let’s say that your company, for whatever reason, needs a tool to return many areas of circles using a command line tool. Here are the requirements:</p>
+<ul>
+<li>The program is required to have a function called <code>circle_area</code> that has <code>radius</code> as its parameter and returns the calculated area.</li>
+<li>The program is required to run the rest of the code inside of a <strong>main block</strong> (<code>if __name__ == "__main__":</code>).</li>
+<li>Inside the main block:
+<ul>
+<li>The program should prompt the user to enter numbers. The numbers should be integers, and between 0 and 1999.</li>
+<li>If the user enters an input that is not an integer, or is out of bounds, the program should print an error message and repeat the prompt.</li>
+<li>Each number is considered to be the radius of a circle. For each circle, print both the <em>radius</em> and the <em>area</em> (Create a function to return circle area).</li>
+<li>The user should be able to continue entering numbers until they press Enter to stop.</li>
+<li>However, if the user presses Enter at the first prompt, print the message: <code>Program was cancelled.</code></li>
+</ul></li>
+</ul>
+<h3 id="sample-output-1">Sample Output</h3>
+<pre><code>Circle Area Calculator
+Enter a radius between 0 and 1999. Press Enter to exit: 2
+Radius: 2. Area: 12.566370614359172.
+Enter a radius between 0 and 1999. Press Enter to exit: ten
+Error: ten is not a number.
+Enter a radius between 0 and 1999. Press Enter to exit: 17
+Radius: 17. Area: 907.9202768874502.
+Enter a radius between 0 and 1999. Press Enter to exit: 2001
+Error: 2001 is out of range.
+Enter a radius between 0 and 1999. Press Enter to exit: 
+Exiting...</code></pre>
+<p>Save the file as <code>lab4c.py</code> and submit it as part of your lab.</p>
+<h2 id="challenge-task-calculate-trend">CHALLENGE TASK: Calculate Trend</h2>
+<ul>
+<li>Save this file as <code>challenge4.py</code>.</li>
+<li>Create a function called <code>rtrn_slope</code>. This function will take 4 integers and return a float.</li>
+<li>each float will be between 0 and 10. You will do input validation <em>outside</em> of the function.</li>
+<li>Inside the function, the first two numbers are the x and y values of a point on a Cartesian map. <strong>Note:</strong> You can review <a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:foundation-algebra/x2f8bb11595b61c86:algebra-overview-history/v/descartes-and-cartesian-coordinates">Cartesian maps</a> on Khan Academy, if you don’t remember!</li>
+<li>The last two numbers are the x and y values of a second point.</li>
+<li>Your function should return the calculate slope of these two points.</li>
+<li>Call your <code>rtrn_slope</code> function inside your <code>challenge4.py</code> script. Use <em>hard-coded</em> values to test. For example, <code>rtrn_slope(1, 1, 3, 3)</code> should return a slope of <code>1.0</code>.</li>
+<li>Once your function is returning the correct slope, use <code>input()</code> to get these values from the user. Remember to <strong>validate the user input</strong>!. Values outside of the acceptable range should cause an error.</li>
+<li>Finally, put the second <code>input()</code> statement inside a while loop. Your script should now calculate the slope of the <em>previous value</em> along with the <em>current value</em>. You can create the option to quit if you wish, or use Ctrl+d to terminate the program at any time.</li>
+</ul>
+<h3 id="sample-output-2">Sample Output</h3>
+<p>Please note I omitted the input validation step from this sample, however your code should have it!</p>
+<pre><code>Enter the starting X value: 1
+Enter the next Y value: 1
+Enter the new X value: 3
+Enter the new Y value: 3
+Slope is: 1.0
+Enter the new X value: 3
+Enter the new Y value: 3
+Slope is: 0.0
+Enter the new X value: 5
+Enter the new Y value: 4
+Slope is: 0.5
+Enter the new X value: 0
+Enter the new Y value: 1
+Slope is: 0.6
+Enter the new X value: 3
+Enter the new Y value: 0
+Slope is: -0.3333333333333333</code></pre>
+<h2 id="deliverables">Deliverables</h2>
+<p>You can <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab4.py">download the check script here</a>.</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+<code>lab4a.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab4b.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab4c.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab4-check-output.txt</code></li>
+<li><input type="checkbox" disabled="" />
+<code>challenge4.py</code></li>
+</ul>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li>Function</li>
+<li>Argument</li>
+<li>Parameter</li>
+<li>Function Definition</li>
+<li>Function Call</li>
+<li>Scope</li>
+<li>Local/Global</li>
+<li>Input Validation</li>
+<li>Boolean Logic</li>
+<li>Truth Table</li>
+</ul>
+</body>
+</html>

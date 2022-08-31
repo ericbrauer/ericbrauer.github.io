@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab1</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-1-introduction-to-python">Lab 1: Introduction to Python</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#installing-python-3-on-windows">1.1 Installing Python 3 on Windows</a>
+<ul>
+<li><a href="#installing-vs-code-on-windows">Installing VS Code on Windows</a></li>
+<li><a href="#other-preparation">Other Preparation</a></li>
+</ul></li>
+<li><a href="#working-with-python-for-the-first-time">1.2 Working With Python For The First Time</a>
+<ul>
+<li><a href="#what-is-a-string">What is a string?</a></li>
+</ul></li>
+<li><a href="#working-with-user-input">1.3 Working With User Input</a></li>
+<li><a href="#creating-our-first-python-script">1.4 Creating Our First Python Script</a></li>
+<li><a href="#opening-a-script-in-vscode">1.5 Opening a Script in VSCode</a></li>
+<li><a href="#task-using-a-check-script">1.6 TASK: Using A Check Script</a></li>
+<li><a href="#task-your-next-script">1.7 TASK: Your Next Script</a>
+<ul>
+<li><a href="#example-dialog">Example Dialog</a></li>
+</ul></li>
+<li><a href="#deliverables">Deliverables</a></li>
+<li><a href="#glossary">Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-1-introduction-to-python">Lab 1: Introduction to Python</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<p>In this lab, you will:</p>
+<ul>
+<li>Install Python 3 and learn the basics of creating scripts</li>
+<li>Learn how to interact with the Python interpreter</li>
+<li>Learn how to use <code>print()</code> to print messages to standard output</li>
+<li>Learn about storing data in variables</li>
+<li>Learn how to print the contents of variables</li>
+<li>Learn how to get user input using <code>input()</code> and store it into variables</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>Python is a programming language which has gradually become one of the most popular languages in the world. It’s not hard to see why: the strengths of Python lie in its accessibility and its large standard library. This means that non-programmers often choose Python as their first language to learn. Its <em>syntax</em> (that is, the keywords and symbols used to define how code works) will remind you of plain English, and allow you to focus on grasping some of the fundamental concepts of programming rather than on punctuation.</p>
+<h2 id="installing-python-3-on-windows">1.1 Installing Python 3 on Windows</h2>
+<p>Python 3 was released in 2008. One important thing to note is that there are large differences between Python 2 and Python 3, so we will need to make sure that we aren’t using the older version of Python.</p>
+<ol type="1">
+<li>Go to <a href="https://www.python.org/downloads/">Python Downloads</a> and select the latest version of Python. At the time of writing, this is <strong>Python 3.8</strong>.</li>
+<li>You should see a list of possible files to download. Select <strong>Windows x86-64 executable installer</strong>. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/def57eaaa68e4d0bb11c6b4b219a224f" alt="ebf8167aad277fa4c9b5afd959b0c954.png" /></li>
+<li>Accept default values. This should install a tool called <em>pip</em> and a text editor called <em>Idle</em>. You are free to use a different a different text editor if you wish. Also <strong>check “Add Python 3.8 to PATH”</strong>. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/026c1bc66ca64809aa5e9c8fe7ef4606" alt="6f6fc88c2ae0abf5775fab2df68d6444.png" /></li>
+</ol>
+<h3 id="installing-vs-code-on-windows">Installing VS Code on Windows</h3>
+<p>IDLE is a great way to get familiar with Python, but as we proceed in the course we are going to find that IDLE is too limited. VS Code is an open source text editor with a wide array of extensions that benefit programmers. Follow the steps to install VS Code below:</p>
+<ol type="1">
+<li>Go to <a href="https://code.visualstudio.com/download">VS Code’s Download Page</a> and select the version appropriate to your OS. For Windows, choose the 64-bit version and choose <em>System Installer</em> if you are using your own machine and have admin privileges.</li>
+<li>Run the installer and accept the defaults. You may also want to select options to make VS Code work as an editor for its supported file types.</li>
+</ol>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/e8fb38ad44f34af3849f37bfe3621832" alt="" /><figcaption>399e321b0ba596363a26783cbe76ee40.png</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>Run VS Code for the first time.</li>
+<li>We will now install the Python extension for VS Code. Along the left side, you will see several icons. Select the bottom icon (Extensions) or press <code>Ctrl+Shift+x</code>. Enter “Python” into the search bar and install the first extension you see.</li>
+</ol>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/7bed0565bf914f3d889f76458708793e" alt="" /><figcaption>6788a48bc7eea0622dad445bcb83361c.png</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>Follow prompts to reload VS Code when the extension is installed.</li>
+</ol>
+<h3 id="other-preparation">Other Preparation</h3>
+<p>It’s also recommended that you create a directory for your course files. This can be named whatever you like, but you should probably also create a “Lab 1” directory inside of it to keep things organized. Organization is very important for programmers 😅.</p>
+<h2 id="working-with-python-for-the-first-time">1.2 Working With Python For The First Time</h2>
+<ol type="1">
+<li>We will use Python’s builtin text editor called <em>IDLE</em>. Run that now.</li>
+</ol>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/f40ad56c6ff2461b88d428c58d0f4002" alt="" /><figcaption>9061b75aeab1f50c1377b94e5bd1f58b.png</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>You will see a prompt <code>&gt;&gt;&gt;&gt;</code> waiting for your input. Type <code>print('Hello World')</code> and press Enter. Congratulations, you have printed your first <em>string</em>!</li>
+</ol>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/4d72101d43ab44a2aa9e8d6468d09d18" alt="" /><figcaption>1490e0ad99ed17743a35df6922c26011.png</figcaption>
+</figure>
+<h3 id="what-is-a-string">What is a string?</h3>
+<p>A string is a series of characters entered from a keyboard. In this case, our string is <strong>Hello World</strong>. Strings can also contain numbers and special characters such as (&amp;%$#). You can’t do math with strings, but you can print them to a screen. The string is our first <em>data type</em>. There are others that we will introduce further on in the course.</p>
+<p>For now, remember that strings need to be inside either single quotes (’’) or double quotes ("").Use <code>print()</code> again and enter another sentence of your choice.</p>
+<ol start="3" type="1">
+<li><code>print()</code> is a built-in <em>function</em> used to print output to the screen. Programmers use a particular vocabulary to talk about functions: the things we put inside the parentheses are called <em>arguments</em>. They modify what the function will do. In the case of <code>print()</code>, we expect only one argument, and that argument should be a string.</li>
+</ol>
+<h2 id="working-with-user-input">1.3 Working With User Input</h2>
+<ol type="1">
+<li>Now in Idle, enter the following line and press Enter:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&#39;Enter your name: &#39;</span>)</span></code></pre></div>
+<ol start="2" type="1">
+<li>You should see that the program has paused and is waiting for input. Please enter your name.</li>
+<li><code>input()</code> is another example of a function. Again, you can enter a string as an argument and it will be used to prompt the user for input. <code>input()</code> will also <em>return</em> something. Whatever is returned by a function, needs to be stored inside a <em>variable</em>. We have named our variable <code>x</code>, but this isn’t a very good name. Let’s change it.</li>
+<li>Use the <strong>up arrow key</strong> (↑) to cycle through the commands you have already entered. Select the <code>x = input('Enter your name: ')</code> command and replace <code>x</code> with <code>user_name</code>.</li>
+<li>When we name variables, we want our names to be descriptive in order to reduce confusion. Programming is confusing enough!</li>
+<li>Variables will store any important data while our program is running. We can use the variable name to retrieve that stored information now. Enter the following:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="bu">print</span>(user_name)</span></code></pre></div>
+<ol start="7" type="1">
+<li>Notice that Python will replace the variable name (<code>user_name</code>) with whatever you typed in.</li>
+<li>In addition, we can combine two strings using the plus sign (+). Enter the following:</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Hello&quot;</span> <span class="op">+</span> user_name)</span></code></pre></div>
+<p>You will probably see something similar to this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>HelloEric</span></code></pre></div>
+<ol start="9" type="1">
+<li>Remember that spaces are also considered to be part of our string. In order to make this output a little better, put a space inside your <em>double quotes</em>.</li>
+<li>Additionally, let’s make the output a little more friendly by ending the string with an exclamation mark. After <code>user_name</code>, put another plus sign, then an exclamation mark enclosed in quotes. It does not matter if you use double quotes or single quotes. Your new <code>print</code> statement should look something like this:</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> user_name <span class="op">+</span> <span class="st">&#39;!&#39;</span>)</span></code></pre></div>
+<p>…which should give you the following output:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>Hello Eric<span class="op">!</span></span></code></pre></div>
+<p>I’ve combined double quotes with single quotes. This doesn’t matter, as long as every <em>opening quote</em> has a matching <em>closing quote</em>. (eg. Entering <code>print('Hi")</code> will not work).</p>
+<hr />
+<p><strong>Note:</strong> When naming things in Python (including variables), keep in mind the following rules:</p>
+<ol type="1">
+<li>Use letters, numbers and underscores (_).</li>
+<li>Variable names can’t start with a number.</li>
+<li>Variable names are case sensitive. <em>Use only lower case letters</em>.</li>
+<li>You can’t use spaces, and you can’t use special characters.</li>
+<li>You will notice that some special keywords (such as <code>print</code>) are reserved for the Python programming language and cannot be used.</li>
+</ol>
+<hr />
+<h2 id="creating-our-first-python-script">1.4 Creating Our First Python Script</h2>
+<p>So far, we have been interacting with the <em>Python Interpreter</em>, which is a way of saying that we are entering code, and Python is translating each line of code into instructions. This is useful because we get immediate feedback from the interpreter: if there is a problem with our line of code, we will know immediately.</p>
+<p>The next step will be to enter our code into a file, so that we can save our instructions and have Python repeat them whenever we need. We often call these files programs or <em>scripts</em>.</p>
+<p>By script we simply mean a short computer program meant to perform a simple task quickly. The Python Interpreter is still translating your code, but this time your code has been saved in a file, and will be executed like any other program on your system.</p>
+<ol type="1">
+<li>From Idle, click on the menu item <code>File</code> and select <code>New File</code>.</li>
+<li>Now, enter the following lines, similar to what you entered into your interpreter just a moment ago.</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="co">Name: Your name here.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="co">Student ID: Your nine-digit seneca ID.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="co">Description: This is our first program. </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>user_name <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>)  <span class="co"># asks user for input</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> user_name <span class="op">+</span> <span class="st">&quot;!&quot;</span>)  <span class="co"># prints user name in a friendly way.</span></span></code></pre></div>
+<ol start="3" type="1">
+<li>Save your file inside your “Lab 1” directory. The file should be named <code>lab1a.py</code>.</li>
+</ol>
+<hr />
+<p><strong>Note:</strong> the <code>.py</code> is called a <em>file suffix</em>, and is used to identify what kind of file this is. This isn’t like a normal text file, so it shouldn’t be named with a <code>.txt</code>! Identify this as a Python script by ensuring that <code>.py</code> is at the end.</p>
+<hr />
+<ol start="4" type="1">
+<li>Now at the top of the Idle window, click on <code>Run</code> -&gt; ‘Run Module’. Make sure that your first script is running successfully and doing what you expect it to do.</li>
+<li>Notice that the lines between <code>'''</code> didn’t affect anything, nor did the words coming after the <code>#</code>. These are examples of <em>comments</em>. Comments are used to document code in various ways.</li>
+</ol>
+<p><strong>Believe it or not, but being able to write good comments is a crucial skill for programmers.</strong> Often we return to old code that we have written, and it can be difficult to understand what we wrote and why. Comments are a way to describe <em>why we have written the code that we have</em>. For this course, you will be graded partially on the quality of your code comments.</p>
+<ul>
+<li><strong>Docstrings</strong> are usually paragraphs that might describe how the use the script. In this course, you will be asked to put docstrings with your name and student ID in <strong>each</strong> script you submit.</li>
+<li><strong>In-line comments</strong> are short sentences that explain <em>why</em> you are performing the instruction on this line. You will <strong>also be asked to explain your code using these comments</strong>. Explaining your approach is an important part of things like <strong>whiteboard job interviews</strong>.</li>
+</ul>
+<h2 id="opening-a-script-in-vscode">1.5 Opening a Script in VSCode</h2>
+<p>All of our Python work will be inside these <code>.py</code> files. We will soon be writing scripts of such complexity that we will require better tools than IDLE can provide. So let’s make sure that our first script runs inside VSCode.</p>
+<ol type="1">
+<li><p>If you haven’t already, start up <strong>VSCode</strong>.</p></li>
+<li><p>Use the “Open File…” dialog to find your <code>lab1a.py</code> and open it. You should see a screen similar to this: <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/Screenshot%20from%202021-07-27%2019-34-23.png" alt="vscode" /></p></li>
+<li><p>On the left side, find the “Run and Debug” button or press <code>Ctrl + Shift + D</code>. Click on the "play button to launch your program.</p></li>
+<li><p>You may be asked to select a configuration. Make sure to select ‘Python’ from the list. If all is well, you should see a screen like this:</p></li>
+</ol>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/Screenshot%20from%202021-07-27%2019-41-32.png" alt="" /><figcaption>vscode2</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>VSCode allows us to run our code inside of a <em>terminal</em>, which is another way of saying that we are able to interact with Python. You will be learning how to working with terminals and command line interfaces in other courses, but additionally it will be our primary way of interacting with Python.</li>
+</ol>
+<hr />
+<p><strong>Note:</strong> If you are <em>not</em> seeing the Python script at this point, contact your professor. We are going to be using these tools for all of the next labs and assignments, so if there’s an issue it’s better that we resolve it sooner rather than later!</p>
+<hr />
+<h2 id="task-using-a-check-script">1.6 TASK: Using A Check Script</h2>
+<p>For this lab, you can use a check script that will verify that your files are printing the correct output. Here are the steps for using the check script:</p>
+<ol type="1">
+<li><a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab1.py">Download the file <strong>check-lab1.py</strong> from here.</a></li>
+<li>Copy check-lab1.py into your Lab 1 directory, the <strong>same directory</strong> as where you have put lab1a.py.</li>
+<li>Start VSCode if it isn’t already open. From “File”, select “Open Folder…”. Select the Lab 1 directory.</li>
+<li>If you get a message about this directory being open in “Restricted Mode”, be sure to select “Trust the authors of this directory”.</li>
+</ol>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/trust.png" alt="" /><figcaption>A restricted mode dialog</figcaption>
+</figure>
+<ol type="1">
+<li>Double-click on the check script from the file manager in the left panel. Make sure that this file has <em>focus</em> (that is, it is the active document in VSCode).</li>
+<li>Run this file the same way you ran your lab1a.py file.</li>
+<li>In the bottom terminal, you will get messages telling you if there were errors in lab1a.py. Go back and verify that the output of lab1a.py matches <em>exactly</em> what’s shown in the lab.</li>
+<li>You will also see that the check script has failed because lab1b.py cannot be found. This is your next task to complete the lab.</li>
+</ol>
+<h2 id="task-your-next-script">1.7 TASK: Your Next Script</h2>
+<p>You will now be asked to create a new script. Your script must fulfill the following requirements:</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+Your script is named <code>lab1b.py</code>.</li>
+<li><input type="checkbox" disabled="" />
+Your script contains a docstring (<code>'''</code>) with your name and student ID.</li>
+<li><input type="checkbox" disabled="" />
+Your script will use a combination of <code>input()</code> and <code>print()</code> statements to re-create the dialog below. Your script will also run without errors.</li>
+</ul>
+<h3 id="example-dialog">Example Dialog</h3>
+<pre><code>Welcome to PRG600!
+Enter your name: Eric
+Enter your student ID: 123456789
+Enter your age: 41
+Enter your favorite food: pizza
+Eric is 41 years old and loves to eat pizza!
+Good luck with the course!</code></pre>
+<ul>
+<li>Once you have completed this script, save it and run the check script again. Make sure that the check script has focus when you click “Run and Debug”!</li>
+<li>Use output from the check script to verify that your script is producing the correct output. If everything is successful, you should see the terminal print two “OK” messages.</li>
+</ul>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/ok.png" alt="" /><figcaption>An example of a successful check</figcaption>
+</figure>
+<ul>
+<li>Once you get no warnings or errors, find the file that the check script has created. It is called <code>check-lab1-output.txt</code>.</li>
+<li>Submit this file along with your two scripts.</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<p>To complete the lab, you will need to submit the following to Blackboard:</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+lab1a.py</li>
+<li><input type="checkbox" disabled="" />
+lab1b.py</li>
+<li><input type="checkbox" disabled="" />
+check-lab1-output.txt</li>
+</ul>
+<p>Congratulations! You have completed the first lab.</p>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li>Interpreter</li>
+<li>Script</li>
+<li>Variable</li>
+<li>Argument</li>
+<li>Function</li>
+<li>String</li>
+</ul>
+</body>
+</html>

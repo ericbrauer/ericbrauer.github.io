@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Review For Midterm" />
+  <title>Lecture 7</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header>
+<h1 class="title">Lecture 7</h1>
+<p class="author">Review For Midterm</p>
+<p class="date">Eric Brauer</p>
+</header>
+<hr />
+<p>The Midterm will be 90 minutes long, and will cover anything in the summaries at the end of each lecture.</p>
+<p>You should be comfortable with:</p>
+<ul>
+<li>Navigation commands, relative paths, relative-to-home paths, and absolute paths.</li>
+<li>Copying, moving, and deleting files and directories. When to use <code>-r</code>.</li>
+<li>Sending input into files, and reading files. The various redirects and what they do.</li>
+<li>File expansions.</li>
+<li>Using the <code>find</code> command to find files and directories.</li>
+<li>Converting from different number systems.</li>
+<li>Setting permissions using <code>chmod</code> with both octal and symbolic commands. Using <code>umask</code> to set defaults.</li>
+<li>Using filter commands such as <code>tr</code>, <code>cut</code>, <code>sort</code>, <code>head</code> and <code>tail</code>. Using pipes to ‘chain’ these commands together.</li>
+<li>Using <code>grep</code> to find a pattern in a file.</li>
+<!--<li>Use SSH to log into a remote server, and SCP to transfer files.</li>-->
+</ul>
+<p>Review questions can be found at the end of <a href="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture3b.html">Lecture 3B</a> and <a href="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture5b.html">Lecture 5B</a>. The ULG also has a comprehensive midterm review that you might find useful.</p>
+<p>Additionally, here are yet even more review questions that you might find useful:</p>
+<ol type="1">
+<li><p>Convert the decimal number <strong>217</strong> to octal.</p>
+<p><spoiler>0331</spoiler></p></li>
+<li><p>What is <strong>0xDEC</strong> in binary?</p>
+<p><spoiler>1101 1110 1100</spoiler></p></li>
+<li><p>How do you know if a file or directory is hidden? How would you list these files and directories?</p>
+<p><spoiler>Hidden files and directories start with . and you can see them using ls -a.</spoiler></p></li>
+<li><p>What find command will match all files on the filesystem that are called report2018 or report2019?</p>
+<p><spoiler>find / -iname report201[89] </spoiler></p></li>
+<li><p>How can you read from a file called <code>cars</code>, convert everything to upper-case, and redirect that into a file called CARS?</p>
+<p><spoiler>cat cars</spoiler> | <spoiler>tr ‘a-z’ ‘A-Z’</spoiler> <spoiler>&gt; CARS</spoiler></p></li>
+<li><p>Let’s say that user <code>tstark13</code> has an account on the server <code>avengers</code> which is part of the <code>marvel.com</code> domain. They have a folder called <code>suitv4</code> in their home directory that they want to save locally. What command will do this?</p>
+<p><spoiler>scp -r tstark13@avengers.marvel.com:~/suitv4 ~</spoiler></p></li>
+<li><p>What will this command do? <code>find ~ -iname file?? &gt; list-of-files 2&gt;&amp;1</code></p>
+<p><spoiler>list all files that start with ‘file’ and end with 2 characters, and save that list to a file called list-of-files. All errors will also be saved to list-of-files.</spoiler></p></li>
+</ol>
+<p>Have a look at the contents of the file <code>SSDexample</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">Samsung</span> 860 250 79.99</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">Samsung</span> 860 500 119.99</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ex">Kingston</span>    A400    240 52.99</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="ex">WD</span>  Blue    250 74.99</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="ex">Crucial</span> MX500   500 115.99</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="ex">Kingston</span>    UV500   240 72.99</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="ex">WD</span>  Green   240 59.90</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="ex">Crucial</span> MX600   1000    194.99</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="ex">Kingston</span>    UV500   120 44.99</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="ex">Samsung</span> 860Pro  2000    1099.99</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="ex">Sandisk</span> PLUS    480 144.99</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="ex">Samsung</span> 850 500 348.12</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="ex">Crucial</span> M500    480 733.74</a></code></pre></div>
+<p>Now have a look at the desired output:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">WD</span>  Green   240 59.90</a></code></pre></div>
+<p>What command will accomplish this?</p>
+<p><spoiler>sort SSDexample | tail -1</spoiler></p>
+<p>Have a look at this file structure:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">/</span></a>
+<a class="sourceLine" id="cb3-2" title="2">├── <span class="ex">sample_dir</span></a>
+<a class="sourceLine" id="cb3-3" title="3">│   ├── <span class="ex">admin</span></a>
+<a class="sourceLine" id="cb3-4" title="4">│   ├── <span class="ex">cambridge</span></a>
+<a class="sourceLine" id="cb3-5" title="5">│   │   ├── <span class="ex">cafeteria</span></a>
+<a class="sourceLine" id="cb3-6" title="6">│   │   └── <span class="ex">library</span></a>
+<a class="sourceLine" id="cb3-7" title="7">│   │       └── <span class="ex">dir_practice</span></a>
+<a class="sourceLine" id="cb3-8" title="8">│   ├── <span class="ex">faculty</span></a>
+<a class="sourceLine" id="cb3-9" title="9">│   ├── <span class="ex">markham</span></a>
+<a class="sourceLine" id="cb3-10" title="10">│   │   ├── <span class="ex">annex</span></a>
+<a class="sourceLine" id="cb3-11" title="11">│   │   ├── <span class="ex">annex2</span></a>
+<a class="sourceLine" id="cb3-12" title="12">│   │   ├── <span class="ex">building1</span></a>
+<a class="sourceLine" id="cb3-13" title="13">│   │   └── <span class="ex">parking</span></a>
+<a class="sourceLine" id="cb3-14" title="14">│   ├── <span class="ex">outline.doc</span></a>
+<a class="sourceLine" id="cb3-15" title="15">│   ├── <span class="ex">oxford</span></a>
+<a class="sourceLine" id="cb3-16" title="16">│   │   ├── <span class="ex">outline.doc</span></a>
+<a class="sourceLine" id="cb3-17" title="17">│   │   ├── <span class="ex">programming</span></a>
+<a class="sourceLine" id="cb3-18" title="18">│   │   │   ├── <span class="ex">report.docx</span></a>
+<a class="sourceLine" id="cb3-19" title="19">│   │   │   ├── <span class="ex">report-final.pdf</span></a>
+<a class="sourceLine" id="cb3-20" title="20">│   │   │   └── <span class="ex">report.pdf</span></a>
+<a class="sourceLine" id="cb3-21" title="21">│   │   ├── <span class="ex">report</span></a>
+<a class="sourceLine" id="cb3-22" title="22">│   │   └── <span class="ex">security</span></a>
+<a class="sourceLine" id="cb3-23" title="23">│   ├── <span class="ex">stenton</span></a>
+<a class="sourceLine" id="cb3-24" title="24">│   │   ├── <span class="ex">gen_ed</span></a>
+<a class="sourceLine" id="cb3-25" title="25">│   │   │   ├── <span class="ex">cars</span></a>
+<a class="sourceLine" id="cb3-26" title="26">│   │   │   ├── <span class="ex">cars2</span></a>
+<a class="sourceLine" id="cb3-27" title="27">│   │   │   └── <span class="ex">link-cars</span></a>
+<a class="sourceLine" id="cb3-28" title="28">│   │   ├── <span class="ex">lib_arts</span></a>
+<a class="sourceLine" id="cb3-29" title="29">│   │   │   ├── <span class="ex">english.txt</span></a>
+<a class="sourceLine" id="cb3-30" title="30">│   │   │   └── <span class="ex">match.doc</span></a>
+<a class="sourceLine" id="cb3-31" title="31">│   │   └── <span class="ex">parking2</span></a>
+<a class="sourceLine" id="cb3-32" title="32">│   └── <span class="bu">test</span></a>
+<a class="sourceLine" id="cb3-33" title="33">└── <span class="ex">home</span></a>
+<a class="sourceLine" id="cb3-34" title="34">    ├── <span class="ex">cjohnson</span></a>
+<a class="sourceLine" id="cb3-35" title="35">    └── <span class="ex">sam</span></a></code></pre></div>
+<ol type="1">
+<li><p>What command will put you into <code>gen_ed</code> no matter where you are?</p>
+<p><spoiler>cd /sample_dir/stenton/gen_ed</spoiler></p></li>
+<li><p>User <code>sam</code>’s current location is in <code>programming</code>. What command will they use to move <code>report.pdf</code> into their home directory?</p>
+<p><spoiler>mv report.pdf ~</spoiler></p></li>
+<li><p>Your current location is in <code>cambridge</code>. What command will remove <code>stenton</code>?</p>
+<p><spoiler>rm -r ../stenton</spoiler></p></li>
+</ol>
+</body>
+</html>

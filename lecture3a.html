@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="File Expansion, Find commands, Head/Tail, File">
+  <title>Lecture 3A</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'http://lab.hakim.se/reveal-js/css/print/pdf.css' : 'http://lab.hakim.se/reveal-js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="http://lab.hakim.se/reveal-js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="ericrv.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Lecture 3A</h1>
+  <p class="author">File Expansion, Find commands, Head/Tail, File</p>
+  <p class="date">Eric Brauer</p>
+</section>
+
+<section id="filename-expansions" class="slide level1">
+<h1>Filename Expansions</h1>
+<p>The shell not only accepts specific filenames. You can also use ‘expansions’ to capture more than one file.</p>
+<p><code>touch bash bath beach both booth &amp;&amp; ll</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">bash</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">bath</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ex">beach</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="ex">both</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="ex">booth</span></a></code></pre></div>
+<p>Aside: We can combine two commands on one line using <code>&amp;&amp;</code> like you see above. The second command will only run if the first completed with no errors. One more thing: <code>ll</code> is a shorter way to call the <code>ls -l</code> command. We will talk about this soon! Just know that <code>ll=ls -l</code>.</p>
+<p>Ok, so here are some expansions to play with:</p>
+<ul>
+<li><strong>*</strong> : zero or more characters</li>
+<li>? : matches a single character</li>
+</ul>
+<p><code>ll b*h</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bash</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bath</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 beach</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 both</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 booth</a>
+<a class="sourceLine" id="cb2-6" title="6"></a></code></pre></div>
+<p><code>ll ba?h</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bash</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bath</a></code></pre></div>
+<p><code>ll b?th</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bath</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 both</a></code></pre></div>
+<p>Let’s try something else:</p>
+<p><code>touch ww .wow wow wooooooow &amp;&amp; ls -la</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric      0 Sep 12 11:03  wooooooow</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric      0 Sep 12 11:03  wow</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="ex">-rw-rw-r--</span> 1 eric eric      0 Sep 12 11:03  ww</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="ex">-rw-rw-r--</span> 1 eric eric      0 Sep 12 11:03  .wow</a></code></pre></div>
+<p>Remember, we need <code>-a</code> to be able to see hidden files. That . in front of wow means that it’s a hidden file!</p>
+<p><code>ll w*w</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 11:03 wooooooow</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 11:03 wow</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 11:03 ww</a></code></pre></div>
+<p>Here’s an example of the * capturing <em>zero</em> characters and returning the file ‘ww’.</p>
+<p><code>ll *wow</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 11:03 wow</a></code></pre></div>
+<p>No hidden file. You must be explicit when you search for hidden files:</p>
+<p><code>ll .w*</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 11:03 .wow</a></code></pre></div>
+<p>Now let’s try a new expansion. It looks like this:</p>
+<p><code>ll b[ao]th</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bath</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 both</a></code></pre></div>
+<p>Any <em>single</em> character in the square brackets will be matched. Notice what’s missing: <em>booth</em>. Try this: <code>touch</code> a file called ‘baath’ and run the same command again.</p>
+<p>Note also that you can input ranges, such as for numbers:</p>
+<p>`ll lecture[0-9]*</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric  12K Sep 5 18:30  lecture1.md</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric  16K Sep 10 15:04  lecture2a.md</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="ex">-rw-rw-r--</span> 1 eric eric  12K Sep 12 12:29  lecture2b.md</a></code></pre></div>
+<p>To <em>invert</em> the selection between square brackets, use an <strong>!</strong> <em>inside the brackets</em>.</p>
+<p><code>ll b[!o]th</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bath</a></code></pre></div>
+<p><code>ll b[!o]?h</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bash</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ex">-rw-rw-r--</span> 1 eric eric 0 Sep 12 10:56 bath</a></code></pre></div>
+</section>
+<section id="relative-to-home-paths" class="slide level1">
+<h1>Relative-to-Home Paths</h1>
+<p>So far in these notes we’ve talked about:</p>
+<ul>
+<li>Relative Paths:: These paths specify a path from your <em>current location</em> to some other location. They usually start with either the shortcut to your <em>parent directory</em> (<code>..</code>), or with a <em>subdirectory</em> in your current location.</li>
+<li>Absolute Paths:: These paths specify a path starting from the <em>top</em> of your file system down to some other location. They start with the shortcut for <em>root</em> (<code>/</code>).</li>
+</ul>
+<p>There is a third type of path that we use frequently, and that is a <em>relative-to-home</em> path. To demonstrate this, log into Matrix and enter <code>pwd</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">/home/student</span></a></code></pre></div>
+<p>Your actual path will be different, since everyone is logged in as different users. But this path that you see can be shortened using a tilde (<code>~</code>). So, for example, if you have a <code>Documents</code> directory, you can easily peek inside it like this:</p>
+<p><code>ll ~/Documents</code></p>
+<p>You can also specify the home directories of other users. So for example, you have been accessing the assignments using this path:</p>
+<p><code>~uli101/assign1</code></p>
+<p>What does this actually mean? Well, there is a user called <code>uli101</code>, and that user has a home directory that contains the assignments. So the absolute path for assignment 1 would be:</p>
+<p><code>/home/uli101/assign1</code></p>
+<p>Here’s another demonstration: I’ve used a file called <code>Acceptable-Use-Policy</code> to demonstrate commands such as <code>more</code> and <code>less</code>. If you don’t have a copy of this file, I will share mine. Enter this command to get it:</p>
+<p><code>cp ~eric.brauer/Acceptable-Use-Policy ~</code></p>
+<p>Again, the first argument is the <em>target</em>. That’s located in <em>my</em> home. The destination is <em>your</em> home.</p>
+</section>
+<section id="find-part-ii" class="slide level1">
+<h1>find Part II</h1>
+<p>File expansions get <em>very</em> useful with the <code>find</code> command, since usually we lost something because we typed it in wrong. The first thing we can do to expand our search is to <em>ignore case</em>. This is easy to do.</p>
+<p>Instead of this command:</p>
+<p><code>find ~ -name report.pdf</code></p>
+<p>Use this command:</p>
+<p><code>find ~ -iname report.pdf</code></p>
+<p>For every alphabetic character, the find command will include all upper and lower case possibilities.</p>
+<p>But you will also benefit sometimes from using expansions such as ’report*’ in your search.</p>
+<p>We aren’t limited to just searching by name, either. We can combine a ‘name’ or ‘iname’ search with other conditions. For example, we might want to limit our search to only <em>files</em> or only <em>directories</em>.</p>
+<p><code>find ~ -iname report* -type f</code></p>
+<p><code>find ~ -iname oxford -type d</code></p>
+<p>You can combine this with filtering your search by <em>time</em>. You can specify that you want to see when files were <em>changed</em>, and when they were <em>accessed</em>.</p>
+<p>Try this. We are going to use the file called ‘friendly’ from last week. If you don’t have this file, no problem. The command below will create it:</p>
+<p><code>echo &quot;This is a test&quot; &gt;&gt; friendly</code></p>
+<p><code>find . -cmin -20</code></p>
+<p>You will see testfile show up in results. <code>-cmin</code> stands for <em>changed</em> + <em>minutes</em>. <code>-20</code> sets the search for less than 20. So this search should return all files changed less than 20 minutes ago.</p>
+<p>Finally, one more useful search. This is for size.</p>
+<p><code>find ~ -size +1G</code></p>
+<p>This will return all files <em>larger</em> than 1 Gigabyte. G = Gigabyte, M = Megabyte, k = kilobyte.</p>
+<p><code>find</code> is an complicated tool. By default, it will use <code>ls</code> to list the positive results, but you can even specify other commands to run on the results. I encourage you to search through examples and options online and through the man pages.</p>
+</section>
+<section id="head-and-tail" class="slide level1">
+<h1>Head and Tail</h1>
+<p>If you want to only see the first ten lines of a file, use <code>head</code>. If you want to only see the last ten lines of a file, use <code>tail</code>. You can also specify the number of lines with an argument:</p>
+<p><code>head -3 Acceptable-Use-Policy</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="ex">Please</span> refer to http://www.senecac.on.ca/policies/itau.html for the latest and </a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="ex">up</span> to date copy of the Information Technology Acceptable Use.</a></code></pre></div>
+</section>
+<section id="learning-about-a-file" class="slide level1">
+<h1>Learning About a File</h1>
+<p>The most common way to learn about files is to use <code>ls -l</code>, which you’ve seen before. But there are more options.</p>
+<p>Let’s use an image from last week:</p>
+<p><code>ls -l lecture2a-nautilus.png</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="ex">-rw-r--r--</span> 1 eric eric 70K Sep  9 21:21 lecture2a-nautilus.png</a></code></pre></div>
+<p>Let’s learn more about this with the <code>file</code> command.</p>
+<p><code>file lecture2a-nautilus.png</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1"><span class="ex">lecture2a-nautilus.png</span>: PNG image data, 1242 x 696, 8-bit/color RGBA, non-interlaced</a></code></pre></div>
+<p>In Windows, traditionally the <em>extension</em> of the file was very important. If you took an image called ‘file.jpg’ and renamed it ‘file.txt’, it would probably cause notepad.exe to choke on that file. In Linux, extensions aren’t required, and we mostly keep them around by convention.</p>
+<p><code>cp lecture2a-nautilus.png test.txt</code></p>
+<p><code>file test.txt</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"><span class="ex">test.txt</span>: PNG image data, 1242 x 696, 8-bit/color RGBA, non-interlaced</a></code></pre></div>
+</section>
+<section class="slide level1">
+
+<blockquote>
+<h1 id="summary">Summary</h1>
+<h2 id="commands">Commands</h2>
+<ul>
+<li>find, continued: type, size, amin, cmin</li>
+<li>file: Information about files</li>
+<li>head: Show first X lines</li>
+<li>tail: Show last X lines</li>
+<li>history: Show history</li>
+</ul>
+<h2 id="expansions">Expansions</h2>
+<ul>
+<li>*: Zero or more characters</li>
+<li>?: One character</li>
+<li>[ ]: Match <em>one</em> character of whatever’s inside the brackets</li>
+<li>[! ]: Exclude <em>one</em> character of whatever’s inside the brackets</li>
+</ul>
+</blockquote>
+</section>
+    </div>
+  </div>
+
+  <script src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
+  <script src="http://lab.hakim.se/reveal-js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'http://lab.hakim.se/reveal-js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'http://lab.hakim.se/reveal-js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'http://lab.hakim.se/reveal-js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 4A: Numbering Systems</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header>
+<h1 class="title">Lecture 4A: Numbering Systems</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#base-2-binary">Base-2 (Binary)</a><ul>
+<li><a href="#converting-from-decimal-to-binary">Converting From Decimal to Binary</a></li>
+<li><a href="#converting-from-binary-to-decimal">Converting from Binary to Decimal</a></li>
+</ul></li>
+<li><a href="#base-8-octal">Base-8 (Octal)</a></li>
+<li><a href="#base-16-hexadecimal">Base-16 (Hexadecimal)</a></li>
+<li><a href="#summary">Summary</a><ul>
+<li><a href="#bonus-dlc-content-why-use-binary-at-all">Bonus (DLC?) Content: Why Use Binary At All?</a><ul>
+<li><a href="#calculating-the-number-of-bits-for-a-given-decimal-number">Calculating the Number of Bits for a Given Decimal Number</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h2 id="introduction">Introduction</h2>
+<p>We use a base-10 numbering system. What does this mean? Let’s take an example of counting to 20. In a <em>tally</em> system, you might make a mark for every number. You’d have 20 marks by the end of it. This is very inefficient. Our normal way of representing numbers is to count to 9, then represent 9+1 by resetting our count to zero and <em>carrying over</em> the 1.</p>
+<table>
+<thead>
+<tr class="header">
+<th>10<sup>2</sup></th>
+<th>10<sup>1</sup></th>
+<th>10<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Hopefully makes sense, we’ve been doing it like this since Kindergarten! This is more efficient, since instead of requiring one <em>character</em> for every thing we count, we can compress our representation of that number count to two <em>digits</em>.</p>
+<hr />
+<h2 id="base-2-binary">Base-2 (Binary)</h2>
+<p>Hopefully everyone is familiar with the idea that computers use a <em>binary</em> number system. What does that mean? It means that every one of our <em>digits</em> can have only two possible values that we understand: 1 or 0. More accurately, we chould say that every digit has two voltage levels: a high voltage and a low voltage. Let’s use the number 5 as an example.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>2<sup>2</sup> = 4 2<sup>0</sup> = 1</p>
+<p><span class="math inline">4 + 1 = 5</span></p>
+<p>Simple enough, so far!</p>
+<p>This, by the way, is four bis, which we can call a <em>nibble</em>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>128</td>
+<td>64</td>
+<td>32</td>
+<td>16</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>And this is 8 bits, which we call a <em>byte</em>. If you add <span class="math inline">128 + 64 + 32 + 16 + 8 + 4 + 2 + 1</span>, you get <span class="math inline">255</span>, which is the maximum <em>unsigned</em> value you can represent with a byte.</p>
+<hr />
+<h3 id="converting-from-decimal-to-binary">Converting From Decimal to Binary</h3>
+<p>One skill you will required to demonstrate in this course is the ability to do this conversion <em>without a calculator</em>.</p>
+<p>There are several strategies to do this, but here’s one that I recommend:</p>
+<p>Let’s start with an example: <strong>78</strong>.</p>
+<p>Use long division to divide <em>78</em> by <em>2</em>.</p>
+<p><span class="math inline">78/2 = 39</span> with a remainder of <span class="math inline">0</span>.</p>
+<p>The remainder becomes your <em>least significant bit</em>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Next, divide your result by 2 again:</p>
+<p><span class="math inline">39/2 = 19, <em>r</em><em>e</em><em>m</em><em>a</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em> = 1</span>.</p>
+<p>Again, your remainder gets added to the <em>next</em> least significant bit.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td><strong>1</strong></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">19/2 = 9, <em>r</em><em>e</em><em>m</em><em>a</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em> = 1</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">9/2 = 4, <em>r</em><em>e</em><em>m</em><em>a</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em> = 1</span>.</p>
+<p><span class="math inline">4/2 = 2, <em>r</em><em>e</em><em>m</em><em>a</em><em>i</em><em>n</em><em>d</em><em>e</em><em>r</em> = 0</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The last division of <span class="math inline">2/2 = 1</span> with a remainder of <span class="math inline">0</span>. <strong>Remember to add the remainder to your binary number first</strong>. Since our final result is less than our <em>radix</em>, we can add this to the <em>most significant bit</em> of our binary number.</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>–</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One word about style</strong>: It is good practice to divide your binary numbers into nibbles to make it easier to read. We will add a leading zero and write our answer like so:</p>
+<p><code>0100 1110</code></p>
+<hr />
+<h3 id="converting-from-binary-to-decimal">Converting from Binary to Decimal</h3>
+<p>This should be easy if you can memorize the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>128</td>
+<td>64</td>
+<td>32</td>
+<td>16</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>For this course, we aren’t going to ask you to convert exceedingly long numbers, so this should work for any quiz/test questions. <code>0b</code> is one common way to <em>represent</em> binary numbers, which we will use here.</p>
+<p>Example: <code>0b10101100</code>.</p>
+<p>First, arrange this number in a way that’s easy to read:</p>
+<table>
+<thead>
+<tr class="header">
+<th>2<sup>7</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>128</td>
+<td>64</td>
+<td>32</td>
+<td>16</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">(1 * 128) + (1 * 32) + (1 * 8) + (1 * 4) = 172</span>.</p>
+<p><a href="http://www.robotroom.com/NumberSystems3.html">Another Handy Resource</a></p>
+<hr />
+<h2 id="base-8-octal">Base-8 (Octal)</h2>
+<p>Octal numbers have digits between 0 and 7, at which point they carry over. We use octal numbers with <code>chmod</code>, which we will discuss this week.</p>
+<table>
+<thead>
+<tr class="header">
+<th>8<sup>2</sup></th>
+<th>8<sup>1</sup></th>
+<th>8<sup>0</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>16</td>
+<td>8</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>When being asked to do conversions with octal, the easiest approach is to start with binary and to group bits into <em>groups of three</em>.</p>
+<p><code>0b10101100</code> becomes <strong>10</strong> <strong>101</strong> <strong>100</strong>. Convert from binary to ‘decimal’ to get: <strong>2</strong> <strong>5</strong> <strong>4</strong></p>
+<p>The way to correctly identify an octal number varies, but a leading zero seems to be most common. So our number is <code>0254</code>.</p>
+<p>To convert from octal to another format, convert each digit to binary, then group your binary digits into nibbles.</p>
+<hr />
+<h2 id="base-16-hexadecimal">Base-16 (Hexadecimal)</h2>
+<p>Hexadecimal is used often to represent memory addresses. Hexadecimal numbers have digits between 0 and 15, at which point they carry over. Here’s how we represent these digits:</p>
+<table>
+<thead>
+<tr class="header">
+<th>15</th>
+<th>14</th>
+<th>13</th>
+<th>12</th>
+<th>11</th>
+<th>10</th>
+<th>9</th>
+<th>8</th>
+<th>7</th>
+<th>6</th>
+<th>5</th>
+<th>4</th>
+<th>3</th>
+<th>2</th>
+<th>1</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>F</td>
+<td>E</td>
+<td>D</td>
+<td>C</td>
+<td>B</td>
+<td>A</td>
+<td>9</td>
+<td>8</td>
+<td>7</td>
+<td>6</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>When being asked to do conversions with octal, the easiest approach is to start with binary and to group bits into <em>groups of four</em>.</p>
+<p>Let’s convert from Hex into decimal. Here’s our Hex Number: <code>0xD6</code>.</p>
+<p><code>0x</code> is the most common way of representing Hex numbers.</p>
+<p><span class="math inline"><em>D</em> = 13</span>, which is <span class="math inline">1101</span> in binary. <span class="math inline">6 = 6</span>, which is <span class="math inline">0110</span> in binary.</p>
+<p><code>0xD6</code> = 1101 0110. From here we can convert to decimal to get 214.</p>
+<h1 id="summary">Summary</h1>
+<ul>
+<li>Base-10 is the number system you are already familiar with.</li>
+<li>Base-2 is binary. Two possible values: <strong>1</strong> or <strong>0</strong>.</li>
+<li>To convert decimal to binary, divide the decimal number by 2, and assign the remainder to the least signficant bit. (LSB). Continue until you have a result less than 2, and add this to your binary number.</li>
+<li>Base-8 is octal. Possible values: <strong>0 - 7</strong>. Octal digits contain <strong>3</strong> bits.</li>
+<li>Base-16 is hexadecimal. Possible values: <strong>0 - F</strong>. Hex digits contain <strong>4</strong> bits.</li>
+</ul>
+<h2 id="bonus-dlc-content-why-use-binary-at-all">Bonus (DLC?) Content: Why Use Binary At All?</h2>
+<ul>
+<li><a href="https://matrix.senecacollege.ca/~eric.brauer/uli101/whyUseBinary.html">Why Use Binary? - My Attempt</a></li>
+<li><a href="https://youtu.be/thrx3SBEpL8">Why Use Binary? - Computerphile</a></li>
+</ul>
+<hr />
+<h3 id="calculating-the-number-of-bits-for-a-given-decimal-number">Calculating the Number of Bits for a Given Decimal Number</h3>
+<p>This is <em>not</em> a calculation that you will need to demonstrate on any tests in this course, but it <em>is</em> something that you will find useful in many practical situations.</p>
+<p>Let’s say you are given a decimal number <span class="math inline">65001</span>. You want to decided what <em>unsigned</em> data type is required to store this number. Use this formula:</p>
+<p><span class="math inline"><em>l</em><em>o</em><em>g</em><sub>2</sub>65001 = 15.988</span> Take the <em>ceiling</em> of that number (round up to the next integer) to get the number of bits required for this number. (In this case, 16 bits are required.)</p>
+<p>Using a calculator, it can be difficult to program a <span class="math inline"><em>l</em><em>o</em><em>g</em><sub>2</sub></span> calculation, so in a pinch, you can use <span class="math inline"><em>l</em><em>o</em><em>g</em><sub>10</sub></span>:</p>
+<p><span class="math inline"><em>l</em><em>o</em><em>g</em><sub>10</sub>65001/<em>l</em><em>o</em><em>g</em><sub>10</sub>2 = 15.988</span></p>
+</body>
+</html>

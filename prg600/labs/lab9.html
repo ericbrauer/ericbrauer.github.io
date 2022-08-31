@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab9</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-9-graphical-user-interfaces">Lab 9: Graphical User Interfaces</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#the-components-of-a-gui-program">9.1 The Components Of A GUI Program</a>
+<ul>
+<li><a href="#introduction-to-event-driven-programming">Introduction to Event Driven Programming</a></li>
+</ul></li>
+<li><a href="#working-with-tkinter">9.2 Working With Tkinter</a></li>
+<li><a href="#classes-and-objects">9.3 Classes and Objects</a>
+<ul>
+<li><a href="#what-about-self">What About <code>self</code>?</a></li>
+</ul></li>
+<li><a href="#task-many-objects-one-class">9.4 TASK: Many Objects, One Class</a></li>
+<li><a href="#defining-behaviour-using-buttons">9.5 Defining Behaviour Using Buttons</a>
+<ul>
+<li><a href="#task-experiments">TASK: Experiments</a></li>
+<li><a href="#task-the-grid">TASK: The Grid</a></li>
+</ul></li>
+<li><a href="#text-boxes">9.6 Text Boxes</a></li>
+<li><a href="#task-dialog-boxes">9.7 TASK: Dialog Boxes</a></li>
+<li><a href="#task-the-atm-example">9.8 TASK: The ATM Example</a></li>
+<li><a href="#deliverables">Deliverables</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-9-graphical-user-interfaces">Lab 9: Graphical User Interfaces</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<p>In this lab, you will learn:</p>
+<ul>
+<li>how to create graphical user interfaces using Tkinter,</li>
+<li>some concepts for creating classes in Python.</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>Programming in the workplace can happen in many different ways: you may be on a large (or not so large) team building an application for the public. This type of work is usually given to software developers who have a specific set of skills. Alternatively, you may be asked to create smaller, less polished applications for internal use. These type of jobs are very common: we create scripts to automate tedious tasks and to focus on more demanding tasks.</p>
+<p>You will find that laypeople are intimidated by the shell, and are much more comfortable using tools with a graphical user interface (GUI). GUIs have the additional advantage of <em>discoverability</em> – we can often learn a lot about what a GUI application can do by exploring its menus and interface.</p>
+<p>The good news is that creating GUI applications is possible in Python, but requires us to set up the interface and learn a little about <em>Event-Driven Programming</em>.</p>
+<h2 id="the-components-of-a-gui-program">9.1 The Components Of A GUI Program</h2>
+<p>It is important to remember that much of how a GUI looks and behaves is defined at the operating system level. Modern OSes now have common features: we can expect to have a title bar with buttons to close, maximise and minimise that window. We expect that many applications will have a menu bar with further settings, and that there will be objects such as text boxes, labels and buttons that the user can interact with. Below is an example of a GUI application that we will be building at the end of the lab.</p>
+<p><img src="resources/atm-start.png" /></p>
+<p>Again, every operating system will have a different way of presenting these objects, but we can be reasonably certain that their behaviour will remain consistent. Python provides us with a <em>Framework</em> for defining these window objects, and then passing these objects to the operating system so that they can be rendered. Analyze the ATM example carefully. How many different objects are there?</p>
+<h3 id="introduction-to-event-driven-programming">Introduction to Event Driven Programming</h3>
+<p>Whereas the scripts we have created up until now will run a set on instructions from start to finish, when we are creating GUI applications we are defining a set of instructions and associating them with these window objects. Clicking on the “Deposit” button in the example above will trigger a function, for example.</p>
+<p>This is called <em>Event Driven Programming</em>. The main behaviour of our program will not be calling functions, but creating the objects we want to present and then waiting for the user to interact with them. The data is the same, however.</p>
+<h2 id="working-with-tkinter">9.2 Working With Tkinter</h2>
+<p>The framework <code>tkinter</code> already exists in the Python Standard Library, and will allow us, with a little work, to create GUI applications. Our first application will need to define a new <em>Class</em> based off of <code>tkinter</code>’s <code>Frame</code> class, and we will need to define what window objects are created. Create a new file called <code>lab9a.py</code> and add this code.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="im">from</span> tkinter <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">class</span> LabelDemo(Frame):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        ...</span></code></pre></div>
+<ul>
+<li>Our first GUI is going include just a <em>label</em> object for now, so we are naming it <code>LabelDemo</code>. It is based off of the <code>Frame</code> class. There is a special method we are defining called <code>__init__</code>. This is a special method that is called when we create a new object. Add the following code so that your <code>__init__</code> looks like mine:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>        <span class="co">&quot;Sets up the window and widgets.&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>        Frame.<span class="fu">__init__</span>(<span class="va">self</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>        <span class="va">self</span>.master.title(<span class="st">&quot;Label Demo&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>        <span class="va">self</span>.grid()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>        <span class="va">self</span>._label <span class="op">=</span> Label(<span class="va">self</span>, text <span class="op">=</span> <span class="st">&quot;Hello world!&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>        <span class="va">self</span>._label.grid()</span></code></pre></div>
+<ul>
+<li>Notice that we are setting the master title for the window to “Label Demo”. Then we set up a <em>grid</em> for our window objects. Next, we have created a new <code>_label</code> from the class <code>Label</code>. And we are setting the text for that object to <code>Hello world!</code>. Finally, we add this <code>_label</code> object to our grid.</li>
+<li>Our <code>__init__</code> method is complete, but you will notice that nothing happens yet. We have defined a new class, but we are not yet creating an <em>object</em> based off of it. We will need to do that now. Add the following code to the <em>end</em> of your script, and make sure that it <strong>has no indentation</strong>.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">def</span> main():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>    <span class="co">&quot;Instantiate and pop up the window.&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    LabelDemo().mainloop()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>main()</span></code></pre></div>
+<p>Inside this new <code>main()</code> function, we create a new object based off our <code>LabelDemo</code> class, and <code>mainloop()</code> will allow our Window to remain open and wait for user interaction.</p>
+<p>Save and run your program. If all is well, you should see a window created that looks like this:</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/hello.png" /></p>
+<h2 id="classes-and-objects">9.3 Classes and Objects</h2>
+<p>We have discussed objects before: they are a more modern way of organising code. You have had experience creating objects; however in this lab you have also created a <em>Class</em>. A class provides a ‘template’ for each object created from it. Classes generally are named with Capital Letters, such as <code>LabelDemo</code> and <code>Label</code>.</p>
+<p>When you create an object using a class, the <code>__init__</code> method is called and will initialise various attributes for our object. Inside our <code>LabelDemo</code> init, we set a master title and create another object called <code>_label</code>. <code>_label</code> is set up using a template <code>Label</code>, which in turn calls its own <code>__init__</code> method. You can see that we pass <code>text = "Hello world!"</code> to this object, and this becomes the text that the label displays.</p>
+<h3 id="what-about-self">What About <code>self</code>?</h3>
+<p>The methods and attributes that we create in Python have to be associated with each object that they belong to, so it is required that we pass <code>self</code> as a parameter inside <em>each method that we create</em>. This is a confusing concept, but don’t worry: all you have to remember is to include <code>self</code> inside method definitions!</p>
+<p>Programming using objects and classes can be difficult to grasp at first, but for the GUI application it is absolutely essential. One other thing to note: we can set objects to be <em>private</em> by starting them with an underscore, such as <code>_label</code>. It’s recommended that you follow this practice.</p>
+<h2 id="task-many-objects-one-class">9.4 TASK: Many Objects, One Class</h2>
+<p>Ensure that <code>lab9a.py</code> is open. Inside <code>LabelDemo</code>’s <code>__init__</code> method, create a new label object. Name the object <code>self._label2</code> and make sure it’s being created from the <code>Label</code> class. In fact, the only change that you should make is in the <code>text</code> string!</p>
+<p>Once you have created this new label, use <code>self._label2.grid()</code> to add it to the window. Save and run your script.</p>
+<p>This should hopefully illustrate the use of objects and classes.</p>
+<ul>
+<li><code>Label</code> is a template.</li>
+<li><code>_label</code> and <code>_label2</code> are objects.</li>
+<li>The <code>Label</code> class defines how <code>label</code> objects work, but each <code>label</code> object will have its own unique text.</li>
+<li><code>self._label = Label(self, text = "text")</code> will called <code>Label</code>’s <code>__init__</code> method, and <code>text = "text"</code> will be passed in.</li>
+<li><strong>We don’t have to read <code>Label</code>’s <code>__init__</code> method, all we need to know is to pass in <code>text = "text"</code> to have it work.</strong></li>
+</ul>
+<h2 id="defining-behaviour-using-buttons">9.5 Defining Behaviour Using Buttons</h2>
+<p>Our first program is not very interactive: labels just display text and nothing more. In order to create interactivity we will need to introduce buttons. Create a new file called <code>lab9b.py</code> and include the following code:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="im">from</span> tkinter <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">class</span> ButtonDemo(Frame):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>        Frame.<span class="fu">__init__</span>(<span class="va">self</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>        <span class="va">self</span>.master.title(<span class="st">&quot;Button Demo&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>        <span class="va">self</span>.grid()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>        <span class="va">self</span>._label <span class="op">=</span> Label(<span class="va">self</span>, text <span class="op">=</span> <span class="st">&quot;Hello&quot;</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>        <span class="va">self</span>._label.grid()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>        <span class="va">self</span>._button <span class="op">=</span> Button(<span class="va">self</span>, text <span class="op">=</span> <span class="st">&quot;click&quot;</span>, command <span class="op">=</span> <span class="va">self</span>._switch)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>        <span class="va">self</span>._button.grid()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a><span class="kw">def</span> main():</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>    <span class="co">&quot;Instantiate and pop up the window.&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>    ButtonDemo().mainloop()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>main()</span></code></pre></div>
+<p>This code resembles our previous example but also defines a new object of the <code>Button</code> class. The <code>command = self._switch</code> here is pointing to a method that will be called when the button is clicked. We will need to define this method <em>inside the <code>ButtonDemo</code> class</em>. Make sure that this method comes <strong>before <code>main()</code></strong>, and make sure that the <strong><code>def</code> line is indented four spaces</strong>. It should be at the <strong>same indent level</strong> as <code>def __init__</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>   <span class="kw">def</span> _switch(<span class="va">self</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>        <span class="cf">if</span> <span class="va">self</span>._label[<span class="st">&quot;text&quot;</span>] <span class="op">==</span> <span class="st">&quot;Hello&quot;</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>            <span class="va">self</span>._label[<span class="st">&quot;text&quot;</span>] <span class="op">=</span> <span class="st">&quot;Goodbye&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>            <span class="va">self</span>._label[<span class="st">&quot;text&quot;</span>] <span class="op">=</span> <span class="st">&quot;Hello&quot;</span></span></code></pre></div>
+<p>Run <code>lab9b.py</code> now. Click the button to see what happens.</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/button.png" /></p>
+<h3 id="task-experiments">TASK: Experiments</h3>
+<ul>
+<li>The user clicking on the button activates an <em>event</em>, which we must handle using a method. You can try removing <code>command = self._switch</code> from the line that creates <code>_button</code> and see what happens.</li>
+<li>Replace the <code>command =</code> text, but instead of <code>_switch</code>, come up with your own method name (Don’t forget <code>self</code>!) Then make sure you change the <code>def _switch</code> line to match that method name.</li>
+<li>Finally, you will notice that inside the method, we are modifying <code>_label</code>’s text. Change this so that <code>_button</code>’s text is modified instead.</li>
+</ul>
+<h3 id="task-the-grid">TASK: The Grid</h3>
+<ul>
+<li>Right now <code>tkinter</code> is arranging our objects in a default manner. For me, it is placing the label on top of the button. We can change this so that the label and button are on the same <em>row</em>, but next to each other. We will modify the <code>.grid()</code> instructions, providing a row and column for each object.</li>
+<li>On the line that says <code>self._label.grid()</code>, put <code>row = 0, column = 0</code> inside <code>grid</code>’s parentheses <code>()</code>. Put <code>row = 0, column = 1</code> inside the <code>grid</code> for <code>self._button</code>. Run the script and note the difference.</li>
+<li>Now, modify the code again so that the button is <em>to the left</em> of the label. Save your script.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>row 0, column 0</th>
+<th>row 0, column 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>row 1, column 0</td>
+<td>row 1, column 1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="text-boxes">9.6 Text Boxes</h2>
+<p>Now that we have introduced events using buttons, we can introduce another window object. Text boxes will be familiar to most of us: these are (usually) white boxes that the user can input text into. We can also print output to text boxes. <code>tkinter</code> provides us with an <code>Entry</code> object that will implement text boxes.</p>
+<ul>
+<li>Create a new file called <code>lab9c.py</code>.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="im">from</span> tkinter <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="im">import</span> math</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="kw">class</span> CircleArea(Frame):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>        Frame.<span class="fu">__init__</span>(<span class="va">self</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>        <span class="va">self</span>.master.title(<span class="st">&quot;Circle Area&quot;</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>        <span class="va">self</span>.grid()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>        <span class="va">self</span>._radiusLabel <span class="op">=</span> Label(<span class="va">self</span>, text <span class="op">=</span> <span class="st">&quot;Radius&quot;</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>        <span class="va">self</span>._radiusLabel.grid(row<span class="op">=</span><span class="dv">0</span>, column<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>        <span class="va">self</span>._radiusVar <span class="op">=</span> DoubleVar()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>        <span class="va">self</span>._radiusEntry <span class="op">=</span> Entry(<span class="va">self</span>, textvariable<span class="op">=</span> <span class="va">self</span>._radiusVar)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>        <span class="va">self</span>._radiusEntry.grid(row<span class="op">=</span><span class="dv">0</span>, column<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>        <span class="va">self</span>._areaLabel <span class="op">=</span> Label(<span class="va">self</span>, text <span class="op">=</span> <span class="st">&quot;Area&quot;</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>        <span class="va">self</span>._areaLabel.grid(row<span class="op">=</span><span class="dv">1</span>, column<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>        <span class="va">self</span>._areaVar <span class="op">=</span> DoubleVar()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>        <span class="va">self</span>._areaEntry <span class="op">=</span> Entry(<span class="va">self</span>, textvariable<span class="op">=</span><span class="va">self</span>._areaVar)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a>        <span class="va">self</span>._areaEntry.grid(row<span class="op">=</span><span class="dv">1</span>, column<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a>        <span class="va">self</span>._button <span class="op">=</span> Button(<span class="va">self</span>, text <span class="op">=</span> <span class="st">&quot;Compute&quot;</span>, command <span class="op">=</span> <span class="va">self</span>._area)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a>        <span class="va">self</span>._button.grid(row<span class="op">=</span><span class="dv">2</span>, column<span class="op">=</span><span class="dv">0</span>, columnspan<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a>    <span class="kw">def</span> _area(<span class="va">self</span>):</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true"></a>        radius <span class="op">=</span> <span class="va">self</span>._radiusVar.get()</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true"></a>        area <span class="op">=</span> radius <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> math.pi</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true"></a>        <span class="va">self</span>._areaVar.<span class="bu">set</span>(area)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true"></a><span class="kw">def</span> main():</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true"></a>    CircleArea().mainloop()</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a>main()</span></code></pre></div>
+<p>Run the code, you should see a window that looks similar to this:</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/tbox.png" /></p>
+<p>Let us now analyze the code above, and pay attention to <code>__init__</code>.</p>
+<ul>
+<li><code>tkinter</code> requires us to create special objects to contains the value of textboxes. Here a <code>DoubleVar</code> functions the same way as a <code>float</code>.</li>
+<li><code>_radiusEntry</code> is the name of the first text box, and <code>_areaEntry</code> is the name of the second.</li>
+<li><code>textvariable</code> will associate the contents of a textbox with a variable, so that we can use it for further processing.</li>
+<li>The <code>Entry</code> objects here have no methods associated with them, but their contents will be used when the user clicks the “Compute” button.</li>
+<li>Also note: the button object has been modified to take up more than one column, using <code>columnspan</code>. This can be used to make applications more presentable.</li>
+</ul>
+<p>Now let’s look at the method which is called when the “Compute” button is pressed. This is called <code>_area()</code>:</p>
+<ul>
+<li>We create a local variable called <code>radius</code>, and we <code>self._radiusVar.get()</code> to return the text from the <code>_radiusEntry</code> textbox.</li>
+<li>Similarly, we can use <code>self._areaVar.set(area)</code> to put the contents of <code>area</code> into the <code>_areaEntry</code> textbox.</li>
+<li>So we can conclude that textboxes can act like both the <code>print()</code> function (by using <code>.set()</code> and like the <code>input()</code> function (by using <code>.get()</code>.</li>
+<li>If you recall from Lab 2, whenever we work with user input, we run the risk of having exceptions occur. This is still a concern for us. Try entering non-numeric input into the “Radius” text box.</li>
+</ul>
+<h2 id="task-dialog-boxes">9.7 TASK: Dialog Boxes</h2>
+<p>A common way for GUI applications to occur errors is to make use of pop-up dialog boxes such as the one shown below:</p>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/error.png" /></p>
+<p>Fortunately the <code>tkinter</code> framework comes with a submodule which we can use to easily generate an error message. You will need to add a line to the top of your code: <code>from tkinter.messagebox import *</code>.</p>
+<p>Once this is done, you can create an error box with the following line:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>showerror(message<span class="op">=</span><span class="st">&quot;Error: Bad format&quot;</span>, parent<span class="op">=</span><span class="va">self</span>)</span></code></pre></div>
+<ul>
+<li><code>showerror</code> will define what type of icon is shown to the left of your message.</li>
+<li>Find the line that caused the exception when you previously tested bad input. Put this line into a <code>try...except</code> block.</li>
+<li>It’s always better to specify the type of exception you wish to handle, but you may have noticed that the exception thrown is a custom type specific to <code>tkinter</code>. (In other words, using <code>except TypeError</code> won’t work here). Use the exception message to find the right exception type, or leave it as a default <code>except</code> if you prefer.</li>
+<li>Once your exception handling is working, save your finished version of <code>lab9c.py</code>.</li>
+</ul>
+<h2 id="task-the-atm-example">9.8 TASK: The ATM Example</h2>
+<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-start.png" /></p>
+<p>Create one more file called <code>lab9d.py</code>. Use what you have learned to re-create the following application. Read the following to get started:</p>
+<ul>
+<li>Your program will need one Label for “Amount” and one for “Status” textboxes. You will also need to define a <code>DoubleVar</code> for the “Amount” textbox, and <code>StringVar</code> for status.</li>
+<li>Create <code>self._balance</code> as a <strong>float</strong> (not a <code>DoubleVar</code>). Inside <code>__init__</code>, set this to a starting value, for example <code>100.0</code>.</li>
+<li>Inside <code>Entry</code>, you can add <code>justify=CENTER</code> so that text is always centered.</li>
+<li>Create three methods: one to return balance, one to make a deposit, and one to make a withdrawal. These should be associated with three buttons.</li>
+<li>The method to return balance should use <code>.set()</code> to print the <code>self._balance</code> variable. <strong>HINT:</strong> You can use f-strings inside <code>.set()</code>. Use this to format your currency properly.</li>
+<li>The method to deposit should use <code>.get()</code> with the amount textbox. Use error handling! Add this amount to your balance.</li>
+<li>The method to deposit should use <code>.get()</code> with the amount textbox. If the amount is greater than balance, print “Insufficient funds” inside the status box. Otherwise deduct this amount from balance.</li>
+<li>Refer to the following: to get a better idea of what’s required:</li>
+</ul>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-dep.png" alt="" /><figcaption>Depositing Money</figcaption>
+</figure>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-nofunds.png" alt="" /><figcaption>Insufficient Funds</figcaption>
+</figure>
+<figure>
+<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-balance.png" alt="" /><figcaption>Printing the Balance</figcaption>
+</figure>
+<ul>
+<li>Submit this file along with the others to complete this final lab!</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+<code>lab9a.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab9b.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab9c.py</code></li>
+<li><input type="checkbox" disabled="" />
+<code>lab9d.py</code></li>
+</ul>
+</body>
+</html>

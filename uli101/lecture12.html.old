@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" type="text/css" />
+</head>
+<body>
+<h2 id="bash-scripting-part-ii">Bash Scripting Part II</h2>
+<p>In order to discuss some more features of the Bash scripting language, I'm going to demonstrate a couple of little scripts, including version 2 of the simple 'say-hi-to' script we saw in week 10.</p>
+<h4 id="example-1-say-hi-to-version-2.0">Example 1: <em>Say Hi To</em> version 2.0</h4>
+<p>If you remember, in the first version of that script, we had a script that would basically work correctly if you had either one or two arguments:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+<span class="co"># This is a test script! :)</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-lt</span> 2<span class="bu"> ]</span> <span class="co"># If the number of arguments is less than two...</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span> <span class="co"># Say hi to one person. Otherwise...</span>
+<span class="kw">else</span>
+    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st"> and </span><span class="va">$2</span><span class="st">!&quot;</span> <span class="co"># Say hi to two people.</span>
+<span class="kw">fi</span>
+<span class="bu">echo</span> <span class="st">&quot;Number of arguments: </span><span class="va">$#</span><span class="st">&quot;</span> <span class="co"># print the number of names that were given.</span></code></pre></div>
+<p>This script has a lot of limitations. If you give more than two names, it will say hello to the first two and ignore the rest. It also doesn't handle a case where the user gives <em>zero</em> arguments. We can improve this script by using a better <em>if.. elif.. else</em> format.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span><span class="bu"> [</span> condition<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="ex">action</span>
+<span class="kw">elif</span><span class="bu"> [</span> second condition<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="ex">second</span> action
+<span class="kw">else</span>
+    <span class="ex">default</span> action
+<span class="kw">fi</span></code></pre></div>
+<p>In this next example, we don't need to think about numerical comparisons such as <em>less than</em> <code>-lt</code> or <em>greater than</em> <code>-gt</code>. We can treat the value of <code>$#</code> like a string. So let's specify a condition for <em>zero</em> arguments, a condition for <em>one</em> argument, and a default case for everything else:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+<span class="co"># Always comment your code.</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">=</span> 0<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> Usage: please include at least one person to greet. <span class="op">1&gt;&amp;2</span>
+    <span class="bu">exit</span> 1
+<span class="kw">elif</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">=</span> 1<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span>
+<span class="kw">else</span>
+    <span class="bu">echo</span> <span class="st">&quot;Wow, there are a lot of people in here...&quot;</span>
+<span class="kw">fi</span>
+<span class="bu">exit</span> 0</code></pre></div>
+<p>So one thing to note about our exit codes: in the first condition we specify an exit code of 1. Once we hit an exit, the program is finished. If there are no arguments, we take the first set of actions and never get to the bottom of the script. We never encounter <code>exit 0</code>. However, if either one argument or many arguments are encountered, we <em>do</em> reach <code>exit 0</code>. This is good: <em>0</em> means everything was working properly. <em>1</em> means there was an error. We consider the script to be running normally if one or more names have been entered.</p>
+<p>The next thing to think about is how to deal with the case where we have many names? How can we handle this case in a way that looks nice? Well, let's try a loop. We want to deal with each name in the arguments list <code>$*</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">variable</span> in list
+<span class="kw">do</span>
+    <span class="ex">repeated</span> actions
+<span class="kw">done</span></code></pre></div>
+<p>So now our script might look like this:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="co"># say hi to version 2</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">=</span> 0<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> Usage: please include at least one person to greet. <span class="op">1&gt;&amp;2</span>
+    <span class="bu">exit</span> 1
+<span class="kw">elif</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">=</span> 1<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span>
+<span class="kw">else</span>
+    <span class="kw">for</span> <span class="ex">name</span> in <span class="va">$*</span>
+    <span class="kw">do</span>
+        <span class="bu">echo</span> <span class="va">$name</span>
+    <span class="kw">done</span>
+<span class="kw">fi</span>
+<span class="bu">exit</span> 0</code></pre></div>
+<p>This script now handles 0 arguments by complaining to the user, it handles 1 argument by saying &quot;Hello User!&quot; and it handles 2 or more arguments by simply listing those names, each on a new line:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Eric</span>
+<span class="ex">Sarah</span>
+<span class="ex">Yoko</span>
+<span class="ex">Nate</span>
+<span class="ex">Paul</span>
+<span class="ex">...</span></code></pre></div>
+<p>This isn't what we want. We want our script to respond to us by saying hello in a way that is somewhat closer to real communication.</p>
+<p>First, let's make it so that before we enter the loop, we say Hello, and using <code>-n</code> to suppress the newline...</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">    <span class="bu">echo</span> -n <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">&quot;</span></code></pre></div>
+<p>...then inside our loop we insert &quot;and&quot; and a name...</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">    <span class="bu">echo</span> -n <span class="st">&quot; and </span><span class="va">$name</span><span class="st">&quot;</span></code></pre></div>
+<p>...and after iterating through each name in our argument list, we finish with an &quot;!&quot; to make it match up with our output before. This time, we <em>do</em> want to finish with a newline, because this is the end of our script.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&#39;!&#39;</span> <span class="co"># Notice the single quotes here!</span>
+<span class="co"># We don&#39;t want this ! to be interpreted as anything other than punctuation.</span></code></pre></div>
+<p>(If you don't understand why we want a newline, go ahead and try this script with a <code>-n</code> flag and see how it looks!)</p>
+<p>There's one last piece of the puzzle: If I run this script with arguments like this:</p>
+<p><code>./say-hi-to2 Eric Sarah Yoko Nate Paul</code></p>
+<p>...My output looks like this:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Hello</span> Eric and Eric and Sarah and Yoko and Nate and Paul!</code></pre></div>
+<p>...So we can conclude that the value of <code>$1</code> and the <em>first</em> value of <code>$*</code> are the same. What we want to do is discard the first value of our argument list and to <em>shift</em> all of our arguments up one:</p>
+<p><strong>Before Shift:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>$1</th>
+<th>$2</th>
+<th>$3</th>
+<th>$4</th>
+<th>$5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Eric</td>
+<td>Sarah</td>
+<td>Yoko</td>
+<td>Nate</td>
+<td>Paul</td>
+</tr>
+</tbody>
+</table>
+<p><strong>After Shift:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>$1</th>
+<th>$2</th>
+<th>$3</th>
+<th>$4</th>
+<th>$5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sarah</td>
+<td>Yoko</td>
+<td>Nate</td>
+<td>Paul</td>
+<td>--</td>
+</tr>
+</tbody>
+</table>
+<p>Conveniently enough, the name of this command is <code>shift</code>. We will call it after saying &quot;Hello&quot;:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="co"># say hi to version 2</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">=</span> 0<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> Usage: please include at least one person to greet. <span class="op">1&gt;&amp;2</span>
+    <span class="bu">exit</span> 1
+<span class="kw">elif</span><span class="bu"> [</span> <span class="va">$#</span> <span class="ot">=</span> 1<span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">!&quot;</span>
+<span class="kw">else</span>
+    <span class="bu">echo</span> -n <span class="st">&quot;Hello </span><span class="va">$1</span><span class="st">&quot;</span>
+    <span class="bu">shift</span> <span class="co"># discard the value $1, and shift all arguments up</span>
+    <span class="kw">for</span> <span class="ex">name</span> in <span class="va">$*</span>
+    <span class="kw">do</span>
+        <span class="bu">echo</span> -n <span class="st">&quot; and </span><span class="va">$name</span><span class="st">&quot;</span>
+    <span class="kw">done</span>
+    <span class="bu">echo</span> <span class="st">&#39;!&#39;</span>
+<span class="kw">fi</span>
+<span class="bu">exit</span> 0</code></pre></div>
+<p><em>Bonus:</em> If you are looking for practice, I challenge you to create <em>say-hi-to3</em>. Instead of separating names with the word 'and', separate them with commas, until you reach the last name, which should have an 'and' preceding it.</p>
+<p><code>./say-hi-to3 Eric Sarah Yoko Nate</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Hello</span> Eric, Sarah, Yoko and Nate!</code></pre></div>
+<hr />
+<h4 id="example-2-create-directories">Example 2: Create directories</h4>
+<p>Let's try an example that is slightly closer to a real-world example. At Seneca, we need to prepare Matrix accounts for each new student. The list of new students is coming from the Admissions office, and we are receiving that in a file called <code>roster.txt</code>.</p>
+<p>Now, let's also assume that we have a bunch of existing students listed in <code>roster.txt</code>. Maybe they are repeating a class. For these students, we want to move whatever is in their directory into a backup.</p>
+<p>The first challenge is to be reading from a file in our script. There's a couple ways to do it, but let's take this moment to talk about a while loop:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="ex">condition</span> is true
+<span class="kw">do</span>
+    <span class="ex">actions</span>
+<span class="kw">done</span></code></pre></div>
+<p>Now, how can we use this to read a file? Basically we want to take each line as input, and deal with it separately. When there are no longer any lines in the file to read, we are finished and want to exit the loop. Here's what we might have so far:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="co"># Create directories for each student.</span>
+
+<span class="va">attendance=</span>roster.txt
+
+<span class="bu">echo</span> <span class="st">&quot;Reading from &quot;</span><span class="va">$attendance</span><span class="st">&quot;...&quot;</span>
+<span class="kw">while</span> <span class="bu">read</span> <span class="va">input</span>
+<span class="kw">do</span>
+    <span class="bu">echo</span> <span class="st">&quot;I found &quot;</span><span class="va">$input</span><span class="st">&quot;.&quot;</span>
+
+<span class="kw">done</span> <span class="op">&lt;</span> <span class="va">$attendance</span></code></pre></div>
+<p>I like to put important variables like filenames at the very top of a script, so that they are easy to find and edit later.</p>
+<p>What does <code>&lt; $attendance1</code> do in this case? It is accepting input from our file. As long as there is something to <code>read</code> from <code>$attendance1</code>, our condition is true. <code>input</code> is a variable name, and it could be anything we choose to name it.</p>
+<p>If this syntax is confusing for you, don't sweat it. It's not too common in Bash, but it has some important use cases. This is one of them.</p>
+<p>I'm going to name this script <code>create_users.sh</code>. Then I can run it: <code>./create_users.sh</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Reading</span> from roster.txt...
+<span class="ex">I</span> found mhuang.
+<span class="ex">I</span> found ebrau.
+<span class="ex">I</span> found cjohnson.
+<span class="ex">I</span> found mfernandes.
+<span class="ex">I</span> found rpatel.</code></pre></div>
+<p>So far, so good. The confusing syntax for file reading works. Now, for each line of roster.txt, we want to check if that user's directory exists yet. If it doesn't, then we should create it. And one more thing: let's change the hardcoded value for <code>attendance</code> to accept an argument. To be safe, let's also run a check to make sure that roster.txt exists.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="co"># Create directories for each student.</span>
+
+<span class="va">attendance=$1</span>
+<span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-f</span> <span class="st">&quot;</span><span class="va">$attendance</span><span class="st">&quot;</span><span class="bu"> ]</span>
+<span class="kw">then</span>
+    <span class="bu">echo</span> <span class="st">&quot;&quot;</span><span class="va">$attendance</span><span class="st">&quot; not found.&quot;</span>
+    <span class="bu">exit</span> 1
+<span class="kw">fi</span>
+
+<span class="bu">echo</span> <span class="st">&quot;Reading from &quot;</span><span class="va">$attendance</span><span class="st">&quot;...&quot;</span>
+<span class="kw">while</span> <span class="bu">read</span> <span class="va">input</span>
+<span class="kw">do</span>
+    <span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-d</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span><span class="bu"> ]</span>
+    <span class="kw">then</span>
+        <span class="fu">mkdir</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span>
+        <span class="bu">echo</span> <span class="st">&quot;Created &quot;</span><span class="va">$input</span><span class="st">&quot;.&quot;</span>
+    <span class="kw">fi</span>
+<span class="kw">done</span> <span class="op">&lt;</span> <span class="va">$attendance</span></code></pre></div>
+<p>Remember: - -f: True if <em>file</em> exists. - -d: True if <em>directory</em> exists. - !: Inverts the logic.</p>
+<p><code>./create_users.sh rostar.txt</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">rostar.txt</span> not found.</code></pre></div>
+<p><code>./create_users.sh roster.txt</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Reading</span> from roster.txt...
+<span class="ex">Created</span> mhuang.
+<span class="ex">Created</span> ebrau.
+<span class="ex">Created</span> cjohnson.
+<span class="ex">Created</span> mfernandes.
+<span class="ex">Created</span> rpatel.</code></pre></div>
+<p>If we run this script again, nothing would happen because all directories have already been created. Our script would simply skip over each student that already has a directory. But what we really want to do is to make a backup of that directory, and then re-create a clean directory for that user. Essentially:</p>
+<pre><code>    For each line of our attendance:
+        if that directory already exists:
+            move that directory to a backup.
+        then:
+            create an empty directory.</code></pre>
+<p>One more step, and this will introduce another important piece of syntax. As we make backups, we want those backups to be sorted by <em>date</em>. Essentially, we want to assign today's date to a variable.</p>
+<p>First, let's set variables for our directories, so that we can change them easily later.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">attendance=</span><span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span>
+<span class="va">user_dir=</span><span class="st">&quot;users&quot;</span> <span class="co"># In the real world, we create these in /home!</span>
+<span class="va">backup_dir=</span><span class="st">&quot;backup&quot;</span>
+<span class="va">today=</span><span class="st">&quot;&quot;</span> <span class="co"># </span><span class="al">TODO</span><span class="co">: set this to today&#39;s date.</span></code></pre></div>
+<p>To set the value of <code>today</code>, we can use <code>$( ... )</code> or '''' to call another command, and to assign its output to a variable. In Bash, you do it like this:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">today=$(</span><span class="fu">date</span> <span class="st">&#39;+%Y-%m-%d&#39;</span><span class="va">)</span></code></pre></div>
+<p>It's not necessary to memorize the '+%Y-%m-%d'! All that's important to remember is that you are basically running that command (<code>date '+%Y-%m-%d'</code>) in a new shell. When the command completes, the output is assigned to <code>today</code>.</p>
+<p>Here's the current version of the script:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="co"># Create directories for each student.</span>
+
+<span class="va">attendance=</span><span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span>
+<span class="va">user_dir=</span><span class="st">&quot;users&quot;</span> <span class="co"># In the real world, we create these in /home!</span>
+<span class="va">backup_dir=</span><span class="st">&quot;backup&quot;</span>
+<span class="va">today=$(</span><span class="fu">date</span> <span class="st">&#39;+%Y-%m-%d&#39;</span><span class="va">)</span> <span class="co"># Don\&#39;t worry about remembering this! It\&#39;s just an example..</span>
+<span class="bu">echo</span> <span class="st">&quot;Today is: &quot;</span><span class="va">$today</span><span class="st">&quot;.&quot;</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-d</span> <span class="st">&quot;</span><span class="va">$backup_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$today</span><span class="st">&quot;</span><span class="bu"> ]</span> <span class="co"># If today&#39;s backup doesn&#39;t exist,</span>
+<span class="kw">then</span>
+        <span class="fu">mkdir</span> <span class="st">&quot;</span><span class="va">$backup_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$today</span><span class="st">&quot;</span> <span class="co"># create it.</span>
+<span class="kw">fi</span>
+
+<span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-f</span> <span class="st">&quot;</span><span class="va">$attendance</span><span class="st">&quot;</span><span class="bu"> ]</span> <span class="co"># if the user&#39;s argument is not a file,</span>
+<span class="kw">then</span>
+        <span class="bu">echo</span> <span class="st">&quot;&quot;</span><span class="va">$attendance</span><span class="st">&quot; not found.&quot;</span> <span class="co"># complain and exit.</span>
+        <span class="bu">exit</span> 1
+<span class="kw">fi</span>
+
+<span class="bu">echo</span> <span class="st">&quot;Reading from &quot;</span><span class="va">$attendance</span><span class="st">&quot;...&quot;</span> <span class="co"># Always keep the user informed!</span>
+<span class="kw">while</span> <span class="bu">read</span> <span class="va">input</span>
+<span class="kw">do</span>
+        <span class="kw">if</span><span class="bu"> [</span> <span class="ot">-d</span> <span class="st">&quot;</span><span class="va">$user_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span><span class="bu"> ]</span> <span class="co"># If the directory already exists,</span>
+        <span class="kw">then</span>
+                <span class="fu">mv</span> <span class="st">&quot;</span><span class="va">$user_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$backup_dir</span><span class="st">&quot;</span>/<span class="st">&quot;</span><span class="va">$today</span><span class="st">&quot;</span> <span class="co"># move it to backup.</span>
+        <span class="kw">fi</span>
+        <span class="fu">mkdir</span> users/<span class="st">&quot;</span><span class="va">$input</span><span class="st">&quot;</span> <span class="co"># Then, no matter what, create a fresh directory.</span>
+        <span class="bu">echo</span> <span class="st">&quot;Created &quot;</span><span class="va">$input</span><span class="st">&quot;.&quot;</span> <span class="co"># Always keep the user informed!</span>
+<span class="kw">done</span> <span class="op">&lt;</span> <span class="va">$attendance</span>
+<span class="bu">exit</span> 0 <span class="co"># If we get to here without exiting, the script was successful.</span></code></pre></div>
+<p><code>./create_users.sh roster.txt</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">Today</span> is: 2018-08-04.
+<span class="ex">Reading</span> from roster.txt...
+<span class="ex">Created</span> mhuang.
+<span class="ex">Created</span> ebrau.
+<span class="ex">Created</span> cjohnson.
+<span class="ex">Created</span> mfernandes.
+<span class="ex">Created</span> rpatel.
+<span class="ex">Created</span> sam.</code></pre></div>
+<p><code>tree</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">.</span>
+├── <span class="ex">backup</span>
+│   └── <span class="ex">2018-08-04</span>
+│       ├── <span class="ex">cjohnson</span>
+│       ├── <span class="ex">ebrau</span>
+│       │   └── <span class="ex">test.txt</span>
+│       ├── <span class="ex">mfernandes</span>
+│       ├── <span class="ex">mhuang</span>
+│       └── <span class="ex">rpatel</span>
+├── <span class="ex">create_users.sh</span>
+├── <span class="ex">roster.txt</span>
+└── <span class="fu">users</span>
+    ├── <span class="ex">cjohnson</span>
+    ├── <span class="ex">ebrau</span>
+    ├── <span class="ex">mfernandes</span>
+    ├── <span class="ex">mhuang</span>
+    ├── <span class="ex">rpatel</span>
+    └── <span class="ex">sam</span>
+
+<span class="ex">15</span> directories, 4 files</code></pre></div>
+<p>As you can see, I made a test.txt file in ebrau's folder. I also added 'sam' to my roster.txt and then ran the script. My test.txt file was copied to the backup, and sam's folder was created.</p>
+<p>Feel free to grab these two scripts for reference and modification: - <code>wget https://matrix.senecacollege.ca/~eric.brauer/uli101/say-hi-to2.sh</code> - <code>wget https://matrix.senecacollege.ca/~eric.brauer/uli101/create_users.sh</code></p>
+<p><strong>Bonus:</strong> It's unlikely that <code>roster.txt</code> would just be usernames. Most likely, it would probably have fields like First Name, Last Name, Student ID, Program and so on. Before creating anything, you most likely would have to select the appropriate field using <code>awk</code>. Create a <code>roster2.txt</code> file with some of these fields, and think about how you could parse <code>input</code>.</p>
+<p><strong>Note</strong>: I said that this was a real-world example, but this isn't quite true. In Linux, we don't simply use the <code>mkdir</code> command for new users. Each new user will have a folder, but inside that home folder there should be some standard files like .bashrc and Acceptable-Use-Policy. We would also need to set a low level of permissions, so that students don't have the ability to <code>rm -rf /</code>! And we need to set up quotas so that students don't fill the Matrix hard drives with Gigabytes of their personal data. We also need to set passwords based off of Blackboard.</p>
+<p>These types of commands fall under user management, and it's beyond the scope of this course! But my hunch is that if you replaced the <code>mkdir</code> commands with something like <code>adduser</code>, you'd be in the ballpark of how things really work.</p>
+</body>
+</html>

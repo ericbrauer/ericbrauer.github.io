@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>EXAM REVIEW</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">EXAM REVIEW</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#here-are-some-things-you-can-expect-to-see-on-the-exam">Here are some things you can expect to see on the Exam</a></li>
+<li><a href="#here-are-some-topics-that-are-not-on-the-exam">Here are some topics that are NOT ON THE EXAM</a></li>
+<li><a href="#some-resources-to-study-from">Some resources to study from</a></li>
+</ul>
+</nav>
+<hr />
+<h2 id="here-are-some-things-you-can-expect-to-see-on-the-exam">Here are some things you can expect to see on the Exam</h2>
+<ul>
+<li>file permissions (using chmod and umask, using octals to <em>set</em> permissions and ugo+rwx to <em>change</em> permissions (Week 4)</li>
+<li>file expansion wildcards: *, ?, [ ], [! ] (Week 3)</li>
+<li>basic file commands such as <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>mkdir</code>, etc. (Week 2)</li>
+<li>absolute/relative paths (Week 2)</li>
+<li>filter commands such as <code>sort</code>, <code>head</code>, <code>tail</code> etc. (Week 5)</li>
+<li>pipes and file redirections (Week 2 and 5)</li>
+<li>SSH and SCP commands (Week 6)</li>
+<li>be able to read simple bash scripts. (Week 10)</li>
+<li>variables like $?, $#, $*, etc. (Week 10)</li>
+<li>using regular expressions with grep, sed, and awk (Week 9 and 11)</li>
+<li>hex, bin, octal conversions</li>
+<li>…and more</li>
+</ul>
+<h2 id="here-are-some-topics-that-are-not-on-the-exam">Here are some topics that are NOT ON THE EXAM</h2>
+<ul>
+<li>egrep and extended regular expressions</li>
+<li>vim commands</li>
+<li>network commands such as ping, nmap, netstat</li>
+<li>UNIX theory: inodes, processes, etc.</li>
+</ul>
+<h2 id="some-resources-to-study-from">Some resources to study from</h2>
+<ul>
+<li>Review lecture notes (especially summaries)</li>
+<li>Redo assignment sections that you find difficult (repeating any part of the assignments <strong>won’t</strong> affect your final grade!)</li>
+<li>Review and correct your quizzes and midterm</li>
+<li>The <a href="https://cs.senecac.on.ca/~fac/uli101/live/">ULI101 Homepage</a> has links to more lecture notes and exercises</li>
+<li>ULG has exam review and <em>even more</em> practice questions</li>
+<li>If you have questions about a particular topic, you may ask me for clarification</li>
+</ul>
+<h4 id="here-are-some-general-questions-that-you-should-be-able-to-answer-after-your-review.-these-dont-include-everything-you-might-see-on-the-exam-but-should-give-you-an-idea.">Here are some general questions that you should be able to answer after your review. These don’t include everything you might see on the exam, but should give you an idea.</h4>
+<ul>
+<li>What is the command to set <code>file1</code>’s permissions so a user can read write and execute, and everyone else can read and execute? What is command so that these are also the default permissions for all new files? What is command to remove execute permissions from group?</li>
+<li>What is the difference between regular expressions and file expansions?</li>
+<li>How can you recognize an absolute path (what character does it contain at the beginning?) How can you recognize a relative-to-home path?</li>
+<li>What is the meaning of <code>!!</code>? Of <code>2&gt;&gt;</code>? Of <code>&amp;1</code>?</li>
+<li>What happens when you enter the command <code>touch this and that</code>?</li>
+<li>What is output of <code>echo '$USER'</code> and of <code>echo "$USER"</code>?</li>
+<li>Explain what this code is doing: <code>if [ $? -eq 0 ]</code></li>
+<li>What command will transfer a file to a remote location (like the Matrix server)?</li>
+<li>What command will list the background jobs that are running?</li>
+<li>What command will create a symbolic link <code>syslog</code> for the file <code>/var/log/system.log</code> in the directory <code>~</code>?</li>
+<li>What will be the output of this command: <code>grep -iv '^c' cars</code>?</li>
+<li>What will be the output of this command: <code>awk '$5 ~ /^[^4][0-9][0-9]$/ {print $1,$2,$NF}' cars</code></li>
+<li>What command will replace every <code>"</code> with a <code>'</code> in the file <code>demo.old</code>?</li>
+<li>How do you specify a delimiter in <code>awk</code>?</li>
+<li>What command will copy a directory (and its contents) called <code>legit-content</code> from <code>/home/user/Downloads</code> into your current directory (assume that you are <code>user</code>?)</li>
+</ul>
+<p><strong>Good Luck!</strong></p>
+</body>
+</html>

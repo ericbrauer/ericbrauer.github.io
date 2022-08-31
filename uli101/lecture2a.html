@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 2A : Linux File Commands</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 2A : Linux File Commands</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#terminology-revisited">Terminology Revisited</a></li>
+<li><a href="#navigation-i">Navigation II</a></li>
+<li><a href="#more-navigation">More Navigation</a></li>
+<li><a href="#creating-files">Creating Files</a></li>
+<li><a href="#copying-files">Copying Files</a></li>
+<li><a href="#renaming-files">Renaming Files</a></li>
+<li><a href="#creating-directories">Creating Directories</a></li>
+<li><a href="#creating-directories-ii">Creating Directories II</a></li>
+<li><a href="#changing-options">Changing Options</a></li>
+<li><a href="#moving-files">Moving Files</a></li>
+<li><a href="#copying-directories">Copying Directories</a></li>
+<li><a href="#moving-directories">Moving Directories</a></li>
+<li><a href="#remove-filesdirectories">Remove Files/Directories</a></li>
+<li><a href="#navigation-ii">Navigation II</a></li>
+<li><a href="#summary-for-filepaths">Summary for Filepaths</a>
+<ul>
+<li><a href="#terminology">Terminology</a></li>
+</ul></li>
+<li><a href="#the-linux-filesystem">The Linux Filesystem</a></li>
+<li><a href="#understanding-the-information-in-ls--l">Understanding the Information in <strong>ls -l</strong></a></li>
+</ul>
+</nav>
+<p>If you are familiar with how files and directories work in Windows, then you’ll be happy to know that it works very similarly in Linux.</p>
+<p>When you start up File Explorer in Windows, you see an empty folder for your user, and inside there are folders called ‘Documents’, ‘Music’, ‘Desktop’, and so on.</p>
+<p>When you start up the File Explorer in Knoppix or any Linux distribution with a GUI, you will see almost exactly the same thing. Each user has a home directory located here: <strong>/home/<user>.</strong> (Please note the direction of the slashes, they are the opposite of the slashes in Windows!)</p>
+<hr />
+<h2 id="terminology-revisited">Terminology Revisited</h2>
+<figure>
+<img src="lecture2a-nautilus.png" alt="" /><figcaption>nautilus screenshot</figcaption>
+</figure>
+<ul>
+<li><strong>/home</strong> is the <em>parent</em> of the directory <strong>user</strong>.</li>
+<li>There are two <em>subdirectories</em>: <strong>Documents</strong> and <strong>Desktop</strong>.</li>
+<li>We talk about moving <em>into</em> a subdirectory, end moving <em>out</em> into the parent directory.</li>
+<li>As we move up and up, eventually we run out of parent directories. We are now in the <em>root</em> directory.</li>
+<li>The <em>root</em> directory in Windows is usually C:, which represents our primary file system. As you’ll see, Linux is a bit different.</li>
+</ul>
+<hr />
+<h2 id="navigation-i">Navigation II</h2>
+<p>Use <code>ls -a</code> to view the contents of your Matrix home. You might see something like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="bu">.</span>   <span class="ex">.bash_history</span>  .bashrc  public_html  .viminfo</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">..</span>  .bash_logout</span></code></pre></div>
+<ul>
+<li><code>cd public_html</code> is used to enter the public_html directory. You can use <code>ls</code> to see that there is only one document in here.</li>
+<li><code>cd ..</code> to go back up. Now we are back where we started, in the directory <strong>/home/student</strong>. Here is our first important Linux shortcut:</li>
+</ul>
+<p><code>..</code> = parent directory (one level up).</p>
+<hr />
+<h2 id="more-navigation">More Navigation</h2>
+<p>Try to use <code>cd ..</code> to enter <code>/home</code>. Use <code>ls</code> to view all of the home directories of students and professors (Be prepared to wait!). Ask a friend for their myseneca username, and use <code>cd &lt;username&gt;</code> to enter their home directory. Try to use <code>ls</code>. Does it let you?</p>
+<hr />
+<h2 id="creating-files">Creating Files</h2>
+<p>We can use a command called <code>touch</code> to make a file called <code>test1</code>. <code>touch test1</code></p>
+<p>This file is empty, it has nothing in it and its size is zero. You can confirm this by typing in <code>ls -l</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">total</span> 8</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="ex">drwxrwxr-x</span> 2 student student 4096 Sep  7 14:33 Desktop</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="ex">drwxrwxr-x</span> 2 student student 4096 Sep  7 15:51 Documents</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="ex">-rw-rw-r--</span> 1 student student    0 Sep  9 21:24 test1</span></code></pre></div>
+<p>See the 0 in the fifth column? That is file size.</p>
+<hr />
+<h2 id="copying-files">Copying Files</h2>
+<p>Now, let’s take a look at copy and move.</p>
+<p><code>cp</code> = copy</p>
+<p><code>cp test1 test2</code> what did that do?</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">total</span> 8</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ex">drwxrwxr-x</span> 2 student student 4096 Sep  7 14:33 Desktop</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="ex">drwxrwxr-x</span> 2 student student 4096 Sep  7 15:51 Documents</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">-rw-rw-r--</span> 1 student student    0 Sep  9 21:24 test1</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="ex">-rw-rw-r--</span> 1 student student    0 Sep  9 21:24 test2</span></code></pre></div>
+<p><code>cp</code> takes two <em>arguments</em>. The first is the <em>target</em>. This is a file or directory that already exists. The second argument is what you want to <em>create</em>. (Tell the shell what you have, and then tell it what you want).</p>
+<hr />
+<h2 id="renaming-files">Renaming Files</h2>
+<p><code>mv</code> = move/rename.</p>
+<p><code>mv test2 test3</code> what did that do?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">total</span> 8</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">drwxrwxr-x</span> 2 student student 4096 Sep  7 14:33 Desktop</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">drwxrwxr-x</span> 2 student student 4096 Sep  7 15:51 Documents</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="ex">-rw-rw-r--</span> 1 student student    0 Sep  9 21:24 test1</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="ex">-rw-rw-r--</span> 1 student student    0 Sep  9 21:24 test3</span></code></pre></div>
+<p><code>mv</code> is used to <em>move</em> files and directories around, but we also use it to <em>rename</em> files and directories. This is an example of renaming. Again, tell the shell what you <em>have</em> (I have a file called <code>test2</code>), and then tell the shell what you <em>want</em> (I want this to become a file called <code>test3</code>).</p>
+<hr />
+<h2 id="creating-directories">Creating Directories</h2>
+<p>Working with directories requires some different commands in Linux.</p>
+<p>In <strong>Documents</strong>, type this command: <code>mkdir level1</code>. Then use an <code>ls</code> command to check your work.</p>
+<hr />
+<h2 id="creating-directories-ii">Creating Directories II</h2>
+<p>Now type in this command: <code>mkdir level2/level3</code>. You should see an <em>error message</em>. Reading and understanding error messages is an important skill to learn!</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">mkdir</span>: cannot create directory ‘level2/level3’: No such file or directory</span></code></pre></div>
+<p>The problem here is that we want to create <code>level3</code>, but the shell is expecting <code>level2</code> to exist, and it doesn’t. So it assumes that we’ve probably made a mistake, gives us an error message, and stops without creating anything. This is the default behavior.</p>
+<hr />
+<h2 id="changing-options">Changing Options</h2>
+<p>Let’s change the default behavior by adding an <em>option</em>, or <em>flag</em>.</p>
+<p><code>mkdir -p level2/level3</code></p>
+<p>The <code>-p</code> is option tells the shell to create a <em>parent</em> directory if it doesn’t exist already. In this case, we asked the shell to create <strong>level2</strong> in addition to creating <strong>level3</strong>.</p>
+<p>We can use another command <code>tree</code> to see a nice output of directories and subdirectories.</p>
+<hr />
+<h2 id="moving-files">Moving Files</h2>
+<p>Now let’s demonstrate the other other use of <code>mv</code>: this time our second argument will be a <em>destination</em>. Our destination will be the name of a directory.</p>
+<p><code>mv test3 level2/level3</code> What do you expect that to do?</p>
+<p>We could use <code>cd level2/level3</code> then <code>ls -l</code> to check what happened, but we can also peek into a directory without entering it.</p>
+<p><code>ls -l level2/level3</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">total</span> 0</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">-rw-rw-r--</span> 1 student student 0 Sep  9 21:24 test3</span></code></pre></div>
+<p>Please note that our <em>current location hasn’t changed</em>.</p>
+<hr />
+<h2 id="copying-directories">Copying Directories</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">.</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>├── <span class="ex">level1</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>├── <span class="ex">level2</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>│   └── <span class="ex">level3</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>│       └── <span class="ex">test3</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>└── <span class="ex">test1</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="ex">3</span> directories, 2 files</span></code></pre></div>
+<p>We can see that this wasn’t exactly what we wanted. <strong>level2</strong> should probably a subdirectory of <strong>level1</strong>. So we probably want to perform a command to <em>copy</em> level2 into level1. We can try using the <code>cp</code> command to do this. The first <em>argument</em> will be the <em>target</em>, the second argument will be the <em>destination</em>.</p>
+<p>Try this:</p>
+<p><code>cp level2 level1</code></p>
+<p>What happened?</p>
+<p>Try this instead:</p>
+<p><code>cp -r level2 level1</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">.</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>├── <span class="ex">level1</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>│   └── <span class="ex">level2</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>│       └── <span class="ex">level3</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>│           └── <span class="ex">test3</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>├── <span class="ex">level2</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>│   └── <span class="ex">level3</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>│       └── <span class="ex">test3</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>└── <span class="ex">test1</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="ex">5</span> directories, 3 files</span></code></pre></div>
+<p>The <code>-r</code> means <em>recursive</em>. It means to repeat an action for all things contained in the target (<strong>level2</strong>). necessary for directories and things.</p>
+<hr />
+<h2 id="moving-directories">Moving Directories</h2>
+<p>Let’s use <code>mv level2 level2a</code> to rename that second <code>level2</code> directory in our current location. You should now have a tree that looks like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">.</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>├── <span class="ex">level1</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>│   └── <span class="ex">level2</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>│       └── <span class="ex">level3</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>│           └── <span class="ex">test3</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>├── <span class="ex">level2a</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>│   └── <span class="ex">level3</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>│       └── <span class="ex">test3</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>└── <span class="ex">test1</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="ex">5</span> directories, 3 files</span></code></pre></div>
+<p>Use <code>cd level1</code> to set <code>level1</code> as your current location.</p>
+<p>Now let’s try <em>pulling</em> instead of <em>pushing</em>. The idea here is that your <em>target</em> is somewhere other than your current location, and your <em>destination</em> is the current destination. This works fine.</p>
+<p>Try this command: <code>mv ../level2a .</code> (Again, use TAB to make less work!)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">.</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>├── <span class="ex">level1</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>│   ├── <span class="ex">level2</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>│   │   └── <span class="ex">level3</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>│   │       └── <span class="ex">test3</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>│   └── <span class="ex">level2a</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>│       └── <span class="ex">level3</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>│           └── <span class="ex">test3</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>└── <span class="ex">test1</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="ex">5</span> directories, 3 files</span></code></pre></div>
+<p>Notice that the <code>mv</code> command <em>doesn’t need the <code>-r</code> option!</em> This is just a weird inconsistency of these core utilities that you’ll have to remember.</p>
+<p><code>.</code> = current directory. We are <em>pointing at</em> a target that’s far away, and pointing at the current location as destination.</p>
+<p><code>mv level2a/level3/test3 .</code> What did this do?</p>
+<h2 id="remove-filesdirectories">Remove Files/Directories</h2>
+<p>Finally, a lesson in removing files and directories. The command here is <code>rm</code>. <code>rm test3</code> This should work!</p>
+<p><code>cd level2a</code></p>
+<p>Now try <code>rmdir level3</code> This will remove an <em>empty</em> directory.</p>
+<ul>
+<li><code>cd ..</code></li>
+<li><code>rmdir level2</code> (doesn’t work!)</li>
+<li>Now try <code>rm -r level2</code></li>
+<li>Use <code>ls</code> to make sure that level2 is gone. The <code>-r</code> is required to delete a directory that <em>isn’t</em> empty. Be careful, because as you see, this command will remove <em>all subdirectories and files</em>!</li>
+<li>Use <code>touch</code> to create a new file, and then try using <code>rm -i</code> to delete it. What does the <code>-i</code> option do?</li>
+</ul>
+<h2 id="navigation-ii">Navigation II</h2>
+<p>Type: <code>tree ~</code> <code>~</code> is a shortcut that means <strong>home</strong> for the current user. Our current user is <code>student</code>. So <code>~</code> = <code>/home/student</code>.</p>
+<ul>
+<li><code>cd ~/public_html</code> where are we?</li>
+</ul>
+<p>Now try this: <code>cd</code> without any argument will take us home.</p>
+<hr />
+<h2 id="summary-for-filepaths">Summary for Filepaths</h2>
+<h3 id="terminology">Terminology</h3>
+<dl>
+<dt><strong>absolute</strong></dt>
+<dd>print the entire file path. This is very specific, but a lot to type. It will work regardless of where you are in the filesystem. (example: <code>/home/student/level1/level2/level3</code>)
+</dd>
+<dt><strong>relative</strong></dt>
+<dd>print the path relative to something else. Allows us to use shortcuts like: <code>..</code>, <code>.</code>. It’s easier for humans to use, but can be unpredictable since the result will change based on where you are. (example: <code>../level2a</code>)
+</dd>
+<dt><strong>commands</strong></dt>
+<dd>We always interacting with the shell by entering a command. Example: <code>ls</code>
+</dd>
+<dt><strong>options/flags</strong></dt>
+<dd>changes a command’s default behaviour. These will always be listed in a command’s man page. Example: the “-l” in <code>ls -l</code>.
+</dd>
+<dt><strong>arguments</strong></dt>
+<dd>specifies (usually) a location, destination, a file, or something else. Example: the “test” in <code>mkdir test</code>.
+</dd>
+</dl>
+<blockquote>
+<h3 id="commands">Commands</h3>
+<ul>
+<li><code>pwd</code>: Print Working Directory (where am I?)</li>
+<li><code>cd</code>: Change Directory</li>
+<li><code>ls</code>: LiSt files</li>
+<li><code>touch</code>: create an empty files</li>
+<li><code>cp</code>, <code>cp -r</code>: CoPy, CoPy Recursively</li>
+<li><code>mv</code>: MoVe (also how we rename files)</li>
+<li><code>mkdir</code>, <code>mkdir -p</code>: MaKe DIRectory, MaKe DIRectory and Parent</li>
+<li><code>rm</code>, <code>rm -r</code>: ReMove, ReMove Recursively</li>
+<li><code>rmdir</code>: ReMove DIRectory</li>
+</ul>
+</blockquote>
+<blockquote>
+<h3 id="shortcuts-used-in-relative-filepaths">Shortcuts Used in <em>Relative Filepaths</em></h3>
+<ul>
+<li><code>.</code>: Current directory (we use this to <em>pull</em> files)</li>
+<li><code>..</code>: Parent directory (one directory closer to root)</li>
+</ul>
+</blockquote>
+<hr />
+<h1 id="the-linux-filesystem">The Linux Filesystem</h1>
+<p>We started by talking about the Windows filesystem, and comparing it to the Linux filesystem. We talked about C:\ being <em>root</em> in Windows, but not really how it works in Linux. Let’s try that now. Enter <code>cd ..</code> until your command prompt no longer changes when you enter the command. You can go no further. Take a look at your command prompt:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">student@eric-eriga</span>:/$</span></code></pre></div>
+<p>Now use <code>pwd</code> to see where you are.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">/</span></span></code></pre></div>
+<p><strong>/</strong> is root. You are at the top of the filesystem.</p>
+<p>Use `ls -l to take a look at the contents. They will look <em>very</em> different from what you are used to.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">total</span> 139</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="ex">drwxr-xr-x</span>   2 root root 12288 Sep  5 17:06 bin</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="ex">drwxr-xr-x</span>   5 root root  3072 Sep  6 08:24 boot</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="ex">drwxrwxr-x</span>   2 root root  4096 Mar  5  2016 cdrom</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="ex">drwxr-xr-x</span>  22 root root  5440 Sep  9 21:15 dev</span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="ex">drwxr-xr-x</span> 181 root root 12288 Sep  7 14:32 etc</span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="ex">drwxr-xr-x</span>   4 root root  4096 Sep  7 14:23 home</span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="ex">drwxr-xr-x</span>  26 root root  4096 May  1 23:28 lib</span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="ex">drwxr-xr-x</span>   2 root root 12288 Jun  4 11:55 lib32</span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="ex">drwxr-xr-x</span>   2 root root  4096 May  1 23:21 lib64</span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="ex">drwxr-xr-x</span>   3 root root  4096 Mar  7  2016 media</span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="ex">drwxr-xr-x</span>   2 root root  4096 Apr 22  2016 mnt</span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="ex">drwxr-xr-x</span>   8 root root  4096 Jun 18 09:48 opt</span>
+<span id="cb13-14"><a href="#cb13-14"></a><span class="ex">dr-xr-xr-x</span> 294 root root     0 Sep  4 10:25 proc</span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="ex">drwxr-xr-x</span>  34 root root  1240 Sep  9 21:15 run</span>
+<span id="cb13-16"><a href="#cb13-16"></a><span class="ex">drwxr-xr-x</span>   2 root root 12288 Aug 20 11:00 sbin</span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="ex">dr-xr-xr-x</span>  13 root root     0 Sep  7 15:51 sys</span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="ex">drwxrwxrwt</span>  25 root root 24576 Sep  9 21:51 tmp</span>
+<span id="cb13-19"><a href="#cb13-19"></a><span class="ex">drwxr-xr-x</span>  12 root root  4096 Nov 10  2016 usr</span>
+<span id="cb13-20"><a href="#cb13-20"></a><span class="ex">drwxr-xr-x</span>  14 root root  4096 Apr 22  2016 var</span></code></pre></div>
+<ul>
+<li>What do all these directories mean? Let’s look at <em>some</em>:</li>
+<li><code>/bin</code>: Contains binary files (executables). You know all those commands we’ve been using, such as <code>ls</code>, <code>pwd</code>, etc.? They all live here.</li>
+<li><code>/etc</code>: Contains a lot of directories and some files that end in .conf. This is where you find a look on configuration files. If you need to set a static IP address, for example, this is where you might do that.</li>
+<li><code>/mnt</code>: One of the locations where secondary drives are mounted to. For example, a network drive might be found here once you’ve mounted it.</li>
+<li><code>/tmp</code>: Temp. The contents of this directory are cleared when the computer is rebooted. Some scripts and programs might make use of it to store– you guessed it– temporary files.</li>
+<li><code>/home</code>: This is where you will spend most of your time, since you don’t really have permission to change any of the important stuff. :) <code>/home/</code> is where we store anything that is specific to one user. For example, on my personal computer, all of my Steam games are stored in <code>/home</code>. My roommate could create a user on my machine, install Steam and then install games from their account, and I wouldn’t have access to any of them since they would be installed in <em>their</em> home directory.</li>
+<li><code>/dev</code>: Devices. This one is interesting. Here you can find files that correspond to hardware. There is a directory here that is called <strong>cpu</strong> for example. For the most part, you shouldn’t try to manipulate anything in here: <a href="https://superuser.com/questions/71389/what-is-dev-mem">“What is /dev/mem?” for example.</a>. But there is one location that we will use a lot: <strong>/dev/null</strong>. Redirecting things into <strong>/dev/null</strong> is like throwing them into a black hole. You’ll see this used later on.</li>
+</ul>
+<p><strong>In Linux, <em>Everything</em> is a File!</strong></p>
+<h1 id="understanding-the-information-in-ls--l">Understanding the Information in <strong>ls -l</strong></h1>
+<p>Take a look at our previous example:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">drwxr-xr-x</span>   2 root root 12288 Sep  5 17:06 bin</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th>Permissions</th>
+<th>Links</th>
+<th>Owner</th>
+<th>Group</th>
+<th>Size</th>
+<th>Time Last Modified</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>drwxr-xr-x</td>
+<td>2</td>
+<td>root</td>
+<td>root</td>
+<td>12288</td>
+<td>Sep 5 17:06</td>
+<td>bin</td>
+</tr>
+</tbody>
+</table>
+<p>The first letter in ‘Permissions’ tells us that this is a <em>directory</em>. There are several options:</p>
+<ul>
+<li>– : normal file</li>
+<li>d : directory</li>
+<li>s : socket file</li>
+<li>l : link file</li>
+</ul>
+<p>We’ll talk more about permissions and links soon. Note that the owner and group are ‘root’. Isn’t <strong>/</strong> root?</p>
+<ul>
+<li><p><em>User</em>: Much how <strong>/</strong> is the root of the filesystem, “root” is a term that we use for the <em>administrator</em> of the computer. As normal users, we don’t have enough permission to read other people’s directories or to change crucial system files. To do that, we would need <em>root privileges</em>. Since <code>/bin</code> is a directory containing incredibly important executables, we want to restrict a normal user’s ability to wreck things inside. Thus, the owner is ‘root’, and only a root user would be able to edit files inside.</p></li>
+<li><p><em>Group</em>: has a similar purpose. Every user is part of a group, but we can use groups to further control what users can do. For example, we may want to give students and teachers different levels of access to the system. A teacher might have access to edit the assignments, while the students only have access to read or execute the assignments.</p></li>
+<li><p><em>Size</em>: By default, this displays the size of the file in <em>bytes</em>. There is a handy option that we can use with <code>ls</code> that gives us a <em>human-readable</em> file size.</p></li>
+</ul>
+<p><code>ls -lh</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">drwxr-xr-x</span>   2 root root  12K Sep  5 17:06 bin/</span></code></pre></div>
+<p>Now it’s easier for us to see that <code>bin</code> has a size of 12 <em>kilobytes</em>.</p>
+</body>
+</html>

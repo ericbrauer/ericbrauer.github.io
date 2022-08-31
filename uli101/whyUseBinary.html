@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Author: Eric Brauer" />
+  <title>Title: Why Use Binary</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header>
+<h1 class="title">Title: Why Use Binary</h1>
+<p class="author">Author: Eric Brauer</p>
+<p class="date">Date 2019-01-26</p>
+</header>
+<p>It’s a very good question. We know for a fact that decimal requires fewer digits to represent the same number. How many more? Take a look at this equation:</p>
+<p><span class="math inline"><em>l</em><em>o</em><em>g</em><sub>210</sub> = 3.322</span></p>
+<p>What this is telling us is that it will take <span class="math inline">3.322</span> more digits to represent a binary number than a decimal number. This means 3.322 more resources, to do the same amount of work. So why do it?</p>
+<p>Well, what do we mean when we talk about ones and zeroes anyway? Physically, these are <em>voltage levels</em>. Here’s what keyboard input might look like on an oscilloscope:</p>
+<figure>
+<img src="http://1.bp.blogspot.com/-dRoUULdBG5M/TdzzXc1y2HI/AAAAAAAAAJ4/G3lHNSPrnHA/s1600/GoldenWaveform.bmp" alt="oscilloscope capture" /><figcaption>oscilloscope capture</figcaption>
+</figure>
+<p>The X-axis of an oscilloscope is time. The Y-axis is voltage. In this scenario, there are two voltage levels that the computer understands: <em>high</em> and <em>low</em>.</p>
+<p>To re-create a decimal value in this situation, we’d need to recognize <em>ten</em> unique voltage levels, rather than just two. This causes many issues:</p>
+<ul>
+<li>Voltage levels tend to <em>float</em>. That is, they can become uncalibrated, which means the computer can’t interpret a certain voltage level correctly.</li>
+<li>Transistors are what make computers possible. Transistors can work like switches, or they can generate AC signals (such as the ones we’d need for decimal levels). However, transistors use far less power when they are either in <em>saturation</em> mode (on), or in <em>cut-off</em> mode.</li>
+</ul>
+<p><img src="https://qph.fs.quoracdn.net/main-qimg-d4c255d21ccbe0e2ba72aa774adaf631-c" alt="Q-Point of a transistor" /> Power consumption is <span class="math inline"><em>V</em><em>o</em><em>l</em><em>t</em><em>a</em><em>g</em><em>e</em> * <em>C</em><em>u</em><em>r</em><em>r</em><em>e</em><em>n</em><em>t</em></span> and in this graph, as long as either voltage or current is close to zero, the power wasted by transistor will be minimized. Power and heat are the main factors that have limited the speed and size of computers.</p>
+<ul>
+<li>Digital logic using AND, OR, NOT, XOR gates was already a thing by the time computers came along. Using logic gates to perform math was already an established concept.</li>
+</ul>
+<p>Basically, using binary numbers requires more digits (and thus more transistors and memory), but it simplifies the operation of a computer tremendously and so is worth the tradeoff.</p>
+</body>
+</html>

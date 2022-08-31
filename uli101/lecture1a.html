@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Eric Brauer" />
+  <title>Welcome to ULI101!</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Welcome to ULI101!</h1>
+<p class="author">Eric Brauer</p>
+<p class="date">1.2</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#uli101---introduction-to-unixlinux-and-the-internet">ULI101 - Introduction to Unix/Linux and the Internet</a></li>
+<li><a href="#course-intro">Course Intro</a></li>
+<li><a href="#local-uli101-website">Local ULI101 Website</a></li>
+<li><a href="#general-uli101-website">General ULI101 Website</a></li>
+<li><a href="#other-resources">Other Resources</a></li>
+<li><a href="#course-policies-remote">Course Policies: Remote</a></li>
+<li><a href="#course-policies">Course Policies</a></li>
+<li><a href="#course-policies-ii">Course Policies II</a></li>
+<li><a href="#so-what-is-linux-and-why-should-you-care">So What is Linux, and why should you care?</a><ul>
+<li><a href="#time-for-a-history-lesson">Time for a History Lesson…</a></li>
+</ul></li>
+<li><a href="#why-do-we-care-about-an-operating-system-from-the-sixties">Why do we care about an operating system from the sixties?</a><ul>
+<li><a href="#because-linux-is-everywhere">Because Linux is <em>everywhere</em>…</a></li>
+</ul></li>
+<li><a href="#what-does-the-history-of-linux-have-to-do-with-course">What Does the History of Linux Have to do with Course?</a><ul>
+<li><a href="#the-way-it-is-organized-is-different.">The way it is organized is different.</a></li>
+</ul></li>
+<li><a href="#some-terminology">Some Terminology</a></li>
+<li><a href="#this-course-is-mostly-about-getting-more-comfortable-with-the-shell.">This course is mostly about getting more comfortable with the Shell.</a></li>
+<li><a href="#what-is-linux">What is Linux?</a><ul>
+<li><a href="#linux-is-actually-a-kernel.">Linux is <em>actually</em> a Kernel.</a></li>
+</ul></li>
+<li><a href="#what-is-a-kernel">What is a Kernel?</a></li>
+<li><a href="#kernel-summary">Kernel Summary</a></li>
+<li><a href="#steps-to-log-into-matrix-from-the-lab">Steps to log into Matrix from the Lab</a><ul>
+<li><a href="#commands-are-what-we-really-want-you-to-learn">Commands Are What We <em>Really</em> Want You To Learn!</a></li>
+</ul></li>
+<li><a href="#next-steps.">Next Steps.</a></li>
+</ul>
+</nav>
+<h1 id="uli101---introduction-to-unixlinux-and-the-internet">ULI101 - Introduction to Unix/Linux and the Internet</h1>
+<hr />
+<h1 id="course-intro">Course Intro</h1>
+<p>Use Blackboard:</p>
+<ul>
+<li>Use Course Information to find out about Promotion Requirements <!--Important: Assessments, promotion requirements! --></li>
+<li>Announcements: Quizzes, Tests and <strong>Crucial Information</strong> will be posted here</li>
+<li>Grades</li>
+<li>Course Documents</li>
+</ul>
+<hr />
+<h1 id="local-uli101-website">Local ULI101 Website</h1>
+<p><a href="https://ict.senecacollege.ca/~eric.brauer/">https://ict.senecacollege.ca/~eric.brauer/</a></p>
+<p>This is where lecture notes will be posted.</p>
+<ul>
+<li>My Schedule, Useful Links, Links to Videos</li>
+</ul>
+<hr />
+<h1 id="general-uli101-website">General ULI101 Website</h1>
+<p><a href="https://ict.senecacollege.ca/~uli101">https://ict.senecacollege.ca/~uli101/</a></p>
+<p>Good resource if you want a second perspective on what we discuss in class.</p>
+<hr />
+<h1 id="other-resources">Other Resources</h1>
+<ul>
+<li>MS Teams is where the live tutorials will occur</li>
+<li>Study Group (Very helpful!)</li>
+<li>Most important resource is your own <em>practice</em>.</li>
+</ul>
+<hr />
+<h1 id="course-policies-remote">Course Policies: Remote</h1>
+<ul>
+<li>Keep up with the course: watch Blackboard Announcements for upcoming important dates.</li>
+<li>Links to the lecture videos will be provided: watch these in order and make note of any questions you might have.</li>
+<li>Tutorials are real-time, they are a chance for us to connect as a group. Bring your questions (or email them ahead of time), they make the tutorials more interesting for everyone.</li>
+<li>After Tutorials, we have a chance for one-on-one sessions. <del>Some</del> <em>Most</em> problems are easier to solve during these sessions than over email.</li>
+<li>Keep up with assignments, these are crucial for success in the course!</li>
+</ul>
+<h1 id="course-policies">Course Policies</h1>
+<ul>
+<li><strong>Attendance</strong>: Some tutorials will have short quizzes/surveys that count for marks. However attendance is not mandatory. <strong>Tutorials will be recorded for people to refer to later.</strong></li>
+<li><strong>Tests/Quizzes</strong>: I will announce on Blackboard/in class/Email at least a week in advance. (Specifics of how quizzes will run TBA). If you miss an assessment, you get a zero. If you have a doctor’s note, you need to tell me <strong>before</strong> the assessment.</li>
+<li><strong>Academic Dishonesty</strong>: Zero tolerance. I expect you to know the difference.</li>
+<li>If you have an issue, be prepared to communicate the <strong>specific issue</strong>, including:
+<ul>
+<li>error output.</li>
+<li>what you have tried already.</li>
+</ul></li>
+</ul>
+<hr />
+<h1 id="course-policies-ii">Course Policies II</h1>
+<ul>
+<li><strong>Assignments</strong> are a big part of this course.<br />
+</li>
+<li>You will need to log on to our servers in order to work on these assignments.</li>
+<li>The assignments don’t exist locally, you must have an internet connection to access the servers.- But your progress will be saved automatically as we go.</li>
+<li><strong>Most importantly, learn by doing.</strong> Practice what you learn in the assignments.</li>
+</ul>
+<hr />
+<h1 id="so-what-is-linux-and-why-should-you-care">So What is Linux, and why should you care?</h1>
+<h2 id="time-for-a-history-lesson">Time for a History Lesson…</h2>
+<ul>
+<li>Unix was developed in 1969, and was meant to run on <em>mainframes</em>.</li>
+<li>Unix was widely adopted by businesses but also academic institutions.</li>
+<li>Many people were comfortable with Unix, but it was <em>proprietary</em>, meaning it wasn’t free to copy, use or modify.</li>
+<li>Richard Stallman started the GNU project in 1983, hoping to build a Unix-like operating system.</li>
+<li>Linus Torvalds contributed the <em>kernel</em> in 1991. So have that name ‘Linux’, but keep in mind that there were many contributors to the project.</li>
+</ul>
+<p><a href="https://youtu.be/5ocq6_3-nEw">Here is a short video about the history of Linux</a></p>
+<hr />
+<h1 id="why-do-we-care-about-an-operating-system-from-the-sixties">Why do we care about an operating system from the sixties?</h1>
+<h2 id="because-linux-is-everywhere">Because Linux is <em>everywhere</em>…</h2>
+<ul>
+<li>Supercomputers</li>
+<li>Majority of Servers and Network Infrastructure</li>
+<li>Embedded computers (Think: Raspberry Pi, Cars, Kiosks, ATMs, etc.)</li>
+<li>Smartphones (until Fuchsia replaces Android!)</li>
+<li>Sometimes even on desktops. (~2%!)</li>
+</ul>
+<p><a href="https://www.wired.com/2016/08/linux-took-web-now-taking-world/">Linux Took Over the Web, Now it’s Taking Over the World</a></p>
+<hr />
+<h1 id="what-does-the-history-of-linux-have-to-do-with-course">What Does the History of Linux Have to do with Course?</h1>
+<h2 id="the-way-it-is-organized-is-different.">The way it is organized is different.</h2>
+<ul>
+<li>Assumes multiple users</li>
+<li>Better permission controls</li>
+<li>There’s a pattern of having multiple <em>terminals</em> active at any one time</li>
+</ul>
+<hr />
+<h1 id="some-terminology">Some Terminology</h1>
+<figure>
+<img src="https://i.stack.imgur.com/iFRfo.jpg" alt="A Terminal" /><figcaption>A Terminal</figcaption>
+</figure>
+<dl>
+<dt>Terminal</dt>
+<dd>Text input/output environment
+</dd>
+<dt>Terminal Emulator</dt>
+<dd>An application which simulates one of these old devices
+</dd>
+<dt>Shell</dt>
+<dd>Command line interpreter. The shell we will be using is called <strong>Bash</strong>.
+</dd>
+<dt>SSH</dt>
+<dd><h2 id="a-secure-protocol-that-allows-us-to-log-into-a-machine-remotely">A <em>secure</em> protocol that allows us to log into a machine remotely</h2>
+</dd>
+</dl>
+<h1 id="this-course-is-mostly-about-getting-more-comfortable-with-the-shell.">This course is mostly about getting more comfortable with the Shell.</h1>
+<ul>
+<li>CLI = Command Line Interface. CLIs are not unique to Linux. Powershell in Windows, Bash on Mac.</li>
+<li>Being able to use a CLI is a crucial skill for programmers for a number of reasons:
+<ul>
+<li>It’s faster</li>
+<li>A number of commands can be put into a script and can then be run automatically</li>
+<li>Many servers or embedded systems won’t even have a graphical environment installed, or it might be broken. A CLI could be your last resort</li>
+<li>Many tools for developers are designed to be used from a CLI (for example, Git and NPM).</li>
+<li>CLIs are much easier to set up for remote work</li>
+<li>If you’ve ever had to try and help someone solve a problem remotely on their computer, you know how slow and awkward using a GUI can be. (“Click on the Start Button. No, the other Start Button. What do you see?”) Using a GUI is like playing 20 questions. A CLI is all about communicating <em>directly</em> with the system. You need to know the language, but once you do you can get what you want much faster.</li>
+<li>CLIs are more fun :D <img src="https://i.kym-cdn.com/photos/images/newsfeed/001/176/251/4d7.png" alt="CLI is just cooler(?)" /></li>
+</ul></li>
+</ul>
+<hr />
+<h1 id="what-is-linux">What is Linux?</h1>
+<h2 id="linux-is-actually-a-kernel.">Linux is <em>actually</em> a Kernel.</h2>
+<p>Call it Linux, or GNU/Linux, probably at this point it isn’t too interesting to you. Just be aware that in some corners of the Internet, the terminology is important.</p>
+<hr />
+<h1 id="what-is-a-kernel">What is a Kernel?</h1>
+<figure>
+<img src="https://blog.digilentinc.com/wp-content/uploads/2015/05/1280px-Kernel_Layout.svg_-600x474.png" alt="A diagram of a Kernel" /><figcaption>A diagram of a Kernel</figcaption>
+</figure>
+<!--Answer with questions: 
+
+- What is meant by devices?
+- Keyboard, OK. How does a keyboard work? More basic, more basic.
+
+- OK, if you really want to know, you can go find out. But really, you press A, you see A. Right?
+- Another question: How many programs can your computer run at a time? Open Firefox, calculator, notepad, discord, etc. etc.
+- How many cores on your CPU? How many instructions do you think your core can run at a time?
+- When you have too many things open at a time, your computer 'slows down.' What does that really mean?
+- How fast does a core run? GigaHertz? Do you think that speed (3.8 GHz) is slowing down?
+- Finally: memory. In your C class, you're going to talk about pointers, memory addressing, all that kind of stuff. Store a number in memory. Look for it. How does the computer know where to look?-->
+<hr />
+<h1 id="kernel-summary">Kernel Summary</h1>
+<ul>
+<li><em>The Kernel is a thing that acts as an interface between applications and hardware.</em></li>
+<li><em>You can’t directly interact with it. It’s not quite the Operating System.</em></li>
+<li><em>Maybe a good analogy is an air traffic controller. You don’t see the effect is you’re a passenger at the airport, watching the planes. It doesn’t affect your user experience at all.</em></li>
+<li><p><em>Linux has many desktop environments. But they all use the same Kernel.</em> (Windows, by comparison, has only one Desktop environment. It’s running on the Windows NT kernel, but we never really talk about the Windows kernel.)</p></li>
+<li><a href="https://en.wikipedia.org/wiki/Comparison_of_operating_system_kernels">Feel free to geek out over the specifics</a></li>
+<li><p><a href="https://blog.digilentinc.com/demystifiying-the-linux-kernel/">Feel free to geek over the specifics II</a></p></li>
+</ul>
+<hr />
+<h1 id="steps-to-log-into-matrix-from-the-lab">Steps to log into Matrix from the Lab</h1>
+<p><a href="https://wiki.cdot.senecacollege.ca/wiki/ULI101">See the ULI101 Website</a></p>
+<ol type="1">
+<li><strong>(New for Fall)</strong> Install the <a href="https://inside.senecacollege.ca/its/services/vpn/">Seneca VPN</a></li>
+<li>Install a terminal emulator of your choice.</li>
+<li>Enter <code>matrix.senecacollege.ca</code> for the host name, and click “Open.”</li>
+<li>If you see a dialog box about security, click ‘Yes.’</li>
+<li>When you see the text <code>Login as:</code>, enter your myseneca username. For example, <code>ebrauer11</code>. This is the same username you use to log into Blackboard. <strong>(Must be lowercase!)</strong></li>
+<li>Enter your Blackboard password.</li>
+<li>If all is well, you should see a prompt that looks like this:</li>
+</ol>
+<p><code>[eric.brauer@mtrx-node04pd ~]$</code></p>
+<hr />
+<h2 id="commands-are-what-we-really-want-you-to-learn">Commands Are What We <em>Really</em> Want You To Learn!</h2>
+<p>Once you are in Matrix/Knoppix, you can practice the following commands:</p>
+<ul>
+<li><code>pwd</code>: Print working directory</li>
+<li><code>cd</code>: Change directory</li>
+<li><code>ls</code>: List files</li>
+<li><code>ls -l</code>: List files <em>vertically</em></li>
+<li><code>ls -d</code>: List <em>directories</em></li>
+<li><code>ls -a</code>: List <em>all</em> (including hidden files)</li>
+<li><code>cal</code>: Calendar</li>
+<li><code>date</code>: Print today’s date</li>
+<li><code>who</code>: Who’s online?</li>
+<li><code>whoami</code>: Answering life’s big questions</li>
+</ul>
+<hr />
+<h1 id="next-steps.">Next Steps.</h1>
+<ul>
+<li>Assignment #1 is available to you. You should start working on it.</li>
+<li>To access the assignment, enter this into your terminal:</li>
+</ul>
+<ol start="0" type="1">
+<li><p>Login to: <code>matrix.senecacollege.ca</code> using your username and password.</p></li>
+<li><p>Type <code>~uli101/assign1</code> at the command prompt.</p></li>
+<li><p>Enter your <strong>correct</strong> section.</p></li>
+</ol>
+<ul>
+<li><strong>Make sure you enter your correct section</strong> or you stand to lose your work.</li>
+<li>Can take ~10 hours to complete the whole thing.</li>
+<li>As you go, your progress will be saved.</li>
+<li>But if you get stuck on a question, you aren’t able to skip. So it’s a good idea to start work early, and get help once you encounter those issues.</li>
+</ul>
+</body>
+</html>

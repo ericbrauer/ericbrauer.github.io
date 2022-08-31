@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 5B: Filtering II</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 5B: Filtering II</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#the-example">The Example</a></li>
+<li><a href="#tee">tee</a></li>
+<li><a href="#grep">Grep</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#review-for-quiz-2">Review for Quiz #2</a></li>
+<li><a href="#stdin-redirection-with-tr">STDIN redirection with tr</a></li>
+<li><a href="#more-redirection-21">More redirection (2&gt;&amp;1)</a></li>
+</ul>
+</nav>
+<p>Programming is often a process of trying to maximize efficiency. As you proceed in your career, you will often get into discussions about performance– which languages are ‘faster’ in terms of CPU cycles, for example? How can we successfully scale a solution? Sometimes this comes down to a discussion of ‘how can we solve this problem in as few lines of code as possible?’</p>
+<p>There is another way to look at efficiency. We’ve often remarked in this class that as programmers, your time is expensive. No matter where you end up, chances are that project managers will care less about lines of code and more about how many hours it will take to create a solution to a problem. Some projects are an exception, of course. Sometimes you will have time and resources thrown at you, and your project manager will be interested in an ideal, perfect (fast!) program. Most likely there will be tight deadlines, and the expectation that CPU cycles are cheap.</p>
+<p>This isn’t to say that you shouldn’t search for efficient solutions to problems, just that it is a mistake to <a href="https://en.wikipedia.org/wiki/Perfect_is_the_enemy_of_good"><em>let perfect become the enemy of the good</em></a>.</p>
+<p>All this is a way to re-introduce the filtering commands we’ve already discussed. As we progress with this example, I encourage you to think about how you might attempt to solve this problem using other tools. How would you go about solving this problem in C? How about Java, or Python? What are the tradeoffs?</p>
+<h2 id="the-example">The Example</h2>
+<p>“<em>How would you find out the ten largest files in /usr/bin? Print only the size and program name, separated with tabs.</em>”</p>
+<p>There are a lot of ways to solve this problem (if you read the man pages for <code>ls</code>, you’ll find a very fast solution!) but let’s use the tools we’ve been given.</p>
+<p>Let’s break the problem into steps. First step: list the files in /usr/bin.</p>
+<p><code>ls -lh /usr/bin | head</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">total</span> 13M</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">-rwxr-xr-x</span> 1 root root 1.1M Apr  4 14:30 bash</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="ex">-rwxr-xr-x</span> 1 root root 732K Aug 29 03:57 brltty</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="ex">-rwxr-xr-x</span> 1 root root  35K Jan 29  2017 bunzip2</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="ex">-rwxr-xr-x</span> 1 root root 2.0M Dec 12  2017 busybox</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="ex">-rwxr-xr-x</span> 1 root root  35K Jan 29  2017 bzcat</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="ex">lrwxrwxrwx</span> 1 root root    6 Apr  2  2018 bzcmp -<span class="op">&gt;</span> bzdiff</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="ex">-rwxr-xr-x</span> 1 root root 2.1K Jan 29  2017 bzdiff</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="ex">lrwxrwxrwx</span> 1 root root    6 Apr  2  2018 bzegrep -<span class="op">&gt;</span> bzgrep</span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="ex">-rwxr-xr-x</span> 1 root root 4.8K Jan 29  2017 bzexe</span></code></pre></div>
+<p><strong>Note</strong> I’m using <code>head</code> on each step just to demo the steps.</p>
+<p><code>ls</code> separates everything with variable numbers of spaces. Let’s replace one or more spaces with commas.</p>
+<p><code>ls -lh /usr/bin | tr -s ' ' ',' | head</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">total</span>,13M</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,1.1M,Apr,4,14:30,bash</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,732K,Aug,29,03:57,brltty</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,35K,Jan,29,2017,bunzip2</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,2.0M,Dec,12,2017,busybox</span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,35K,Jan,29,2017,bzcat</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="ex">lrwxrwxrwx</span>,1,root,root,6,Apr,2,2018,bzcmp,-<span class="op">&gt;</span>,bzdiff</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,2.1K,Jan,29,2017,bzdiff</span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="ex">lrwxrwxrwx</span>,1,root,root,6,Apr,2,2018,bzegrep,-<span class="op">&gt;</span>,bzgrep</span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="ex">-rwxr-xr-x</span>,1,root,root,4.8K,Jan,29,2017,bzexe</span></code></pre></div>
+<p>Next step: let’s cut out all the extra information.</p>
+<p><code>ls -lh /usr/bin | tr -s ' ' ',' | cut -d, -f 5,9 | head</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">1.1M</span>,bash</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">732K</span>,brltty</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ex">35K</span>,bunzip2</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="ex">2.0M</span>,busybox</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">35K</span>,bzcat</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="ex">6</span>,bzcmp</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="ex">2.1K</span>,bzdiff</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="ex">6</span>,bzegrep</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="ex">4.8K</span>,bzexe</span></code></pre></div>
+<p>With <code>cut</code>, we need to specify a delimiter (<strong>,</strong>). To option to do this is <code>-d,</code>.Next, we want two fields: filename and size. (I tried to start with name but it didn’t work and I forgot to try and fix it…)</p>
+<p>Next step: Sorting. Notice our file sizes are in <em>human readable</em> format. Notice also that we will need to specify our delimiter again.</p>
+<p><code>ls -lh /usr/bin | tr -s ' ' ',' | cut -d, -f 5,9 | sort -h -t, -k1 | head</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">4</span>,lsmod</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">4</span>,ping4</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">4</span>,ping6</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="ex">4</span>,rbash</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="ex">4</span>,rnano</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="ex">4</span>,sh</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="ex">4</span>,sh.distrib</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="ex">6</span>,bzcmp</span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="ex">6</span>,bzegrep</span></code></pre></div>
+<p>What happened? We are getting very <em>small</em> results. We will talk soon about links, because there’s no way that nano or ping are actually 4 bytes in size.</p>
+<p>So we need to <em>reverse</em> our sort, or use <code>tail</code>. Let’s reverse the sort:</p>
+<p><code>ls -lh /usr/bin | tr -s ' ' ',' | cut -d, -f 5,9 | sort -h -t, -k1 -r | head</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">2.0M</span>,busybox</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">1.1M</span>,bash</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="ex">732K</span>,brltty</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="ex">571K</span>,udevadm</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="ex">542K</span>,ip</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="ex">414K</span>,tar</span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">241K</span>,nano</span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="ex">215K</span>,grep</span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="ex">207K</span>,loadkeys</span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="ex">193K</span>,hciconfig</span></code></pre></div>
+<p>Much better. The last thing I want to do is to replace commas with tabs. We could have started with tabs, right? Yeah, unfortunately not. I don’t want to overwhelm you, so <a href="https://nsaunders.wordpress.com/2008/01/04/linux-tip-sort-a-tab-delimited-file/">look here</a> if you <em>really</em> want to know more, otherwise, let’s just do it my way. :)</p>
+<p><code>ls -lh /usr/bin | tr -s ' ' ',' | cut -d, -f 5,9 | sort -h -t, -k1 -r | tr ',' '\t' | head</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">2.0M</span>    busybox</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">1.1M</span>    bash</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">732K</span>    brltty</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="ex">571K</span>    udevadm</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">542K</span>    ip</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="ex">414K</span>    tar</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">241K</span>    nano</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="ex">215K</span>    grep</span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="ex">207K</span>    loadkeys</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="ex">193K</span>    hciconfig</span></code></pre></div>
+<p>…And we’re done! When I did this the first time, I was able to get this done in about two minutes, and in “one” line of my own code. Hopefully my project manager was pleased… Now of course, my “two minute” job doesn’t include the literal months of trial and error I had to go through on the beginning of my Linux journey. I reached for these tools because these are tools I’m used to working with. Your mileage may vary, and that’s okay! Your solution might be better than mine (in fact there’s a very good chance of that :)) and that’s okay too. All we can do is show you some of the <a href="https://www.quora.com/How-are-job-opportunities-for-Bash-Scripting-Unix-Shell-Scripting">tools that others have found useful</a>, and the <a href="https://adtmag.com/blogs/dev-watch/2016/07/bash-salaries.aspx">skills that employers find useful</a>.</p>
+<hr />
+<h2 id="tee">tee</h2>
+<p>To demonstrate <code>tee</code>, let’s take our previous long one-line command, and redirect it into a file for safekeeping.</p>
+<p><code>ls -lh /usr/bin | tr -s ' ' ',' | cut -d, -f 5,9 | sort -h -t, -k1 -r | tr ',' '\t' | head &gt; top-bins</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"></code></pre></div>
+<p>Nothing is printed. As you know by now, we are <em>redirecting</em> our output into that file. We are picking up the garden hose that is STDOUT, and pointing it into a bucket. The grass is dry.</p>
+<p>What if we connect up a T-shaped attachment to that hose so that we can fill our bucket and water our grass at the same time?</p>
+<p><code>rm top-bins</code> <code>ls -lh /usr/bin | tr -s ' ' ',' | cut -d, -f 5,9 | sort -h -t, -k1 -r | tr ',' '\t' | tee top-bins | head</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">2.0M</span>    busybox</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">1.1M</span>    bash</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">732K</span>    brltty</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="ex">571K</span>    udevadm</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="ex">542K</span>    ip</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="ex">414K</span>    tar</span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="ex">241K</span>    nano</span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="ex">215K</span>    grep</span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="ex">207K</span>    loadkeys</span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="ex">193K</span>    hciconfig</span></code></pre></div>
+<p><code>cat top-bins | head</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">2.0M</span>    busybox</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">1.1M</span>    bash</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="ex">732K</span>    brltty</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="ex">571K</span>    udevadm</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="ex">542K</span>    ip</span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="ex">414K</span>    tar</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="ex">241K</span>    nano</span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="ex">215K</span>    grep</span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="ex">207K</span>    loadkeys</span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="ex">193K</span>    hciconfig</span></code></pre></div>
+<p>We have STDOUT going to our display, as normal. But now we also have our <strong>complet</strong> output copied into a file. This is useful for logging.</p>
+<h1 id="grep">Grep</h1>
+<p>Grep is a fantastically useful tool. We are diving deeper into it after the break. But here is the easiest way to use grep:</p>
+<p><code>grep ls top-bins</code></p>
+<blockquote>
+<p>131K <mark>ls</mark></p>
+<p>83K <mark>ls</mark>blk</p>
+<p>32K ntfs<mark>ls</mark></p>
+<p>31K fa<mark>ls</mark>e</p>
+<p>4 <mark>ls</mark>mod</p>
+</blockquote>
+<p>What does this tell us about grep? We are searching for a <em>pattern</em> (in this case, ‘ls’) inside a <em>file</em> (top-bins). This is essentially your Find tool from 1983.</p>
+<p>Try this:</p>
+<p><code>ls -lh /home | grep &lt;your name&gt;</code></p>
+<p>We will be using grep quite a bit as we go, this is just the tip of the iceberg. Another thing you can try is this:</p>
+<p><code>cp /home/eric.brauer/dune.txt .</code></p>
+<p><code>grep worm dune.txt</code></p>
+<p>Your results are going to be very hard to read. Why? Grep is returning every line where your pattern matches.</p>
+<p><code>grep -n worm dune.txt</code></p>
+<p>The <code>-n</code> option also includes a line number.</p>
+<h1 id="summary">Summary</h1>
+<p>The following are important to remember for quizzes and tests:</p>
+<ul>
+<li><code>tr 'SET1' 'SET2'</code>: replace SET1 with SET2.</li>
+<li><code>cut -d#</code>: specify delimiter #.</li>
+<li><code>cut -f#</code>: specify field (column).</li>
+<li><code>sort -k#</code>: specify key (column).</li>
+<li><code>sort -t#</code>: specify delimiter #.</li>
+<li><code>sort -n</code>: sort numerically.</li>
+<li><code>sort -r</code>: reverse the sort.</li>
+<li><code>grep PATTERN FILE</code>: find a pattern in a file.</li>
+<li><code>tee FILE</code>: make a copy of STDIN to FILE, and <em>also</em> pass it to STDOUT.<br />
+</li>
+<li>…as well as <code>head</code>, <code>tail</code>, <code>wc</code>, and so on.</li>
+</ul>
+<h1 id="review-for-quiz-2">Review for Quiz #2</h1>
+<ol start="0" type="1">
+<li><p>What is passed between <code>command1 | command2</code>?</p>
+<p><spoiler>The <em>output</em> of <code>command1</code> is passed to the <em>input</em> of <code>command2</code>. <em>Data</em> is being passed.&lt;/passed.</spoiler></p></li>
+<li><p>Convert the decimal number <strong>103</strong> to hexadecimal.</p>
+<p><spoiler>0x67</spoiler></p></li>
+<li><p>What does <strong>pass-through</strong> refer to?</p>
+<p><spoiler>pass-through is a type of permission for a directory. Without pass-through, no user can access any of the files in a directory, regardless of any other permission. ~uli101 has pass-through so that you can execute the assignments.</spoiler></p></li>
+<li><p>Set the permissions of <code>file1</code> so that the user can read and write, and all other users (group members and others) have the minimum required permissions to execute the file.</p>
+<p><spoiler>chmod 655 file1</spoiler></p></li>
+<li><p>Add write permissions for the group members and others to the file <code>public-sketchbook</code>. Use a <em>symbolic</em> command.</p>
+<p><spoiler>chmod go+w public-sketchbook</spoiler></p></li>
+<li><p>How can you set the default permissions so that all files will only be readable and writable by users?</p>
+<p><spoiler>The permission level we want to set is 600. So our command will be the inverse of that. <code>umask 177</code></spoiler></p></li>
+<li><p>Log into Matrix, if you aren’t already. Type in <code>who am i</code> (with spaces). Use a pipe and <code>cut</code> to print only your user ID and pts value.</p>
+<p><spoiler>who am i | cut -d" " -f1,2</spoiler></p></li>
+<li><p>Copy <code>/home/eric.brauer/uli101/SSDexample</code> to your home folder. How can you find all SDDs made by Kingston? Sort these alphabetically, and return only the first result.</p>
+<p><spoiler>grep Kingston SSDexample | sort | head -1</spoiler></p></li>
+</ol>
+<p><strong>Challenge</strong></p>
+<p>Work with another student. Use <code>vi</code> to open a text file and <code>watch date</code> to keep track of time. In one minute, answer the question: <em>Name a bad job for someone who’s accident prone</em>. Enter your answers, one on each line. (Or search for some other Family Feud type question online).</p>
+<p>Check your file permissions so that you can share your list with the other student. Use <code>sort</code> to sort your answers, then use either <code>diff</code> or another tool to compare your answers.</p>
+<p>Research ways online that you could compare the two outputs, find only the unique lines, and then count up your score. This is an advanced exercise, but if you can manage it then you will be in great shape for tests..!</p>
+<hr />
+<p>Even more to read, if you have the time…</p>
+<h1 id="stdin-redirection-with-tr">STDIN redirection with tr</h1>
+<p>You will notice that <code>tr</code> does <em>not</em> accept filenames as arguments. In order to use <code>tr</code> in this way, we need to use the rarest of birds, STDIN redirection!</p>
+<p>command &lt; filename</p>
+<p>`tr ‘a-z’ ‘A-Z’ &lt; SDDexample</p>
+<h1 id="more-redirection-21">More redirection (2&gt;&amp;1)</h1>
+<p>In some cases you will want to send STDOUT and STDERR to the same place, possibly a logfile. You can do this with the following:</p>
+<p><code>find ~ -iname report.pdf &gt; logfile 2&gt;&amp;1</code></p>
+<p>In this case, <code>find</code> is told to send all results to logfile, and then STDERR is redirected into STDOUT.</p>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>exam_review</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+</head>
+<body>
+<nav id="TOC">
+<ul>
+<li><a href="#some-exam-review">Some Exam Review</a><ul>
+<li><a href="#archiving">Archiving</a><ul>
+<li><a href="#creating-an-archive">Creating an Archive</a></li>
+<li><a href="#extracting-an-archive">Extracting an Archive</a></li>
+<li><a href="#a-note-about-that-gzip-command-from-lab-2">A Note about that gzip command from Lab 2</a></li>
+</ul></li>
+<li><a href="#disk-management">Disk Management</a><ul>
+<li><a href="#using-lvm">Using LVM</a></li>
+</ul></li>
+<li><a href="#iptables">iptables</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="some-exam-review">Some Exam Review</h1>
+<h2 id="archiving">Archiving</h2>
+<h3 id="creating-an-archive">Creating an Archive</h3>
+<p>There are two ways that we’ve talked about creating ‘archives’: using <code>gzip</code> and using <code>tar</code>.</p>
+<p><code>tar</code> does <em>not</em> compress files by default.</p>
+<p><code>du -sh /tmp</code> # This is me checking the size of all files and directories in /tmp.</p>
+<pre><code>800K    /tmp</code></pre>
+<p><code>tar cvf archive1.tar /tmp</code> # archive1.tar is the name of the archive I want to <strong>create</strong>. /tmp is the location of the files I am targetting.</p>
+<pre><code>/tmp/
+/tmp/public_html/
+/tmp/public_html/uli101/
+/tmp/public_html/uli101/lecture5b.html
+/tmp/public_html/uli101/lecture6.html
+/tmp/public_html/uli101/index.html
+...</code></pre>
+<p><code>ls -lh archive1.tar</code> # check the size of the new file</p>
+<pre><code>-rw-rw-r-- 1 ebrauer ebrauer 800K Apr 11 14:34 archive1.tar</code></pre>
+<p>Notice that the file size is the same. Also:</p>
+<ul>
+<li>c to <em>create</em>. x to <em>extract</em>.</li>
+<li>v for verbose mode (tells you what’s happening).</li>
+<li>f to specify a file. (use it always).</li>
+<li>z will <em>compress</em> or <em>decompress</em> the file using gzip.</li>
+</ul>
+<p>So using <code>tar cvfz archive1.tar.gz /tmp</code> is the same as running <code>gzip &lt; archive1.tar &gt; archive1.tar.gz</code>.</p>
+<p><code>tar cvfz archive1.tar.gz /tmp</code></p>
+<pre><code>/tmp/
+/tmp/public_html/
+/tmp/public_html/uli101/
+/tmp/public_html/uli101/lecture5b.html
+/tmp/public_html/uli101/lecture6.html
+/tmp/public_html/uli101/index.html
+...</code></pre>
+<p><code>ls -lh archive1.tar.gz</code></p>
+<pre><code>-rw-rw-r-- 1 ebrauer ebrauer 338K Apr 11 14:39 archive1.tar.gz</code></pre>
+<p>Smaller, right? That’s the magic of compression.</p>
+<h3 id="extracting-an-archive">Extracting an Archive</h3>
+<p>As noted before, we can reverse the process by using <strong>x</strong> instead of <strong>c</strong>.</p>
+<p>We need to indicate the <em>target</em> of the command, that is the file that we wish to extract. Without another argument, the contents of the file will be extracted to the current location.</p>
+<p><code>mkdir new_place &amp;&amp; mv archive1.tar.gz new_place</code></p>
+<p><code>cd new_place</code></p>
+<p><code>tar xvfz archive1.tar.gz</code></p>
+<p>Remember that by combining <strong>x</strong> with <strong>z</strong>, you are combining two steps: Using <code>gunzip</code> to decompress the file <code>archive1.tar</code>, and then extracting all the files to the current location.</p>
+<h3 id="a-note-about-that-gzip-command-from-lab-2">A Note about that gzip command from Lab 2</h3>
+<p>Remember this:</p>
+<p>gzip &lt; practical.qcow2 &gt; practical1.qcow2.gz</p>
+<p>Think about it like this:</p>
+<p>input file –&gt; gzip –&gt; output file</p>
+<p>We want to specify both the input and the output, but Bash always wants us to start with the <em>name of a command</em>. So one of the ways we can write this command is with these file redirections.</p>
+<p>/—————–<br />
+|<br />
+gzip &lt;– input file –&gt; output file</p>
+<h2 id="disk-management">Disk Management</h2>
+<p>When you add hard disks to Linux, they will be identified by either <strong>vd</strong> or <strong>sd</strong>, followed by a letter. <strong>vda</strong> is your first hard drive (usually the one containing your root filesystem!), <strong>vdb</strong>, is the second, and so on. Note that simply adding a hard drive doesn’t mean you can use it yet, it needs to be <em>partitioned</em>.</p>
+<p><code>lsblk</code></p>
+<pre><code>NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda                     252:0    0   15G  0 disk 
+├─vda1                  252:1    0    1G  0 part /boot
+└─vda2                  252:2    0   14G  0 part 
+  ├─centos_centos1-root 253:0    0 12.5G  0 lvm  /
+  └─centos_centos1-swap 253:1    0  1.5G  0 lvm  [SWAP]</code></pre>
+<p>You remember from lab 1 and 2, that you needed to create several partitions to get a working system. In this case, vda contains both vda1 and vda2. vda1 contains /boot, which is required to boot the computer and bootstrap the kernel. vda2 contains the rest of the operating system.</p>
+<p>We can add a virtual hard disk from virt-manager:</p>
+<p><code>lsblk</code></p>
+<pre><code>NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda                     252:0    0   15G  0 disk 
+├─vda1                  252:1    0    1G  0 part /boot
+└─vda2                  252:2    0   14G  0 part 
+  ├─centos_centos1-root 253:0    0 12.5G  0 lvm  /
+  └─centos_centos1-swap 253:1    0  1.5G  0 lvm  [SWAP]
+vdb                     252:16   0    2G  0 disk </code></pre>
+<p>We have a disk, now we must create a partition using <code>fdisk</code>. Refer to lab 5 for the precise steps to do this, but basically we want to create a primary partition. We might also want to specify some or all of the blocks of the hard drive. Once we are done, we use ‘w’ to <em>write</em> our changes, and then reboot to see the new partition. If we accept all of the defaults, we should have create ‘vdb1’ with a size of 2GB.</p>
+<p><code>fdisk /dev/vdb</code> # Remember! this is the drive that we have added.</p>
+<p>After the fdisk process and a reboot:</p>
+<pre><code>NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda                     252:0    0   15G  0 disk 
+├─vda1                  252:1    0    1G  0 part /boot
+└─vda2                  252:2    0   14G  0 part 
+  ├─centos_centos1-root 253:0    0 12.5G  0 lvm  /
+  └─centos_centos1-swap 253:1    0  1.5G  0 lvm  [SWAP]
+vdb                     252:16   0    2G  0 disk 
+└─vdb1                  252:17   0    2G  0 part </code></pre>
+<h3 id="using-lvm">Using LVM</h3>
+<p>The <code>ssm list</code> command gives us this output:</p>
+<pre><code>-------------------------------------------------------------------
+Device        Free      Used     Total  Pool            Mount point
+-------------------------------------------------------------------
+/dev/vda                      15.00 GB                  PARTITIONED
+/dev/vda1                      1.00 GB                  /boot      
+/dev/vda2  0.00 KB  14.00 GB  14.00 GB  centos_centos1             
+/dev/vdb                       2.00 GB                             
+/dev/vdb1                      2.00 GB                             
+-------------------------------------------------------------------
+----------------------------------------------------------
+Pool            Type  Devices     Free      Used     Total  
+----------------------------------------------------------
+centos_centos1  lvm   1        0.00 KB  14.00 GB  14.00 GB  
+----------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+Volume                    Pool            Volume size  FS       FS size       Free  Type    Mount point
+-------------------------------------------------------------------------------------------------------
+/dev/centos_centos1/root  centos_centos1     12.50 GB  ext4    12.50 GB    7.28 GB  linear  /          
+/dev/centos_centos1/swap  centos_centos1      1.50 GB                               linear             
+/dev/vda1                                     1.00 GB  xfs   1014.00 MB  781.89 MB  part    /boot      
+-------------------------------------------------------------------------------------------------------</code></pre>
+<p>The first table gives us a list of physical volumes, The second shows us the volume group, and the third, the logical volumes. We use our new partition, we need to work in particular sequence.</p>
+<p>Notice that in the physical volume table, /dev/vdb1 has a total size but isn’t part of any pool, and doesn’t have a number set for free space, or used space. Let’s start by creating a physical volume, and targeting our new partition.</p>
+<p><code>pvcreate /dev/vdb1</code></p>
+<p>Now, we add it to the volume group that already exists (centos_centos1).</p>
+<p><code>vgextend centos_centos1 /dev/vdb1</code></p>
+<pre><code>-------------------------------------------------------------------
+Device        Free      Used     Total  Pool            Mount point
+-------------------------------------------------------------------
+/dev/vda                      15.00 GB                  PARTITIONED
+/dev/vda1                      1.00 GB                  /boot      
+/dev/vda2  0.00 KB  14.00 GB  14.00 GB  centos_centos1             
+/dev/vdb                       2.00 GB                             
+/dev/vdb1  2.00 GB   0.00 KB   2.00 GB  centos_centos1             
+-------------------------------------------------------------------
+----------------------------------------------------------
+Pool            Type  Devices     Free      Used     Total  
+----------------------------------------------------------
+centos_centos1  lvm   2        2.00 GB  14.00 GB  15.99 GB  
+----------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+Volume                    Pool            Volume size  FS       FS size       Free  Type    Mount point
+-------------------------------------------------------------------------------------------------------
+/dev/centos_centos1/root  centos_centos1     12.50 GB  ext4    12.50 GB    7.28 GB  linear  /          
+/dev/centos_centos1/swap  centos_centos1      1.50 GB                               linear             
+/dev/vda1                                     1.00 GB  xfs   1014.00 MB  781.89 MB  part    /boot      
+-------------------------------------------------------------------------------------------------------</code></pre>
+<p>Now vdb1 has a size, an assigned pool, and in the second table we can see that there are two devices assigned to our group. Now we can either create a new logical volume, and modify an existing logical volume. In this case, I’m going to create a new logical volume. I’m going to specify a certain size for this logical volume (1 Gigabyte) and a volume group.</p>
+<p><code>lvcreate -L 1G -n stuff centos_centos1</code></p>
+<pre><code>----------------------------------------------------------------------
+Device           Free      Used     Total  Pool            Mount point
+----------------------------------------------------------------------
+/dev/vda                         15.00 GB                  PARTITIONED
+/dev/vda1                         1.00 GB                  /boot      
+/dev/vda2     0.00 KB  14.00 GB  14.00 GB  centos_centos1             
+/dev/vdb                          2.00 GB                             
+/dev/vdb1  1020.00 MB   1.00 GB   2.00 GB  centos_centos1             
+----------------------------------------------------------------------
+-------------------------------------------------------------
+Pool            Type  Devices        Free      Used     Total  
+-------------------------------------------------------------
+centos_centos1  lvm   2        1020.00 MB  15.00 GB  15.99 GB  
+-------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+Volume                     Pool            Volume size  FS       FS size       Free  Type    Mount point
+--------------------------------------------------------------------------------------------------------
+/dev/centos_centos1/root   centos_centos1     12.50 GB  ext4    12.50 GB    7.28 GB  linear  /          
+/dev/centos_centos1/swap   centos_centos1      1.50 GB                               linear             
+/dev/centos_centos1/stuff  centos_centos1      1.00 GB                               linear             
+/dev/vda1                                      1.00 GB  xfs   1014.00 MB  781.89 MB  part    /boot      
+--------------------------------------------------------------------------------------------------------</code></pre>
+<p>Stuff now appears in the last table, as a logical volume. But it has no file system, and no mount point assigned. It first needs to be formatted.</p>
+<p><code>mkfs -t ext4 /dev/centos_centos1/stuff</code></p>
+<pre><code>----------------------------------------------------------------------
+Device           Free      Used     Total  Pool            Mount point
+----------------------------------------------------------------------
+/dev/vda                         15.00 GB                  PARTITIONED
+/dev/vda1                         1.00 GB                  /boot      
+/dev/vda2     0.00 KB  14.00 GB  14.00 GB  centos_centos1             
+/dev/vdb                          2.00 GB                             
+/dev/vdb1  1020.00 MB   1.00 GB   2.00 GB  centos_centos1             
+----------------------------------------------------------------------
+-------------------------------------------------------------
+Pool            Type  Devices        Free      Used     Total  
+-------------------------------------------------------------
+centos_centos1  lvm   2        1020.00 MB  15.00 GB  15.99 GB  
+-------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+Volume                     Pool            Volume size  FS       FS size       Free  Type    Mount point
+--------------------------------------------------------------------------------------------------------
+/dev/centos_centos1/root   centos_centos1     12.50 GB  ext4    12.50 GB    7.28 GB  linear  /          
+/dev/centos_centos1/swap   centos_centos1      1.50 GB                               linear             
+/dev/centos_centos1/stuff  centos_centos1      1.00 GB  ext4     1.00 GB  922.20 MB  linear             
+/dev/vda1                                      1.00 GB  xfs   1014.00 MB  781.89 MB  part    /boot      
+--------------------------------------------------------------------------------------------------------</code></pre>
+<p>Ext4 is a formatting system that is very common for modern Linux computers. It has some advantages over the Windows standard (NTFS). Finally, we can create a directory from where we can mount stuff, and then mount it. To make the mounting persistent, edit the /etc/fstab file.</p>
+<p><code>mkdir /stuff</code></p>
+<p><code>mount -t ext4 /dev/centos_centos1/stuff /stuff</code></p>
+<pre><code>----------------------------------------------------------------------
+Device           Free      Used     Total  Pool            Mount point
+----------------------------------------------------------------------
+/dev/vda                         15.00 GB                  PARTITIONED
+/dev/vda1                         1.00 GB                  /boot      
+/dev/vda2     0.00 KB  14.00 GB  14.00 GB  centos_centos1             
+/dev/vdb                          2.00 GB                             
+/dev/vdb1  1020.00 MB   1.00 GB   2.00 GB  centos_centos1             
+----------------------------------------------------------------------
+-------------------------------------------------------------
+Pool            Type  Devices        Free      Used     Total  
+-------------------------------------------------------------
+centos_centos1  lvm   2        1020.00 MB  15.00 GB  15.99 GB  
+-------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+Volume                     Pool            Volume size  FS       FS size       Free  Type    Mount point
+--------------------------------------------------------------------------------------------------------
+/dev/centos_centos1/root   centos_centos1     12.50 GB  ext4    12.50 GB    7.28 GB  linear  /          
+/dev/centos_centos1/swap   centos_centos1      1.50 GB                               linear             
+/dev/centos_centos1/stuff  centos_centos1      1.00 GB  ext4     1.00 GB  922.20 MB  linear  /stuff     
+/dev/vda1                                      1.00 GB  xfs   1014.00 MB  781.89 MB  part    /boot      
+--------------------------------------------------------------------------------------------------------</code></pre>
+<p>I chose to mount this to a directory in root called /stuff, but that’s up to you.</p>
+<p>Each step in this process is required before you can use this hard drive as a place to store your files and directories:</p>
+<ol type="1">
+<li>Add a ‘hard drive’, either install it or add a virtual drive from inside virt-manager</li>
+<li>Identify the new drive using lsblk or df -h. <strong>Your drive is identified with three letters, for example vdb</strong>.</li>
+<li>Create a partition using fdisk. <strong>Your partition is identified with three letters and a number, for example vdb1</strong>.</li>
+<li>If you are using LVM, create a physical volume, and add it to a volume group.</li>
+<li>If you are using LVM, create a new logical volume, or modify an existing logical volume.</li>
+<li>Format the logical volume. ext4 is most common.</li>
+<li>Mount the logical volume. Use a mount command, or make the mount persistent by changing /etc/fstab.</li>
+</ol>
+<h2 id="iptables">iptables</h2>
+<p>iptables is the firewall that you will using in your program. The default configuration of iptables contains three <em>chains</em> of rules, each with a <em>policy</em>. Packets are inspected. If they match a rule, it can be accepted, rejected, dropped or logged based on the rule. If the packet doesn’t match, it is compared with the next rule. <strong>The order of rules is very important</strong>. If the packet doesn’t match any rule in the chain, it is accepted, rejected, dropped or logged based on the <em>default policy</em> of the chain.</p>
+<ul>
+<li>Flushing iptables with remove all rules, <strong>but doesn’t change policy</strong>.</li>
+<li>Flushing iptables is very bad practice.</li>
+<li>Changes made to iptables aren’t persistent until you run <code>iptables-save &gt; /etc/sysconfig/iptables</code>.</li>
+<li>Rules can be appended to the <em>bottom</em> of a chain, or they can be <em>inserted</em> into a specific place in the chain.</li>
+<li>To change a policy, use: <code>iptables -P &lt;CHAIN NAME&gt;  &lt;ACTION&gt;</code></li>
+<li>To append a rule, use: <code>iptables -A &lt;CHAIN NAME&gt;</code></li>
+<li>To insert a rule, use: <code>iptables -I &lt;CHAIN NAME&gt; &lt;WHERE TO INSERT THE RULE&gt;</code></li>
+</ul>
+<p>Here is the default INPUT chain for my centos machine:</p>
+<p><code>iptables -L INPUT</code></p>
+<pre><code>Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited</code></pre>
+<p>The policy is ACCEPT. Any packet that proceeds through the chain without being matched, will be accepted. Look at the last rule of the chain, though. It matches all protocols, all source IP addresses, and all destination IP addresses. “reject-with icmp-host-prohibited” is simply changing how iptables will reject the packet, in this case the sender will see the error message “ICMP port unreachable.”</p>
+<p>Logically, we can see that no traffic will ever be affected by the default policy, since the last rule in our chain is going to match all traffic not otherwise handled earlier in the chain. <strong>Order is important!</strong></p>
+<p>Let’s insert a rule before this reject rule:</p>
+<p><code>iptables -I INPUT 8 -p tcp --dport 80 -j ACCEPT</code></p>
+<pre><code>Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     udp  --  anywhere             anywhere             udp dpt:domain
+2    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:domain
+3    ACCEPT     udp  --  anywhere             anywhere             udp dpt:bootps
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:bootps
+5    ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+6    ACCEPT     icmp --  anywhere             anywhere            
+7    ACCEPT     all  --  anywhere             anywhere            
+8    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+9    ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+10   REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited</code></pre>
+<p>By modifying the <code>iptables -L INPUT</code> command with <code>--line-numbers</code>, you can see our new rule. This will allow outside traffic to connect to port 80 on our system.</p>
+</body>
+</html>

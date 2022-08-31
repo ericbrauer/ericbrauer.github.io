@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 2B : Linux Files II</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 2B : Linux Files II</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#relative-to-home-paths">Relative-to-Home Paths</a>
+<ul>
+<li><a href="#relative-to-home-paths-for-other-users">Relative-to-Home Paths For Other Users</a></li>
+</ul></li>
+<li><a href="#echo">Echo</a></li>
+<li><a href="#file-redirection">File Redirection</a></li>
+<li><a href="#reading-the-contents-of-files">Reading the Contents of Files</a></li>
+<li><a href="#append-redirection">Append Redirection</a></li>
+<li><a href="#other-ways-of-reading-files">Other Ways of Reading Files</a></li>
+<li><a href="#using-the-man-command">Using the man command</a></li>
+<li><a href="#diff-command">diff Command</a></li>
+<li><a href="#find-command">find Command</a></li>
+<li><a href="#introduction-to-standard-streams">Introduction to Standard Streams</a></li>
+<li><a href="#summary">Summary</a>
+<ul>
+<li><a href="#file-paths">File Paths</a></li>
+</ul></li>
+</ul>
+</nav>
+<p>Here is some basic information about naming files and directories in Linux:</p>
+<ul>
+<li>Linux file names (and directory names) are <em>case sensitive</em>. Keep this in mind when you name your files.</li>
+<li>Linux file names can contain any number of strange symbols including *, #, and more. But it’s <em>much much</em> better to avoid these.</li>
+<li>Linux file names can contain spaces, but when you use them in the shell you need to use an escape character (\).</li>
+<li>There can’t be two Linux files or directories with the <em>same name</em> in the same location.</li>
+</ul>
+<p>You can try this now.</p>
+<p><code>mkdir "this is a test"</code> Now type <code>cd this</code> (with the space) and press tab. Did it autocomplete? Now try again, but type <code>cd this\</code> (with a space). This should work.</p>
+<hr />
+<h2 id="relative-to-home-paths">Relative-to-Home Paths</h2>
+<p>So far in these notes we’ve talked about:</p>
+<ul>
+<li><dl>
+<dt>Relative Paths</dt>
+<dd>These paths specify a path from your <em>current location</em> to some other location. They usually start with either the shortcut to your <em>parent directory</em> (<code>..</code>), or with a <em>subdirectory</em> in your current location. You can use this type of file path to travel <em>up</em> and <em>down</em> the file tree.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Absolute Paths</dt>
+<dd>These paths specify a path starting from the <em>top</em> of your file system down to some other location. They start with the shortcut for <em>root</em> (<code>/</code>). You can only this type of file path to travel <em>down</em> a file tree.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Relative-to-Home Paths (<strong>New!</strong>)</dt>
+<dd>These paths start from <em>your home</em>. For example, if you are logged in as user <code>student</code> then your home is <code>/home/student</code>. They always start with a tilde (<code>~</code>). A <em>relative-to-home</em> path might also specify a different user. For example, the filepath <code>~eric.brauer/example</code> specifies user <code>eric.brauer</code>’s home. You should only use this type of file path to travel <em>down</em> a file tree.
+</dd>
+</dl></li>
+</ul>
+<p>To demonstrate this, log into Matrix and enter <code>pwd</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">/home/student</span></span></code></pre></div>
+<p>Your actual path will be different, since everyone is logged in as different users. But this path that you see can be shortened using a tilde (<code>~</code>).</p>
+<p>Try this now:</p>
+<p><code>cd ~eric.brauer/uli101</code></p>
+<p>Use <code>ls</code> and see if you can find a file called <code>tux.png</code>.</p>
+<p>Now you could copy this to your home very quickly:</p>
+<p><code>cp tux.png ~</code></p>
+<p>But you might want to use this image on your webpage instead. Copy this file to your <code>public_html</code> directory:</p>
+<p><code>cp tux.png ~/public_html</code></p>
+<p><code>cd ~/public_html</code></p>
+<p>Use <code>ls</code> to verify that the image was copied. And then use <code>pwd</code> to compare the <em>relative-to-home path</em> with an <em>absolute path</em>.</p>
+<p><strong>~/public_html == /home/student/public_html</strong></p>
+<h3 id="relative-to-home-paths-for-other-users">Relative-to-Home Paths For Other Users</h3>
+<p>You can also specify the home directories of other users. So for example, you have been accessing the assignments using this path:</p>
+<p><code>~uli101/assign1</code></p>
+<p>What does this actually mean? Well, there is a user called <code>uli101</code>, and that user has a home directory that contains the assignments. So the absolute path for assignment 1 would be:</p>
+<p><code>/home/uli101/assign1</code></p>
+<p>Here’s another demonstration: I’m going to use a file called <code>frankenstein.txt</code> to demonstrate commands such as <code>more</code> and <code>less</code>. If you don’t have a copy of this file, I will share mine. Enter this command to get it:</p>
+<p><code>cp ~eric.brauer/uli101/frankenstein.txt ~</code></p>
+<p>Again, the first argument is the <em>target</em>. That’s located in <em>my</em> home. The destination is <em>your</em> home.</p>
+<hr />
+<h2 id="echo">Echo</h2>
+<p>Let’s go over some ways that text can be <em>put into</em> and <em>read from</em> files. This will also introduce our first <em>file redirection</em>.</p>
+<p>The <code>echo</code> command behaves… like an echo.</p>
+<p><code>echo Hello</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">Hello</span></span></code></pre></div>
+<p>We just asked the shell to send what we wrote to <em>STDOUT</em>, or standard output. <em>STDOUT</em> is what we’ve been reading so far, as we explore the file system and so on. By default, anything sent to <em>STDOUT</em> is displayed on our terminal. This isn’t too helpful yet, but it will come in handy when we get into variables!</p>
+<hr />
+<h2 id="file-redirection">File Redirection</h2>
+<p>Instead of using <code>echo</code> with <em>STDOUT</em>, let’s send it into a file that we can call ‘friendly’.</p>
+<p><strong>&gt;</strong> = Redirect (Write).</p>
+<p><code>echo Hello &gt; friendly</code></p>
+<p>Did you see anything printed after you ran the command? Hopefully not, since we asked the shell to <em>redirect</em> the output.</p>
+<p>Use <code>ls</code> to find the ‘friendly’ file.</p>
+<hr />
+<h2 id="reading-the-contents-of-files">Reading the Contents of Files</h2>
+<p>How do we read from the file? There are several ways. Let’s start with the simplest.</p>
+<p><code>cat friendly</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">Hello</span></span></code></pre></div>
+<p><code>cat</code> is short for <code>concatenate</code>, and it is also the command we would use if we wanted to <em>combine</em> two files.</p>
+<p>Let’s try it again:</p>
+<p><code>echo "Hello World" &gt; friendly</code></p>
+<p><code>cat friendly</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">Hello</span> World</span></code></pre></div>
+<hr />
+<h2 id="append-redirection">Append Redirection</h2>
+<p>Notice that the previous output was <em>overwritten</em> by our most recent command. This can be dangerous, if you are echoing into a configuration file.</p>
+<p><strong>&gt;&gt;</strong> = Redirect (Append). This will <em>add</em> to the end of a file, rather than overwrite.</p>
+<p><code>echo 'Hello, User!' &gt;&gt; friendly</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">Hello</span> World</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">Hello</span>, User!</span></code></pre></div>
+<p>This will also work if you are creating a new file:</p>
+<p><code>echo "Hello World" &gt;&gt; friendly2</code></p>
+<p><code>cat friendly2</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">Hello</span> World</span></code></pre></div>
+<hr />
+<h2 id="other-ways-of-reading-files">Other Ways of Reading Files</h2>
+<p><code>cat</code> works well when the file isn’t too big. But how does it work for larger files? Try this:</p>
+<p><code>cat ~eric.brauer/uli101/frankenstein.txt</code></p>
+<p>You’ll find that all the text flys past without any way to slow it or to navigate. This is when it’s useful to switch to another command. Use the up arrow key to find your last command. Use <strong>Ctrl+a</strong> to move to the start of this command, and change <code>cat</code> to:</p>
+<p><code>more ~eric.brauer/uli101/frankenstein.txt</code> or…</p>
+<p><code>less ~eric.brauer/uli101/frankenstein.txt</code></p>
+<p>Of the two, <code>less</code> is much easier to use. Use arrow keys, to navigate, q to quit. You can also search for a word by pressing the <strong>/</strong> key and entering a search term. (Use <strong>n</strong> to navigate to the next instance of the search term).</p>
+<hr />
+<h2 id="using-the-man-command">Using the man command</h2>
+<p>Everything you just learned about <code>less</code> is applicable to <code>man</code>. <code>man</code> should be the first place you look for command help. Every command in Linux has a man page.</p>
+<p><code>man cal</code></p>
+<p>This will print a manual page where you can read about the various options for using the <code>cal</code> command.</p>
+<p><code>/-w</code> (followed by Enter)</p>
+<p>The next time you run <code>cal</code>, add <code>-w</code> to see how this works.</p>
+<p>Another useful feature of <code>man</code> is that you can search to find a tool you might need. Use <code>-k</code>.</p>
+<p><code>man -k calendar</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">cal</span> (1)              <span class="ex">-</span> displays a calendar and the date of Easter</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">calendar</span> (1)         <span class="ex">-</span> reminder service</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">gcal</span> (1)             <span class="ex">-</span> a program for calculating and printing calendars.</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="ex">ncal</span> (1)             <span class="ex">-</span> displays a calendar and the date of Easter</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">zshcalsys</span> (1)        <span class="ex">-</span> zsh calendar system</span></code></pre></div>
+<hr />
+<h2 id="diff-command">diff Command</h2>
+<p>Let’s use a couple files we created already:</p>
+<p><code>cat friendly</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">Hello</span> World</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">Hello</span>, User!</span></code></pre></div>
+<p><code>cat friendly2</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">Hello</span> World</span></code></pre></div>
+<p>To quickly check the differences in files:</p>
+<p><code>diff friendly friendly2</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="ex">1</span>,2c1</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="op">&lt;</span> <span class="ex">Hello</span> World </span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="op">&lt;</span> <span class="ex">Hello</span>, User!</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="ex">---</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="op">&gt;</span> <span class="ex">Hello</span> World</span></code></pre></div>
+<p>Another, more useful version is with <code>-y</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">Hello</span> World                               <span class="kw">|</span> <span class="ex">Hello</span> World</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">Hello</span>, User!                              <span class="op">&lt;</span></span></code></pre></div>
+<p>There are more ways of making <code>diff</code> output useful. Refer to the man pages.</p>
+<hr />
+<h2 id="find-command">find Command</h2>
+<p>The <code>find</code> command does exactly what you expect: it <em>finds</em> the files that you have misplaced. This is a crucial problem-solving tool and from this day forward, it should be a tool that you use before anything else!</p>
+<p>The <code>find</code> tool will require at least two arguments: the place to search and what to search for. Let’s use this directory structure for an example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">sample_dir</span> <span class="op">&lt;</span>-- You are here</span>
+<span id="cb12-2"><a href="#cb12-2"></a>├── <span class="ex">admin</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>├── <span class="ex">cambridge</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>│   ├── <span class="ex">cafeteria</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>│   └── <span class="ex">library</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>│       └── <span class="ex">dir_practice</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>├── <span class="ex">faculty</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>├── <span class="ex">markham</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>│   ├── <span class="ex">annex</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>│   ├── <span class="ex">annex2</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>│   ├── <span class="ex">building1</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>│   └── <span class="ex">parking</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>├── <span class="ex">outline.doc</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>├── <span class="ex">oxford</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a>│   ├── <span class="ex">outline.doc</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>│   ├── <span class="ex">programming</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a>│   │   └── <span class="ex">report.pdf</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a>│   └── <span class="ex">security</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a>└── <span class="ex">stenton</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a>    ├── <span class="ex">gen_ed</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a>    │   ├── <span class="ex">cars</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a>    │   ├── <span class="ex">cars2</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a>    │   └── <span class="ex">link-cars</span></span>
+<span id="cb12-24"><a href="#cb12-24"></a>    ├── <span class="ex">lib_arts</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a>    │   ├── <span class="ex">english.txt</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a>    │   └── <span class="ex">match.doc</span></span>
+<span id="cb12-27"><a href="#cb12-27"></a>    └── <span class="ex">parking2</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a></span>
+<span id="cb12-29"><a href="#cb12-29"></a><span class="ex">12</span> directories, 14 files</span></code></pre></div>
+<p>Take a moment to understand the file structure. We know that ‘cambridge’, ‘markham’, ‘oxford’ and ‘stenton’ are all directories, and ‘gen_ed’, ‘lib_arts’ are subdirectories of ‘stenton’. Additionally, ‘programming’ and ‘library’ are subdirectories of ‘oxford’ and ‘cambridge’ respectively.</p>
+<p>Let’s construct our first <code>find</code> command. The first argument is where we want to start searching. This search will always be <em>recursive</em>, meaning we will be searching all subdirectories. Let’s start the search from our <em>current location</em>, for which we can use our shortcut <strong>.</strong>.</p>
+<p>Our second argument will be what we are searching for. We know what to look for, we are looking for ‘report.pdf’. So let’s plug that in.</p>
+<p><code>find . -name report.pdf</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">./oxford/programming/report.pdf</span></span></code></pre></div>
+<p>The answer appeared right away! Let’s try a broader search:</p>
+<p><code>find ~ -name report.pdf</code></p>
+<p>This time, we starting the search in ‘/home/eric’, and the search takes quite a bit longer.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">find</span>: ‘/home/eric/.cache/dconf’: Permission denied</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="ex">find</span>: ‘/home/eric/.dbus’: Permission denied</span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="ex">/home/eric/ULI101/sample_dir1/sample_dir/oxford/programming/report.pdf</span></span></code></pre></div>
+<p>We find our file again, and we also get a few error messages because we don’t have permission to be reading from ‘.dbus’ or ‘dconf’. This is normal. One more search, but this time it will be <em>very</em> broad. It would also return so many error messages that it would be hard to find the actual result, so I’m going to add a bit to the end.</p>
+<p><code>find / -name report.pdf 2&gt;errors.log</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">/home/eric/ULI101/sample_dir1/sample_dir/oxford/programming/report.pdf</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ex">/home/student/Documents/sample_dir1/sample_dir/oxford/programming/report.pdf</span></span></code></pre></div>
+<p>This time, I searched in root, so the entire file system was included. This search took the longest of all, but I found another result in another user’s home folder. I also added another <em>redirect</em>, but this time what I redirected was <em>STDERR</em>, which stands for ‘standard error’.</p>
+<p>To see what that looks like, use <code>cat errors.log</code> to read our error log.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">find</span>: ‘/snap/core/5328/var/lib/waagent’: Permission denied</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">find</span>: ‘/snap/core/5328/var/spool/cron/crontabs’: Permission denied</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="ex">find</span>: ‘/snap/core/5328/var/spool/rsyslog’: Permission denied</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="ex">find</span>: ‘/snap/core/5145/etc/ssl/private’: Permission denied</span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="ex">find</span>: ‘/snap/core/5145/root’: Permission denied</span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="ex">find</span>: ‘/snap/core/5145/var/cache/ldconfig’: Permission denied</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="ex">find</span>: ‘/snap/core/5145/var/lib/machines’: Permission denied</span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="ex">find</span>: ‘/snap/core/5145/var/lib/waagent’: Permission denied</span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="ex">find</span>: ‘/snap/core/5145/var/spool/cron/crontabs’: Permission denied</span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="ex">find</span>: ‘/snap/core/5145/var/spool/rsyslog’: Permission denied</span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="ex">find</span>: ‘/snap/core/4917/etc/ssl/private’: Permission denied</span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="ex">find</span>: ‘/snap/core/4917/root’: Permission denied</span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="ex">find</span>: ‘/snap/core/4917/var/cache/ldconfig’: Permission denied</span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="ex">find</span>: ‘/snap/core/4917/var/lib/machines’: Permission denied</span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="ex">find</span>: ‘/snap/core/4917/var/lib/waagent’: Permission denied</span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="ex">find</span>: ‘/snap/core/4917/var/spool/cron/crontabs’: Permission denied</span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="ex">find</span>: ‘/snap/core/4917/var/spool/rsyslog’: Permission denied</span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="ex">find</span>: ‘/home/apt’: Permission denied</span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="ex">find</span>: ‘/home/lost+found’: Permission denied</span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="ex">find</span>: ‘/home/eric/.cache/dconf’: Permission denied</span>
+<span id="cb16-21"><a href="#cb16-21"></a><span class="ex">find</span>: ‘/home/eric/.dbus’: Permission denied</span>
+<span id="cb16-22"><a href="#cb16-22"></a><span class="ex">...</span> and so on and so on.</span></code></pre></div>
+<p>How long is this file?</p>
+<p><code>wc -l errors.log</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">1869</span> errors.log</span></code></pre></div>
+<p>1869 error messages! <strong>Note</strong>: Use the <code>man</code> tool to discover what <code>wc</code> is and what <code>-l</code> will do.</p>
+<h2 id="introduction-to-standard-streams">Introduction to Standard Streams</h2>
+<p>Let’s a closer look at streams:</p>
+<figure>
+<img src="https://www.linuxunit.com/images/stdin-stdout-stderr.png" alt="" /><figcaption>From Linux Unit</figcaption>
+</figure>
+<p>By default, when we run programs we are getting a mix of <em>STDOUT</em> and <em>STDERR</em> sent to the display. But as we’ve seen, it’s possible to redirect these streams, for example when we redirected output from <code>echo</code> into a file called ‘friendly’.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">output</span> <span class="op">&gt;</span> file</span></code></pre></div>
+<p>Note that there is an implicit ‘1’ in front of that redirect symbol.</p>
+<p>Similarly, just now we redirected error output into a log file.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="ex">output</span> <span class="op">2&gt;</span> error.log</span></code></pre></div>
+<p>Or maybe we don’t care at all about those error messages, in which case we can throw them into a black hole and forget about them:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">output</span> <span class="op">2&gt;</span> /dev/null</span></code></pre></div>
+<p>What about <em>STDIN</em>? We can demonstrate that with our <code>cat</code> program. When you call <code>cat</code> without a file, it will listen on <em>STDIN</em>. You can try this now, and press Ctrl+d when you want to stop.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="ex">Hello</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="ex">Hello</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">Is</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">Is</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="ex">There</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="ex">There</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="ex">An</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="ex">An</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="ex">Echo?</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="ex">Echo?</span></span></code></pre></div>
+<p>Streaming is at the heart of what makes Linux so powerful, once we get into pipes. For now, be aware of the idea of streams!</p>
+<p><a href="https://www.linuxunit.com/io-redirection-stdin-stdout-stderr-streams/">Another Useful Link for Understanding Streams</a></p>
+<h1 id="summary">Summary</h1>
+<h2 id="file-paths">File Paths</h2>
+<ul>
+<li><dl>
+<dt>Relative Paths</dt>
+<dd>These paths specify a path from your <em>current location</em> to some other location. They usually start with either the shortcut to your <em>parent directory</em> (<code>..</code>), or with a <em>subdirectory</em> in your current location.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Absolute Paths</dt>
+<dd>These paths specify a path starting from the <em>top</em> of your file system down to some other location. They start with the shortcut for <em>root</em> (<code>/</code>).
+</dd>
+</dl></li>
+<li><dl>
+<dt>Relative-to-Home Paths</dt>
+<dd>These paths start from <em>your home</em>. For example, if you are logged in as user <code>student</code> then your home is <code>/home/student</code>. They always start with a tilde (<code>~</code>). A <em>relative-to-home</em> path might also specify a different user. For example, the filepath <code>~eric.brauer/example</code> specifies user <code>eric.brauer</code>’s home.
+</dd>
+</dl></li>
+</ul>
+<blockquote>
+<ul>
+<li><strong>STDIN</strong>: Standard Input <em>into</em> a program.</li>
+<li><strong>STDOUT</strong>: Standard Output, by default it is sent to the display.</li>
+<li><strong>STDERR</strong>: Standard Error, by default is <em>also</em> is sent to the display.</li>
+</ul>
+</blockquote>
+<blockquote>
+<h2 id="commands">Commands</h2>
+<ul>
+<li>echo: display a line of text</li>
+<li>cat: dump the contents of a file to STDOUT</li>
+<li>more: a scrollable way to read files</li>
+<li>less: another scrollable, searchable way to read files</li>
+<li>diff: spot the differences between two files</li>
+<li>man: manual for programs</li>
+<li>find: find a missing file</li>
+<li>wc: word count</li>
+</ul>
+</blockquote>
+<blockquote>
+<h2 id="shortcuts">Shortcuts</h2>
+<ul>
+<li>. : current directory</li>
+<li>.. : parent directory</li>
+<li>~ : home directory for current user</li>
+<li>/ : root directory</li>
+</ul>
+</blockquote>
+<blockquote>
+<h2 id="redirects">Redirects</h2>
+<ul>
+<li>&gt; Redirect STDOUT and overwrite</li>
+<li>&gt;&gt; Redirect STDOUT and append</li>
+<li>2&gt; Redirect STDERR</li>
+</ul>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>lab2</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#lab-2-math-operations-datatypes-conditional-logic">Lab 2: Math Operations, Datatypes, Conditional Logic</a>
+<ul>
+<li><a href="#learning-outcomes">Learning Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#performing-math-operations">2.1 Performing Math Operations</a>
+<ul>
+<li><a href="#task-datatype-detection">TASK: Datatype Detection</a></li>
+</ul></li>
+<li><a href="#debugging-with-datatypes">2.2 Debugging With Datatypes</a></li>
+<li><a href="#datatype-conversion">2.3 Datatype Conversion</a></li>
+<li><a href="#task-summing-calculator">2.4 TASK: Summing Calculator</a>
+<ul>
+<li><a href="#example-dialog">Example Dialog</a></li>
+</ul></li>
+<li><a href="#comparisons">2.5 Comparisons</a></li>
+<li><a href="#if-conditions">2.6 If Conditions</a>
+<ul>
+<li><a href="#indentation-in-python">Indentation In Python</a></li>
+</ul></li>
+<li><a href="#ifelse">2.7 If/Else</a></li>
+<li><a href="#elif-and-nested-if">2.8 Elif and Nested If</a></li>
+<li><a href="#task-tax-calculator">2.9 TASK: Tax Calculator</a>
+<ul>
+<li><a href="#defining-the-customers-requirements">Defining The Customer’s Requirements</a></li>
+<li><a href="#required-input">Required Input</a></li>
+<li><a href="#required-output">Required Output</a></li>
+<li><a href="#algorithm-design">Algorithm Design</a></li>
+<li><a href="#the-deliverable">The Deliverable</a></li>
+</ul></li>
+<li><a href="#challenge-task">CHALLENGE TASK</a></li>
+<li><a href="#glossary">Glossary</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="lab-2-math-operations-datatypes-conditional-logic">Lab 2: Math Operations, Datatypes, Conditional Logic</h1>
+<h2 id="learning-outcomes">Learning Outcomes</h2>
+<p>In this lab, you will:</p>
+<ul>
+<li>Perform math operations</li>
+<li>Learn about more of the basic datatypes</li>
+<li>Perform datatype conversions</li>
+<li>Use comparison operators to compare numbers</li>
+<li>Learn about using conditions</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>In the last lab, we learned how to use builtin functions to print and to get input from the user. You may have noticed that what we can do with this input is so far very limited. In this lab we will explore some ways that we can with data.</p>
+<h2 id="performing-math-operations">2.1 Performing Math Operations</h2>
+<ol type="1">
+<li>We will once again use Python’s builtin text editor called <em>IDLE</em>. Run that now. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/resources/f40ad56c6ff2461b88d428c58d0f4002" alt="9061b75aeab1f50c1377b94e5bd1f58b.png" /></li>
+<li>At the prompt, type <code>3 + 4</code> and press Enter. You should see the result printed below.</li>
+<li>Let’s work with some variables now. Type <code>x = 5</code>. Remember to press Enter after each instruction.</li>
+<li>Now type <code>y = 6</code>.</li>
+<li>Now type <code>result = x + y</code>.</li>
+<li>To see the value associated with our variable <code>result</code>, type <code>print(result)</code>.</li>
+</ol>
+<p><code>x</code>, <code>y</code>, and <code>result</code> are all examples of the <em>integer</em> datatype. Integers are whole numbers, they have no fraction. Whenever you assign a variable with a number without quotes or a decimal, Python will automatically consider it an integer. Let’s introduce another basic datatype now.</p>
+<ol type="1">
+<li>Type the following: <code>a = 3.0</code>. This is a <em>floating point number</em>, or <em>float</em>. In Python, a float is any number that can contain decimals. In other words, <code>a</code> could equal <code>3.5</code>.</li>
+<li>Enter the following: <code>a + y</code>. You will see that the result is <code>9.0</code>.</li>
+<li>If you try a math operation using an integer and a float, Python will convert the int to a float and the result will be a float.</li>
+<li>Enter <code>2 * 3</code>. This is multiplication, and the result will be an int.</li>
+<li>Enter <code>6 / 3</code>. This is division. The result of division will always be a float. Python will intelligently perform conversions so that accuracy is preserved by default.</li>
+<li>There is another type of division: <code>7 // 2</code>. This is integer division, and it will always return a whole number.</li>
+</ol>
+<hr />
+<p><strong>Math Operators in Python</strong></p>
+<dl>
+<dt><code>+</code></dt>
+<dd>Addition
+</dd>
+<dt><code>-</code></dt>
+<dd>Subtraction
+</dd>
+<dt><code>*</code></dt>
+<dd>Multiplication
+</dd>
+<dt><code>/</code></dt>
+<dd>Division
+</dd>
+<dt><code>**</code></dt>
+<dd>Powers. eg: 2<sup>3</sup> = 8
+</dd>
+<dt><code>//</code></dt>
+<dd>Integer Division
+</dd>
+<dt><code>%</code></dt>
+<dd>Modulo. eg: When we divide 15 by 7, we get a result of 2 with a remainder of 1. Modulo will return the remainder.
+</dd>
+</dl>
+<hr />
+<h3 id="task-datatype-detection">TASK: Datatype Detection</h3>
+<p>You are writing an application for the college. Answer the following questions in a file called <code>datatypes.txt</code> and include it in your lab submission:</p>
+<p>What datatype (string/integer/float) will you use for the following:</p>
+<ol type="1">
+<li>The student’s name?</li>
+<li>The number of students in a class?</li>
+<li>The student’s grade (as a percent)?</li>
+<li>The student’s nine-digit ID number?</li>
+<li>The total amount of tuitions paid by the student (in Canadian dollars)?</li>
+</ol>
+<p>When answering these questions, consider also what types of <em>processing</em> you will be doing with these variables. Are they mathematical?</p>
+<h2 id="debugging-with-datatypes">2.2 Debugging With Datatypes</h2>
+<p>As we have seen, usually Python will intelligently convert between integers and floats during calculations. Additionally, <code>print()</code> commands will often handle ints and floats without an issue, as we saw when we entered <code>print(result)</code>. But this is not always the case.</p>
+<ol type="1">
+<li>Use the up arrow key to once again find and execute the <code>print(result)</code> instruction. Make sure that it is working and printing the number <code>11</code>.</li>
+<li>Now we will press the up arrow key and modify the <code>print()</code> command. We want to print “The result of our math is 11.” If you’ll remember from the last lab, the way we combine strings with variables is with the plus symbol.</li>
+<li>You will see something like the screen below: <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/resources/Screenshot%20from%202021-07-28%2022-26-32.png" alt="error" /></li>
+</ol>
+<hr />
+<p><strong>Note:</strong> This is an example of an <em>exception</em>. An exception is another way to say an error. Believe or not, exceptions are helpful! When the Python interpreter encounters an instruction that it finds <em>ambiguous</em>, it will often stop and request more input from the programmer. This is usually better than to continue doing something with strange effects.</p>
+<p>When debugging code, always pay attention to the exception messages, and to to line numbers. When getting help from students or professors, always provide exception messages and line numbers where they occur.</p>
+<hr />
+<p>The problem here is that <code>+</code> has two meanings. When + is between two <em>strings</em>, it will simply combine (or <em>concatenate</em>) them into one. When + is between ints or floats, it will perform a mathematical addition.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">&#39;bat&#39;</span> <span class="op">+</span> <span class="st">&#39;man&#39;</span> <span class="op">=</span> <span class="st">&#39;batman&#39;</span>  <span class="co"># concatenation</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="dv">3</span> <span class="op">+</span> <span class="fl">4.0</span> <span class="op">=</span> <span class="fl">7.0</span>  <span class="co"># addition</span></span></code></pre></div>
+<p>But the Python interpreter gets stuck when + is between a string and an int. Should it combine or add? And so, rather than potentially do the wrong thing, it halts and asks for clarification. Read the error message again and see if it makes sense. We cannot concatenate an int with a str.</p>
+<h2 id="datatype-conversion">2.3 Datatype Conversion</h2>
+<p>The solution to this issue is perform a conversion. We can convert <code>result</code> into a string using another builtin function called <code>str()</code>. This function will take an int or float and return a string (if possible).</p>
+<ol type="1">
+<li>Enter <code>str(3)</code>. You should see it print <code>'3'</code>. The single quotes tell us that 3 is now a string.</li>
+<li>Modify your <code>print</code> statement from before so that now it reads: <code>print('The result of our math is ' + str(result) + '.')</code>. Verify that you are getting the correct output now.</li>
+</ol>
+<p>Datatype conversion is also important for doing the opposite: converting strings into integers. Note that the <code>input()</code> function will return strings. Keep that in mind as you complete the next task.</p>
+<h2 id="task-summing-calculator">2.4 TASK: Summing Calculator</h2>
+<ol type="1">
+<li>Create a script called <code>lab2a.py</code>. This should be in a “Lab 2” directory, create that now. Use either IDLE or VSCode to create the file.</li>
+<li>Enter your name and MySeneca ID as comments.</li>
+<li>Use an <code>input()</code> instruction to ask for the first number. Store this into a variable called <code>user_num1</code>.</li>
+<li>Use another <code>input()</code> instruction to ask for a second number. Store this into another variable called <code>user_num2</code>.</li>
+<li>Before trying to add these together, we will need to convert them into integers. The function to do this is called <code>int()</code>. To convert into floats, we would use <code>float()</code>.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>user_int1 <span class="op">=</span> <span class="bu">int</span>(user_num1)</span></code></pre></div>
+<ol start="6" type="1">
+<li>Do the same for <code>user_num2</code>.</li>
+<li>Now you can perform the calculation. Create a new variable called <code>result</code> and it should equal the sum of your two integers.</li>
+<li>Finally, print the result in the way we have shown. Notice that the final print statement should use <code>user_num1</code>, <code>user_num2</code> and <code>result</code> coverted into a string.</li>
+</ol>
+<h3 id="example-dialog">Example Dialog</h3>
+<pre><code>Enter the first number: 4
+Enter the second number: 5
+The result of 4 plus 5 is: 9</code></pre>
+<p>Include <code>lab2a.py</code> as part of your Lab 2 submission.</p>
+<hr />
+<p>** Note:**</p>
+<p>There is a dangerous edge case to be aware of in Python. Observe:</p>
+<pre><code>&gt;&gt;&gt;&gt; int(2.4)
+2
+&gt;&gt;&gt;&gt; int(2.5)
+2
+&gt;&gt;&gt;&gt; int(2.6)
+2</code></pre>
+<p><code>int()</code> will simply strip away any decimal values. In many cases, if you need to be more accurate, you should use the <code>round()</code> function:</p>
+<pre><code>&gt;&gt;&gt;&gt; round(2.4)
+2
+&gt;&gt;&gt;&gt; round(2.5)
+2
+&gt;&gt;&gt;&gt; round(2.6)
+3</code></pre>
+<hr />
+<h2 id="comparisons">2.5 Comparisons</h2>
+<ol type="1">
+<li>Enter the following into your Python interpreter: <code>100 &gt; 10</code>. You should see it return <code>True</code>.</li>
+<li>Now try reversing the logic: instead of using the <em>greater than</em> symbol, use <code>&lt;</code>. You should now see it return <code>False</code>.</li>
+</ol>
+<p>Comparison operators are useful in many contexts. They compare two numbers based on different criteria. <code>True</code> and <code>False</code> are new datatypes as well. Before demonstrating how we can use these, let’s be sure to include the types of comparisons that are possible in Python.</p>
+<hr />
+<p>** Comparison Operators:**</p>
+<dl>
+<dt><code>&gt;</code></dt>
+<dd>greater than
+</dd>
+<dt><code>&lt;</code></dt>
+<dd>less than
+</dd>
+<dt><code>&gt;=</code></dt>
+<dd>greater than or equal to
+</dd>
+<dt><code>&lt;=</code></dt>
+<dd>less than or equal to
+</dd>
+<dt><code>==</code></dt>
+<dd>equal to
+</dd>
+<dt><code>!=</code></dt>
+<dd>not equal to
+</dd>
+</dl>
+<hr />
+<h2 id="if-conditions">2.6 If Conditions</h2>
+<p>If conditions are used to change a script’s behaviour based on circumstances. This usually means that we test a variable for a certain condition, and it that condition is true, perform an action.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&gt;</span> <span class="dv">10</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;One hundred is larger than ten.&#39;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&#39;End of test.&#39;</span>)</span></code></pre></div>
+<p>This produces the output:</p>
+<pre><code>One hundred is larger than ten.
+End of test.</code></pre>
+<p>The first defines a <em>condition</em>. In this case, we are comparing two numbers. If this condition is true, Python will run every line below that is <em>indented</em>. And finally, every line without an indent is run normally.</p>
+<h3 id="indentation-in-python">Indentation In Python</h3>
+<p>Every programming language uses indents to make code more readable, but in Python this is particularly important. Indentation defines <em>code blocks</em>, which are sets of instructions that should be run together.</p>
+<pre><b>
+number = int(input('Enter 1 for odd numbers, and 2 for even numbers.'))
+if number == 1:
+    <span style="color:red">print('1') <i># this is the first code block</i>
+    print('3')
+    print('5')
+    print('7')</span>
+else:
+    <span style="color:blue">print('2') <i># this is the second code block</i>
+    print('4')
+    print('6')
+    print('8')</span>
+print('This is the end of the program.')
+
+</b></pre>
+<p>Please note that <strong>Python requires all indents to be consistent</strong>. Style guides require that each indent should be <strong>four spaces</strong> (ie, a soft tab). VSCode will do this for you automatically. <strong>If you mix spaces and hard tabs, or if your indents are mismatched, you will get an IndentationError.</strong></p>
+<p>For many other code editors, you can set the Tab key (⭾) to output four spaces. You will find instructions online on how to set this up.</p>
+<h2 id="ifelse">2.7 If/Else</h2>
+<p>You probably noticed in the example above that we used an <code>else</code> line. This defines actions to take if our condition is <em>False</em>. So in summary:</p>
+<ul>
+<li>If the user enters <code>1</code> as their input we <strong>run</strong> every instruction in the <em>red</em> block and <strong>skip</strong> the instructions in the <em>blue</em> block.</li>
+<li>If the user enters <code>2</code> as their input we <strong>skip</strong> every instruction in the <em>red</em> block and <strong>run</strong> the instructions in the <em>blue</em> block.</li>
+<li>The final <code>print</code> instruction runs no matter what.</li>
+</ul>
+<h2 id="elif-and-nested-if">2.8 Elif and Nested If</h2>
+<p>We are not restricted to only testing a variable for only one condition. By using <code>elif</code> after our initial <code>if</code> condition, we can introduce another condition to test. The important thing to remember with <code>elif</code> is that we will test each condition in sequence. If any test returns <code>True</code>, all other tests will be skipped.</p>
+<p>Consider the example below. We understand from our experience in school that only one letter grade is assigned; if you have received an A then you haven’t also received a B, C or D. In addition, note that the sequence of these tests is important. If you placed <code>grade &gt;= 50</code> close to the top, then most student would be receiving a ‘D’ rather than an ‘A’. Feel free to re-organise this code and see how the behaviour changes.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>grade <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&#39;Please enter your grade as a percent between 0 and 100: &#39;</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="cf">if</span> grade <span class="op">&gt;=</span> <span class="dv">80</span>:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;You get an A!&#39;</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>    <span class="cf">if</span> grade <span class="op">&gt;=</span> <span class="dv">90</span>:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>        <span class="bu">print</span>(<span class="st">&#39;Actually, you get an A+!!&#39;</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">70</span>:</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;You get a B!&#39;</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">60</span>:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;You get a C!&#39;</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a><span class="cf">elif</span> grade <span class="op">&gt;=</span> <span class="dv">50</span>:</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;You get a D!&#39;</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a><span class="cf">else</span>:</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>    <span class="bu">print</span>(<span class="st">&#39;Better luck next time!&#39;</span>)</span></code></pre></div>
+<p>Some other important things to note:</p>
+<ol type="1">
+<li>By combining <code>int()</code> and <code>input()</code> we can make our code shorter and more readable. Function calls are similar to using parentheses in math:</li>
+</ol>
+<p><strong>(3 + 4) * 2</strong> will equal 14 since the addition inside parentheses is calculated first. Similarly:</p>
+<p><code>int(input())</code> the <code>input</code> function will return data from the user, which is then converted into an integer. Such combinations should be used <strong>sparingly</strong>. It’s extremely bad practice, for example, to perform a calculation and to print on the same line.</p>
+<ol start="2" type="1">
+<li>There is a nested if statement in this code. When grade is greater than 80, we will print <code>You get an A!</code> and then we will test the grade to see if it’s greater than 90. This <code>grade &gt;= 90</code> test only every happens when the first test is True. Note that the “A+” print message has an eight-space indent.</li>
+<li>You can include many <code>elif</code> statements, and it’s good practice to include an <code>else</code> as a default action.</li>
+</ol>
+<h2 id="task-tax-calculator">2.9 TASK: Tax Calculator</h2>
+<h3 id="defining-the-customers-requirements">Defining The Customer’s Requirements</h3>
+<p>You join a meeting with your manager and a new client. This client wants you to create a simple program to calculate income tax. Your manager looks over at you and asks if you can do this.</p>
+<p>It is at this point that you will need to talk to the client and define their <em>requirements</em>. The client probably has some idea of what they want, but they are probably not thinking in terms of <em>algorithms</em>, and we are (we must, because we are programmers!). By talking with the client, we can start to get specific rules for how this task will be accomplished:</p>
+<ul>
+<li>If a taxpayer’s income is less than 32000, their tax rate is 10%.</li>
+<li>If a taxpayer’s income is greater than or equal to 32000 but less than 64000, their tax rate is 15%.</li>
+<li>If a taxpayer’s income is greater than or equal to 64000, their tax rate is 25%.</li>
+<li>All taxpayers get a $10000 standard deduction.</li>
+<li>For each dependent, a taxpayer gets an additional $2000 deduction.</li>
+<li>If the calculated tax is a negative number, it should be recalculated to zero.</li>
+<li>Apply the deductions first to decrease the taxable income, then use multiplication to apply the tax rate.</li>
+</ul>
+<h3 id="required-input">Required Input</h3>
+<p>Now we can start thinking about the data we will need to collect, and how. Right now, we only know how to prompt the user for manual input. What types of questions will we need to ask?</p>
+<p>In the requirements, we can see that have different rules based on the user’s <em>income</em> and also their <em>dependents</em>. So we will need an <code>input</code> for both those pieces of information.</p>
+<p>Also at this point we need to consider the variables we will need to create, and also how to handle <em>input validation</em>. What do we do when the input goes wrong? For example, the user enters their number of dependents as ‘blue’. Later we will discuss ways to handle these types of errors. For this task, assume that the user will always enter valid numbers.</p>
+<h3 id="required-output">Required Output</h3>
+<p>Usually the client has a good idea of how they want their final product to behave. It’s your job to translate requirements and input into a desired output.</p>
+<p>Since this is a simple example, the client has expressed that it is fine to print the result to the terminal output. By discussing the output, we can talk about the program’s behaviour in a way that makes sense to everyone.</p>
+<pre><code>Enter your gross income: 46000
+Enter the number of dependents: 2
+The income tax is $4800.</code></pre>
+<h3 id="algorithm-design">Algorithm Design</h3>
+<p>Now that we have specified the requirements, we can go about designing our algorithm. We can use either <em>pseudocode</em> or a <em>flow chart</em>. We will discuss flow charts in the next lab, for now we will write each command in plain English.</p>
+<ol type="1">
+<li>Ask user for their income.</li>
+<li>Ask user for their number of dependents.</li>
+<li>if income is less than or equal to 32000, tax rate is 10%.</li>
+<li>otherwise, if income is greater than 32000 but less than or equal to 64000, tax rate is 15%.</li>
+<li>otherwise, it’s 25%.</li>
+<li>deduction is 10000 plus 2000 for each dependent.</li>
+<li>Subtract the deduction from income to get taxable income.</li>
+<li>multiply taxable income by the tax rate to get result.</li>
+<li>If the result is negative, total tax is zero.</li>
+<li>Otherwise, the result is the total tax.</li>
+<li>Print the result.</li>
+</ol>
+<p>You should be able to see how each step can be translated into Python commands you already know. Also, notice that I am trying to identify each piece of information along the way: ‘tax rate’, ‘taxable income’, ‘result’, and so on. These will be my clues when I start defining <strong>variables</strong>.</p>
+<p>In this way, we can separate the work of <em>logical design</em> from the work of <em>translating logic into syntax</em>. Programming is hard enough without the additional mental load of multi-tasking!</p>
+<h3 id="the-deliverable">The Deliverable</h3>
+<p>This is usually the final negotiation with the client. The program needs to be delivered in a way that is satisfactory to the client. This step also includes providing training and documentation so that the client knows how to use your program correctly.</p>
+<ol type="1">
+<li>Name this script <code>lab2b.py</code>.</li>
+<li>Use <code>input()</code> to query the user. Remember to convert to integers.</li>
+<li>Put your math calculation on its own line. Use parentheses <code>()</code> in your calculation if needed. Don’t try to do math inside of a print statement, it will be harder to debug.</li>
+<li>Use if statements to set to correct tax rate, and to handle negative numbers.</li>
+<li>Test your code using the Sample output.</li>
+<li><strong>Include a Docstring, and in-line comments to explain how the program works</strong>. Remember to include comments in every script you submit from now on.</li>
+<li>Include <code>lab2b.py</code> in your lab submission.</li>
+</ol>
+<h2 id="challenge-task">CHALLENGE TASK</h2>
+<p>This is our first <em>challenge</em>. These types of questions are meant to be harder to accomplish, but will be excellent practice for creating algorithms. <strong>In order to get full marks on the lab, you need to attempt this challenge</strong>, although you will <strong>not</strong> be penalised if your solution is incorrect.</p>
+<p>Please read the instructions carefully, and avoid searching for solutions online. You won’t gain any marks for copying a solution, and you won’t gain the practice needed to succeed in the course.</p>
+<ol type="1">
+<li>Name this script <code>challenge2.py</code>.</li>
+<li>Add your name and student ID as a docstring at the beginning of the script.</li>
+<li>Use input to query the user for a <em>decimal</em> number.</li>
+<li><strong>Without using the <code>round()</code> function</strong>, print the rounded integer for the number inputted by the user. For example: 2.4 = 2.</li>
+<li>For each important calculation, be sure to use an <em>in-line comment</em> to explain your approach.</li>
+</ol>
+<h2 id="glossary">Glossary</h2>
+<ul>
+<li>Integer</li>
+<li>Floating Point Number</li>
+<li>Concatenation</li>
+<li>Modulo</li>
+<li>Exception</li>
+</ul>
+</body>
+</html>

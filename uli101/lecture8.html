@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 8: Links, Processes, Aliases</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style>
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 8: Links, Processes, Aliases</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#inodes">Inodes</a></li>
+<li><a href="#hard-links">Hard Links</a><ul>
+<li><a href="#how-is-it-different-from-making-a-copy-of-a-file">How is it different from making a copy of a file?</a></li>
+<li><a href="#what-happens-when-we-remove-the-original-file">What happens when we remove the original file?</a></li>
+</ul></li>
+<li><a href="#symbolic-links">Symbolic Links</a><ul>
+<li><a href="#what-happens-if-that-file-gets-moved-or-deleted">What happens if that file gets moved or deleted?</a></li>
+</ul></li>
+<li><a href="#directory-links">Directory Links</a></li>
+<li><a href="#alias">Alias</a></li>
+<li><a href="#processes">Processes</a><ul>
+<li><a href="#killing-processes">Killing Processes</a></li>
+</ul></li>
+<li><a href="#jobs">Jobs</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</nav>
+<h1 id="inodes">Inodes</h1>
+<p>If you run a touch command, such as:</p>
+<p><code>touch test1 &amp;&amp; ls -l test1</code></p>
+<p>You get this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">-rw-r--r--</span> 1 eric eric 0 Oct 27 16:06 test1</span></code></pre></div>
+<p>Now we see that this file called <code>test1</code> has a reported file size of 0, which makes sense. But let’s think about it for one second: if file size is zero, where does all this other information come from? For example: the permission level <code>rw-r--r--</code>, the user and group of <code>eric eric</code> and the date of the last modification.</p>
+<p>It’s not a lie that the size of the file is zero, but it’s also true that there’s another place where we keep information related to the file. This is the concept of the <em>inode</em>. Inodes and the contents of a file are stored in separate places. Think of an MP3 file, for example. Most of the file content is compressed audio information. But the file also includes <em>metadata</em>: the name of the artist, track name, year it was published, etc. Now imagine if that metadata is stored separately from the audio content, but with an address to link the two together.</p>
+<p>We can see this address using our ‘ls’ command.</p>
+<p><code>ls -li cars</code></p>
+<p>Result:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">total</span> 8</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">25826992</span> -rw-r--r-- 1 eric eric 447 Jul  6 16:22 cars</span></code></pre></div>
+<p>The <code>-i</code> option shows up the inode number for our files. When we partition a file system, we divide that file system into a certain number of blocks with an equal size. We also generate a fixed number of inodes to correspond to those data blocks. Once we are finished, we can’t change the number of inodes. Just like how you can run out of disk space, you can run out of available inodes and you won’t be able anymore new files.</p>
+<p>There are several other resources on the Internet which are useful for trying to understand Inodes.</p>
+<p><a href="http://www.grymoire.com/Unix/Inodes.html">Inodes - an Introduction</a></p>
+<p><a href="https://youtu.be/_6VJ8WfWI4k">theurbanpenguin - Understanding Inodes</a></p>
+<h1 id="hard-links">Hard Links</h1>
+<p>We’ve actually been using hard links with every file and directory we’ve used so far. An inode will point to a location on the filesystem, and will contain important <em>metadata</em> about that file. But we humans prefer to give things names that make some sense to us. So we create <em>links</em> to each of these inodes, and these links have a human-friendly name that’s easier to use.</p>
+<p><strong>Hard Link</strong> –&gt; <strong>Inode</strong> –&gt; <strong>Data on Filesystem</strong></p>
+<p>Every file on your system has a hard link already. When all links to an inode are removed, the kernel will consider that part of the hard drive to be available for storage.</p>
+<p>Let’s create a second hard link to cars:</p>
+<p><code>ln cars link-to-cars</code></p>
+<p>check again. notice link ## and same inode.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">total</span> 32K</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">29491882</span> drwxrwxr-x 2 eric eric 4.0K Jul  8 23:48 ./</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ex">29491880</span> drwxrwxr-x 4 eric eric 4.0K Jul  6 19:31 ../</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="ex">25826992</span> -rw-rw-r-- 2 eric eric  447 Jul  6 16:22 cars</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">25826992</span> -rw-rw-r-- 2 eric eric  447 Jul  6 16:22 link-to-cars</span></code></pre></div>
+<p>Two things to notice: ‘1’ has interated up to ‘2’. This is the number of links to a file. Second, we can see that the inode ‘25826992’ is the same for both <del>files</del> <strong>links</strong>.</p>
+<p>(Notice how easy it is to fall into our human pattern of thinking about things, we see a list of things on the screen, and we are very used to thinking of these things as ‘files.’ <em>But they are links!</em> There is still only one file here!)</p>
+<p><code>ln link-to-cars another-link</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">total</span> 40K</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">29491882</span> drwxrwxr-x 2 eric eric 4.0K Jul  8 23:51 ./</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">29491880</span> drwxrwxr-x 4 eric eric 4.0K Jul  6 19:31 ../</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">25826992</span> -rw-rw-r-- 3 eric eric  447 Jul  6 16:22 another-link</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="ex">25826992</span> -rw-rw-r-- 3 eric eric  447 Jul  6 16:22 cars</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="ex">25826992</span> -rw-rw-r-- 3 eric eric  447 Jul  6 16:22 link-to-cars</span></code></pre></div>
+<p>Now the number of links is <em>3</em>. All three of these <del>files</del> <strong>links</strong> have the same inode. And another thing: they have the same timestamp, same permission, same <em>metadata</em>. And again, remember that the number of <em>files</em> in this location hasn’t changed!</p>
+<h2 id="how-is-it-different-from-making-a-copy-of-a-file">How is it different from making a copy of a file?</h2>
+<p><code>cp cars copy-of-cars</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">total</span> 48K</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">29491882</span> drwxrwxr-x 2 eric eric 4.0K Jul  8 23:56 ./</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="ex">29491880</span> drwxrwxr-x 4 eric eric 4.0K Jul  6 19:31 ../</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="ex">25826992</span> -rw-rw-r-- 3 eric eric  447 Jul  6 16:22 another-link</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="ex">25826992</span> -rw-rw-r-- 3 eric eric  447 Jul  6 16:22 cars</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="ex">29492005</span> -rw-r--r-- 1 eric eric  447 Jul  8 23:56 copy-of-cars</span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">25826992</span> -rw-rw-r-- 3 eric eric  447 Jul  6 16:22 link-to-cars</span></code></pre></div>
+<p>So, the copy has a different inode and a different timestamp, and we know from experience that if we make edits to ‘copy of cars’, we <em>will not</em> see those changes in ‘cars’ or any of those other <del>files</del> <strong>links</strong>.</p>
+<p>What do you think will happen if we make a change to ‘link-to-cars?’ <code>vi link-to-cars</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">1</span> plym    fury    77      73      2500</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">2</span> chevy   nova    79      60      3000</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">3</span> ford    mustang 65      45      17000</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="ex">4</span> volvo   gl      78      102     9850</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">5</span> ford    ltd     83      15      10500</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="ex">6</span> Chevy   nova    80      50      3500</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">7</span> fiat    600     65      115     450</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="ex">8</span> honda   accord  81      30      6000</span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="ex">9</span> ford    thundbd 84      10      17000</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="ex">10</span> toyota  tercel  82      180     750</span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="ex">11</span> chevy   impala  65      85      1550</span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="ex">12</span> ferd    bronco  83      25      9525</span></code></pre></div>
+<p>So, I changed the last line (12) of the file to say ‘ferd’ instead of ‘ford.’</p>
+<p><code>cat another-link</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">plym</span>    fury    77      73      2500</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">chevy</span>   nova    79      60      3000</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">ford</span>    mustang 65      45      17000</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="ex">volvo</span>   gl      78      102     9850</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">ford</span>    ltd     83      15      10500</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="ex">Chevy</span>   nova    80      50      3500</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="ex">fiat</span>    600     65      115     450</span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="ex">honda</span>   accord  81      30      6000</span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="ex">ford</span>    thundbd 84      10      17000</span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="ex">toyota</span>  tercel  82      180     750</span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="ex">chevy</span>   impala  65      85      1550</span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="ex">ferd</span>    bronco  83      25      9525</span></code></pre></div>
+<p><em>Remember</em>: We are looking at the same data, which has the same inode pointing to it. We just used a different link to find that inode.</p>
+<h2 id="what-happens-when-we-remove-the-original-file">What happens when we remove the original file?</h2>
+<p><code>rm cars</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">total</span> 40K</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">29491882</span> drwxrwxr-x 2 eric eric 4.0K Jul  9 00:12 ./</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">29491880</span> drwxrwxr-x 4 eric eric 4.0K Jul  6 19:31 ../</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="ex">25826992</span> -rw-rw-r-- 2 eric eric  447 Jul  6 16:22 another-link</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="ex">29492005</span> -rw-r--r-- 1 eric eric  447 Jul  8 23:56 copy-of-cars</span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="ex">25826992</span> -rw-rw-r-- 2 eric eric  447 Jul  6 16:22 link-to-cars</span></code></pre></div>
+<p>The number of links is now <em>2</em>. But I can still open ‘copy-of-cars’ or ‘another-link’ to see the same data. <em>What will take it lose this data?</em></p>
+<p><code>rm link-to-cars another-link</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">29491882</span> drwxrwxr-x 2 eric eric 4.0K Jul  9 00:12 ./</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">29491880</span> drwxrwxr-x 4 eric eric 4.0K Jul  6 19:31 ../</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="ex">29492005</span> -rw-r--r-- 1 eric eric  447 Jul  8 23:56 copy-of-cars</span></code></pre></div>
+<p>At this point, all links to that original data have been removed. The kernel will note this, and will assume that…</p>
+<figure>
+<img src="https://i.kym-cdn.com/entries/icons/original/000/021/311/free.jpg" alt="" /><figcaption>free real estate</figcaption>
+</figure>
+<p>What does this mean? The data might still accessible, as long as it doesn’t get overwritten by anything else. This is why data recovery is sometimes still possible for data that has been ‘deleted.’</p>
+<p>To clean up, let’s restore cars from our copy: <code>mv copy-of-cars cars</code></p>
+<h1 id="symbolic-links">Symbolic Links</h1>
+<p>Hard links point to an inode, and will point you to the data even if the original link is removed. Symbolic act more like hyperlinks. Consider that image above… all I had to do to add it to the document was to type in a URL. &gt; https://i.kym-cdn.com/entries/icons/original/000/021/311/free.jpg</p>
+<p>That creates a link to the image which sits on a server somewhere, and it isn’t mine. I’m not spending any money to store that file on a server, but I’m hoping that the file will exist there for as long as this document stays relevant. But if that image gets moved or deleted, my hyperlink will look like this:</p>
+<figure>
+<img src="https://four-oh-four.com/broken.jpg" alt="" /><figcaption>A broken link</figcaption>
+</figure>
+<p>This should give you an idea about the advantages and drawbacks of symbolic links. They are cheap (they don’t take up space) but fragile (they can be easily broken). They are a great way to create shortcuts on your filesystem.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="bu">cd</span> sample_dir1/sample_dir</span>
+<span id="cb10-2"><a href="#cb10-2"></a>$ <span class="ex">tree</span> -C <span class="co">## keep the colour!</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">.</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>└── <span class="ex">sample_dir</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    ├── <span class="ex">admin</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>    ├── <span class="ex">cambridge</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>    │   ├── <span class="ex">cafeteria</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>    │   └── <span class="ex">library</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>    │       └── <span class="ex">dir_practice</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>    ├── <span class="ex">faculty</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>    ├── <span class="ex">history.exe</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>    ├── <span class="ex">markham</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>    │   ├── <span class="ex">annex</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a>    │   ├── <span class="ex">annex2</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>    │   ├── <span class="ex">building1</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a>    │   └── <span class="ex">parking</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a>    ├── <span class="ex">outline.doc</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a>    ├── <span class="ex">oxford</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>    │   ├── <span class="ex">outline.doc</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>    │   ├── <span class="ex">programming</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a>    │   │   └── <span class="ex">report.pdf</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>    │   └── <span class="ex">security</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a>    └── <span class="ex">stenton</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a>        ├── <span class="ex">gen_ed</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a>        │   └── <span class="ex">cars</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a>        ├── <span class="ex">lib_arts</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a>        │   ├── <span class="ex">english.txt</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a>        │   └── <span class="ex">match.doc</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a>        └── <span class="ex">parking2</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a></span>
+<span id="cb11-29"><a href="#cb11-29"></a><span class="ex">13</span> directories, 13 files</span></code></pre></div>
+<p>in your assignment, you are asked to run many commands on ‘cars’ from ‘sample_dir1.’ It gets tiring to keep having to type stenton/gen_ed/cars..</p>
+<p><code>ln -s sample_dir/stenton/gen_ed/cars car-shortcut</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">total</span> 24K</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">drwxrwxr-x</span> 3 eric eric 4.0K Jul  9 00:37 ./</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="ex">drwxr-xr-x</span> 3 eric eric 4.0K Jul  8 22:21 ../</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="ex">lrwxrwxrwx</span> 1 eric eric   30 Jul  9 00:37 car-shortcut -<span class="op">&gt;</span> sample_dir/stenton/gen_ed/cars</span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="ex">drwxrwxr-x</span> 8 eric eric 4.0K Jul  6 19:31 sample_dir/</span></code></pre></div>
+<p>The ‘l’ in permissions tells us this is a symbolic link. But also we can see where it’s pointing directly from <code>ls -l</code>.</p>
+<p><code>cat car-shortcut</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">plym</span>    fury    77      73      2500</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="ex">chevy</span>   nova    79      60      3000</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="ex">ford</span>    mustang 65      45      17000</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="ex">volvo</span>   gl      78      102     9850</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="ex">ford</span>    ltd     83      15      10500</span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="ex">Chevy</span>   nova    80      50      3500</span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="ex">fiat</span>    600     65      115     450</span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="ex">honda</span>   accord  81      30      6000</span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="ex">ford</span>    thundbd 84      10      17000</span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="ex">toyota</span>  tercel  82      180     750</span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="ex">chevy</span>   impala  65      85      1550</span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="ex">ford</span>    bronco  83      25      9525</span></code></pre></div>
+<p>Our cat command is redirected to the file in sample_dir/stenton/gen_ed.</p>
+<h2 id="what-happens-if-that-file-gets-moved-or-deleted">What happens if that file gets moved or deleted?</h2>
+<p><code>mv sample_dir/stenton/gen_ed/cars sample_dir/stenton/gen_ed/cars.old</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">cat</span>: cars: No such file or directory</span></code></pre></div>
+<p>We now have a broken link.</p>
+<h1 id="directory-links">Directory Links</h1>
+<p>In Linux, directories are actually just a special kind of file. So links should work the same way, right?</p>
+<p><code>ln sample_dir/stenton/gen_ed/ gen_ed-link</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">ln</span>: sample_dir/stenton/gen_ed: hard link not allowed for directory</span></code></pre></div>
+<p>To create hard links for directories, you need root privileges, unfortunately. But symbolic links work fine:</p>
+<p><code>ln -s sample_dir/stenton/gen_ed/ gen_ed-link</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">total</span> 24K</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">drwxrwxr-x</span> 3 eric eric 4.0K Jul  9 00:51 ./</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="ex">drwxr-xr-x</span> 3 eric eric 4.0K Jul  8 22:21 ../</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="ex">lrwxrwxrwx</span> 1 eric eric   30 Jul  9 00:37 cars -<span class="op">&gt;</span> sample_dir/stenton/gen_ed/cars</span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="ex">lrwxrwxrwx</span> 1 eric eric   25 Jul  9 00:51 gen_ed-link -<span class="op">&gt;</span> sample_dir/stenton/gen_ed/</span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="ex">drwxrwxr-x</span> 8 eric eric 4.0K Jul  6 19:31 sample_dir/</span></code></pre></div>
+<p>Symbolic links can be very useful for fixing broken dependencies. For example, an application might be expecting to find a certain configuration file or other software in the wrong location. But you’re system might be maintaining that file elsewhere. By creating a symbolic link, you can satisfy the broken dependencies easily.</p>
+<h1 id="alias">Alias</h1>
+<p>notice that I like to use <code>ll</code> instead of <code>ls</code>… this is purely personal preference. I like being able to see timestamps and other information quickly. What is <code>ll</code>?</p>
+<p><code>ll</code> does the same thing as <code>ls -l</code>. It lists files one per line with all details. <code>ll</code> is not a separate program. If you look in ‘/bin’, you will find the programm <code>ls</code> but not <code>ll</code>. <strong>ll is an alias of ls.</strong> This means that ll=‘ls -l’. And that’s exactly how we can type it in:</p>
+<p><code>alias ll='ls -l'</code></p>
+<p>Keep in mind that we haven’t made this alias persistent yet. If we log out, the next time we log in to Matrix that alias will be lost. We’ll get to making things persistent in a bit.</p>
+<hr />
+<h1 id="processes">Processes</h1>
+<p><em>In Linux, everything gets a number.</em> We have Inodes, User IDs, Group IDs, and so on. It only makes sense, then, that we’d also be numbering the <em>processes</em> that are running on our system.</p>
+<p>A process, put simply, is the execution of a piece of code. It takes up space in memory, and is performing something useful (usually!). It’s a little bit different from a program, though. For example, if you open up a browser, you might see many processes in your list. <a href="https://www.howtogeek.com/124218/why-does-chrome-have-so-many-open-processes/">For most browsers</a>, every tab you have open will be running in a separate process.</p>
+<p>When you start a computer, it will go through a POST stage where hardware is checked. From there, you get to a bootloader. If you have many Operating Systems installed, this is where you will be given a screen to choose which Operating System to use. From there, the Linux kernel is started. And the kernel will start a ‘System and Service Manager.’ This manager is responsibe for scheduling, basically allocating CPU time to many different processes. On most modern systems, this is <em>Systemd</em> and it will always have a process ID of 1. It is the parent of all other processes.</p>
+<p>Try this: <code>ps</code> - This will show you a list of processes running <em>in this shell window</em> only.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">PID</span> TTY          TIME CMD</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="ex">7163</span> pts/12   00:00:00 ps</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="ex">57666</span> pts/12   00:00:00 bash</span></code></pre></div>
+<p><strong>Note:</strong> This will make sense later on, but you can also use <code>echo $$</code> to print your shell’s process ID number.</p>
+<p>This is fine, but what we really want is to look at <em>all</em> the running processes, not just local ones.</p>
+<p>To get a different picture, try this:</p>
+<p><code>ps -ef</code> this will show you <em>all</em> processes. This is set with the <code>-a</code> flag. What is <code>-x</code> for? Don’t worry about it, it’s handling a legacy edge-case, basically.</p>
+<p><code>ps -ef</code> returns a huge list. How big?</p>
+<p><code>ps -ef | wc -l</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">164</span></span></code></pre></div>
+<p>164 lines on Matrix. It’s easier to grep for something: <code>ps -ef | grep sshd</code></p>
+<p>Try it out, it gives you a list of users logged in with SSH.</p>
+<p><code>ps afux</code></p>
+<p>This is going to give a list of <em>all</em> processes, and will show you parent/child relationships. This is usually easier to see from <code>top</code> though.</p>
+<p><code>ps -U &lt;username&gt;</code></p>
+<p>This is to see processes connected to a certain user.</p>
+<p>There are two common ways to see processes in Linux. <code>ps</code> will spit out a list of running processes and then exit. <code>top</code> or <code>htop</code> will keep running, and you can watch your processes running in real-time <code>htop</code> is slightly easier to read than <code>top</code>, because it adds colour and some graphical elements, but it isn’t installed on Matrix (and you don’t permission to install it!) so it’s usually safer to use <code>top</code>.</p>
+<p><a href="https://youtu.be/jB6dS3_xdBA">To learn more about Top, this video is a decent primer.</a></p>
+<h2 id="killing-processes">Killing Processes</h2>
+<p>Seeing a list of processes is educational, but really you’ll usually be looking at processes if something has gone wrong. For example, to diagnose a memory leak, you might want to monitor <code>top</code> to see which process is using the most memory. Or you might be looking for <em>zombie</em> processes. (We’re not going to cover zombies in this course).</p>
+<p>If you think a process is misbehaving, you will have to <em>kill</em> it. There are two ways to do so: - Send a <em>TERMINATE</em> Signal (15). This is safe, but you will lose unsaved data. - Send a <em>KILL</em> Signal (9). This could cause system instability, and should only be a last resort.</p>
+<p>By default, these commands use the TERMINATE signal. To kill from the command line, we can use <code>ps -ef | grep &lt;application&gt;</code> to find the PID. Then:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="bu">kill</span> <span class="op">&lt;</span>pid<span class="op">&gt;</span></span></code></pre></div>
+<p>Or:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">pkill</span> <span class="op">&lt;</span>application name<span class="op">&gt;</span></span></code></pre></div>
+<p>This will kill <em>all</em> processes of that application, so use PIDs to be more specific.</p>
+<p>There’s one more command you might find useful. If you are using Linux with a GUI, you can often use <code>xkill</code> to click on a misbehaving window with the mouse.</p>
+<h1 id="jobs">Jobs</h1>
+<p>Let’s say you are running a command that will take a long time to complete: <code>grep -r 'foo' / &gt; foo.log 2&gt; error.log</code></p>
+<p>This command is going to look for ‘foo’ in every single file in the filesystem. This could take minutes, and we don’t want to stare at an empty terminal that we can’t interact with.</p>
+<p>This is where jobs come in handy. First we suspend the process: <code>ctrl-z</code></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2"></a>^<span class="ex">Z</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>[<span class="ex">1</span>]+  Stopped                 grep --color=auto -r <span class="st">&#39;foo&#39;</span> / <span class="op">&gt;</span> foo.log <span class="op">2&gt;</span> error.log</span></code></pre></div>
+<p>Then type in <code>bg</code> to put it in the background.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a>[<span class="ex">1</span>]+ grep --color=auto -r <span class="st">&#39;foo&#39;</span> / <span class="op">&gt;</span> foo.log <span class="op">2&gt;</span> error.log <span class="kw">&amp;</span></span></code></pre></div>
+<p>If you <code>ll foo</code> you will be able to see the file growing. The job is still running. You can also bype in <code>jobs</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a>[<span class="ex">1</span>]+  Running                 grep --color=auto -r <span class="st">&#39;foo&#39;</span> / <span class="op">&gt;</span> foo.log <span class="op">2&gt;</span> error.log <span class="kw">&amp;</span></span></code></pre></div>
+<p>Let’s do <code>top</code> again.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="ex">top</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="op">&lt;</span><span class="ex">Ctrl+z</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="bu">bg</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="bu">jobs</span></span></code></pre></div>
+<p>what does that do?</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a>[<span class="ex">1</span>]-  Running                 grep --color=auto -r <span class="st">&#39;foo&#39;</span> / <span class="op">&gt;</span> foo.log <span class="op">2&gt;</span> error.log <span class="kw">&amp;</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>[<span class="ex">2</span>]+  Stopped                 top</span></code></pre></div>
+<p>Use <code>fg</code> plus a job number to bring that job back up. <code>fg 2</code> You should see top come back up. <em>Remember</em>: processes and jobs are not the same thing. Jobs are a way that we can multitask from a command line. <em>One more thing</em>: If you enter a command and end it with &amp;, that command will run in the background. It does the same thing as Ctrl+z and bg.</p>
+<h1 id="summary">Summary</h1>
+<ul>
+<li><code>ln &lt;target&gt; &lt;link-name&gt;</code>: create a hard link of <target></li>
+<li><code>ln -s &lt;target&gt; &lt;link-name&gt;</code>: create a symbolic link</li>
+<li><code>alias &lt;what you want to type&gt;='&lt;command to be run&gt;'</code></li>
+<li><code>top</code>: system monitor, show all processes</li>
+<li><code>ps -ef</code>: show all processes</li>
+<li><code>fg, bg</code>: move commands to foreground or background respectively</li>
+<li><code>jobs</code>: see list of jobs</li>
+<li><code>kill</code>: terminate a process by PID</li>
+<li><code>pkill</code>: terminate a process by program name</li>
+<li><code>$$</code> : an environment variable which contains the <em>current processe’s</em> ID number. Useful for scripting!</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 12: Bash Scripting Part II</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 12: Bash Scripting Part II</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#for-loops">For Loops</a></li>
+<li><a href="#while-loops">While Loops</a></li>
+<li><a href="#command-substitution">Command Substitution</a></li>
+<li><a href="#example-file-name-analyzer">Example: File Name Analyzer</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#bash-shell-debugging">Bash Shell Debugging</a></li>
+</ul>
+</nav>
+<hr />
+<p><strong>Note</strong>: As always, you can find examples in <code>~eric.brauer/uli101</code></p>
+<h1 id="for-loops">For Loops</h1>
+<p>Consider doing the laundry.</p>
+<p>You have a big pile of clean clothes back from the dryer, and you want to fold, hang, or otherwise put away each of those articles of clothing. The only way to handle this job is to pick each article of clothing in the pile, handle it however you want, and then move on to the next until there is no more clothing left in the pile.</p>
+<p>Consider this example like a programmer. There are two variables that we are working with: the <em>pile</em>, and the <em>individual article of clothing</em>. We are performing actions on the article, not on the pile.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">for</span> <span class="ex">article</span> in pile</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">do</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>   <span class="ex">put</span> away <span class="va">$article</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">done</span></span></code></pre></div>
+<p>The <em>for loop</em> allows us to repeat a set of actions for each element in our pile, whatever that may be. <code>article</code> here is a new variable, you can name it whatever you like.</p>
+<p><code>cat -n scripts/SIMPLE-LOOP.sh</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb2-3"><a href="#cb2-3"></a>     <span class="ex">3</span>  echo </span>
+<span id="cb2-4"><a href="#cb2-4"></a>     <span class="ex">4</span>  echo <span class="st">&quot;We are entering the loop now.&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>     <span class="ex">5</span>  echo <span class="st">&quot;==============================&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>     <span class="ex">6</span>  echo</span>
+<span id="cb2-7"><a href="#cb2-7"></a>     <span class="ex">7</span>  for thing in coffee tea juice</span>
+<span id="cb2-8"><a href="#cb2-8"></a>     <span class="ex">8</span>  do</span>
+<span id="cb2-9"><a href="#cb2-9"></a>     <span class="ex">9</span>      <span class="co"># Any lines between &#39;do&#39; and &#39;done&#39; will be repeated for each &#39;thing.&#39;</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="ex">10</span>      echo <span class="st">&quot;The variable &#39;thing&#39; in this loop contains the value &#39;</span><span class="va">$thing</span><span class="st">&#39;.&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="ex">11</span>      echo -n <span class="st">&quot;Press any key to continue...&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="ex">12</span>      read</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    <span class="ex">13</span>      echo</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="ex">14</span>  done</span>
+<span id="cb2-15"><a href="#cb2-15"></a>    <span class="ex">15</span>  </span>
+<span id="cb2-16"><a href="#cb2-16"></a>    <span class="ex">16</span>  echo</span>
+<span id="cb2-17"><a href="#cb2-17"></a>    <span class="ex">17</span>  echo <span class="st">&quot;==============================&quot;</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>    <span class="ex">18</span>  echo <span class="st">&quot;Now we are outside the loop.&quot;</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>    <span class="ex">19</span>  echo <span class="st">&quot;Try adding more things after &#39;juice&#39;.&quot;</span></span></code></pre></div>
+<p>In this example we hard-coded three things in our ‘pile.’ But for loops are also useful when we don’t know how many elements we need to deal with. We just know that there is lots of laundry in our pile, and we’re going to keep working with it until it’s all gone.</p>
+<p>We have a useful variable that we can use when dealing with our “pile of arguments” from the user. It looks like this: <code>$@</code>. This variable contains all arguments passed to the script, separated by whitespace. We can use this variable in our example to handle each name individually.</p>
+<p><code>cat -n scripts/SIMPLE-LOOP-WITH-ARGS.sh</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb3-3"><a href="#cb3-3"></a>     <span class="ex">3</span>  if [ <span class="va">$#</span> = 0 ]</span>
+<span id="cb3-4"><a href="#cb3-4"></a>     <span class="ex">4</span>  then</span>
+<span id="cb3-5"><a href="#cb3-5"></a>     <span class="ex">5</span>          echo <span class="st">&quot;Run this script with arguments. See SIMPLE-ARGS.sh&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>     <span class="ex">6</span>          exit 1</span>
+<span id="cb3-7"><a href="#cb3-7"></a>     <span class="ex">7</span>  fi</span>
+<span id="cb3-8"><a href="#cb3-8"></a>     <span class="ex">8</span>  </span>
+<span id="cb3-9"><a href="#cb3-9"></a>     <span class="ex">9</span>  echo</span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="ex">10</span>  echo <span class="st">&quot;Entering loop...&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="ex">11</span>  echo <span class="st">&quot;Press Enter to step after each loop.&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="ex">12</span>  </span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="ex">13</span>  for thing in <span class="va">$@</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>    <span class="ex">14</span>  do</span>
+<span id="cb3-15"><a href="#cb3-15"></a>    <span class="ex">15</span>      echo <span class="st">&quot;Current value of &#39;thing&#39; is: </span><span class="va">$thing</span><span class="st">.&quot;</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>    <span class="ex">16</span>      everything_so_far=<span class="va">$everything_so_far</span><span class="st">&quot; &quot;</span><span class="va">$thing</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>    <span class="ex">17</span>      echo</span>
+<span id="cb3-18"><a href="#cb3-18"></a>    <span class="ex">18</span>      echo <span class="st">&quot;Currently everything so far is: </span><span class="va">$everything_so_far</span><span class="st">.&quot;</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="ex">19</span>      read</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="ex">20</span>  done</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="ex">21</span>  </span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="ex">22</span>  echo</span>
+<span id="cb3-23"><a href="#cb3-23"></a>    <span class="ex">23</span>  echo <span class="st">&quot;Exiting loop...&quot;</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>    <span class="ex">24</span>  echo <span class="st">&quot;Everything: </span><span class="va">$everything_so_far</span><span class="st">.&quot;</span></span></code></pre></div>
+<p>Keep in mind that there’s nothing we can do with our “pile.” We want to handle each element individually using the variable we created on line 13.</p>
+<h1 id="while-loops">While Loops</h1>
+<p>These work exactly how you would expect them to. We will combine the <code>do ... done</code> block from our for loop with the <code>[ condition ]</code> from our if statement.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">counter=</span>0</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">while</span><span class="bu"> [</span> <span class="va">$counter</span> <span class="ot">-lt</span> 10<span class="bu"> ]</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">do</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="bu">echo</span> <span class="va">$counter</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="va">counter=$(($counter</span>+1<span class="va">))</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">done</span></span></code></pre></div>
+<hr />
+<h1 id="command-substitution">Command Substitution</h1>
+<p>Let’s say that you want to assign the output of a command to a new variable. For example, running <code>date -I'date'</code> will give you this output:</p>
+<pre><code>2019-07-29</code></pre>
+<p>(note: your output may vary from mine).</p>
+<p>Now perhaps you want to use that output in a script. For example, maybe you want to put a timecode into a log file, or create files with today’s date as the name. You essentially want to run:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">touch</span> <span class="va">$today</span></span></code></pre></div>
+<p>…where the value of <code>$today</code> is <code>2019-07-29</code>. This is where we can perform <em>command substitution</em>. Instead of setting a variable from user input, we can set it from a command:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="va">today=$(</span><span class="fu">date</span> -I <span class="st">&#39;date&#39;</span><span class="va">)</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="bu">echo</span> <span class="va">$today</span></span></code></pre></div>
+<p>Everything inside <code>$(   )</code> is going to be sent into its own <em>non-interactive shell</em>. This means that a second shell is going to be opened, that command will run, and <code>$(   )</code> will be replaced with whatever the standard output of that command was.</p>
+<p>We can use this in a lot of helpful ways. It allows us to integrate our shell commands in the script. Consider this:</p>
+<p><code>cat -n scripts/SIMPLE-COM-SUB.sh</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="va">today=$(</span><span class="fu">date</span> -I <span class="st">&#39;date&#39;</span><span class="va">)</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="fu">mkdir</span> <span class="va">$HOME</span>/<span class="va">$today</span></span></code></pre></div>
+<p>Now we have the output of the <code>date</code> command to create a variable, and used the variable to create a directory. We could use this directory to back up our work, for example.</p>
+<hr />
+<h1 id="example-file-name-analyzer">Example: File Name Analyzer</h1>
+<p>You’ve learned that 1. Linux filenames can contain all kinds of different characters, and 2. You really shouldn’t.</p>
+<p>This script is a utility that you can use to test directories. Each file in the directory will be tested to see if it contains some troublesome characters. If it does, then an error message will be printed.</p>
+<p><code>cat -n scripts/filename-analyzer.sh</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb9-3"><a href="#cb9-3"></a>     <span class="ex">3</span>  targetD=<span class="va">$1</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>     <span class="ex">4</span>  returnCode=0</span>
+<span id="cb9-5"><a href="#cb9-5"></a>     <span class="ex">5</span>  </span>
+<span id="cb9-6"><a href="#cb9-6"></a>     <span class="ex">6</span>  if [ ! -d <span class="va">$targetD</span> ]</span>
+<span id="cb9-7"><a href="#cb9-7"></a>     <span class="ex">7</span>  then</span>
+<span id="cb9-8"><a href="#cb9-8"></a>     <span class="ex">8</span>      echo <span class="st">&quot;Warning: target directory </span><span class="va">$targetD</span><span class="st"> does not exist.&quot;</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>     <span class="ex">9</span>      echo <span class="st">&quot;Usage: ./filename-analyzer.sh &lt;name of a directory&gt;&quot;</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>    <span class="ex">10</span>      exit 2</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    <span class="ex">11</span>  else</span>
+<span id="cb9-12"><a href="#cb9-12"></a>    <span class="ex">12</span>      IFS=<span class="st">$&#39;</span><span class="dt">\n</span><span class="st">&#39;</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a>    <span class="ex">13</span>      for filename in <span class="va">$(</span><span class="fu">ls</span> <span class="va">$targetD)</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>    <span class="ex">14</span>      do</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    <span class="ex">15</span>          if [ <span class="va">$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$filename</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;[ !$%~#]&#39;</span><span class="va">)</span> ]</span>
+<span id="cb9-16"><a href="#cb9-16"></a>    <span class="ex">16</span>          then</span>
+<span id="cb9-17"><a href="#cb9-17"></a>    <span class="ex">17</span>              echo <span class="st">&quot;Warning: &quot;</span><span class="va">$filename</span><span class="st">&quot; contains problematic character. &quot;</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a>    <span class="ex">18</span>              returnCode=1</span>
+<span id="cb9-19"><a href="#cb9-19"></a>    <span class="ex">19</span>          fi</span>
+<span id="cb9-20"><a href="#cb9-20"></a>    <span class="ex">20</span>      done</span>
+<span id="cb9-21"><a href="#cb9-21"></a>    <span class="ex">21</span>      IFS=<span class="st">$&#39; </span><span class="dt">\t\n</span><span class="st">&#39;</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a>    <span class="ex">22</span>  fi</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    <span class="ex">23</span>  exit <span class="va">$returnCode</span></span></code></pre></div>
+<p>Let’s discuss things one at a time:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>     <span class="ex">3</span>  targetD=<span class="va">$1</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>     <span class="ex">4</span>  returnCode=0</span></code></pre></div>
+<p>We are working with an argument from the user, but it’s good practice to assign the value of <code>$1</code> to a named variable, since it’ll be easier for a reader to understand what it represents.</p>
+<p><code>returnCode</code> is going to be used by us for the exit code. The goal of this script is to be useful not only for humans running the script, but to return useful exit codes if it’s being called inside another script. I have decided that ‘1’ will indicate the presence of at least one problematic filename, and ‘0’ will represent no problematic filenames.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>     <span class="ex">6</span>  if [ ! -d <span class="va">$targetD</span> ]</span>
+<span id="cb11-2"><a href="#cb11-2"></a>     <span class="ex">7</span>  then</span>
+<span id="cb11-3"><a href="#cb11-3"></a>     <span class="ex">8</span>      echo <span class="st">&quot;Warning: target directory </span><span class="va">$targetD</span><span class="st"> does not exist. Enter an existing file&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>     <span class="ex">9</span>      echo <span class="st">&quot;Usage: ./filename-analyzer.sh &lt;name of a directory&gt;&quot;</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>    <span class="ex">10</span>      exit 2</span></code></pre></div>
+<p>This is a file test. The user argument is tested to see if it is the name of an existing directory. If it is not, then an error message is printed, and the script exits. This warning also gets printed if the user has not entered any argument.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>    <span class="ex">11</span>  else</span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="ex">12</span>      IFS=<span class="st">$&#39;</span><span class="dt">\n</span><span class="st">&#39;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="ex">13</span>      for filename in <span class="va">$(</span><span class="fu">ls</span> <span class="va">$targetD)</span></span></code></pre></div>
+<p><code>IFS</code> is an environment variable. Usually it contains spaces, tabs and newlines. It’s here so that spaces in filenames are treated as part of the filename, and not a separator. Feel free to comment out this line to see how the script changes.</p>
+<p>This is a for loop connected to a command substitution. The command substitution is an <code>ls</code> command of the target directory. So basically we are returning a list of files, and we will look at each filename individually inside <code>do ... done</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a>    <span class="ex">14</span>      do</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="ex">15</span>          if [ <span class="va">$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$filename</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;[ !$%~#]&#39;</span><span class="va">)</span> ]</span></code></pre></div>
+<p>This is another command substitution.</p>
+<ul>
+<li><code>echo "$filename"</code> will print the filename.</li>
+<li><code>grep '[ !$%~#]'</code> if the filename contains any of these forbidden characters, the <em>output</em> of <code>grep</code> will be <em>something</em>.</li>
+<li>The <code>if [ ... ]</code> evaluates whatever’s inside. If it’s <em>nothing</em>, it will be false. If it’s <em>something</em>, it will be true.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a>    <span class="ex">16</span>          then</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="ex">17</span>              echo <span class="st">&quot;Warning: &quot;</span><span class="va">$filename</span><span class="st">&quot; contains problematic character. &quot;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="ex">18</span>              returnCode=1</span>
+<span id="cb14-4"><a href="#cb14-4"></a>    <span class="ex">19</span>          fi</span></code></pre></div>
+<p>We reach these lines when <code>grep</code> has returned <em>something</em>. We print a message that identifies the offending filename. We also change the value of <code>returnCode</code> from 0 to 1. This will indicate a failure.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a>    <span class="ex">20</span>      done</span>
+<span id="cb15-2"><a href="#cb15-2"></a>    <span class="ex">21</span>      IFS=<span class="st">$&#39; </span><span class="dt">\t\n</span><span class="st">&#39;</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>    <span class="ex">22</span>  fi</span>
+<span id="cb15-4"><a href="#cb15-4"></a>    <span class="ex">23</span>  exit <span class="va">$returnCode</span></span></code></pre></div>
+<p>Finally, we have to close the loop. We will set the value of IFS back to its default. Then close the if statement, and use <code>exit</code> with the value of $returnCode (either 0 or 1).</p>
+<p>With 23 lines, you can create a very powerful tool for system maintenance!</p>
+<p>Still, there are a lot of ways we could improve this tool. We could choose to <em>invert</em> our <code>grep</code> and instead only search for acceptable characters. We could learn how to handle globs rather than directories, and so on.</p>
+<hr />
+<h1 id="summary">Summary</h1>
+<ul>
+<li>for <em>var</em> in <em>array</em>; do … done</li>
+<li>$#: number of arguments</li>
+<li>$*: all arguments</li>
+<li>$( ): performs command substitution</li>
+</ul>
+<hr />
+<h1 id="bash-shell-debugging">Bash Shell Debugging</h1>
+<p>There are a couple of ways that we can modify Bash options to help us solve problems. To do this, we need to call bash explicitly so that we can give it some options.</p>
+<p>Let’s use our example <code>say-hi-to2.sh</code> to show how a <em>trace</em> might work.</p>
+<p><code>bash -x say-hi-to2.sh</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">+</span> <span class="st">&#39;[&#39;</span> 0 = 0 <span class="st">&#39;]&#39;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">+</span> echo Usage: please include at least one person to greet.</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="ex">Usage</span>: please include at least one person to greet.</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="ex">+</span> exit 1</span></code></pre></div>
+<p>Here we can see exactly how the interpreter is performing substitutions line-by-line. I didn’t run this script with any arguments, so the value of <code>$#</code> is <code>0</code>. <code>[ 0 = 0 ]</code>, so we proceed into all the lines after <code>then</code>.</p>
+<p>Feel free to use this tool on the scripts you are creating for the assignment, in order to understand how they are working.</p>
+<p>Another tool you might want to consider is <a href="https://www.shellcheck.net/">shellcheck</a>. Shellcheck is a tool that you can install if you have your own Linux system, but it isn’t installed by default on Matrix. Fortunately we can use it in the browser.</p>
+<p>Shellcheck will tend to generate a lot of warnings that are outside the scope of our course, but useful when you start creating more complex scripts. It’s a good to learn some best practices.</p>
+</body>
+</html>

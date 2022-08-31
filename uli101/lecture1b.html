@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Introduction to the File System" />
+  <title>Lecture 1B</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 1B</h1>
+<p class="author">Introduction to the File System</p>
+<p class="date">Eric Brauer</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction-to-the-file-system">Introduction to the File System</a>
+<ul>
+<li><a href="#history-lesson-ii">History Lesson II</a></li>
+<li><a href="#a-useful-analogy">A Useful Analogy</a></li>
+</ul></li>
+<li><a href="#some-useful-features-of-the-shell">Some Useful Features of the Shell</a>
+<ul>
+<li><a href="#explore-your-apartment">Explore Your “Apartment”</a></li>
+<li><a href="#explore-the-common-space">Explore the “Common Space”</a></li>
+<li><a href="#navigating-the-linux-filesystem">Navigating the Linux Filesystem</a></li>
+<li><a href="#here-are-some-rules">Here are Some Rules</a></li>
+<li><a href="#moving-into-a-subdirectory">Moving Into a Subdirectory</a></li>
+<li><a href="#moving-into-a-parent-directory">Moving Into a Parent Directory</a></li>
+<li><a href="#moving-into-a-sub-subdirectory">Moving Into a Sub-Subdirectory</a></li>
+<li><a href="#moving-into-the-parent-of-a-parent-directory">Moving Into the Parent of a Parent Directory</a></li>
+<li><a href="#lateral-movement">Lateral Movement</a></li>
+<li><a href="#start-from-root">Start From Root (/)</a></li>
+<li><a href="#navigating-the-linux-filesystem-ii">Navigating the Linux Filesystem II</a></li>
+<li><a href="#the-tree-command">The Tree Command</a></li>
+</ul></li>
+<li><a href="#summary">Summary</a>
+<ul>
+<li><a href="#terminology">Terminology</a></li>
+<li><a href="#commands">Commands</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction-to-the-file-system">Introduction to the File System</h1>
+<h2 id="history-lesson-ii">History Lesson II</h2>
+<p>Recall that Linux descended from an operating system designed for mainframes. That is, a single computer being used by many users simultaneously. In the 1980s, personal computers (PCs) became available, which as you can imagine was a revolutionary leap forward! In this case, you had one user working on one computer. Eventually DOS became the most common operating systems for these PCs, and Microsoft Windows was built on (and eventually replaced) DOS.</p>
+<hr />
+<h2 id="a-useful-analogy">A Useful Analogy</h2>
+<ul>
+<li>Windows = a single family home</li>
+<li>Linux (especially Matrix) = an apartment building</li>
+</ul>
+<p>On Matrix, you have a space which is ‘yours’ for as long as you are a student. You have control over this space. On the other hand, there is a lot that you <em>don’t</em> have control over. The plumbing, the heat, the HVAC, and so on. There is an administrator/superintendant that has authority over these spaces, and who has permission to make changes. The super has authority to create, modify and remove user accounts.</p>
+<hr />
+<h1 id="some-useful-features-of-the-shell">Some Useful Features of the Shell</h1>
+<p>These aren’t anything you’ll be tested on, but they will absolutely save you time. <strong>Please remember this:</strong> the shell is a place where accuracy is crucial. A typo will cause your command to not work, or to do something you didn’t want it to. The <em>Tab</em> key is an excellent way of troubleshooting. Here’s how it works:</p>
+<p>Let’s go back to the previous example. You are in <strong>/home/student</strong>. You type in <code>cd D</code> and then press tab once. You won’t see anything occur. You press tab <em>twice</em>. You should see a list of all the matching patterns, in this case both <strong>Desktop</strong> and <strong>Documents</strong> will be listed since they both contain <strong>D</strong>. You continue by typing in <code>o</code> and press tab once again. Your path will be autocompleted, and you should see the complete command <code>cd Documents</code>. Now you can press Enter to complete the command.</p>
+<p>Please note that the auto-complete doesn’t unfortunately work when you’re working on Assignments. :( But in the real world, using Tab will speed up your work and also provide a ‘sanity check’ on your commands. If something should be auto-completing and it isn’t, 90% of the time it’s because you’ve made a mistake!</p>
+<blockquote>
+<ul>
+<li><strong>Ctrl+a</strong>: Move to start of command</li>
+<li><strong>Ctrl+e</strong>: Move to end of command</li>
+<li><strong>Up &amp; Down</strong>: Command History</li>
+<li><strong>Tab</strong>: Autocomplete a Path (your first sanity check!)</li>
+<li><strong>Ctrl+c</strong>: Cancel</li>
+<li><strong>Ctrl+d</strong>: Logout</li>
+<li><strong>Ctrl+r</strong>: Search your command history</li>
+<li><strong>Ctrl+l</strong>: Clears the screen</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="explore-your-apartment">Explore Your “Apartment”</h2>
+<ul>
+<li>Use <code>ls</code> to view your home folder.</li>
+<li>Use <code>cd public_html</code> to change your current location to <code>public_html</code>.</li>
+<li>Use <code>cd ..</code> to return to your home.</li>
+<li>Use <code>pwd</code> to see your current location.</li>
+</ul>
+<hr />
+<h2 id="explore-the-common-space">Explore the “Common Space”</h2>
+<p>The places <em>outside</em> your home folder are common spaces. You can see these places, but you can’t modify them.</p>
+<ul>
+<li>Use <code>cd /bin</code> to travel to one such location.</li>
+<li>Type <code>ls</code> to view its contents.</li>
+<li>Find <code>ls</code> in the contents of this folder.</li>
+</ul>
+<p><em><code>ls</code> is a program. And its location is in <code>/bin</code>! So what would happen if a malicious person decided to modify <code>ls</code> for everyone?</em></p>
+<hr />
+<h2 id="navigating-the-linux-filesystem">Navigating the Linux Filesystem</h2>
+<p>You don’t know it yet, but we’ve just demonstrated two different types of filepaths. To see how this works, let’s use a different type of diagram.</p>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-tree.jpg" alt="" /><figcaption>tree diagram</figcaption>
+</figure>
+<hr />
+<h2 id="here-are-some-rules">Here are Some Rules</h2>
+<p>The rules for this ‘game’ are simple.</p>
+<ul>
+<li>Every dot is a <em>directory</em>. Moving along any line will take one ‘turn.’</li>
+<li>We want to <em>minimize</em> the number of turns we take.</li>
+<li>Every directory has <em>one parent</em>. (Except for the very top).</li>
+<li>Directories don’t have <em>unique</em> names. So there might be <em>many</em> directories with the name <code>bin</code>.</li>
+<li>We need to be able to move from <em>anywhere</em> in the tree to <em>anywhere else</em>.</li>
+<li>We need to always be <em>specific</em> when we are describing our moves.</li>
+<li>When choosing our path, we can start from our <em>current location</em>, or from the <em>top</em> of the tree.</li>
+</ul>
+<hr />
+<h2 id="moving-into-a-subdirectory">Moving Into a Subdirectory</h2>
+<ul>
+<li>Assume we are moving from point <strong>A</strong> to point <strong>B</strong>. This movement takes one “turn.”</li>
+<li>The command to do this is: <code>cd B</code>.</li>
+</ul>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-sub.jpg" alt="" /><figcaption>to subdirectory</figcaption>
+</figure>
+<hr />
+<h2 id="moving-into-a-parent-directory">Moving Into a Parent Directory</h2>
+<ul>
+<li>Assume we are moving from point <strong>B</strong> to point <strong>A</strong> again. This movement takes one turn.</li>
+<li>Since <code>B</code> only has one parent, we can save ourselves some typing by using <strong>..</strong>.</li>
+<li>The command to do this is: <code>cd ..</code>.</li>
+</ul>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-parent.jpg" alt="" /><figcaption>to parent</figcaption>
+</figure>
+<hr />
+<h2 id="moving-into-a-sub-subdirectory">Moving Into a Sub-Subdirectory</h2>
+<ul>
+<li>Assume we are moving from point <strong>A</strong> to point <strong>B</strong> again. This movement takes two turns.</li>
+<li>You could enter the command <code>cd aa</code>, and then press enter, and then enter <code>cd   B</code>. But this is a waste of time. Instead, we can enter: <code>cd aa/B</code>.</li>
+<li>The <strong>/</strong> here is indicating that there are two turns: moving into directory <code>aa</code> and then moving into directory <code>B</code> from <code>aa</code>.</li>
+</ul>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-sub2.jpg" alt="" /><figcaption>to subdirectory2</figcaption>
+</figure>
+<hr />
+<h2 id="moving-into-the-parent-of-a-parent-directory">Moving Into the Parent of a Parent Directory</h2>
+<ul>
+<li>Once again, we are moving from point <strong>B</strong> to point <strong>A</strong>. We are combining two turns in one command.</li>
+<li>The command is: <code>cd ../..</code>.</li>
+</ul>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-parent2.jpg" alt="" /><figcaption>to parent2</figcaption>
+</figure>
+<hr />
+<h2 id="lateral-movement">Lateral Movement</h2>
+<ul>
+<li>In this case, <strong>A</strong> and <strong>B</strong> have a common parent. We must move up to the directory <code>aa</code> before moving to <strong>B</strong>. This movement takes two turns.</li>
+<li>The command is: <code>cd ../B</code>.</li>
+</ul>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-lateral.jpg" alt="" /><figcaption>lateral movement</figcaption>
+</figure>
+<hr />
+<h2 id="start-from-root">Start From Root (/)</h2>
+<ul>
+<li>If we were to move up the tree from <strong>A</strong>, the command would be <code>cd ../../B</code> and it would take three turns.</li>
+<li>Instead, we should start from the top, which will take only one turn.</li>
+<li>The top is called <strong>root</strong> (<strong>/</strong>).</li>
+<li>To indicate that we are starting from the top instead of starting from <strong>A</strong>, we start our command with <strong>/</strong>.</li>
+<li>The correct command is: <code>cd /B</code>.</li>
+</ul>
+<p><strong>Note</strong>: There usually isn’t a /B in Linux systems, so try this with <code>cd /bin</code> instead.</p>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-absolute.jpg" alt="" /><figcaption>absolute</figcaption>
+</figure>
+<hr />
+<h2 id="navigating-the-linux-filesystem-ii">Navigating the Linux Filesystem II</h2>
+<ul>
+<li>Now let’s replace labels like <strong>A</strong> and <strong>B</strong> with some proper directory names.</li>
+<li>Refer back to the navigation commands you used in Assignment 1. Do they match up?</li>
+</ul>
+<figure>
+<img src="https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-proper-names.jpg" alt="" /><figcaption>proper names</figcaption>
+</figure>
+<hr />
+<h2 id="the-tree-command">The Tree Command</h2>
+<p>Compare the tree diagrams above with the output from <code>tree</code>:</p>
+<pre><code>/
+├── sample_dir
+│   ├── faculty
+│   ├── markham
+│   ├── oxford
+│   │   ├── programming
+│   │   ├── report
+│   │   └── security
+│   ├── stenton
+│   │   ├── gen_ed
+│   │   └── lib_arts
+│   └── todays-example
+└── users
+    ├── ebrau
+    └── sam
+</code></pre>
+<ul>
+<li><strong>Challenge: re-draw this in the ‘tree’ format</strong></li>
+<li><code>/</code> has two subdirectories (two dots)</li>
+<li><code>sample_dir</code> has <strong>five</strong> subdirectories.</li>
+</ul>
+<p><strong>Please feel free to practice navigation by entering the following command:</strong></p>
+<p><code>cd ~eric.brauer/uli101</code></p>
+<hr />
+<h1 id="summary">Summary</h1>
+<h2 id="terminology">Terminology</h2>
+<ul>
+<li><em>parent</em></li>
+<li><em>subdirectory</em></li>
+<li><em>home</em></li>
+<li><em>root</em></li>
+<li><em>user</em></li>
+</ul>
+<h2 id="commands">Commands</h2>
+<ul>
+<li><code>pwd</code></li>
+<li><code>cd</code></li>
+<li><code>ls</code></li>
+<li><code>tree</code></li>
+</ul>
+</body>
+</html>

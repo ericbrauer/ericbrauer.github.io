@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lecture 10A: Introduction to Bash Scripting</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../css/eric.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lecture 10A: Introduction to Bash Scripting</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction-to-scripting">Introduction to Scripting</a>
+<ul>
+<li><a href="#example">Example:</a></li>
+</ul></li>
+<li><a href="#variables">Variables</a>
+<ul>
+<li><a href="#notes-on-quotes">Notes on Quotes</a></li>
+</ul></li>
+<li><a href="#read">Read</a></li>
+<li><a href="#passing-in-arguments">Passing In Arguments</a></li>
+<li><a href="#if-statements">IF Statements</a></li>
+<li><a href="#summary">Summary</a>
+<ul>
+<li><a href="#be-sure-to-remember-the-syntax-for">Be sure to remember the syntax for:</a></li>
+<li><a href="#quotes">Quotes:</a></li>
+<li><a href="#variables-1">Variables:</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><strong>Note: All relevant examples can be copied from: <code>~eric.brauer/uli101/scripts</code></strong></p>
+<p><strong>Note #2:</strong> Scripts often require debugging. If you working on the assignment and it isn’t allowing you to proceed, be sure to <strong>run the script by itself in the terminal</strong>. Pay attention to the error messages that Bash gives you. Also, turn on line numbers!</p>
+<ul>
+<li>Use <code>cat -n</code> to match line numbers to errors, or</li>
+<li>use <code>:set number</code> in Vim.</li>
+</ul>
+<p>If you don’t have error messages or the output of your script with line numbers, I can’t help you with debugging!</p>
+<h1 id="introduction-to-scripting">Introduction to Scripting</h1>
+<p>So far we’ve been talking about Bash as being our shell, a place where we type in commands, press Enter, and have them executed. In this section we will discuss Bash as a <em>scripting language</em>. Bash lacks many features of more dedicated programming languages– for example there are no classes or objects– but it is a fantastic tool for many jobs.</p>
+<ul>
+<li>Bash is interpreted at runtime. The interpreter will try its best to figure what you want it to do.</li>
+<li>Unlike C, there is no compiler. There is no real way to know if the script has errors until you try running it.</li>
+<li>Bash scripts are basically plaintext documents that include any of the shell commands that you already know.</li>
+<li>For that reason, it is best practice to define how we want our script interpreted. We do this by including a <em>shebang</em> at the top of the script.</li>
+<li>The shebang will include the absolute path to the Bash interpreter. (You can use <code>which bash</code> to check this)</li>
+<li>Our shebang on Matrix (and in 99% of cases) will be: <code>#!/bin/bash</code></li>
+<li>It is also best practice to include a file suffix so that people will recognize your scripts. It’s best to use either <code>.sh</code> or <code>.bash</code>.</li>
+</ul>
+<h2 id="example">Example:</h2>
+<p>Follow these steps to create your very first script:</p>
+<ol type="1">
+<li>Run command: <code>echo "Hello World!"</code> What happens?</li>
+<li>Now let’s put that same command into a new file. Use <code>vim hello.sh</code> or <code>nano hello.sh</code> to create a new file.</li>
+<li>Insert the following text:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># This is a comment. All comments begin with #.</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="bu">echo</span> <span class="st">&quot;Hello World!&quot;</span></span></code></pre></div>
+<ol type="1">
+<li>Let’s give this file execute permission: <code>chmod u+x test.sh</code>.</li>
+<li>Use <code>ls -l</code> check the permissions.`</li>
+<li>Try running it. Type in: <code>test.sh</code>. What happens?</li>
+</ol>
+<h1 id="variables">Variables</h1>
+<p>Let’s open the file again in Vim/Nano and edit it so that it looks like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="va">name=</span>Eric</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">$name</span><span class="st">!&quot;</span></span></code></pre></div>
+<p>Use <em>your name</em>, not mine.</p>
+<p>The first line after the shebang will create a variable called <code>name</code> and assign a it a <em>value</em> of <code>Eric</code>. Note that variables in Bash are treated like strings, and don’t need to be declared.</p>
+<p>With the second line, we want the user to be seeing the <em>value</em> of the variable, not the name of the variable. In order for the interpreter to understand that we want this substitution to occur, we use <code>$</code> followed by the variable. (It’s also acceptable to put the variable name in <code>{ }</code>s like this: <code>${name}</code>.</p>
+<h2 id="notes-on-quotes">Notes on Quotes</h2>
+<ol type="1">
+<li>Change the line to your full name, ex: <code>name=Eric Brauer</code>. What happens?</li>
+<li>You’ll see: <code>Brauer: command not found</code>.</li>
+<li>Change to “Eric Brauer”. It works.</li>
+</ol>
+<p>The space isn’t being interpreted as the contents of the variable, but as a separate command. We need to make it clear where the assignment of the variable begins and ends, and to do this we will use double quotes.</p>
+<p><strong>Note:</strong> Enclosing characters in double quotes (") preserves the literal value of all characters within the quotes, with the exception of $, `, \, and, when history expansion is enabled, !.</p>
+<p><strong>Another Special Note:</strong></p>
+<p>Look at a file called <code>SIMPLE-VARS.sh</code> in my <code>uli101/scripts</code> directory.</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-VARS.sh</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>     <span class="ex">1</span>  <span class="co">#/bin/bash</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb3-3"><a href="#cb3-3"></a>     <span class="ex">3</span>  </span>
+<span id="cb3-4"><a href="#cb3-4"></a>     <span class="ex">4</span>  <span class="co"># This is a simple variable assignment:</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>     <span class="ex">5</span>  variable_name=<span class="st">&quot;Variable Value&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>     <span class="ex">6</span>  </span>
+<span id="cb3-7"><a href="#cb3-7"></a>     <span class="ex">7</span>  <span class="co"># Echo will print:</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>     <span class="ex">8</span>  echo <span class="st">&quot;Hello World!&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>     <span class="ex">9</span>  </span>
+<span id="cb3-10"><a href="#cb3-10"></a>    <span class="ex">10</span>  <span class="co"># Echo with double quotes will allow substitution:</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>    <span class="ex">11</span>  echo <span class="st">&quot;This prints the value of </span><span class="va">$variable_name</span><span class="st">.&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="ex">12</span>  </span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="ex">13</span>  <span class="co"># Echo with single quotes will prevent substitution:</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>    <span class="ex">14</span>  echo <span class="st">&#39;This does not print the value of $variable_name.&#39;</span></span></code></pre></div>
+<p>When you run this script, you should see this output:</p>
+<p>`~eric.brauer/uli101/scrdipts/SIMPLE-VARS.sh</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">Hello</span> World!</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">This</span> prints the value of Variable Value.</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">This</span> does not print the value of <span class="va">$variable_name</span>.</span></code></pre></div>
+<ul>
+<li>Single quotes: everything is literal.</li>
+<li>Double quotes: everything is literal except for “$ ! ` \”</li>
+</ul>
+<p>So the takeaway is: double quotes are best used when you need to use special characters like <code>$</code>s to perform substitutions.</p>
+<h1 id="read">Read</h1>
+<p>Take a look at a file called <code>SIMPLE-READ.sh</code>:</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-READ.sh</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb5-3"><a href="#cb5-3"></a>     <span class="ex">3</span>  <span class="co"># Let&#39;s start with a variable:</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>     <span class="ex">4</span>  variable=<span class="st">&quot;nothing&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>     <span class="ex">5</span>  </span>
+<span id="cb5-6"><a href="#cb5-6"></a>     <span class="ex">6</span>  <span class="co"># We&#39;ll use an echo command to ask the user for input. -n will suppress a newline:</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>     <span class="ex">7</span>  echo -n <span class="st">&quot;Enter a new value for our variable: &quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>     <span class="ex">8</span>  <span class="co"># Read will store the input we give it. </span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>     <span class="ex">9</span>  <span class="co"># We&#39;ll also give it the name of the variable where we&#39;re storing the user input.</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="ex">10</span>  read variable</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="ex">11</span>  </span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="ex">12</span>  echo <span class="st">&quot;You entered </span><span class="va">$variable</span><span class="st">.&quot;</span></span></code></pre></div>
+<p><code>read</code> is a simple way to ask the user for input. Whatever the user types will be stored into the variable that you specify.</p>
+<p>However, we often don’t want to create our scripts like this, since it requires the user to be sitting at a chair, reading the message and typing in their response. Remember, a lot of times our scripts are supposed to run automatically.</p>
+<h1 id="passing-in-arguments">Passing In Arguments</h1>
+<p>You remember arguments, they are the usual way that we have interacted with commands such as <code>cp</code>, <code>rm</code>, <code>ls</code>…</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-ARGS.sh</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a>     <span class="ex">1</span>  <span class="co">#/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb6-3"><a href="#cb6-3"></a>     <span class="ex">3</span>  <span class="co"># Arguments come from the user. Such as this example:</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>     <span class="ex">4</span>  </span>
+<span id="cb6-5"><a href="#cb6-5"></a>     <span class="ex">5</span>  <span class="co"># `rm scripts`</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>     <span class="ex">6</span>  <span class="co">#  ^  ^-----------argument</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>     <span class="ex">7</span>  <span class="co">#  \command</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>     <span class="ex">8</span>  </span>
+<span id="cb6-9"><a href="#cb6-9"></a>     <span class="ex">9</span>  <span class="co"># Try running this script with zero arguments.</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="ex">10</span>  </span>
+<span id="cb6-11"><a href="#cb6-11"></a>    <span class="ex">11</span>  echo <span class="st">&quot;Number of arguments from the user: </span><span class="va">$#</span><span class="st">.&quot;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>    <span class="ex">12</span>  </span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="ex">13</span>  <span class="co"># Now Try running this script again. This time enter an argument after the script name.</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="ex">14</span>  </span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="ex">15</span>  <span class="co"># `SIMPLE-ARGS.sh dog`</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>    <span class="ex">16</span>  echo <span class="st">&quot;The first argument passed in from the user: </span><span class="va">$1</span><span class="st">.&quot;</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="ex">17</span>  </span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="ex">18</span>  <span class="co"># Now try running this script with two arguments. </span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="ex">19</span>  echo <span class="st">&quot;The second argument passed in from the user: </span><span class="va">$2</span><span class="st">.&quot;</span></span></code></pre></div>
+<p>Notice that <code>$#</code> is a special, built-in variable. It contains a number which represents the number of arguments that Bash has seen passed into the script.</p>
+<p>When we run the script without arguments, we see output that looks like this:</p>
+<p><code>~eric.brauer/uli101/scripts/SIMPLE-ARGS.sh</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">Number</span> of arguments from the user: 0.</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">The</span> first argument passed in from the user: .</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">The</span> second argument passed in from the user: .</span></code></pre></div>
+<p>Now let’s follow the instructions inside the script. Run the script with one and then two arguments:</p>
+<p><code>~eric.brauer/uli101/scripts/SIMPLE-ARGS.sh dog</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">Number</span> of arguments from the user: 1.</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">The</span> first argument passed in from the user: dog.</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">The</span> second argument passed in from the user: .</span></code></pre></div>
+<p><code>~eric.brauer/uli101/scripts/SIMPLE-ARGS.sh dog cat</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">Number</span> of arguments from the user: 2.</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">The</span> first argument passed in from the user: dog.</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="ex">The</span> second argument passed in from the user: cat.</span></code></pre></div>
+<p><code>$1</code> and <code>$2</code> are more special builtin variables that contain the contents of the first and second arguments. We can pass in up to nine arguments like this: $1 $2… $9. This should be enough for most scripts. If the user doesn’t pass in an argument, then the contents of its builtin variable are <em>null</em> (empty).</p>
+<h1 id="if-statements">IF Statements</h1>
+<p>You’ll notice that the example above contains different output based on the arguments that the user entered. We can use this behaviour to demonstrate <em>conditional logic</em>. If you are familiar with programming, then this should be clear to you. The only thing different is the <em>syntax</em>, that is, the keywords that Bash uses to interpret your logic.</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-IF.sh</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>     <span class="ex">1</span>  <span class="co">#/bin/bash</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb10-3"><a href="#cb10-3"></a>     <span class="ex">3</span>  <span class="co"># Arguments come from the user. Such as this example:</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>     <span class="ex">4</span>  </span>
+<span id="cb10-5"><a href="#cb10-5"></a>     <span class="ex">5</span>  <span class="co"># `rm scripts`</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>     <span class="ex">6</span>  <span class="co">#  ^  ^-----------argument</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>     <span class="ex">7</span>  <span class="co">#  \command</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>     <span class="ex">8</span>  </span>
+<span id="cb10-9"><a href="#cb10-9"></a>     <span class="ex">9</span>  <span class="co"># Try running this script with zero arguments.</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="ex">10</span>  </span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="ex">11</span>  echo <span class="st">&quot;Number of arguments from the user: </span><span class="va">$#</span><span class="st">.&quot;</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="ex">12</span>  </span>
+<span id="cb10-13"><a href="#cb10-13"></a>    <span class="ex">13</span>  <span class="co"># Now Try running this script again. This time enter an argument after the script name.</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>    <span class="ex">14</span>  </span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="ex">15</span>  <span class="co"># `./SIMPLE-ARGS.sh dog`</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>    <span class="ex">16</span>  </span>
+<span id="cb10-17"><a href="#cb10-17"></a>    <span class="ex">17</span>  if [ <span class="va">$#</span> = 1 ]</span>
+<span id="cb10-18"><a href="#cb10-18"></a>    <span class="ex">18</span>  then</span>
+<span id="cb10-19"><a href="#cb10-19"></a>    <span class="ex">19</span>      echo <span class="st">&quot;The argument passed in from the user: </span><span class="va">$1</span><span class="st">.&quot;</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a>    <span class="ex">20</span>  fi</span>
+<span id="cb10-21"><a href="#cb10-21"></a>    <span class="ex">21</span>  </span>
+<span id="cb10-22"><a href="#cb10-22"></a>    <span class="ex">22</span>  <span class="co"># Now try running this script with two arguments. </span></span>
+<span id="cb10-23"><a href="#cb10-23"></a>    <span class="ex">23</span>  </span>
+<span id="cb10-24"><a href="#cb10-24"></a>    <span class="ex">24</span>  if [ <span class="va">$#</span> = 2 ]</span>
+<span id="cb10-25"><a href="#cb10-25"></a>    <span class="ex">25</span>  then</span>
+<span id="cb10-26"><a href="#cb10-26"></a>    <span class="ex">26</span>      echo <span class="st">&quot;The two arguments passed in from the user: </span><span class="va">$2</span><span class="st"> and </span><span class="va">$1</span><span class="st">.&quot;</span></span>
+<span id="cb10-27"><a href="#cb10-27"></a>    <span class="ex">27</span>  fi</span>
+<span id="cb10-28"><a href="#cb10-28"></a>    <span class="ex">28</span>  </span>
+<span id="cb10-29"><a href="#cb10-29"></a>    <span class="ex">29</span>  <span class="co"># Notice those last two are reversed.</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">if</span><span class="bu"> [</span> CONDITION<span class="bu"> ]</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">then</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="co"># ACTION that runs if the condition is TRUE</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="kw">fi</span></span></code></pre></div>
+<p>In our example above, we check the number of arguments, and run different <code>echo</code> commands based on whether the number of arguments is zero, one, or two. If the condition is false, then we skip every line between <code>then</code> and <code>fi</code>.</p>
+<p>We can combine this with an <code>else</code> statement. In this case, instead of just skipping over actions, we can specify alternative actions to take if the condition is false.</p>
+<p><code>cat -n ~eric.brauer/uli101/scripts/SIMPLE-IF-ELSE.sh</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>     <span class="ex">1</span>  <span class="co">#!/bin/bash</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>     <span class="ex">2</span>  </span>
+<span id="cb12-3"><a href="#cb12-3"></a>     <span class="ex">3</span>  condition=1</span>
+<span id="cb12-4"><a href="#cb12-4"></a>     <span class="ex">4</span>  </span>
+<span id="cb12-5"><a href="#cb12-5"></a>     <span class="ex">5</span>  if [ <span class="va">$condition</span> = 1 ]</span>
+<span id="cb12-6"><a href="#cb12-6"></a>     <span class="ex">6</span>  then</span>
+<span id="cb12-7"><a href="#cb12-7"></a>     <span class="ex">7</span>          echo <span class="st">&quot;The condition is true.&quot;</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>     <span class="ex">8</span>          echo <span class="st">&quot;Action 1.&quot;</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>     <span class="ex">9</span>  else</span>
+<span id="cb12-10"><a href="#cb12-10"></a>    <span class="ex">10</span>          echo <span class="st">&quot;The condition is false.&quot;</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>    <span class="ex">11</span>          echo <span class="st">&quot;Action 2.&quot;</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="ex">12</span>  fi</span>
+<span id="cb12-13"><a href="#cb12-13"></a>    <span class="ex">13</span>  </span>
+<span id="cb12-14"><a href="#cb12-14"></a>    <span class="ex">14</span>  echo <span class="st">&quot;Open this script in Vim or Nano, and change the value of &#39;condition&#39;.&quot;</span></span></code></pre></div>
+<p>Be sure to open this file, and modify if so that you can see how it works when the condition is false. The main idea is, your script will <em>either</em> reach lines 7 and 8 <em>or</em> lines 10 and 11, but never both.</p>
+<p>Regardless of whether the condition is true or false, after the <code>fi</code> on line 12, the script will run each line normally. That means your script will <em>always</em> reach the action on line 14.</p>
+<h1 id="summary">Summary</h1>
+<h2 id="be-sure-to-remember-the-syntax-for">Be sure to remember the syntax for:</h2>
+<ul>
+<li>print output</li>
+<li>read input</li>
+<li>read arguments</li>
+<li>if statements</li>
+</ul>
+<h2 id="quotes">Quotes:</h2>
+<ul>
+<li>"": weak quotes (substitution of $ occurs)</li>
+<li>’’: strong quotes (substitution of $ does not occur)</li>
+<li>\: escape character</li>
+</ul>
+<h2 id="variables-1">Variables:</h2>
+<ul>
+<li><code>$#</code>: Returns the number of arguments as an integer</li>
+<li><code>$1..$9</code>: Returns positional arguments</li>
+</ul>
+</body>
+</html>

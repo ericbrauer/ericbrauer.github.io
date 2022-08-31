@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Title</title>
+        <meta charset="utf-8">
+        <style>
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700    ,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:4    00,700,400italic);
+        .remark-code, .remark-inline-code { font-family    : 'Ubuntu Mono'; }
+        </style>
+        </head>
+ <body>
+ <textarea id="source">
+% Lecture 1B
+% Introduction to the File System
+% Eric Brauer
+
+# Introduction to the File System
+
+## History Lesson II
+
+Recall that Linux descended from an operating system designed for mainframes.
+That is, a single computer being used by many users simultaneously. In the 1980s,
+personal computers (PCs) became available, which as you can imagine was a
+revolutionary leap forward! In this case, you had one user working on one
+computer. Eventually DOS became the most common operating systems for these PCs,
+and Microsoft Windows was built on (and eventually replaced) DOS.
+
+---
+
+## A Useful Analogy 
+
++ Windows = a single family home
++ Linux (especially Matrix) = an apartment building
+
+On Matrix, you have a space which is 'yours' for as long as you are a student.
+You have control over this space. On the other hand, there is a lot that you
+*don't* have control over. The plumbing, the heat, the HVAC, and so on. There is
+an administrator/superintendant that has authority over these spaces, and who
+has permission to make changes. The super has authority to create, modify and
+remove user accounts.
+
+---
+
+## Explore Your "Apartment"
+
+- Use `ls` to view your home folder.
+- Use `cd Documents` to change your current location to `Documents`.
+- Use `cd ..` to return to your home.
+- Use `pwd` to see your current location.
+
+---
+
+## Explore the "Common Space"
+
+The places _outside_ your home folder are common spaces. You can see these
+places, but you can't modify them.
+
+- Use `cd /bin` to travel to one such location.
+- Type `ls` to view its contents.
+- Find `ls` in the contents of this folder. 
+
+_`ls` is a program. And its location is in `/bin`! So what would happen if a
+malicious person decided to modify `ls` for everyone?_
+
+---
+
+## Navigating the Linux Filesystem
+
+You don't know it yet, but we've just demonstrated two different types of
+filepaths. To see how this works, let's use a different type of diagram.
+
+![tree diagram](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-tree.jpg)
+
+---
+
+## Here are Some Rules
+
+The rules for this 'game' are simple.
+
+- Every dot is a _directory_. Moving along any line will take one 'turn.'
+- We want to _minimize_ the number of turns we take.
+- Every directory has _one parent_. (Except for the very top).
+- Directories don't have _unique_ names. So there might be _many_ directories with the name `bin`.
+- We need to be able to move from _anywhere_ in the tree to _anywhere else_.
+- We need to always be _specific_ when we are describing our moves.
+- When choosing our path, we can start from our _current location_, or from the _top_ of the tree.
+
+---
+
+## Moving Into a Subdirectory
+
+- Assume we are moving from point **A** to point **B**. This movement takes one
+"turn."
+- The command to do this is: `cd B`.
+
+![to subdirectory](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-sub.jpg)
+
+---
+
+## Moving Into a Sub-Subdirectory
+
+- Assume we are moving from point **A** to point **B** again. This movement
+  takes two turns.
+- You could enter the command `cd aa`, and then press enter, and then enter `cd
+  B`. But this is a waste of time. Instead, we can enter: `cd aa/B`.
+- The **/** here is indicating that there are two turns: moving into directory
+  `aa` and then moving into directory `B` from `aa`.
+
+![to subdirectory2](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-sub2.jpg)
+
+---
+
+## Moving Into a Parent Directory
+
+- Assume we are moving from point **A** to point **B** again. This movement
+  takes one turn.
+- Since `A` only has one parent, we can save ourselves some typing by using
+  **..**. 
+- The command to do this is: `cd ..`.
+
+![to parent](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-parent.jpg)
+
+---
+
+## Moving Into a Parent Directory II
+
+- Once again, we are moving from point **A** to point **B**. We are combining
+  two turns in one command. 
+- The command is: `cd ../..`.
+
+![to parent2](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-to-parent2.jpg)
+
+---
+
+## Lateral Movement
+
+- In this case, **A** and **B** have a common parent. We must move up to the
+  directory `aa` before moving to **B**. This movement takes two turns.
+- The command is: `cd ../B`.
+
+![lateral movement](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-lateral.jpg)
+
+---
+
+## Start From Root (/)
+
+- If we were to move up the tree from **A**, the command would be `cd ../../B`
+  and it would take three turns.
+- Instead, we should start from the top, which will take only one turn.
+- The top is called **root** (**/**).
+- To indicate that we are starting from the top instead of starting from **A**,
+  we start our command with **/**.
+- The correct command is: `cd /B`.
+
+![absolute](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-absolute.jpg)
+
+---
+
+## Navigating the Linux Filesystem II
+
+- Now let's replace labels like **A** and **B** with some proper directory
+  names. 
+- Refer back to the navigation commands you used in Assignment 1. Do they match
+  up? 
+
+![proper names](https://matrix.senecacollege.ca/~eric.brauer/uli101/lecture2-proper-names.jpg)
+
+---
+ 
+## The Tree Command
+
+Compare the tree diagrams above with the output from `tree`:
+
+```
+.
+├── sample_dir
+│   ├── faculty
+│   ├── markham
+│   ├── oxford
+│   │   ├── programming
+│   │   ├── report
+│   │   └── security
+│   ├── stenton
+│   │   ├── gen_ed
+│   │   └── lib_arts
+│   └── todays-example
+└── users
+    ├── ebrau
+    └── sam
+
+```
+
+- **Challenge: re-draw this in the 'tree' format**
+- `.` has two subdirectories (two dots)
+- `sample_dir` has **five** subdirectories.
+
+---
+## Practice in Matrix
+
+Now, in your home directory, try this:
+
+- use `tree` to see your home directory
+- observe the output
+- use cd to get to every location
+- use `cd` (without any arguments!) to get back to home
+- use `cd ..` to get to the *parent* of your home
+- type `ls`, what do you see?
+- type `tree -d`
+- why are most things hidden?
+
+---
+
+# Terminology
+
+- _parent_
+- _subdirectory_
+- _home_
+- _root_
+- _user_ 
+
+---
+
+# Commands
+
+- `pwd`
+- `cd`
+- `ls`
+- `tree`
+</textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js">
+</script>
+<script>
+	var slideshow = remark.create();
+</script>
+</body>
+</html>
