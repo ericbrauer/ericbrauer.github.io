@@ -75,7 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+  <link rel="stylesheet" href="../../css/eric.css" />
 </head>
 <body>
 <nav id="TOC" role="doc-toc">
@@ -123,8 +123,8 @@
 <p>Python 3 was released in 2008. One important thing to note is that there are large differences between Python 2 and Python 3, so we will need to make sure that we aren’t using the older version of Python.</p>
 <ol type="1">
 <li>Go to <a href="https://www.python.org/downloads/">Python Downloads</a> and select the latest version of Python. At the time of writing, this is <strong>Python 3.8</strong>.</li>
-<li>You should see a list of possible files to download. Select <strong>Windows x86-64 executable installer</strong>. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/def57eaaa68e4d0bb11c6b4b219a224f" alt="ebf8167aad277fa4c9b5afd959b0c954.png" /></li>
-<li>Accept default values. This should install a tool called <em>pip</em> and a text editor called <em>Idle</em>. You are free to use a different a different text editor if you wish. Also <strong>check “Add Python 3.8 to PATH”</strong>. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/026c1bc66ca64809aa5e9c8fe7ef4606" alt="6f6fc88c2ae0abf5775fab2df68d6444.png" /></li>
+<li>You should see a list of possible files to download. Select <strong>Windows x86-64 executable installer</strong>. <img src="resources/def57eaaa68e4d0bb11c6b4b219a224f" alt="ebf8167aad277fa4c9b5afd959b0c954.png" /></li>
+<li>Accept default values. This should install a tool called <em>pip</em> and a text editor called <em>Idle</em>. You are free to use a different a different text editor if you wish. Also <strong>check “Add Python 3.8 to PATH”</strong>. <img src="resources/026c1bc66ca64809aa5e9c8fe7ef4606" alt="6f6fc88c2ae0abf5775fab2df68d6444.png" /></li>
 </ol>
 <h3 id="installing-vs-code-on-windows">Installing VS Code on Windows</h3>
 <p>IDLE is a great way to get familiar with Python, but as we proceed in the course we are going to find that IDLE is too limited. VS Code is an open source text editor with a wide array of extensions that benefit programmers. Follow the steps to install VS Code below:</p>
@@ -133,14 +133,14 @@
 <li>Run the installer and accept the defaults. You may also want to select options to make VS Code work as an editor for its supported file types.</li>
 </ol>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/e8fb38ad44f34af3849f37bfe3621832" alt="" /><figcaption>399e321b0ba596363a26783cbe76ee40.png</figcaption>
+<img src="resources/e8fb38ad44f34af3849f37bfe3621832" alt="" /><figcaption>399e321b0ba596363a26783cbe76ee40.png</figcaption>
 </figure>
 <ol start="3" type="1">
 <li>Run VS Code for the first time.</li>
 <li>We will now install the Python extension for VS Code. Along the left side, you will see several icons. Select the bottom icon (Extensions) or press <code>Ctrl+Shift+x</code>. Enter “Python” into the search bar and install the first extension you see.</li>
 </ol>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/7bed0565bf914f3d889f76458708793e" alt="" /><figcaption>6788a48bc7eea0622dad445bcb83361c.png</figcaption>
+<img src="resources/7bed0565bf914f3d889f76458708793e" alt="" /><figcaption>6788a48bc7eea0622dad445bcb83361c.png</figcaption>
 </figure>
 <ol start="5" type="1">
 <li>Follow prompts to reload VS Code when the extension is installed.</li>
@@ -152,13 +152,13 @@
 <li>We will use Python’s builtin text editor called <em>IDLE</em>. Run that now.</li>
 </ol>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/f40ad56c6ff2461b88d428c58d0f4002" alt="" /><figcaption>9061b75aeab1f50c1377b94e5bd1f58b.png</figcaption>
+<img src="resources/f40ad56c6ff2461b88d428c58d0f4002" alt="" /><figcaption>9061b75aeab1f50c1377b94e5bd1f58b.png</figcaption>
 </figure>
 <ol start="2" type="1">
 <li>You will see a prompt <code>&gt;&gt;&gt;&gt;</code> waiting for your input. Type <code>print('Hello World')</code> and press Enter. Congratulations, you have printed your first <em>string</em>!</li>
 </ol>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/4d72101d43ab44a2aa9e8d6468d09d18" alt="" /><figcaption>1490e0ad99ed17743a35df6922c26011.png</figcaption>
+<img src="resources/4d72101d43ab44a2aa9e8d6468d09d18" alt="" /><figcaption>1490e0ad99ed17743a35df6922c26011.png</figcaption>
 </figure>
 <h3 id="what-is-a-string">What is a string?</h3>
 <p>A string is a series of characters entered from a keyboard. In this case, our string is <strong>Hello World</strong>. Strings can also contain numbers and special characters such as (&amp;%$#). You can’t do math with strings, but you can print them to a screen. The string is our first <em>data type</em>. There are others that we will introduce further on in the course.</p>
@@ -241,12 +241,12 @@
 <p>All of our Python work will be inside these <code>.py</code> files. We will soon be writing scripts of such complexity that we will require better tools than IDLE can provide. So let’s make sure that our first script runs inside VSCode.</p>
 <ol type="1">
 <li><p>If you haven’t already, start up <strong>VSCode</strong>.</p></li>
-<li><p>Use the “Open File…” dialog to find your <code>lab1a.py</code> and open it. You should see a screen similar to this: <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/Screenshot%20from%202021-07-27%2019-34-23.png" alt="vscode" /></p></li>
+<li><p>Use the “Open File…” dialog to find your <code>lab1a.py</code> and open it. You should see a screen similar to this: <img src="resources/Screenshot%20from%202021-07-27%2019-34-23.png" alt="vscode" /></p></li>
 <li><p>On the left side, find the “Run and Debug” button or press <code>Ctrl + Shift + D</code>. Click on the "play button to launch your program.</p></li>
 <li><p>You may be asked to select a configuration. Make sure to select ‘Python’ from the list. If all is well, you should see a screen like this:</p></li>
 </ol>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/Screenshot%20from%202021-07-27%2019-41-32.png" alt="" /><figcaption>vscode2</figcaption>
+<img src="resources/Screenshot%20from%202021-07-27%2019-41-32.png" alt="" /><figcaption>vscode2</figcaption>
 </figure>
 <ol start="5" type="1">
 <li>VSCode allows us to run our code inside of a <em>terminal</em>, which is another way of saying that we are able to interact with Python. You will be learning how to working with terminals and command line interfaces in other courses, but additionally it will be our primary way of interacting with Python.</li>
@@ -257,13 +257,13 @@
 <h2 id="task-using-a-check-script">1.6 TASK: Using A Check Script</h2>
 <p>For this lab, you can use a check script that will verify that your files are printing the correct output. Here are the steps for using the check script:</p>
 <ol type="1">
-<li><a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab1.py">Download the file <strong>check-lab1.py</strong> from here.</a></li>
+<li><a href="check/check-lab1.py">Download the file <strong>check-lab1.py</strong> from here.</a></li>
 <li>Copy check-lab1.py into your Lab 1 directory, the <strong>same directory</strong> as where you have put lab1a.py.</li>
 <li>Start VSCode if it isn’t already open. From “File”, select “Open Folder…”. Select the Lab 1 directory.</li>
 <li>If you get a message about this directory being open in “Restricted Mode”, be sure to select “Trust the authors of this directory”.</li>
 </ol>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/trust.png" alt="" /><figcaption>A restricted mode dialog</figcaption>
+<img src="resources/trust.png" alt="" /><figcaption>A restricted mode dialog</figcaption>
 </figure>
 <ol type="1">
 <li>Double-click on the check script from the file manager in the left panel. Make sure that this file has <em>focus</em> (that is, it is the active document in VSCode).</li>
@@ -294,7 +294,7 @@ Good luck with the course!</code></pre>
 <li>Use output from the check script to verify that your script is producing the correct output. If everything is successful, you should see the terminal print two “OK” messages.</li>
 </ul>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/ok.png" alt="" /><figcaption>An example of a successful check</figcaption>
+<img src="resources/ok.png" alt="" /><figcaption>An example of a successful check</figcaption>
 </figure>
 <ul>
 <li>Once you get no warnings or errors, find the file that the check script has created. It is called <code>check-lab1-output.txt</code>.</li>

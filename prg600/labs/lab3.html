@@ -75,7 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+  <link rel="stylesheet" href="../../css/eric.css" />
 </head>
 <body>
 <nav id="TOC" role="doc-toc">
@@ -238,15 +238,15 @@ finished</code></pre>
 <p>You’ll also notice a new operator: <code>+=</code>. To demonstrate how this works, we are going to <em>step through</em> our code.</p>
 <ol type="1">
 <li>Save your file as <code>lab3c.py</code>.</li>
-<li>From VSCode, click the ‘Run and Debug’ icon on the left. It looks like a play button with a bug next to it. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode1.png" alt="vscode1" /></li>
+<li>From VSCode, click the ‘Run and Debug’ icon on the left. It looks like a play button with a bug next to it. <img src="resources/vscode1.png" alt="vscode1" /></li>
 <li>In the left panel, you will see a new ‘Run and Debug’ button as well as the option to customize launch options by opening a ‘launch.json’ file. Click this now.</li>
-<li><code>launch.json</code> will open in a new tab. A JSON file is just another way of storing configuration data, but it can be confusing at first glance. Click “Add Configuration” and select “Python” from the drop-down list. If you do not see Python as an option, make sure you have installed the Python extension. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode3.png" alt="vscode3" /> By creating a <code>launch.json</code> file, we can save our Python settings and won’t have to specify ‘Python’ each time we run the file. Press <code>Ctrl+s</code> to save <code>launch.json</code> with its default values. Your <code>launch.json</code> file should look similar to mine, and in the top-left corner you should have an option to run “Python: Current File”. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode4.png" alt="vscode4" /></li>
+<li><code>launch.json</code> will open in a new tab. A JSON file is just another way of storing configuration data, but it can be confusing at first glance. Click “Add Configuration” and select “Python” from the drop-down list. If you do not see Python as an option, make sure you have installed the Python extension. <img src="resources/vscode3.png" alt="vscode3" /> By creating a <code>launch.json</code> file, we can save our Python settings and won’t have to specify ‘Python’ each time we run the file. Press <code>Ctrl+s</code> to save <code>launch.json</code> with its default values. Your <code>launch.json</code> file should look similar to mine, and in the top-left corner you should have an option to run “Python: Current File”. <img src="resources/vscode4.png" alt="vscode4" /></li>
 <li>Now close <code>launch.json</code> and return to <code>lab3c.py</code>. You should see a play button appear in the left panel. Press that now. In the terminal that appears, you should be able to interact with your program normally.</li>
 </ol>
 <p>The real power of the debugger occurs when we set <em>break points</em>. Break points will allow us to ‘pause’ the program at various stages, and examine the state of variables.</p>
 <ol type="1">
 <li>To set your first break point, click <strong>to the left</strong> of the ‘4’ on line #4. For me, this is the “SUMMING CALCULATOR” line. You should see a <strong>red dot</strong> appear. This is called a <em>break point</em>, a location where the execution of code will stop and wait for your input.</li>
-<li>Press “Play” again. You should see new buttons at the top of your screen, and an arrow pointing to line 4. <img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode5.png" alt="vscode5" /></li>
+<li>Press “Play” again. You should see new buttons at the top of your screen, and an arrow pointing to line 4. <img src="resources/vscode5.png" alt="vscode5" /></li>
 <li>The arrow indicates that we are about to run the instructions on line 4. At the top, find the “Step Over” button. Press it now.</li>
 <li>In the terminal, you should see that the line 4 print instruction has completed, and that in the <strong>terminal below</strong> you can see “<code>SUMMING CALCULATOR</code>” has been printed. Look in the top-left corner, for the panel that says “Variables”. You should see <code>sum</code> listed there, with its initial value of 0.</li>
 <li>Press “Step over” two more times so that the terminal is now prompting you to enter a number. Enter “3” as your number and press Enter.</li>
@@ -329,7 +329,7 @@ Question skipped. 0 points awarded.
 Enter the answer to 17 + 5, or press &#39;s&#39; to skip: q
 Quiz over. You scored 50.0%.</code></pre>
 <h2 id="check-script">Check Script</h2>
-<p>The check script <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab3.py">can be found here</a>.</p>
+<p>The check script <a href="check/check-lab3.py">can be found here</a>.</p>
 <h2 id="challenge-task-binary-converter">CHALLENGE TASK: Binary Converter</h2>
 <p>Binary numbers are used internally by all computers. Binary numbers are composed only of ones and zeroes. If you would like an introduction to binary systems, you can visit <a href="https://www.khanacademy.org/math/algebra-home/alg-intro-to-algebra/algebra-alternate-number-bases/v/number-systems-introduction">Khan Academy</a> or refer to my <a href="https://ict.senecacollege.ca/~eric.brauer/uli101/lecture4a.html">notes</a>.</p>
 <p>One way to convert a decimal number into binary is to use the following procedure (again, my <a href="https://ict.senecacollege.ca/~eric.brauer/uli101/lecture4a.html">notes</a> cover this process in much more detail):</p>

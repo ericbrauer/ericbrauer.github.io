@@ -75,7 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+  <link rel="stylesheet" href="../../css/eric.css" />
 </head>
 <body>
 <nav id="TOC" role="doc-toc">
@@ -140,13 +140,13 @@
 <li>Visit <a href="https://regex101.com/">Regex101.com</a>.</li>
 <li>In the “Test String” window below, enter your telephone number (or a fake) and today’s date.</li>
 </ol>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/regex1.png" /></p>
+<p><img src="resources/regex1.png" /></p>
 <ol start="3" type="1">
 <li>In the “Regular Expression” text box, start by entering a dash. You should see this character highlighted in the “Test String” below. You can experiment by entering <em>literals</em> in the regex box.</li>
 <li>By “literals” we refer to specific numbers. This is how we do most searches: we look up the numbers that we know. But now instead of matching literals, we will match <em>digits</em>. Clear the “regular expression” text box and enter <code>\d</code>.</li>
 <li>You should now see every character between 0 and 9 with a highlight. In other words, we have matched every number and excluded each dash. Add two more <code>\d</code>s followed by the literal <code>-</code>.</li>
 </ol>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/regex2.png" /></p>
+<p><img src="resources/regex2.png" /></p>
 <ol start="6" type="1">
 <li>Make sure that your Regex 101 screen matches mine. We have matched this pattern: three digits followed by a dash. Complete the pattern for a telephone number in the format XXX-XXX-XXXX. Remember that the highlight for your telephone number should be <strong>all one colour</strong>. We want our pattern to match with the complete telephone number, not a partial one.</li>
 </ol>
@@ -245,7 +245,7 @@
 <li>Print the <em>number of results found</em>. Ask the user if they would like to see the results.</li>
 <li>If the user presses either ‘y’ or Enter, print each phone number found. If the user presses ‘n’, terminate the program without doing anything else.</li>
 </ul>
-<p><strong>A test file for this assignment can be downloaded <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/regex-test.txt">here</a>.</strong></p>
+<p><strong>A test file for this assignment can be downloaded <a href="regex-test.txt">here</a>.</strong></p>
 <h2 id="calling-shell-commands">8.8 Calling Shell Commands</h2>
 <p>By this point you’ve become familiar with many shell commands for your preferred platform: Windows uses Command Prompt or Powershell, and Mac/Linux will most often use the Bourne-Again Shell (BASH). For example, I am using Linux, and this is how I would get my current username:</p>
 <pre><code>eric@archie ~ $ whoami
@@ -317,8 +317,8 @@ uptime is:
 <p>When writing a script, we often want to see a list of all files or directories, in order that we can automate certain tasks we want to perform on them. For this type of task it is useful to use <code>os.walk</code>. This method will list the contents of a directory we specify in a <em>recursive</em> manner. That is, it won’t just display the files or directories in the current location. It will display files for the current directory, and then for each <em>subdirectory</em> in the current location, it will display the files in the subdirectory, then for each sub-subdirectory, it will display the files there, and so on. Recursion is an important concept in computing. Here, it means that we are repeating an action for each subsequent object.</p>
 <p>Let’s consider an example. Currently I am using Linux, and my current directory looks like this:</p>
 <pre><code>lab8.md
-https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/</code></pre>
-<p><code>lab8.md</code> is a file, and <code>https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/</code> is a directory. If I move up to the parent directory and type <code>ls</code>, I will see this:</p>
+resources/</code></pre>
+<p><code>lab8.md</code> is a file, and <code>resources/</code> is a directory. If I move up to the parent directory and type <code>ls</code>, I will see this:</p>
 <pre><code>eric.css
 html/
 lab1/
@@ -436,11 +436,11 @@ resources</code></pre>
 ../average-words-per-lecture.sh
 ../lab3/lab3.md
 ../lab3/lab3.html
-../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode5.png
-../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode3.png
-../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode2.png
-../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode1.png
-../lab3/https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/vscode4.png
+../lab3/resources/vscode5.png
+../lab3/resources/vscode3.png
+../lab3/resources/vscode2.png
+../lab3/resources/vscode1.png
+../lab3/resources/vscode4.png
 ...
 &lt;very long output is truncated&gt;</code></pre>
 <p>Try removing the <code>root</code> from each filepath, and see what remains.</p>
@@ -464,7 +464,7 @@ resources</code></pre>
 <li>Remember to check the existing methods inside <code>os</code> for help!</li>
 </ul>
 <h2 id="deliverables">Deliverables</h2>
-<p>As always, you can check your work using <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab8.py">the provided check script</a>.</p>
+<p>As always, you can check your work using <a href="check/check-lab8.py">the provided check script</a>.</p>
 <ul class="task-list">
 <li><input type="checkbox" disabled="" />
 regex.txt</li>

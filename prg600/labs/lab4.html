@@ -75,7 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+  <link rel="stylesheet" href="../../css/eric.css" />
 </head>
 <body>
 <nav id="TOC" role="doc-toc">
@@ -420,13 +420,13 @@ Correct! You win</code></pre>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a>rect1_area <span class="op">=</span> get_rect_area(<span class="dv">5</span>,<span class="dv">6</span>)</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a><span class="bu">print</span>(<span class="st">&quot;Complete&quot;</span>)</span></code></pre></div>
 <p>As you step through the code, you will see <code>area</code>, <code>length</code> and <code>width</code> defined in the ‘Variables’ box.</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope1.png" /></p>
+<p><img src="resources/scope1.png" /></p>
 <p>When you reach the function call, make sure to use the <strong>Step Into</strong> button rather than Step Over. “Step Into” will enter into a function, whereas “Step Over” will skip over it.</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope2.png" /></p>
+<p><img src="resources/scope2.png" /></p>
 <p>In the Variables box, you will see that the values for <code>length</code> and <code>width</code> have changed. What happened to the previous values? The answer is that they are still there, only they aren’t visible at the moment. Click on the “Globals” Drop-Down.</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope3.png" /></p>
+<p><img src="resources/scope3.png" /></p>
 <p>There exist <strong>two</strong> <code>lengths</code>: one local (equals 5) and one global (equals 3). What happens inside the function, stays inside the function. Go ahead and use “Step Over” or “Step Through” to finish running the code.</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/scope4.png" /></p>
+<p><img src="resources/scope4.png" /></p>
 <p>Once we exit the function, the local version of <code>length</code> <code>width</code> and <code>area</code> revert to their previous values. The function has died, and the paramter values are lost. Only the return value is preserved, and this is assigned to the variable <code>rect1_area</code>.</p>
 <p>What should we learn from this example?</p>
 <ul>
@@ -493,7 +493,7 @@ Enter the new X value: 3
 Enter the new Y value: 0
 Slope is: -0.3333333333333333</code></pre>
 <h2 id="deliverables">Deliverables</h2>
-<p>You can <a href="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/check/check-lab4.py">download the check script here</a>.</p>
+<p>You can <a href="check/check-lab4.py">download the check script here</a>.</p>
 <ul class="task-list">
 <li><input type="checkbox" disabled="" />
 <code>lab4a.py</code></li>

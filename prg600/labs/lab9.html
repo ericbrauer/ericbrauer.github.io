@@ -75,7 +75,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="https://ict.senecacollege.ca/~eric.brauer/prg600/eric.css" />
+  <link rel="stylesheet" href="../../css/eric.css" />
 </head>
 <body>
 <nav id="TOC" role="doc-toc">
@@ -153,7 +153,7 @@
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>main()</span></code></pre></div>
 <p>Inside this new <code>main()</code> function, we create a new object based off our <code>LabelDemo</code> class, and <code>mainloop()</code> will allow our Window to remain open and wait for user interaction.</p>
 <p>Save and run your program. If all is well, you should see a window created that looks like this:</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/hello.png" /></p>
+<p><img src="resources/hello.png" /></p>
 <h2 id="classes-and-objects">9.3 Classes and Objects</h2>
 <p>We have discussed objects before: they are a more modern way of organising code. You have had experience creating objects; however in this lab you have also created a <em>Class</em>. A class provides a ‘template’ for each object created from it. Classes generally are named with Capital Letters, such as <code>LabelDemo</code> and <code>Label</code>.</p>
 <p>When you create an object using a class, the <code>__init__</code> method is called and will initialise various attributes for our object. Inside our <code>LabelDemo</code> init, we set a master title and create another object called <code>_label</code>. <code>_label</code> is set up using a template <code>Label</code>, which in turn calls its own <code>__init__</code> method. You can see that we pass <code>text = "Hello world!"</code> to this object, and this becomes the text that the label displays.</p>
@@ -198,7 +198,7 @@
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>        <span class="cf">else</span>:</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>            <span class="va">self</span>._label[<span class="st">&quot;text&quot;</span>] <span class="op">=</span> <span class="st">&quot;Hello&quot;</span></span></code></pre></div>
 <p>Run <code>lab9b.py</code> now. Click the button to see what happens.</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/button.png" /></p>
+<p><img src="resources/button.png" /></p>
 <h3 id="task-experiments">TASK: Experiments</h3>
 <ul>
 <li>The user clicking on the button activates an <em>event</em>, which we must handle using a method. You can try removing <code>command = self._switch</code> from the line that creates <code>_button</code> and see what happens.</li>
@@ -264,7 +264,7 @@
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true"></a></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true"></a>main()</span></code></pre></div>
 <p>Run the code, you should see a window that looks similar to this:</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/tbox.png" /></p>
+<p><img src="resources/tbox.png" /></p>
 <p>Let us now analyze the code above, and pay attention to <code>__init__</code>.</p>
 <ul>
 <li><code>tkinter</code> requires us to create special objects to contains the value of textboxes. Here a <code>DoubleVar</code> functions the same way as a <code>float</code>.</li>
@@ -282,7 +282,7 @@
 </ul>
 <h2 id="task-dialog-boxes">9.7 TASK: Dialog Boxes</h2>
 <p>A common way for GUI applications to occur errors is to make use of pop-up dialog boxes such as the one shown below:</p>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/error.png" /></p>
+<p><img src="resources/error.png" /></p>
 <p>Fortunately the <code>tkinter</code> framework comes with a submodule which we can use to easily generate an error message. You will need to add a line to the top of your code: <code>from tkinter.messagebox import *</code>.</p>
 <p>Once this is done, you can create an error box with the following line:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>showerror(message<span class="op">=</span><span class="st">&quot;Error: Bad format&quot;</span>, parent<span class="op">=</span><span class="va">self</span>)</span></code></pre></div>
@@ -293,7 +293,7 @@
 <li>Once your exception handling is working, save your finished version of <code>lab9c.py</code>.</li>
 </ul>
 <h2 id="task-the-atm-example">9.8 TASK: The ATM Example</h2>
-<p><img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-start.png" /></p>
+<p><img src="resources/atm-start.png" /></p>
 <p>Create one more file called <code>lab9d.py</code>. Use what you have learned to re-create the following application. Read the following to get started:</p>
 <ul>
 <li>Your program will need one Label for “Amount” and one for “Status” textboxes. You will also need to define a <code>DoubleVar</code> for the “Amount” textbox, and <code>StringVar</code> for status.</li>
@@ -306,13 +306,13 @@
 <li>Refer to the following: to get a better idea of what’s required:</li>
 </ul>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-dep.png" alt="" /><figcaption>Depositing Money</figcaption>
+<img src="resources/atm-dep.png" alt="" /><figcaption>Depositing Money</figcaption>
 </figure>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-nofunds.png" alt="" /><figcaption>Insufficient Funds</figcaption>
+<img src="resources/atm-nofunds.png" alt="" /><figcaption>Insufficient Funds</figcaption>
 </figure>
 <figure>
-<img src="https://ict.senecacollege.ca/~eric.brauer/prg600/labs/resources/atm-balance.png" alt="" /><figcaption>Printing the Balance</figcaption>
+<img src="resources/atm-balance.png" alt="" /><figcaption>Printing the Balance</figcaption>
 </figure>
 <ul>
 <li>Submit this file along with the others to complete this final lab!</li>
