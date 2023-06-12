@@ -1,0 +1,15 @@
+OSL740 Summer 2023 Assignment 1 instructions for jasbir-singh1
+Install a new Centos 7 VM into your existing c7host, using any of the installation methods covered in this course.
+Ensure the machine has the gnome-desktop.
+Set the hostname of this machine to be a.1.
+Provide this VM with 15GiB of storage.
+While the default partition setup will be mostly sufficient, make sure your new VM has a separate 1200 MiB /ext4 volume mounted at /var/libexeca.
+  Note: You can free up space to be able to do this, by shrinking the / volume to 10 GiB.
+Make sure the bind-utils package is present on your machine.
+Make sure the orca package is not present on your machine.
+Create new users called anthony parker, steven li, and randal jenson.  Their login names should be anthony.parker, steven.li, and r.jenson respectively.
+Create a group called management with GID 1050.  Add anthony parker and randal jenson to it as a supplementary group.
+Set the account for anthony parker so that they can use the sudo command to execute the ip command.  Do not use the main sudoers file for this.
+Modify the machine so that it will boot to the command-line automatically.
+Modify your backupVM.py script from lab2 to backup any VM on your c7host machine, regardless of its name or where the image file is stored.
+  Note: The --name option for the virsh list command will prove helpful.  So will the fact that the source file is one of the values stored in each machine's xml definition. 
