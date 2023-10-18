@@ -1,0 +1,189 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/eric/MEGA/OPS445/midterm/f23
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 88
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 29
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 398
+    content: "\e[?2004h\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 1838
+    content: p
+  - delay: 230
+    content: 'y'
+  - delay: 118
+    content: t
+  - delay: 100
+    content: h
+  - delay: 156
+    content: o
+  - delay: 126
+    content: 'n'
+  - delay: 170
+    content: ' '
+  - delay: 214
+    content: m
+  - delay: 156
+    content: i
+  - delay: 257
+    content: 'dterm.py '
+  - delay: 1405
+    content: p
+  - delay: 114
+    content: a
+  - delay: 204
+    content: s
+  - delay: 136
+    content: s
+  - delay: 372
+    content: w
+  - delay: 190
+    content: s
+  - delay: 866
+    content: "\b\e[K"
+  - delay: 92
+    content: d
+  - delay: 386
+    content: "\r\n\e[?2004l\r"
+  - delay: 45
+    content: "whoopsie:x:117:124::/nonexistent:/bin/false\r\n\r\nwhoopsie is not a human\r\npkhan:x:1005:1005::/home/pkhan:/usr/bin/fsh\r\n\r\npkhan is a human\r\ngnome-initial-setup:x:127:65534::/run/gnome-initial-setup/:/bin/false\r\n\r\ngnome-initial-setup is not a human\r\nmessagebus:x:102:109::/nonexistent:/usr/sbin/nologin\r\n\r\nmessagebus is not a human\r\nmtyler:x:1006:1111::/home/mtyler:/usr/bin/zsh\r\n\r\nmtyler is a human\r\nghalleck:x:1001:1001:Gurney Halleck::/usr/bin/zsh\r\n\r\nghalleck is a human\r\ngdm:x:125:133:Gnome Display Manager:/var/lib/gdm3:/bin/false\r\n\r\ngdm is not a human\r\ncups-browsed:x:132:122::/nonexistent:/usr/sbin/nologin\r\n\r\ncups-browsed is not a human\r\nstudent:x:1101:1051::/home/student:/bin/sh\r\n\r\nstudent is a human\r\nirc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin\r\n\r\nirc is not a human\r\nsyslog:x:103:110::/home/syslog:/usr/sbin/nologin\r\n\r\nsyslog is not a human\r\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\r\n\r\nlp is not a human\r\neric:x:1000:1000:Eric Brauer,,,:/home/eric:/usr/bin/zsh\r\n\r\neric is a human\r\navahi:x:114:121:Avahi mDNS daemon,,,:/run/avahi-daemon:/usr/sbin/nologin\r\n\r\navahi is not a human\r\ngwitcher:x:1004:1004:Geralt Witcher,,,:/home/gwitcher:/bin/sh\r\n\r\ngwitcher is a human\r\nmpd:x:131:29::/var/lib/mpd:/usr/sbin/nologin\r\n\r\nmpd is not a human\r\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\r\n\r\ndaemon is not a human\r\ndidaho:x:1002:1002:Duncan Idaho::/bin/sh\r\n\r\ndidaho is a human\r\nsystemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin\r\n\r\nsystemd-network is not a human\r\nteacher:x:1102:1102:::/usr/bin/zsh\r\n\r\nteacher is a human\r\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\r\n\r\nsys is not a human\r\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\r\n\r\nmail is not a human\r\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\r\n\r\nnobody is not a human\r\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\r\n\r\nman is not a human\r\ntcpdump:x:109:118::/nonexistent:/usr/sbin/nologin\r\n\r\ntcpdump is not a human\r\nsystemd-resolve:x:104:111:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin\r\n\r\nsystemd-resolve is not a human\r\nhhuang:x:1012:1012:Hong Huang,,,:/home/hhuang:/bin/sh\r\n\r\nhhuang is a human\r\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\r\n\r\nproxy is not a human\r\nsync:x:4:65534:sync:/bin:/bin/sync\r\n\r\nsync is not a human\r\nroot:x:0:0:root:/root:/bin/bash\r\n\r\nroot is not a human\r\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\r\n\r\nuucp is not a human\r\nJEF:x:1103:1103:::\r\n\r\nJEF is a human\r\nsystemd-timesync:x:101:104:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin\r\n\r\nsystemd-timesync is not a human\r\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\r\n\r\nbackup is not a human\r\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\r\n\r\nbin is not a human\r\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\r\n\r\nnews is not a human\r\nsssd:x:118:125:SSSD system user,,,:/var/lib/sss:/usr/sbin/nologin\r\n\r\nsssd is not a human\r\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\r\n\r\nlist is not a human\r\njklee:x:1011:1011:Lee Jae Kwon,,,:/home/jklee:/bin/sh\r\n\r\njklee is a human\r\ndnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin\r\n\r\ndnsmasq is not a human\r\n\e[?2004h\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 8751
+    content: "\e[H\e[2J\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 1016
+    content: python midterm.py passwd
+  - delay: 448
+    content: "\b\e[K"
+  - delay: 140
+    content: "\b\e[K"
+  - delay: 140
+    content: "\b\e[K"
+  - delay: 130
+    content: "\b\e[K"
+  - delay: 296
+    content: "\b\e[K"
+  - delay: 326
+    content: "\b\e[K"
+  - delay: 782
+    content: 'n'
+  - delay: 108
+    content: o
+  - delay: 166
+    content: f
+  - delay: 94
+    content: i
+  - delay: 180
+    content: l
+  - delay: 150
+    content: e
+  - delay: 272
+    content: "\r\n\e[?2004l\r"
+  - delay: 46
+    content: "File not found.\r\n\e[?2004h\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 3474
+    content: "\e[?2004l\r\r\nlogout\r\n"
