@@ -1,0 +1,135 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/eric/MEGA/OPS445/midterm/f23
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 88
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 29
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 414
+    content: "\e[?2004h\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 1981
+    content: python midterm.py nofile
+  - delay: 450
+    content: "\b\b\b\b\b\bpasswd"
+  - delay: 638
+    content: "\r\n\e[?2004l\r"
+  - delay: 46
+    content: "whoopsie:x:117:124::/nonexistent:/bin/false\r\n\r\nwhoopsie does not have home directory in /home\r\npkhan:x:1005:1005::/home/pkhan:/usr/bin/fsh\r\n\r\npkhan has home directory in /home\r\ngnome-initial-setup:x:127:65534::/run/gnome-initial-setup/:/bin/false\r\n\r\ngnome-initial-setup does not have home directory in /home\r\nmessagebus:x:102:109::/nonexistent:/usr/sbin/nologin\r\n\r\nmessagebus does not have home directory in /home\r\nmtyler:x:1006:1111::/home/mtyler:/usr/bin/zsh\r\n\r\nmtyler has home directory in /home\r\nghalleck:x:1001:1001:Gurney Halleck::/usr/bin/zsh\r\n\r\nghalleck does not have home directory in /home\r\ngdm:x:125:133:Gnome Display Manager:/var/lib/gdm3:/bin/false\r\n\r\ngdm does not have home directory in /home\r\ncups-browsed:x:132:122::/nonexistent:/usr/sbin/nologin\r\n\r\ncups-browsed does not have home directory in /home\r\nstudent:x:1101:1051::/home/student:/bin/sh\r\n\r\nstudent has home directory in /home\r\nirc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin\r\n\r\nirc does not have home directory in /home\r\nsyslog:x:103:110::/home/syslog:/usr/sbin/nologin\r\n\r\nsyslog has home directory in /home\r\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\r\n\r\nlp does not have home directory in /home\r\neric:x:1000:1000:Eric Brauer,,,:/home/eric:/usr/bin/zsh\r\n\r\neric has home directory in /home\r\navahi:x:114:121:Avahi mDNS daemon,,,:/run/avahi-daemon:/usr/sbin/nologin\r\n\r\navahi does not have home directory in /home\r\ngwitcher:x:1004:1004:Geralt Witcher,,,:/home/gwitcher:/bin/sh\r\n\r\ngwitcher has home directory in /home\r\nmpd:x:131:29::/var/lib/mpd:/usr/sbin/nologin\r\n\r\nmpd does not have home directory in /home\r\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\r\n\r\ndaemon does not have home directory in /home\r\ndidaho:x:1002:1002:Duncan Idaho::/bin/sh\r\n\r\ndidaho does not have home directory in /home\r\nsystemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin\r\n\r\nsystemd-network does not have home directory in /home\r\nteacher:x:1102:1102:::/usr/bin/zsh\r\n\r\nteacher does not have home directory in /home\r\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\r\n\r\nsys does not have home directory in /home\r\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\r\n\r\nmail does not have home directory in /home\r\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\r\n\r\nnobody does not have home directory in /home\r\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\r\n\r\nman does not have home directory in /home\r\ntcpdump:x:109:118::/nonexistent:/usr/sbin/nologin\r\n\r\ntcpdump does not have home directory in /home\r\nsystemd-resolve:x:104:111:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin\r\n\r\nsystemd-resolve does not have home directory in /home\r\nhhuang:x:1012:1012:Hong Huang,,,:/home/hhuang:/bin/sh\r\n\r\nhhuang has home directory in /home\r\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\r\n\r\nproxy does not have home directory in /home\r\nsync:x:4:65534:sync:/bin:/bin/sync\r\n\r\nsync does not have home directory in /home\r\nroot:x:0:0:root:/root:/bin/bash\r\n\r\nroot does not have home directory in /home\r\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\r\n\r\nuucp does not have home directory in /home\r\nJEF:x:1103:1103:::\r\n\r\nJEF does not have home directory in /home\r\nsystemd-timesync:x:101:104:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin\r\n\r\nsystemd-timesync does not have home directory in /home\r\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\r\n\r\nbackup does not have home directory in /home\r\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\r\n\r\nbin does not have home directory in /home\r\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\r\n\r\nnews does not have home directory in /home\r\nsssd:x:118:125:SSSD system user,,,:/var/lib/sss:/usr/sbin/nologin\r\n\r\nsssd does not have home directory in /home\r\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\r\n\r\nlist does not have home directory in /home\r\njklee:x:1011:1011:Lee Jae Kwon,,,:/home/jklee:/bin/sh\r\n\r\njklee has home directory in /home\r\ndnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin\r\n\r\ndnsmasq does not have home directory in /home\r\n\e[?2004h\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 57649
+    content: "\e[H\e[2J\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 718
+    content: python midterm.py passwd
+  - delay: 726
+    content: "\b\b\b\b\b\bnofile"
+  - delay: 561
+    content: "\r\n\e[?2004l\r"
+  - delay: 45
+    content: "File not found.\r\n\e[?2004h\e]0;eric@NeoMex: ~/MEGA/OPS445/midterm/f23\a\e[01;32meric@NeoMex\e[01;34m ~/MEGA/OPS445/midterm/f23\e[00m $ "
+  - delay: 5147
+    content: "\e[?2004l\r\r\nlogout\r\n"
