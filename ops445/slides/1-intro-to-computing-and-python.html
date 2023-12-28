@@ -1,0 +1,217 @@
+<section id="introduction" class="slide level1">
+<h1>Introduction</h1>
+<p>As discussed, we are introducing the Fundamentals of Programming,
+including:</p>
+<ul>
+<li>Logic</li>
+<li>Syntax</li>
+<li>Algorithms</li>
+</ul>
+</section>
+<section id="terminology" class="slide level1">
+<h1>Terminology</h1>
+<p>Logic: Getting a computer to do what you need requires us to use
+certain logical structures, such as checking conditions, looping,
+etc.</p>
+<p><em>These patterns are common to most (all?) programming
+languages.</em></p>
+</section>
+<section id="terminology-1" class="slide level1">
+<h1>Terminology</h1>
+<p>Syntax: The keywords and punctuation that are used in a particular
+programming language. We will be learning Python syntax.</p>
+</section>
+<section id="terminology-2" class="slide level1">
+<h1>Terminology</h1>
+<p>Algorithms: Breaking down a bigger problem into logical steps that
+the computer can follow.</p>
+</section>
+<section id="an-example-of-algorithmic-thinking" class="slide level1">
+<h1>An Example Of Algorithmic Thinking</h1>
+<p>How many of you prepare coffee/tea in the morning? Break down your
+process into steps. Now break it down into more steps. When we
+communicate to humans, we can skip some information because it is
+implied. We can’t do this in programming.</p>
+</section>
+<section id="cpu-instructions-assembly" class="slide level1">
+<h1>CPU instructions: Assembly</h1>
+<figure>
+<img data-src="pptimages/image1.png" alt="image" />
+<figcaption aria-hidden="true">image</figcaption>
+</figure>
+<p>Example of Assembly code, which is a low-level language (very close
+to the hardware). Even this has to be compiled into machine code…</p>
+</section>
+<section id="introduction-to-python" class="slide level1">
+<h1>Introduction to Python</h1>
+<ul>
+<li>Python is a high level programming language, it is very far from
+assembly indeed. Created in 1990, it is a modern (but mature)
+language.</li>
+<li>It’s meant to be human readable as much as possible.</li>
+<li>It is interpreted, not compiled. Each instruction is translated to
+action immediately, rather than being converted as a file.</li>
+<li>It has a large standard library: basically it can do a lot of
+things, but in many cases is not the ideal tool for the job. Python is
+considered to be a very good general-use programming language.</li>
+</ul>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th># Installing Python and an IDE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># Introduction To Python</td>
+</tr>
+<tr class="even">
+<td>There are two ways to use Python:</td>
+</tr>
+<tr class="odd">
+<td>1. The Interpreter (IDLE). You enter lines of code, a result appears
+instantly 1. Scripts. You enter many lines of code into a
+<strong>.py</strong> file, and run the file as an executable</td>
+</tr>
+<tr class="even">
+<td>Generally, the interpreter is good for trying things out, but we
+will be focusing on creating scripts.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="printing" class="slide level1">
+<h1>Printing</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span></code></pre></div>
+<p>This code will print the <em>string</em> to your terminal.</p>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th># Strings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># Inputting</td>
+</tr>
+<tr class="even">
+<td><code>python x = input("Please enter your name: ")</code></td>
+</tr>
+<tr class="odd">
+<td><code>input</code> is a way for us to prompt the user for
+information. This is a <em>function</em>.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="variables" class="slide level1">
+<h1>Variables</h1>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>word <span class="op">=</span> <span class="st">&quot;Hello&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>square_root_of_2 <span class="op">=</span> <span class="fl">1.4142</span></span></code></pre></div>
+<p>We often need to store pieces of data. We use variables to do this.
+On the left, the variable name. On the right, the value assigned to it.
+<strong>=</strong> separates the two.</p>
+<p>Here we have an integer, a string, and a float.</p>
+</section>
+<section id="functions" class="slide level1">
+<h1>Functions</h1>
+<p>Functions are named blocks of code. Python has many, many <em>builtin
+functions</em>. Functions often have <em>input</em> (arguments) and
+<em>output</em> (return values). Let’s look at an example:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span></code></pre></div>
+</section>
+<section id="functions-1" class="slide level1">
+<h1>Functions</h1>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span></code></pre></div>
+<p>In this example, the function named <code>input</code> takes a string
+as an argument (inside the parentheses) and is returning another string,
+which we can store in a variable called x.</p>
+</section>
+<section id="your-first-script" class="slide level1">
+<h1>Your First Script</h1>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">Your first program.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Joe Seneca</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>) <span class="co"># prompts the user for a name</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;!&quot;</span>) <span class="co"># + used to concatenate strings</span></span></code></pre></div>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td># Scripting Guidelines</td>
+</tr>
+<tr class="even">
+<td>- All Python scripts should end in ‘.py’ as their <em>suffix</em>
+(or file extension). - This identifies the file as a Python script, and
+not just a text file.</td>
+</tr>
+<tr class="odd">
+<td>Example: lab1a.py</td>
+</tr>
+<tr class="even">
+<td>- All Python scripts should have a shebang:
+<code>#!/usr/bin/env python3</code> - This distinguishes Python 3 code
+from Python 2, which is quite different and won’t run correctly.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="commenting-code" class="slide level1">
+<h1>Commenting Code</h1>
+<p>Comments are very important, but often overlooked by students!</p>
+<ul>
+<li>Explains the code to other programmers, and to yourself (after time
+has passed). # : starts an in-line comment (one sentence long). ’’’ :
+will create a docstring (a paragraph or longer).</li>
+</ul>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th># Commenting Code II</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># don’t be like this</td>
+</tr>
+<tr class="even">
+<td>Wrong  <img data-src="pptimages/image2.jpeg" alt="image" /></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="built-in-functions-in-the-interpreter"
+class="slide level1">
+<h1>Built-In Functions In The Interpreter</h1>
+<p>The Python Interpreter also has some built-in functions that you may
+find useful.</p>
+<dl>
+<dt><code>help()</code></dt>
+<dd>
+will print the documentation for a function or object
+<code>type()</code> :will tell you what datatype an object is considered
+to be
+</dd>
+</dl>
+<p>The good (and bad!) thing about Python is that <em>datatypes are
+implicit</em>.</p>
+<p>That means they aren’t obvious (but will still cause you issues!)</p>
+</section>
