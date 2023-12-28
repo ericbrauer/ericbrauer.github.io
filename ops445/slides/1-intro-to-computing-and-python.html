@@ -55,68 +55,53 @@ action immediately, rather than being converted as a file.</li>
 things, but in many cases is not the ideal tool for the job. Python is
 considered to be a very good general-use programming language.</li>
 </ul>
-<table style="width:6%;">
-<colgroup>
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th># Installing Python and an IDE</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td># Introduction To Python</td>
-</tr>
-<tr class="even">
-<td>There are two ways to use Python:</td>
-</tr>
-<tr class="odd">
-<td>1. The Interpreter (IDLE). You enter lines of code, a result appears
-instantly 1. Scripts. You enter many lines of code into a
-<strong>.py</strong> file, and run the file as an executable</td>
-</tr>
-<tr class="even">
-<td>Generally, the interpreter is good for trying things out, but we
-will be focusing on creating scripts.</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section id="installing-python-and-an-ide" class="slide level1">
+<h1>Installing Python and an IDE</h1>
+<ul>
+<li>Create a Virtual Machine (Fedora Workstation is recommended)</li>
+<li>Python is already installed by default on Fedora.</li>
+<li>You will also need to install VS Code</li>
+</ul>
+</section>
+<section id="introduction-to-python-1" class="slide level1">
+<h1>Introduction To Python</h1>
+<p>There are two ways to use Python:</p>
+<ol type="1">
+<li>The Interpreter (IDLE). You enter lines of code, a result appears
+instantly</li>
+<li>Scripts. You enter many lines of code into a <strong>.py</strong>
+file, and run the file as an executable</li>
+</ol>
+<p>Generally, the interpreter is good for trying things out, but we will
+be focusing on creating scripts.</p>
 </section>
 <section id="printing" class="slide level1">
 <h1>Printing</h1>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span></code></pre></div>
 <p>This code will print the <em>string</em> to your terminal.</p>
-<table style="width:6%;">
-<colgroup>
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th># Strings</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td># Inputting</td>
-</tr>
-<tr class="even">
-<td><code>python x = input("Please enter your name: ")</code></td>
-</tr>
-<tr class="odd">
-<td><code>input</code> is a way for us to prompt the user for
-information. This is a <em>function</em>.</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section id="strings" class="slide level1">
+<h1>Strings</h1>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="st">&quot;this is a string&quot;</span></span></code></pre></div>
+<p>Notice the quotes around the words, this is important! You can also
+use single quotes (’’).</p>
+</section>
+<section id="inputting" class="slide level1">
+<h1>Inputting</h1>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>)</span></code></pre></div>
+<p><code>input</code> is a way for us to prompt the user for
+information. This is a <em>function</em>.</p>
 </section>
 <section id="variables" class="slide level1">
 <h1>Variables</h1>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>word <span class="op">=</span> <span class="st">&quot;Hello&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>square_root_of_2 <span class="op">=</span> <span class="fl">1.4142</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>word <span class="op">=</span> <span class="st">&quot;Hello&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>square_root_of_2 <span class="op">=</span> <span class="fl">1.4142</span></span></code></pre></div>
 <p>We often need to store pieces of data. We use variables to do this.
 On the left, the variable name. On the right, the value assigned to it.
 <strong>=</strong> separates the two.</p>
@@ -127,49 +112,42 @@ On the left, the variable name. On the right, the value assigned to it.
 <p>Functions are named blocks of code. Python has many, many <em>builtin
 functions</em>. Functions often have <em>input</em> (arguments) and
 <em>output</em> (return values). Let’s look at an example:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span></code></pre></div>
 </section>
 <section id="functions-1" class="slide level1">
 <h1>Functions</h1>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span></code></pre></div>
 <p>In this example, the function named <code>input</code> takes a string
 as an argument (inside the parentheses) and is returning another string,
 which we can store in a variable called x.</p>
 </section>
 <section id="your-first-script" class="slide level1">
 <h1>Your First Script</h1>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">Your first program.</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Joe Seneca</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>) <span class="co"># prompts the user for a name</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;!&quot;</span>) <span class="co"># + used to concatenate strings</span></span></code></pre></div>
-<table style="width:6%;">
-<colgroup>
-<col style="width: 5%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td># Scripting Guidelines</td>
-</tr>
-<tr class="even">
-<td>- All Python scripts should end in ‘.py’ as their <em>suffix</em>
-(or file extension). - This identifies the file as a Python script, and
-not just a text file.</td>
-</tr>
-<tr class="odd">
-<td>Example: lab1a.py</td>
-</tr>
-<tr class="even">
-<td>- All Python scripts should have a shebang:
-<code>#!/usr/bin/env python3</code> - This distinguishes Python 3 code
-from Python 2, which is quite different and won’t run correctly.</td>
-</tr>
-</tbody>
-</table>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">Your first program.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Joe Seneca</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>) <span class="co"># prompts the user for a name</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;!&quot;</span>) <span class="co"># + used to concatenate strings</span></span></code></pre></div>
+</section>
+<section id="scripting-guidelines" class="slide level1">
+<h1>Scripting Guidelines</h1>
+<ul>
+<li>All Python scripts should end in ‘.py’ as their <em>suffix</em> (or
+file extension).</li>
+<li>This identifies the file as a Python script, and not just a text
+file.</li>
+</ul>
+<p>Example: lab1a.py</p>
+<ul>
+<li>All Python scripts should have a shebang:
+<code>#!/usr/bin/env python3</code></li>
+<li>This distinguishes Python 3 code from Python 2, which is quite
+different and won’t run correctly.</li>
+</ul>
 </section>
 <section id="commenting-code" class="slide level1">
 <h1>Commenting Code</h1>
@@ -179,15 +157,16 @@ from Python 2, which is quite different and won’t run correctly.</td>
 has passed). # : starts an in-line comment (one sentence long). ’’’ :
 will create a docstring (a paragraph or longer).</li>
 </ul>
+</section>
+<section id="commenting-code-ii" class="slide level1">
+<h1>Commenting Code II</h1>
+<p>Writing comments is an art. But generally, don’t explain
+<em>what</em> your code does (it’s usually obvious). Explain
+<em>why</em> your code is doing what it does.</p>
 <table style="width:6%;">
 <colgroup>
 <col style="width: 5%" />
 </colgroup>
-<thead>
-<tr class="header">
-<th># Commenting Code II</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
 <td># don’t be like this</td>
