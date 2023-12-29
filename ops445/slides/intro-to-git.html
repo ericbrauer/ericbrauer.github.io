@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Eric Brauer">
+  <title>Introduction to Git and GitHub</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Introduction to Git and GitHub</h1>
+  <p class="author">Eric Brauer</p>
+</section>
+
+<section id="has-this-ever-happened-to-you" class="slide level1">
+<h1>Has This Ever Happened to you?</h1>
+<figure>
+<img data-src="pptimages/git-problem.gif" alt="the problem" width=400 />
+<figcaption aria-hidden="true">the problem</figcaption>
+</figure>
+</section>
+<section id="the-problem-explained" class="slide level1">
+<h1>The Problem, Explained</h1>
+<p>When we are collaborating on a document/file/codebase, we need to
+track changes. Creating new copies of a file is confusing. Adding more
+collaborators and files will increase the complexity and introduce lots
+of confusion.</p>
+</section>
+<section id="what-is-git" class="slide level1">
+<h1>What is Git?</h1>
+<p><strong>Git</strong> is a program we can install on our Linux
+machine. It tracks changes on a directory.</p>
+</section>
+<section id="features-of-git" class="slide level1">
+<h1>Features of Git</h1>
+<ul>
+<li>Only the latest ‘version’ of a file is visible.</li>
+<li>However, we can ‘rewind’ back to any previous version.</li>
+<li>Also tracks <em>who</em> has made changes.</li>
+<li>Handles ‘collisions’ when two people have made changes to the same
+file.</li>
+<li>You can also choose to ‘push’ a copy of the directory (and its
+changes) to a remote server. This is called <em>creating a
+repository</em>.</li>
+</ul>
+</section>
+<section id="what-is-github" class="slide level1">
+<h1>What is GitHub?</h1>
+<p><strong>GitHub</strong> is a website that hosts many repositories,
+usually for free. It has become a popular choice for programmers when
+they are trying to choose a place to store their work.</p>
+<p>In addition, it has a lot of features such as issues, team
+management, Wikis, Continuous Integration tools, etc.</p>
+<p><em>Not every git repo is stored on GitHub!</em></p>
+</section>
+<section id="local-remote" class="slide level1">
+<h1>Local / Remote</h1>
+<ul>
+<li>Remote hosting allows us to have a backup in case our local machine
+fails.</li>
+<li>Team members (or users!) will be able to access the latest version
+of the software from anywhere.</li>
+</ul>
+</section>
+<section id="setting-up-a-github-account" class="slide level1">
+<h1>Setting Up A GitHub Account</h1>
+<ul>
+<li>Choose a username, password, enter an email address (same as setting
+up almost any online account).</li>
+</ul>
+</section>
+<section id="setting-up-git" class="slide level1">
+<h1>Setting Up Git</h1>
+<p>Use <code>git config</code> to specify your name and your email
+address (so that we know who to blame for a specific change!)</p>
+</section>
+<section id="setting-up-git-add-your-public-key-to-github"
+class="slide level1">
+<h1>Setting Up Git: Add Your Public Key to GitHub</h1>
+<p>In order to <em>sync</em> with GitHub, we need to generate a
+public/private keypair, and then store the public key on GitHub.</p>
+<p>This is the same as using SSH to log into a remote Server.</p>
+<ol type="1">
+<li>Use <code>ssh-keygen</code> to generate keys on <strong>the machine
+you will be using to complete labs</strong>. (Fedora VM)</li>
+<li>Copy the contents of the public key to your clipboard. (Ctrl+Shift+C
+will copy from a terminal)</li>
+<li>Paste the key into GitHub under Settings -&gt; SSH &amp; GPG
+Keys</li>
+</ol>
+</section>
+<section id="git-clone" class="slide level1">
+<h1>Git Clone</h1>
+<p>We are ready to grab the contents of an existing repository and copy
+it to our local machine.</p>
+<figure>
+<img data-src="pptimages/git-clone.png"
+alt="on GitHub, look for the ‘Code’ button" />
+<figcaption aria-hidden="true">on GitHub, look for the ‘Code’
+button</figcaption>
+</figure>
+</section>
+<section id="git-clone-1" class="slide level1">
+<h1>Git Clone</h1>
+<p>Use <code>git clone</code> + the URL from GitHub (Ctrl+Shift+V will
+paste into a terminal)</p>
+<p>You should now be able to <code>cd</code> into the directory you have
+created.</p>
+</section>
+<section id="checking-your-work-git-status" class="slide level1">
+<h1>Checking Your Work: Git Status</h1>
+<p>Use <code>git status</code> to check your work as you go. Reading and
+understanding this output will help you a lot!</p>
+</section>
+<section id="tracking-changes" class="slide level1">
+<h1>Tracking Changes</h1>
+<ol type="1">
+<li>Make your changes to <code>example.py</code>, save the file.</li>
+<li><code>git status</code> to see what has changed.</li>
+<li><code>git add example.py</code> to include this file in what you
+want to track.</li>
+<li><code>git status</code> once again! What has changed?</li>
+<li><code>git commit -m "made my first change"</code></li>
+<li><code>git status</code> yet again, believe it or not..</li>
+</ol>
+</section>
+<section id="tracking-changes-1" class="slide level1">
+<h1>Tracking Changes</h1>
+<p><img
+data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAxAAAACWCAYAAABO+G6lAAAAAXNSR0IArs4c6QAAAyBJREFUeJzt10ENACAQwDDAv+fDwn6EpFWw7/bMzAIAAAjO6wAAAOAfBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEB2AbFjBSg0ZVmdAAAAAElFTkSuQmCC"
+alt="" /></p>
+</section>
+<section id="rules-for-commits" class="slide level1">
+<h1>Rules For Commits</h1>
+<p>Any significant change should have its own commit. This helps if your
+change <em>broke something important</em> and we need to <em>roll
+back</em> the change.</p>
+</section>
+<section id="pushing-your-commits" class="slide level1">
+<h1>Pushing Your Commits</h1>
+<p>Using <code>git push</code> will sync your commits with the remote
+repository.</p>
+</section>
+<section id="what-does-it-look-like-when-you-work-in-a-group"
+class="slide level1">
+<h1>What does it look like when you work in a group?</h1>
+<p>Chris and Michael have both cloned the same repo Chris commits a
+change and pushes Michael uses <code>git pull</code> to sync Chris’s
+changes. This helps prevent 90% of problems!</p>
+</section>
+<section id="group-work" class="slide level1">
+<h1>Group Work</h1>
+<p>what happens if Chris and Michael change the same code?</p>
+<p>instead of any person’s change overwriting the other, git will force
+you to <em>merge</em> your changes</p>
+</section>
+<section id="what-merging-looks-like-it-sucks" class="slide level1">
+<h1>What Merging Looks Like (It Sucks)</h1>
+<pre><code>&lt;&lt;&lt;michael&#39;s changes
+Author: Michael
+|||
+Author: Chris
+&gt;&gt;&gt;Chris&#39;s changes</code></pre>
+</section>
+<section id="branches" class="slide level1">
+<h1>Branches</h1>
+<ul>
+<li>On a team, reduces the amount of merging that needs to happen</li>
+<li>Create a new branch for each new feature</li>
+<li>main should be stable code</li>
+</ul>
+<figure>
+<img data-src="pptimages/git-branches.png" alt="branches" />
+<figcaption aria-hidden="true">branches</figcaption>
+</figure>
+</section>
+<section id="pull-request" class="slide level1">
+<h1>Pull Request</h1>
+<ul>
+<li>This is the process where a branch’s changes become part of
+main.</li>
+<li>Often this will require code review and approval.</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
