@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Eric Brauer">
+  <title>Lecture 3: Functions and Lists</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Lecture 3: Functions and Lists</h1>
+  <p class="author">Eric Brauer</p>
+</section>
+
+<section id="object-function" class="slide level1">
+<h1>Object: Function</h1>
+<p>A function object refers to a named block of Python code, designed to
+perform one specific task and only runs when it’s called, not defined.
+In this way, code can be reused easily. This is called modular
+programming.</p>
+<p>You’ve already used <em>builtin functions</em> that are provided by
+the Python language.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your name: &quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">len</span>(<span class="st">&quot;seneca&quot;</span>)</span></code></pre></div>
+</section>
+<section id="defining-your-own-functions" class="slide level1">
+<h1>Defining Your Own Functions</h1>
+<p>Functions are composed of two parts:</p>
+<ul>
+<li>Function definition (function name and parentheses)</li>
+<li>Body (defined by an indent level)</li>
+</ul>
+<p>The body <strong>must contain something</strong> in order not to
+cause a Syntax Error. If you need to, you can simply use
+<code>pass</code> as a placeholder.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hello():  <span class="co"># definition</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Hello<span class="op">!</span>”)  <span class="co"># body</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> goodbye():  <span class="co"># </span><span class="al">TODO</span><span class="co">: finish tomorrow</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
+</section>
+<section id="functions-visualization" class="slide level1">
+<h1>Functions: Visualization</h1>
+<p>Consider the <code>len()</code> function: we give it a string or list
+and it returns an integer equal to the length of the input. <strong>We
+don’t need to see the code to understand how to use it.</strong> And so
+we can save time by using functions.</p>
+<figure>
+<img data-src="pptimages/len-func.png"
+alt="len() is a black box: stuff goes in, things come out." />
+<figcaption aria-hidden="true">len() is a black box: stuff goes in,
+things come out.</figcaption>
+</figure>
+</section>
+<section id="functions-visualization-1" class="slide level1">
+<h1>Functions: Visualization</h1>
+<p>Consider the <code>len()</code> function: we give it a string or list
+and it returns an integer equal to the length of the input. <strong>We
+don’t need to see the code to understand how to use it.</strong> And so
+we can save time by using functions.</p>
+<p><code>y = len(“seneca”)</code></p>
+</section>
+<section id="calling-functions" class="slide level1">
+<h1>Calling Functions</h1>
+<p>Once you define a function, it won’t run by default. It will only run
+when you <em>call</em> it. Write the name of the function, and include
+the parentheses.</p>
+<p><code>hello()</code></p>
+<p>By calling this function, the Python interpreter will print “Hello!”
+on screen.</p>
+</section>
+<section id="function-types" class="slide level1">
+<h1>Function Types</h1>
+<p>Functions can be broken into four major categories.</p>
+<ul>
+<li>Does not accept arguments or return a value (no in, no out)</li>
+<li>Does not accept arguments but returns a value ( no in, but out)</li>
+<li>Accepts arguments but doesn’t return a value (in, but no out)</li>
+<li>Accepts arguments and returns a value (both in and out)</li>
+</ul>
+</section>
+<section id="functions-arguments" class="slide level1">
+<h1>Functions: Arguments</h1>
+<p>A function that accepts arguments is one that allows you to give it
+input when it’s run. For example:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> birthday(year):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘You were born <span class="kw">in</span> the year ’ <span class="op">+</span> year)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>birthday(‘<span class="dv">1970</span>’)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>birthday(<span class="st">&#39;2005&#39;</span>)</span></code></pre></div>
+</section>
+<section id="functions-arguments-1" class="slide level1">
+<h1>Functions: Arguments</h1>
+<p>You can have many arguments, but you must supply the same number as
+defined when you run it.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> birthday(year, month, day):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘You were born on ’ <span class="op">+</span> month <span class="op">+</span> day <span class="op">+</span> year)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Main Program - Run Function</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>birthday(‘<span class="dv">1970</span>’, ‘January’, ‘<span class="dv">1</span>’)</span></code></pre></div>
+</section>
+<section id="functions-default-arguments" class="slide level1">
+<h1>Functions: Default Arguments</h1>
+<p>There is <strong>one exception</strong> to the rule about arguments:
+you can give an argument a <em>default value</em>. Then you can choose
+to pass it a value, or leave it.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_func(name, school<span class="op">=</span>”Seneca”):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name <span class="op">+</span> “ attends “ <span class="op">+</span> school)</span></code></pre></div>
+<pre><code>&gt;&gt;&gt;&gt; school(“Eric”)  # 1 arg, default for 2nd arg is used
+Eric attends Seneca
+&gt;&gt;&gt;&gt; school(“Hong”, “Centennial”)  # 2 args, default is overridden
+Hong attends Centennial</code></pre>
+</section>
+<section id="functions-parameters" class="slide level1">
+<h1>Functions: Parameters</h1>
+<p><em>Parameters</em> are what we set up in the function definition.
+Each argument is passed into the body of the function and assigned a
+parameter name. Once the function stops, those parameter values are lost
+and the memory is freed up.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_age(year):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    now <span class="op">=</span> <span class="dv">2024</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> now <span class="op">-</span> year</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘You are <span class="st">&#39; + str(age) + &#39;</span> years old.<span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<pre><code>&gt;&gt;&gt;&gt; get_age(1991)
+You are 33 years old.
+&gt;&gt;&gt;&gt; print(now)
+Error: Varible &#39;now&#39; is not defined!</code></pre>
+</section>
+<section id="functions-return-values" class="slide level1">
+<h1>Functions: Return Values</h1>
+<p>One thing to keep in mind is that any parameters inside a function
+aren’t available to the rest of the code (not a global variable). If you
+do work inside the function and want to use it elsewhere, you have to
+<em>return the value</em>.</p>
+<p><strong>Note:</strong> as soon as your code encounters a
+<code>return</code>, it will <em>stop running the function</em>
+immediately!</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function Definition</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_age():</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> <span class="dv">1970</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> age  <span class="co"># stops the function</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;We will never reach this line&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Main Program - Run Function</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(calculate_age()) <span class="co"># Prints ”54”</span></span></code></pre></div>
+</section>
+<section id="functions-arguments-and-return-values"
+class="slide level1">
+<h1>Functions: Arguments And Return Values</h1>
+<p>You can combine both to create an incredibly useful function. This
+example returns a <code>True</code> or <code>False</code>.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> can_drive(year):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> <span class="dv">2024</span> <span class="op">-</span> year</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> age <span class="op">&gt;=</span> <span class="dv">16</span>:  <span class="co"># legal age to get G1 license in Ontario</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Main Program - Run Function</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your date of birth: &quot;</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> can_drive(x):</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You are old enough to drive.&quot;</span>)</span></code></pre></div>
+</section>
+<section id="some-guidelines-for-creating-functions"
+class="slide level1">
+<h1>Some Guidelines For Creating Functions</h1>
+<ul>
+<li>Shorter functions are always better than longer functions.</li>
+<li>Function names should be short: one verb only! 2-3 words!</li>
+</ul>
+<p>Good:</p>
+<ul>
+<li><code>circle_area()</code></li>
+<li><code>is_odd()</code></li>
+<li><code>get_age()</code></li>
+</ul>
+<p>Bad:</p>
+<ul>
+<li><code>do_stuff()</code></li>
+<li><code>process_form_and_find_all_names_and_put_names_into_a_file()</code></li>
+<li><code>calculation()</code></li>
+</ul>
+</section>
+<section id="some-guidelines-for-creating-functions-1"
+class="slide level1">
+<h1>Some Guidelines For Creating Functions</h1>
+<ul>
+<li>In programming, we try to <em>avoid redundancy</em>. This means if
+you have two blocks of code that are identical or very similar, you can
+probably replace them with one function.</li>
+<li>Functions can only return <em>one thing</em>. If your function is
+returning more than one thing, it probably needs to be
+<strong>two</strong> functions.</li>
+</ul>
+</section>
+<section id="scope" class="slide level1">
+<h1>Scope</h1>
+<p>When we call a function, we pass in our arguments and associate them
+with parameters. Parameters are considered <em>local</em>, that is, they
+only exist inside of the function. Variables outside of functions are
+called <em>global variables</em>.</p>
+<p><strong>Don’t access global variables inside functions!! Pass them in
+as arguments if you need them!</strong> This will make your life
+easier.</p>
+</section>
+<section id="scope-dont-do-this-if-you-want-to-enjoy-your-life"
+class="slide level1">
+<h1>Scope: Don’t Do This If You Want To Enjoy Your Life</h1>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">34</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> a_func(x, y):  <span class="co"># local and global vars can have the same name</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> x  <span class="co"># don&#39;t do this</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> x <span class="op">+</span> y  <span class="co"># what is this going to do?</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> z</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>a_func(<span class="dv">12</span>, <span class="dv">45</span>)</span></code></pre></div>
+</section>
+<section id="concept-list-object" class="slide level1">
+<h1>Concept: List Object</h1>
+<p>A <em>list object</em> is a special datatype. It refers to a series
+of items in a particular order, and each item in the list can be
+accessed using an index.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’] </span></code></pre></div>
+<p><code>mylist</code> is the name of a list object which contains four
+<em>string</em> objects: <code>seneca</code>, <code>ict</code>,
+<code>cns</code>, and <code>cty</code>. Your list can contain any
+combination of datatype you like: integers, floats, strings, other
+lists, etc.</p>
+</section>
+<section id="accessing-items-inside-a-list" class="slide level1">
+<h1>Accessing Items Inside a List</h1>
+<p>We can navigate through this list using its index number to call it,
+a range, or whole list. Note: the last number in the slide tells us the
+first element <em>not</em> included in the slice.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist[<span class="dv">0</span>])  <span class="co"># This will print: seneca</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist[<span class="dv">1</span>:<span class="dv">3</span>]) <span class="co"># This will print: [‘ict’, ‘cns’]</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist)  <span class="co"># This will print [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span></span></code></pre></div>
+</section>
+<section id="manipulating-lists" class="slide level1">
+<h1>Manipulating Lists</h1>
+<p>We can also manipulate the items in a list.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mylist.append(‘<span class="dv">2019</span>’)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mylist.insert(<span class="dv">1</span>, ‘S<span class="op">@</span>Y’)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mylist.remove(’cty’)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>mylist.sort()</span></code></pre></div>
+</section>
+<section id="list-iteration" class="slide level1">
+<h1>List Iteration</h1>
+<p>If you’d like to go through all the items in a list (to use them in a
+function, for example) you can do that as well.</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> mylist:</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘This item <span class="kw">is</span>: ’ <span class="op">+</span> item)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This will print:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is seneca</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is ict</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is cns</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is cty</span></span></code></pre></div>
+</section>
+<section id="for-loops" class="slide level1">
+<h1>For Loops</h1>
+<p>The <em>For Loop</em> is our second method of <em>Iteration</em>. The
+first was the while loop.</p>
+<p>There are two variables: the first is a special <em>iterating
+variable</em>, which is singular. It contains each individual item, one
+at a time.</p>
+<p>The second is our <em>iterable</em>. This is the name of the variable
+that we will iterate through.</p>
+<p>Naming your variables correctly (singular and plural) will reduce
+confusion when you are writing code.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>menu <span class="op">=</span> [<span class="st">&#39;falafel&#39;</span>, <span class="st">&#39;pizza&#39;</span>, <span class="st">&#39;burger&#39;</span>, <span class="st">&#39;coffee&#39;</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>healthy_choices <span class="op">=</span> []  <span class="co"># empty list</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> food <span class="kw">in</span> menu:</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_healthy(food):  <span class="co"># this calls a function</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        healthy_choices.append(food)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We should probably avoid too much &quot;</span> <span class="op">+</span> food)</span></code></pre></div>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
