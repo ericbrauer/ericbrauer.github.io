@@ -110,24 +110,6 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">len</span>(<span class="st">&quot;seneca&quot;</span>)</span></code></pre></div>
 </section>
-<section id="defining-your-own-functions" class="slide level1">
-<h1>Defining Your Own Functions</h1>
-<p>Functions are composed of two parts:</p>
-<ul>
-<li>Function definition (function name and parentheses)</li>
-<li>Body (defined by an indent level)</li>
-</ul>
-<p>The body <strong>must contain something</strong> in order not to
-cause a Syntax Error. If you need to, you can simply use
-<code>pass</code> as a placeholder.</p>
-<p>For example:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hello():  <span class="co"># definition</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Hello<span class="op">!</span>”)  <span class="co"># body</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> goodbye():  <span class="co"># </span><span class="al">TODO</span><span class="co">: finish tomorrow</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
-</section>
 <section id="functions-visualization" class="slide level1">
 <h1>Functions: Visualization</h1>
 <p>Consider the <code>len()</code> function: we give it a string or list
@@ -148,6 +130,24 @@ and it returns an integer equal to the length of the input. <strong>We
 don’t need to see the code to understand how to use it.</strong> And so
 we can save time by using functions.</p>
 <p><code>y = len(“seneca”)</code></p>
+</section>
+<section id="defining-your-own-functions" class="slide level1">
+<h1>Defining Your Own Functions</h1>
+<p>Functions are composed of two parts:</p>
+<ul>
+<li>Function definition (function name and parentheses)</li>
+<li>Body (defined by an indent level)</li>
+</ul>
+<p>The body <strong>must contain something</strong> in order not to
+cause a Syntax Error. If you need to, you can simply use
+<code>pass</code> as a placeholder.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hello():  <span class="co"># definition</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Hello<span class="op">!</span>”)  <span class="co"># body</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> goodbye():  <span class="co"># </span><span class="al">TODO</span><span class="co">: finish tomorrow</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
 </section>
 <section id="calling-functions" class="slide level1">
 <h1>Calling Functions</h1>
