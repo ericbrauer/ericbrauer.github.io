@@ -85,7 +85,8 @@
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/moon.css" id="theme">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
 </head>
 <body>
   <div class="reveal">
@@ -108,21 +109,35 @@ including:</p>
 </section>
 <section id="terminology" class="slide level1">
 <h1>Terminology</h1>
-<p>Logic: Getting a computer to do what you need requires us to use
-certain logical structures, such as checking conditions, looping,
-etc.</p>
+<dl>
+<dt>Logic</dt>
+<dd>
+Getting a computer to do what you need requires us to use certain
+logical structures, such as checking conditions, looping, etc.
+</dd>
+</dl>
 <p><em>These patterns are common to most (all?) programming
 languages.</em></p>
 </section>
 <section id="terminology-1" class="slide level1">
 <h1>Terminology</h1>
-<p>Syntax: The keywords and punctuation that are used in a particular
-programming language. We will be learning Python syntax.</p>
+<dl>
+<dt>Syntax</dt>
+<dd>
+The keywords and punctuation that are used in a particular programming
+language. We will be learning Python syntax.
+</dd>
+</dl>
 </section>
 <section id="terminology-2" class="slide level1">
 <h1>Terminology</h1>
-<p>Algorithms: Breaking down a bigger problem into logical steps that
-the computer can follow.</p>
+<dl>
+<dt>Algorithms</dt>
+<dd>
+Breaking down a bigger problem into logical steps that the computer can
+follow.
+</dd>
+</dl>
 </section>
 <section id="an-example-of-algorithmic-thinking" class="slide level1">
 <h1>An Example Of Algorithmic Thinking</h1>
@@ -134,8 +149,8 @@ implied. We can’t do this in programming.</p>
 <section id="cpu-instructions-assembly" class="slide level1">
 <h1>CPU instructions: Assembly</h1>
 <figure>
-<img data-src="pptimages/image1.png" alt="image" />
-<figcaption aria-hidden="true">image</figcaption>
+<img data-src="pptimages/image2.jpeg" alt="Assembly" />
+<figcaption aria-hidden="true">Assembly</figcaption>
 </figure>
 <p>Example of Assembly code, which is a low-level language (very close
 to the hardware). Even this has to be compiled into machine code…</p>
@@ -197,9 +212,9 @@ information. This is a <em>function</em>.</p>
 <section id="variables" class="slide level1">
 <h1>Variables</h1>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>word <span class="op">=</span> <span class="st">&quot;Hello&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>square_root_of_2 <span class="op">=</span> <span class="fl">1.4142</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span>  <span class="co"># integer: whole number</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>word <span class="op">=</span> <span class="st">&quot;Hello&quot;</span>  <span class="co"># string: a series of characters</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>square_root_of_2 <span class="op">=</span> <span class="fl">1.4142</span>  <span class="co"># float: a number with a fractional component</span></span></code></pre></div>
 <p>We often need to store pieces of data. We use variables to do this.
 On the left, the variable name. On the right, the value assigned to it.
 <strong>=</strong> separates the two.</p>
@@ -224,12 +239,15 @@ which we can store in a variable called x.</p>
 <section id="your-first-script" class="slide level1">
 <h1>Your First Script</h1>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">Your first program.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Joe Seneca</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>) <span class="co"># prompts the user for a name</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;!&quot;</span>) <span class="co"># + used to concatenate strings</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">Your first program.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Joe Seneca</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;&#39;&#39;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Please enter your name: &quot;</span>) <span class="co"># prompts the user for a name</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello &quot;</span> <span class="op">+</span> name <span class="op">+</span> <span class="st">&quot;!&quot;</span>) <span class="co"># + used to concatenate strings</span></span></code></pre></div>
 </section>
 <section id="scripting-guidelines" class="slide level1">
 <h1>Scripting Guidelines</h1>
@@ -250,30 +268,28 @@ different and won’t run correctly.</li>
 <section id="commenting-code" class="slide level1">
 <h1>Commenting Code</h1>
 <p>Comments are very important, but often overlooked by students!</p>
-<ul>
-<li>Explains the code to other programmers, and to yourself (after time
-has passed). # : starts an in-line comment (one sentence long). ’’’ :
-will create a docstring (a paragraph or longer).</li>
-</ul>
+<p>Explains the code to other programmers, and to yourself (after time
+has passed).</p>
+<dl>
+<dt><code>#</code></dt>
+<dd>
+starts an in-line comment (one sentence long).
+</dd>
+<dt><code>'''</code></dt>
+<dd>
+will create a docstring (a paragraph or longer).
+</dd>
+</dl>
 </section>
 <section id="commenting-code-ii" class="slide level1">
 <h1>Commenting Code II</h1>
 <p>Writing comments is an art. But generally, don’t explain
 <em>what</em> your code does (it’s usually obvious). Explain
 <em>why</em> your code is doing what it does.</p>
-<table style="width:6%;">
-<colgroup>
-<col style="width: 5%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td># don’t be like this</td>
-</tr>
-<tr class="even">
-<td>Wrong  <img data-src="pptimages/image2.jpeg" alt="image" /></td>
-</tr>
-</tbody>
-</table>
+<figure>
+<img data-src="pptimages/image3.jpeg" alt="Wrong" />
+<figcaption aria-hidden="true">Wrong</figcaption>
+</figure>
 </section>
 <section id="built-in-functions-in-the-interpreter"
 class="slide level1">
@@ -284,13 +300,18 @@ find useful.</p>
 <dt><code>help()</code></dt>
 <dd>
 will print the documentation for a function or object
-<code>type()</code> :will tell you what datatype an object is considered
-to be
+</dd>
+<dt><code>type()</code></dt>
+<dd>
+will tell you what datatype an object is considered to be
 </dd>
 </dl>
 <p>The good (and bad!) thing about Python is that <em>datatypes are
 implicit</em>.</p>
 <p>That means they aren’t obvious (but will still cause you issues!)</p>
+</section>
+<section id="end" class="slide level1">
+<h1>End</h1>
 </section>
     </div>
   </div>
