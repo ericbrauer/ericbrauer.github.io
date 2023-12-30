@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Eric Brauer">
+  <title>OPS 445: Open System Automation</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">OPS 445: Open System Automation</h1>
+  <p class="author">Eric Brauer</p>
+  <p class="date">Winter 2024</p>
+</section>
+
+<section id="overview" class="slide level1">
+<h1>Overview</h1>
+<ul>
+<li>Introduction and Learning Outcomes</li>
+<li>Course Evaluation and Promotion Policy</li>
+<li>Format of the Course: Online Lectures and Tutorials</li>
+<li>Lab Submission and Quizzes</li>
+<li>Assignments</li>
+<li>Tests</li>
+<li>Course Policies: Academic Integrity, Missing Quizzes, etc.</li>
+</ul>
+</section>
+<section id="faculty-information" class="slide level1">
+<h1>Faculty Information</h1>
+<h2 id="prof.-eric-brauer">Prof. Eric Brauer</h2>
+<p>Web:</p>
+<p><a
+href="https://ericbrauer.github.io">https://ericbrauer.github.io</a></p>
+<p>Email:</p>
+<p><a
+href="mailto:eric.brauer@senecapolytechnic.ca">eric.brauer@senecapolytechnic.ca</a></p>
+</section>
+<section id="introduction" class="slide level1">
+<h1>Introduction</h1>
+<h2
+id="this-is-an-introductory-programming-course-designed-specifically-for-system-and-network-administrators.">This
+is an introductory programming course designed specifically for system
+and network administrators.</h2>
+<h2
+id="students-will-learn-generally-applicable-programming-concepts-and-techniques-using-the-python-programming-language.">Students
+will learn generally-applicable programming concepts and techniques
+using the Python programming language.</h2>
+<h2
+id="following-an-introduction-to-fundamental-programming-principles-the-students-will-write-software-to-automate-deployment-and-configuration-tasks-over-a-network.">Following
+an introduction to fundamental programming principles the students will
+write software to automate deployment and configuration tasks over a
+network.</h2>
+</section>
+<section id="learning-outcomes" class="slide level1">
+<h1>Learning Outcomes</h1>
+<ul>
+<li>Design algorithms to solve simple problems which require
+input/output, conditions, and loops.</li>
+<li>Design and implement functions in order to avoid code duplication,
+while avoiding the use of global variables.</li>
+<li>Read and write data from/to plain-text and binary files.</li>
+<li>Write code that handles expected and unexpectederrors during
+execution.</li>
+<li>Use a programming languagedebugger to speed up locating errors in
+the code.</li>
+</ul>
+</section>
+<section id="learning-outcomes-ii" class="slide level1">
+<h1>Learning Outcomes II</h1>
+<ul>
+<li>Apply knowledge of established and new development tools to write
+deployable code efficiently.</li>
+<li>Automate deployment and configuration tasks using a scripting
+language with a configuration management tool.</li>
+<li>Assess, select, and use appropriate tools and techniques to develop
+and maintain administrative scripts and task automation.</li>
+<li>Provide clear and accurate documentation and comments in the source
+code.</li>
+</ul>
+</section>
+<section id="course-evaluation" class="slide level1">
+<h1>Course Evaluation</h1>
+<h2 id="labs-and-quizzes-20">Labs and quizzes: 20%</h2>
+<h2 id="labs9-10">Labs(9): 10%</h2>
+<h2 id="quizzes-4-10">Quizzes (4): 10%</h2>
+<h2 id="assignments-2-30">Assignments (2): 30%</h2>
+<h2 id="midterm-assessment-20">Midterm Assessment: 20%</h2>
+<h2 id="final-assessment-30">Final Assessment: 30%</h2>
+</section>
+<section id="promotion-requirements" class="slide level1">
+<h1>Promotion Requirements</h1>
+<p>You must:</p>
+<ul>
+<li>Achieve a grade of 50% or better on the Final Assessment.</li>
+<li>Satisfactory complete all <em>assignments</em>.</li>
+<li>Achieve a grade of 50% or better on the overall course.</li>
+</ul>
+</section>
+<section id="class-format" class="slide level1">
+<h1>Class Format</h1>
+<p>In your schedule, you will see 2 classes of 2 hours each. Normally,
+we would have 1 lab period and 1 lecture period. Our lectures will be
+video lectures, available over Zoom. The second scheduled class will be
+our tutorial. This will have more examples, walkthroughs, and I will be
+online during that time for questions, help and support, etc. I will
+record lectures/tutorials for those who miss the scheduled classes.</p>
+</section>
+<section id="tutorial" class="slide level1">
+<h1>Tutorial</h1>
+<p>It’s a good time to be working on labs and assignments. I will
+present examples/walkthroughs and demonstrations that will aid you in
+understanding lab/assignment concepts. Afterwards will be lab time. If
+you are working on labs during this time, you can get help from me very
+quickly. I also will be posting surveys, discussion questions, etc to
+gauge students’ participation.</p>
+</section>
+<section id="online-lectures" class="slide level1">
+<h1>Online Lectures</h1>
+<p>The objective of online video lectures is to accommodate people who
+may be taking the course in different time-zones. Videos give students
+the most flexibility while still delivering the same content. The video
+lectures will cover concepts from the lab in a more comprehensive
+format. (That is, we take a look at the overall concept rather than
+rehashing individual bits of code). Prepare for the class by
+reading/reviewing assigned readings, which include text, lab
+instruction, and slides before class.</p>
+</section>
+<section id="assigned-readings" class="slide level1">
+<h1>Assigned Readings</h1>
+<p>There are two books for this course:</p>
+<ul>
+<li>Think Python 2nd Edition</li>
+<li>Automate the Boring Stuff with Python</li>
+</ul>
+<p>Electronic copies of both can be accessed on Blackboard and available
+online as well. Check the weekly schedule to find out the chapters from
+each book as assigned reading. Reading those chapters before each week’s
+lecture will help you understand the lectures and to complete the
+labs.</p>
+</section>
+<section id="lab-environment-setup" class="slide level1">
+<h1>Lab Environment Setup</h1>
+<p>Requirement for the course: a Linux development environment with git
+and Python 3.6+. I recommend creating a VM where you can install a code
+editor like VS Code. Instructions can be found on the Wiki.</p>
+</section>
+<section id="github-setup" class="slide level1">
+<h1>GitHub Setup</h1>
+<ul>
+<li>Create a GitHub account</li>
+<li>Generate a public/private keypair for <em>each computer</em> you
+will use for labs</li>
+<li>Copy your public key and paste it into your GitHub:</li>
+<li>Click on profile -&gt; Settings -&gt; GPG &amp; SSH Keys</li>
+</ul>
+</section>
+<section id="lab-submission" class="slide level1">
+<h1>Lab Submission</h1>
+<ul>
+<li>Click on the lab from Blackboard, and accept it.</li>
+<li>Clone the repository to your computer using SSH:</li>
+<li>Copy to your clipboard</li>
+</ul>
+</section>
+<section id="lab-submission-1" class="slide level1">
+<h1>Lab Submission</h1>
+<ul>
+<li>Run <code>git clone</code> from your terminal and paste the link
+from GitHub.</li>
+<li>Follow Wiki instructions to create your files.</li>
+<li>Run the Lab Check script for each lab to make sure that you complete
+all the required tasks.</li>
+<li>Labs are submitted on GitHub. Follow instructions to push your code
+back into the repository.</li>
+</ul>
+</section>
+<section id="practical-quizzes" class="slide level1">
+<h1>Practical Quizzes</h1>
+<ul>
+<li>The labs will also prepare you for the practical quizzes. These
+quizzes can be considered “open book.” You may use class notes, and the
+Python interpreter.</li>
+<li>However sharing answers is not permitted.</li>
+<li>Quizzes will be done online on GitHub Codespaces.</li>
+<li>Two types of questions may appear in each quizzes:
+<ul>
+<li>Coding Questions: You will be asked to write or debug and fix a
+script based on given details. You are allowed to use your VM to work
+out the answer to this type of questions.</li>
+<li>Decoding Questions: You will be given a piece of Python code and you
+have to figure out what it does. You will be asked a few questions to
+test your understanding of the given piece of Python code. For example:
+if you run the python code with a command line argument “ABCD”, what
+will be the expected output?</li>
+</ul></li>
+<li>The exact date for each quizzes will be announced at least one week
+before the scheduled date.</li>
+</ul>
+</section>
+<section id="assignments" class="slide level1">
+<h1>Assignments</h1>
+<ul>
+<li>Assignments are based off concepts and lessons learned from the
+lectures, the labs, and the weekly assigned reading.</li>
+<li>Assignments will be done in groups. You will be asked to explain
+your code as you work.</li>
+<li>Don’t be afraid to ask your professor if you have any questions
+about the assignments.</li>
+<li>There are two mandatory assignments, 15% each.</li>
+<li>Files will be provided over GitHub, and GitHub will be used for
+evaluation.</li>
+</ul>
+</section>
+<section id="creating-backups" class="slide level1">
+<h1>Creating Backups!</h1>
+<ul>
+<li>You are responsible for backing up your work in this class! This
+includes your</li>
+<li>VM, and any lab work, python scripts, and assignments you’ve
+completed.</li>
+<li>Fortunately, this is what GitHub is for.</li>
+<li>Commit your work after every significant change!!</li>
+</ul>
+</section>
+<section id="course-policies" class="slide level1">
+<h1>Course Policies</h1>
+<ul>
+<li>Late Policy</li>
+<li>Missed Tests/Quizzes Policy</li>
+<li>Academic Integrity Policy</li>
+<li>Information Technology Acceptable Use Policy</li>
+</ul>
+</section>
+<section id="getting-help" class="slide level1">
+<h1>Getting Help</h1>
+<h2 id="having-problems-no-problem-thats-normal">Having problems? No
+problem, that’s normal!</h2>
+<ul>
+<li>Contact Me after lecture (email, MS Teams)</li>
+<li>Leave a question on the appropriate MS Teams channel</li>
+<li>Bring it up during tutorial! This would be a great time to explain
+the concept!</li>
+</ul>
+</section>
+<section id="getting-help-1" class="slide level1">
+<h1>Getting Help</h1>
+<p>When you ask your question, include:</p>
+<ul>
+<li>What you’re trying to do (not just “lab 3”)</li>
+<li>What result you’re expecting</li>
+<li>What result you’re getting (including error messages)</li>
+<li>What you’ve already tried to fix your problem.</li>
+</ul>
+<h2 id="include-your-error-message">Include your error message!</h2>
+</section>
+<section class="slide level1">
+
+<figure>
+<img data-src="pptimages/sign.jpg" alt="Please remember" />
+<figcaption aria-hidden="true">Please remember</figcaption>
+</figure>
+</section>
+<section id="how-do-i-get-better-at-programming" class="slide level1">
+<h1>“How do I get better at programming?”</h1>
+<p><img data-src="pptimages/image4.jpeg" /></p>
+</section>
+<section class="slide level1">
+
+<ul>
+<li>learn by doing!</li>
+<li>Don’t just watch examples, copy them.</li>
+<li>Seriously, type them out yourself. Seems tedious, but it works (ask
+me how I know).</li>
+<li>Take an example, and modify it. See what happens.</li>
+<li>Later on, take a tedious/boring task and automate it.</li>
+<li>Build tools that you find useful, and use them.</li>
+<li>This is called dogfooding</li>
+<li>(Refer to Automate the Boring Stuff for ideas!)</li>
+</ul>
+</section>
+<section id="lab-marks" class="slide level1">
+<h1>Lab Marks</h1>
+<p>To receive full marks for labs, they must be completed and submitted
+by their due dates as posted on Blackboard (excepting the first
+two).</p>
+<p>Your labs have a Check script.</p>
+<ul>
+<li>If all tests pass, you receive full marks.</li>
+<li>If 50% - 99% of tests pass, you get 50% of marks.</li>
+<li>If less than 50% of tests pass, the lab is not yet complete.</li>
+</ul>
+</section>
+<section id="late-labs" class="slide level1">
+<h1>Late Labs</h1>
+<ul>
+<li>Lab files can be submitted late for a maximum grade of 50%, but all
+tests must pass.</li>
+<li>If late labs are not 100% complete, they will get 0.</li>
+</ul>
+</section>
+<section id="late-assignments" class="slide level1">
+<h1>Late Assignments</h1>
+<h2 id="milestones">Milestones</h2>
+<ul>
+<li>On the deadline of a milestone, I will look at code that you’ve
+committed on GitHub.</li>
+<li>If you didn’t commit any code, you get zero.</li>
+<li>On the next milestone, if you got caught up, you can get 50% of
+marks for the late milestone.</li>
+</ul>
+<h2 id="assignment-final-submissions">Assignment Final Submissions</h2>
+<ul>
+<li>To receive full marks for assignments, they must be completed and
+submitted by their due dates as posted on the web site.</li>
+<li>Late assignments are subject to 10% late penalty per school day.
+Milestones must be submitted on time.</li>
+<li><strong>Both assignments must be completed satisfactory</strong>,
+even if it is overdue and worth zero marks, to get the credit for this
+course.</li>
+</ul>
+</section>
+<section id="quizzes" class="slide level1">
+<h1>Quizzes</h1>
+<ul>
+<li><p>There are five quizzes this semester.</p></li>
+<li><p>I will be dropping the lowest quiz mark.</p></li>
+<li><p>The rest of the quizzes are worth 2.5%.</p></li>
+<li><p>There are no makeups or second chances on quizzes, so don’t
+bother emailing me.</p></li>
+<li><p>If you miss one quiz, not to worry, it won’t affect your grade.
+But you’ll have to be sure to write the next 4.</p></li>
+</ul>
+</section>
+<section id="missed-tests" class="slide level1">
+<h1>Missed Tests</h1>
+<p>If you are going to miss a scheduled test, <strong>Email me before
+the assessment is scheduled to begin.</strong></p>
+<p>It doesn’t have to be a long email, just let me know what’s going
+on.</p>
+<p>Provide valid supporting documentation before alternative arrangement
+will be considered. Tests will require a make-up.</p>
+</section>
+<section id="academic-integrity-policy" class="slide level1">
+<h1>Academic Integrity Policy</h1>
+<p>This college (and course) have a <strong>zero tolerance</strong>
+policy towards plaigiarism, infringement of any kind. The code you
+submit <strong>needs to be your own</strong>.</p>
+<p><a
+href="http://www.senecacollege.ca/policies/academic-integrity-policy.html">Please
+refer to the following web page</a> if you’re at all uncertain.</p>
+<ul>
+<li>Do not use or share completed code for labs, assignments, or
+quizzes.</li>
+<li>If you want to share example to help a classmate, make sure that it
+is not directly from a lab or assignment.</li>
+<li>Change what it does/how it works.</li>
+<li>Sharing a <em>line of code</em> if okay. Do not share your
+<em>files</em>.</li>
+<li>If you are using Github, your repository must be
+<em>private</em>.</li>
+</ul>
+</section>
+<section id="regarding-llms-such-as-chatgpt" class="slide level1">
+<h1>Regarding LLMs Such As ChatGPT</h1>
+<p><img
+data-src="pptimages/chatgpt-is-actually-a-problem-for-developers.png" /></p>
+</section>
+<section id="regarding-llms" class="slide level1">
+<h1>Regarding LLMs</h1>
+<ul>
+<li>LLMs are a fine resource for <em>experienced devs</em>, because we
+can evaluate and troubleshoot the solutions that ChatGPT provides.</li>
+<li>Before you can evaluate and troubleshoot these solutions, you need
+to practice solving easier problems.</li>
+<li>This course provides you with this practice, but the problems we
+train you on are easily solved with LLMs. In my experience, practice
+problems are the <em>only</em> types of problems that LLMs excel at.
+(Real life is messy).</li>
+</ul>
+</section>
+<section id="and-so" class="slide level1">
+<h1>And So</h1>
+<p>I will ask that you <em>not use</em> ChatGPT or similar LLMs during
+the course. Try to solve the problems with your debugger and brain.
+<strong>The process is the point!</strong></p>
+<ul>
+<li>LLM solutions are ineligible for points in the assignments and
+tests. You <em>will</em> get zero.</li>
+<li>LLMs are not permitted in technical job interviews. If you can’t do
+it honestly, you <em>will</em> lose opportunities.</li>
+<li>Sharing proprietary code with ChatGPT <em><a
+href="https://www.techradar.com/news/samsung-bans-chatgpt-use-after-employee-leak">will
+get you fired</a></em>.</li>
+<li>Relying on ChatGPT means you will always be reliant on it, <a
+href="https://locusmag.com/2023/12/commentary-cory-doctorow-what-kind-of-bubble-is-ai/">even
+if it goes away</a>!</li>
+</ul>
+</section>
+<section id="ready-set-go" class="slide level1">
+<h1>Ready? Set, Go…</h1>
+<ul>
+<li>Complete the quiz on Course Expectations</li>
+<li>Get comfortable with Blackboard and bookmark the Wiki</li>
+<li>Create a GitHub account and get started on Lab 1</li>
+<li>Set up your development environment</li>
+</ul>
+</section>
+<section id="assigned-reading-for-next-class" class="slide level1">
+<h1>Assigned Reading for Next Class</h1>
+<p>Think Python: Chapter 1 Automate the Boring Stuff with Python:
+Chapter 1 and 2</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
