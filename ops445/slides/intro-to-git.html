@@ -20,6 +20,69 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
@@ -37,7 +100,7 @@
 <section id="has-this-ever-happened-to-you" class="slide level1">
 <h1>Has This Ever Happened to you?</h1>
 <figure>
-<img data-src="pptimages/git-problem.gif" alt="the problem" width=400 />
+<img data-src="pptimages/git-problem.gif" alt="the problem" />
 <figcaption aria-hidden="true">the problem</figcaption>
 </figure>
 </section>
@@ -133,6 +196,29 @@ created.</p>
 <h1>Checking Your Work: Git Status</h1>
 <p>Use <code>git status</code> to check your work as you go. Reading and
 understanding this output will help you a lot!</p>
+<figure>
+<img data-src="pptimages/git-status.png" alt="git status" />
+<figcaption aria-hidden="true">git status</figcaption>
+</figure>
+</section>
+<section id="git-status" class="slide level1">
+<h1>Git Status</h1>
+<dl>
+<dt><code>On branch master</code></dt>
+<dd>
+this semester, all of your commits can be done on the main branch,
+called ‘main’ or ‘master’ branch
+</dd>
+<dt><code>up to date with origin/master</code></dt>
+<dd>
+<code>origin/master</code> is the <em>remote repository</em>. This tells
+you that remote and local versions are the same.
+</dd>
+<dt><code>nothing to commit</code></dt>
+<dd>
+you haven’t made any local changes, so there’s nothing to do yet.
+</dd>
+</dl>
 </section>
 <section id="tracking-changes" class="slide level1">
 <h1>Tracking Changes</h1>
@@ -148,9 +234,7 @@ want to track.</li>
 </section>
 <section id="tracking-changes-1" class="slide level1">
 <h1>Tracking Changes</h1>
-<p><img
-data-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAxAAAACWCAYAAABO+G6lAAAAAXNSR0IArs4c6QAAAyBJREFUeJzt10ENACAQwDDAv+fDwn6EpFWw7/bMzAIAAAjO6wAAAOAfBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEBmIAAAgMxAAAAAmYEAAAAyAwEAAGQGAgAAyAwEAACQGQgAACAzEAAAQGYgAACAzEAAAACZgQAAADIDAQAAZAYCAADIDAQAAJAZCAAAIDMQAABAZiAAAIDMQAAAAJmBAAAAMgMBAABkBgIAAMgMBAAAkBkIAAAgMxAAAEB2AbFjBSg0ZVmdAAAAAElFTkSuQmCC"
-alt="" /></p>
+<p><img data-src="pptimages/git-log.png" /></p>
 </section>
 <section id="rules-for-commits" class="slide level1">
 <h1>Rules For Commits</h1>
@@ -163,26 +247,85 @@ back</em> the change.</p>
 <p>Using <code>git push</code> will sync your commits with the remote
 repository.</p>
 </section>
+<section id="git-log" class="slide level1">
+<h1>Git Log</h1>
+<ul>
+<li>From the terminal, run <code>git log</code> to view all your
+commits.</li>
+<li>You can also view these on GitHub.</li>
+<li>Notice that commits are labelled with a <em>hash</em>, for example
+<strong>01b8dac</strong>.</li>
+</ul>
+</section>
+<section id="checking-out-previous-commits" class="slide level1">
+<h1>Checking Out Previous Commits</h1>
+<ul>
+<li>Every change is tracked, and you can choose to look at the previous
+state of your code.</li>
+<li>Use <code>git checkout &lt;hash&gt;</code> where hash refers to the
+commit you wish to view.</li>
+<li>Are you done? Use <code>git checkout master</code> to return to the
+“head” of your master branch.</li>
+</ul>
+</section>
+<section id="undoing-commits" class="slide level1">
+<h1>Undoing Commits</h1>
+<ul>
+<li><p>If you break your code, you may need to undo your latest
+commits.</p></li>
+<li><p>There are several ways to do this, but the most direct is to
+use</p></li>
+</ul>
+<p><code>git reset --hard &lt;hash&gt;</code></p>
+<ul>
+<li><p>This will remove the commits that came after the hash commit. Be
+warned!</p></li>
+<li><p>For other (less destructive but more complicated) options, <a
+href="https://www.atlassian.com/git/tutorials/undoing-changes">check
+this page</a></p></li>
+</ul>
+</section>
 <section id="what-does-it-look-like-when-you-work-in-a-group"
 class="slide level1">
 <h1>What does it look like when you work in a group?</h1>
-<p>Chris and Michael have both cloned the same repo Chris commits a
-change and pushes Michael uses <code>git pull</code> to sync Chris’s
-changes. This helps prevent 90% of problems!</p>
+<ul>
+<li>Chris and Michael have both cloned the same repo</li>
+<li>Chris commits a change and pushes at 9:00 am.</li>
+<li>Michael commits a changes and tries to push at 12:00 pm and gets an
+error:</li>
+</ul>
+<p><code>Warning: origin/master has diverged</code></p>
+<p><strong>Your local version of the code doesn’t yet have Chris’s
+commit!</strong></p>
+</section>
+<section id="git-pull" class="slide level1">
+<h1>Git Pull</h1>
+<ul>
+<li>Michael uses <code>git pull</code> to sync Chris’s changes
+<em>before you create your commits</em>. This helps prevent 90% of
+problems!</li>
+<li>You might also need to use <code>git pull --rebase</code>. This
+eliminates the need for a merge</li>
+</ul>
 </section>
 <section id="group-work" class="slide level1">
 <h1>Group Work</h1>
 <p>what happens if Chris and Michael change the same code?</p>
 <p>instead of any person’s change overwriting the other, git will force
 you to <em>merge</em> your changes</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>resutl <span class="op">=</span> x <span class="op">+</span> y  <span class="co"># written by Chris</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> x <span class="op">+</span> z  <span class="co"># written by Michael</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># which do we keep, which do we reject?</span></span></code></pre></div>
 </section>
 <section id="what-merging-looks-like-it-sucks" class="slide level1">
 <h1>What Merging Looks Like (It Sucks)</h1>
-<pre><code>&lt;&lt;&lt;michael&#39;s changes
-Author: Michael
-|||
-Author: Chris
-&gt;&gt;&gt;Chris&#39;s changes</code></pre>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;&lt;&lt;</span>Chris<span class="st">&#39;s changes</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="er">resutl = x + y</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="er">|||</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="er">result = x + z</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;&gt;&gt;Michael&#39;s changes</span></span></code></pre></div>
 </section>
 <section id="branches" class="slide level1">
 <h1>Branches</h1>
@@ -202,6 +345,17 @@ Author: Chris
 <li>This is the process where a branch’s changes become part of
 main.</li>
 <li>Often this will require code review and approval.</li>
+</ul>
+</section>
+<section id="more-help" class="slide level1">
+<h1>More Help</h1>
+<ul>
+<li>Git can be a <strong>very complex tool</strong>. It’s easy to break
+things, but it gets easier with practice.</li>
+<li>Did you make a mistake?</li>
+<li><a href="https://ohshitgit.com/">Oh Shit, Git!</a> is a useful
+webpage to look at, it runs through some nightmare scenarios when you
+have done something weird.</li>
 </ul>
 </section>
     </div>
