@@ -174,9 +174,9 @@ on screen.</p>
 input when it’s run. For example:</p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> birthday(year):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘You were born <span class="kw">in</span> the year ’ <span class="op">+</span> year)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;You were born in the year &#39;</span> <span class="op">+</span> year)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>birthday(‘<span class="dv">1970</span>’)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>birthday(<span class="st">&#39;1970&#39;</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>birthday(<span class="st">&#39;2005&#39;</span>)</span></code></pre></div>
 </section>
 <section id="functions-arguments-1" class="slide level1">
@@ -185,10 +185,10 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 defined when you run it.</p>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> birthday(year, month, day):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘You were born on ’ <span class="op">+</span> month <span class="op">+</span> day <span class="op">+</span> year)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;You were born on &#39;</span> <span class="op">+</span> month <span class="op">+</span> day <span class="op">+</span> year)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Main Program - Run Function</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>birthday(‘<span class="dv">1970</span>’, ‘January’, ‘<span class="dv">1</span>’)</span></code></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>birthday(<span class="st">&#39;1970&#39;</span>, <span class="st">&#39;January&#39;</span>, <span class="st">&#39;1&#39;</span>)</span></code></pre></div>
 </section>
 <section id="functions-default-arguments" class="slide level1">
 <h1>Functions: Default Arguments</h1>
@@ -213,7 +213,7 @@ and the memory is freed up.</p>
 class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_age(year):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    now <span class="op">=</span> <span class="dv">2024</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> now <span class="op">-</span> year</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘You are <span class="st">&#39; + str(age) + &#39;</span> years old.<span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;You are &#39;</span> <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> <span class="st">&#39; years old.&#39;&#39;)</span></span></code></pre></div>
 <pre><code>&gt;&gt;&gt;&gt; get_age(1991)
 You are 33 years old.
 &gt;&gt;&gt;&gt; print(now)
@@ -256,27 +256,64 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a h
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> can_drive(x):</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You are old enough to drive.&quot;</span>)</span></code></pre></div>
 </section>
-<section id="some-guidelines-for-creating-functions"
-class="slide level1">
-<h1>Some Guidelines For Creating Functions</h1>
+<section id="function-annotations" class="slide level1">
+<h1>Function Annotations</h1>
 <ul>
-<li>Shorter functions are always better than longer functions.</li>
-<li>Function names should be short: one verb only! 2-3 words!</li>
+<li>Generally Python functions will accept <em>any</em> datatype, even
+when this is going to cause an issue.</li>
+<li>You can choose to add <em>annotations</em> to your function
+definition, which will suggest datatypes for parameters and return
+values.</li>
+<li><strong>Note</strong>: Depending on your configuration, breaking
+guidelines won’t stop your code. Consider these like comments.</li>
 </ul>
-<p>Good:</p>
-<ul>
-<li><code>circle_area()</code></li>
-<li><code>is_odd()</code></li>
-<li><code>get_age()</code></li>
-</ul>
-<p>Bad:</p>
-<ul>
-<li><code>do_stuff()</code></li>
-<li><code>process_form_and_find_all_names_and_put_names_into_a_file()</code></li>
-<li><code>calculation()</code></li>
-</ul>
+<pre class="python3"><code>def is_even(number: int) -&gt; bool:
+    &quot;accepts an integer, and returns True or False&quot;
+    ...</code></pre>
 </section>
-<section id="some-guidelines-for-creating-functions-1"
+<section id="function-annotations-1" class="slide level1">
+<h1>Function Annotations</h1>
+<ul>
+<li>parameter annotation comes after variable:</li>
+<li>return value annotation comes after -&gt;</li>
+</ul>
+<pre class="python3"><code>def student_grade(name: str, gpa: float) -&gt; dict:
+    &quot;Puts name and gpa into a dictionary&quot;
+    ...</code></pre>
+<ul>
+<li><code>int, float, list, dict, set, str,</code> etc.</li>
+</ul>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td># Some Guidelines For Creating Functions</td>
+</tr>
+<tr class="even">
+<td>- Shorter functions are always better than longer functions. -
+Function names should be short: one verb only! 2-3 words!</td>
+</tr>
+<tr class="odd">
+<td>Good:</td>
+</tr>
+<tr class="even">
+<td>- <code>circle_area()</code> - <code>is_odd()</code> -
+<code>get_age()</code></td>
+</tr>
+<tr class="odd">
+<td>Bad:</td>
+</tr>
+<tr class="even">
+<td>- <code>do_stuff()</code> -
+<code>process_form_and_find_all_names_and_put_names_into_a_file()</code>
+- <code>calculation()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="some-guidelines-for-creating-functions"
 class="slide level1">
 <h1>Some Guidelines For Creating Functions</h1>
 <ul>
@@ -301,23 +338,23 @@ easier.</p>
 <section id="scope-dont-do-this-if-you-want-to-enjoy-your-life"
 class="slide level1">
 <h1>Scope: Don’t Do This If You Want To Enjoy Your Life</h1>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">34</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> a_func(x, y):  <span class="co"># local and global vars can have the same name</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> x  <span class="co"># don&#39;t do this</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> x <span class="op">+</span> y  <span class="co"># what is this going to do?</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> z</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>a_func(<span class="dv">12</span>, <span class="dv">45</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">34</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> a_func(x, y):  <span class="co"># local and global vars can have the same name</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> x  <span class="co"># don&#39;t do this</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> x <span class="op">+</span> y  <span class="co"># what is this going to do?</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> z</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>a_func(<span class="dv">12</span>, <span class="dv">45</span>)</span></code></pre></div>
 </section>
 <section id="concept-list-object" class="slide level1">
 <h1>Concept: List Object</h1>
 <p>A <em>list object</em> is a special datatype. It refers to a series
 of items in a particular order, and each item in the list can be
 accessed using an index.</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’] </span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [<span class="st">&#39;seneca&#39;</span>, <span class="st">&#39;ict&#39;</span>, <span class="st">&#39;cns&#39;</span>, <span class="st">&#39;cty&#39;</span>] </span></code></pre></div>
 <p><code>mylist</code> is the name of a list object which contains four
 <em>string</em> objects: <code>seneca</code>, <code>ict</code>,
 <code>cns</code>, and <code>cty</code>. Your list can contain any
@@ -329,35 +366,35 @@ lists, etc.</p>
 <p>We can navigate through this list using its index number to call it,
 a range, or whole list. Note: the last number in the slide tells us the
 first element <em>not</em> included in the slice.</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist[<span class="dv">0</span>])  <span class="co"># This will print: seneca</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist[<span class="dv">1</span>:<span class="dv">3</span>]) <span class="co"># This will print: [‘ict’, ‘cns’]</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist)  <span class="co"># This will print [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [<span class="st">&#39;seneca&#39;</span>, <span class="st">&#39;ict&#39;</span>, <span class="st">&#39;cns&#39;</span>, <span class="st">&#39;cty&#39;</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist[<span class="dv">0</span>])  <span class="co"># This will print: seneca</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist[<span class="dv">1</span>:<span class="dv">3</span>]) <span class="co"># This will print: [&#39;ict&#39;, &#39;cns&#39;]</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mylist)  <span class="co"># This will print [&#39;seneca&#39;, &#39;ict&#39;, &#39;cns&#39;, &#39;cty&#39;]</span></span></code></pre></div>
 </section>
 <section id="manipulating-lists" class="slide level1">
 <h1>Manipulating Lists</h1>
 <p>We can also manipulate the items in a list.</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mylist.append(‘<span class="dv">2019</span>’)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mylist.insert(<span class="dv">1</span>, ‘S<span class="op">@</span>Y’)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mylist.remove(’cty’)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>mylist.sort()</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [<span class="st">&#39;seneca&#39;</span>, <span class="st">&#39;ict&#39;</span>, <span class="st">&#39;cns&#39;</span>, <span class="st">&#39;cty&#39;</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mylist.append(<span class="st">&#39;2019&#39;</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>mylist.insert(<span class="dv">1</span>, <span class="st">&#39;S@Y&#39;</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>mylist.remove(<span class="st">&#39;cty&#39;</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>mylist.sort()</span></code></pre></div>
 </section>
 <section id="list-iteration" class="slide level1">
 <h1>List Iteration</h1>
 <p>If you’d like to go through all the items in a list (to use them in a
 function, for example) you can do that as well.</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [‘seneca’, ‘ict’, ‘cns’, ‘cty’]</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> mylist:</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(‘This item <span class="kw">is</span>: ’ <span class="op">+</span> item)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This will print:</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is seneca</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is ict</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is cns</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is cty</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mylist <span class="op">=</span> [<span class="st">&#39;seneca&#39;</span>, <span class="st">&#39;ict&#39;</span>, <span class="st">&#39;cns&#39;</span>, <span class="st">&#39;cty&#39;</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> mylist:</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;This item is: &#39;</span> <span class="op">+</span> item)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This will print:</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is seneca</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is ict</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is cns</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># This item is cty</span></span></code></pre></div>
 </section>
 <section id="for-loops" class="slide level1">
 <h1>For Loops</h1>
@@ -370,15 +407,15 @@ at a time.</p>
 that we will iterate through.</p>
 <p>Naming your variables correctly (singular and plural) will reduce
 confusion when you are writing code.</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>menu <span class="op">=</span> [<span class="st">&#39;falafel&#39;</span>, <span class="st">&#39;pizza&#39;</span>, <span class="st">&#39;burger&#39;</span>, <span class="st">&#39;coffee&#39;</span>]</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>healthy_choices <span class="op">=</span> []  <span class="co"># empty list</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> food <span class="kw">in</span> menu:</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_healthy(food):  <span class="co"># this calls a function</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        healthy_choices.append(food)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We should probably avoid too much &quot;</span> <span class="op">+</span> food)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>menu <span class="op">=</span> [<span class="st">&#39;falafel&#39;</span>, <span class="st">&#39;pizza&#39;</span>, <span class="st">&#39;burger&#39;</span>, <span class="st">&#39;coffee&#39;</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>healthy_choices <span class="op">=</span> []  <span class="co"># empty list</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> food <span class="kw">in</span> menu:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> is_healthy(food):  <span class="co"># this calls a function</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        healthy_choices.append(food)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;We should probably avoid too much &quot;</span> <span class="op">+</span> food)</span></code></pre></div>
 </section>
     </div>
   </div>
