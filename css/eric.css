@@ -20,6 +20,12 @@ body {
     margin: 25px;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    max-height: 90vw;
+}
+
 #container {
     background-color: hsl(220, 12%, 16%);
     /* width: 70%; */
@@ -89,7 +95,7 @@ nav {
 .sourceCode {
     background-color: hsl(220, 13%, 20%);
     font-family: Consolas, monospace;
-    font-size: 14px;
+    font-size: 0.9em;
     border: 2px;
     border-color: hsl(220, 13%, 12%);
     margin-left: 5px;
@@ -136,7 +142,7 @@ th {
 code {
     color: white;
     font-family: Consolas, monospace;
-    font-size: 14px;
+    font-size: 0.9em;
     background-color: hsl(220, 12%, 24%);
     margin-left: 5px;
     margin-right: 5px;
