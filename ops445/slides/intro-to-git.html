@@ -16,12 +16,22 @@
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +93,6 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
   <link rel="stylesheet" href="css/custom.css"/>
@@ -325,9 +334,9 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;&lt;&lt;</span>Chris<span class="st">&#39;s changes</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="er">resutl = x + y</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="er">|||</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="er">result = x + z</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;&gt;&gt;Michael&#39;s changes</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">|||</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> x <span class="op">+</span> z</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span>Michael<span class="st">&#39;s changes</span></span></code></pre></div>
 </section>
 <section id="branches" class="slide level1">
 <h1>Branches</h1>
@@ -341,8 +350,38 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 <figcaption aria-hidden="true">branches</figcaption>
 </figure>
 </section>
+<section id="create-a-branch" class="slide level1">
+<h1>Create A Branch</h1>
+<p>On GitHub, find the top of your repo page. Click the drop-down to
+create a new branch based off of main:</p>
+<figure>
+<img data-src="pptimages/github-branch-create.png"
+alt="Create Branch" />
+<figcaption aria-hidden="true">Create Branch</figcaption>
+</figure>
+<p>From the terminal, you can use a command:</p>
+<pre><code>git checkout -b &lt;new branch&gt;</code></pre>
+<p>The <code>checkout</code> command is also used to switch between
+branches.</p>
+</section>
+<section id="merging-branches" class="slide level1">
+<h1>Merging Branches</h1>
+<p>On GitHub, once you’ve created (and pushed) commits, you can choose
+to merge a branch by finding this message at the top of the repo:</p>
+<figure>
+<img data-src="pptimages/github-branch-compare.png"
+alt="Ready to merge" />
+<figcaption aria-hidden="true">Ready to merge</figcaption>
+</figure>
+<p>This will begin a <em>pull request</em>, where your branch undergoes
+final approval.</p>
+</section>
 <section id="pull-request" class="slide level1">
 <h1>Pull Request</h1>
+<figure>
+<img data-src="pptimages/github-pull-request.png" alt="Pull Request" />
+<figcaption aria-hidden="true">Pull Request</figcaption>
+</figure>
 <ul>
 <li>This is the process where a branch’s changes become part of
 main.</li>
