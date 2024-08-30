@@ -1,0 +1,4 @@
+/* Override font size for text within slides */
+.reveal section {
+  font-size: 20px; /* Adjust the font size as needed */
+  }
