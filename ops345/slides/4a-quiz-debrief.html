@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>About the Quiz</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">About the Quiz</h1>
+</section>
+
+<section id="as-a-reminder" class="slide level1">
+<h1>As a reminder…</h1>
+<p>4 Quizzes x 2% = 8% total of your final mark</p>
+</section>
+<section id="not-satisfied-with-your-grade" class="slide level1">
+<h1>Not satisfied with your grade?</h1>
+<ul>
+<li>Don’t Panic</li>
+<li>Understand what you got wrong</li>
+</ul>
+</section>
+<section id="grades-dont-matter" class="slide level1">
+<h1>Grades Don’t Matter</h1>
+<ul>
+<li>When you are looking for a job, the <em>numbers</em> don’t matter.
+Only your <em>knowledge and experience</em>.</li>
+<li>Grades are a <em>failed attempt</em> to quantify that knowledge and
+experience! Interviewers don’t care about grades.</li>
+</ul>
+</section>
+<section id="that-said" class="slide level1">
+<h1>That Said…</h1>
+<p>…let’s discuss weak points.</p>
+<ul>
+<li>Subnetting</li>
+<li>AMIs Vs .iso</li>
+<li>Elastic IPs</li>
+<li>Debugging Port Forwarding</li>
+<li>“Making a connection even more secure”</li>
+<li>Advantages and Drawbacks of The Cloud</li>
+</ul>
+</section>
+<section id="subnetting-review" class="slide level1">
+<h1>Subnetting Review</h1>
+<p>Consider Phone Numbers:</p>
+<p><strong>(416) 872-1973</strong> <a href="#/fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</section>
+<section id="subnetting-review-1" class="slide level1">
+<h1>Subnetting Review</h1>
+<dl>
+<dt>416</dt>
+<dd>
+Area Code. Tells about the region.
+</dd>
+<dt>872-1973</dt>
+<dd>
+The rest of the digits. In this area we have 10 Million possible
+numbers.
+</dd>
+</dl>
+</section>
+<section id="subnetting-review-ii" class="slide level1">
+<h1>Subnetting Review II</h1>
+<p>…It’s the same with Subnetting. The left side of our IP address gives
+us a general identifier…</p>
+<p><strong>192.168.0</strong>.100</p>
+</section>
+<section id="subnetting-review-ii-1" class="slide level1">
+<h1>Subnetting Review II</h1>
+<p>…while the right side gives us a more specific address <em>inside our
+‘area’</em>.</p>
+<p>192.168.0<strong>.100</strong></p>
+<p>Where we separate these two parts is defined by the <em>mask</em>
+(where is it here?).</p>
+</section>
+<section id="subnetting-review-iii" class="slide level1">
+<h1>Subnetting Review III</h1>
+<p>Let’s simplify the idea with an “address” of only <strong>8</strong>
+bits, rather than the <strong>32</strong> bits we usually use.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">127</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subnetting-review-iii-1" class="slide level1">
+<h1>Subnetting Review III</h1>
+<p><strong>/4</strong> means we are masking our 4 most significant
+bits…</p>
+<p><strong>1111</strong> 1111</p>
+</section>
+<section id="subnetting-review-iii-2" class="slide level1">
+<h1>Subnetting Review III</h1>
+<p>…leaving us with <strong>4</strong> bits as available ‘space’ in our
+area, or <em>subnet</em>.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subnetting-review-iii-3" class="slide level1">
+<h1>Subnetting Review III</h1>
+<p>However, 2 of those addresses are reserved: the <strong>network
+address</strong> and the <strong>broadcast address</strong>.</p>
+<ul>
+<li><del>0</del> <em>reserved, network address</em></li>
+<li>1 - 14 <em>ok</em></li>
+<li><del>15</del> <em>reserved, broadcast address</em></li>
+</ul>
+</section>
+<section id="sample-subnet-question" class="slide level1">
+<h1>Sample Subnet Question</h1>
+<p>Let’s say that you are instructed to set up a VPC and a subnet inside
+of it. The VPC is expected to hold no more than 130 possible instances,
+and the subnet no more than 66. Create the smallest possible subnet and
+VPC that you can.</p>
+<ol type="1">
+<li><p>What will be the CIDR of the VPC?</p></li>
+<li><p>What will be the CIDR of the subnet?</p></li>
+<li><p>How many total usable addresses will the subnet have? For this
+exercise, exclude the network address.</p></li>
+<li><p>What is the range of usable addresses in the subnet?</p></li>
+</ol>
+</section>
+<section id="sample-subnet-question-1" class="slide level1">
+<h1>Sample Subnet Question</h1>
+<ul>
+<li>VPC holds <strong>no more than 130</strong> instances, what’s the
+smallest number of bits that will hold that number?</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">127</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="answer" class="slide level1">
+<h1>Answer</h1>
+<dl>
+<dt>0111 1111</dt>
+<dd>
+This equals 127, not enough!
+</dd>
+<dt>1111 1111</dt>
+<dd>
+This equals 255, this is our answer! <strong>We need 8 bits to hold the
+addresses of 130 instances</strong>.
+</dd>
+</dl>
+<p>Since it isn’t specified, we can use 10.3.45.0/24.</p>
+<p><strong>32 bits total - 8 bits = 24 bits.</strong></p>
+</section>
+<section id="answer-ii" class="slide level1">
+<h1>Answer II</h1>
+<p>Within that VPC, we are going to make a <em>further division</em> and
+create a smaller subnet, which will use a portion of those 255 possible
+addresses. <strong>No more than 66</strong>.</p>
+<p>What’s the smallest number of bits that will hold that number?</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">127</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="answer-ii-1" class="slide level1">
+<h1>Answer II</h1>
+<p>0111 1111 = 127, again significantly more than 66 but it’s important
+not to run out!</p>
+<p>32 bits - 7 bits = 25. Our CIDR is 10.3.45/25.</p>
+</section>
+<section id="answer-iii" class="slide level1">
+<h1>Answer III</h1>
+<p>127 - 2 = 125</p>
+<p>Address range is this:</p>
+<p>000 0000 to 111 1111</p>
+<p>In Decimal:</p>
+<p>0 to 127. <em>Except that the very top and very bottom of that range
+aren’t usable! So:</em></p>
+<p><strong>10.3.45.1 to 10.3.45.126</strong>.</p>
+</section>
+<section id="amis-vs.-.iso" class="slide level1">
+<h1>AMIs Vs. .iso</h1>
+<p>Q: How do you install an Operating system, when there is no Operating
+System?</p>
+</section>
+<section id="amis-vs.-.iso-1" class="slide level1">
+<h1>AMIs Vs. .iso</h1>
+<p>A: A <em>bootable</em> drive. CD/DVD or USB Thumb drive.</p>
+<p>Our BIOS will at the very least be able to boot this drive, allowing
+us to install the operating system.</p>
+</section>
+<section id="how-do-we-represent-a-bootable-drive" class="slide level1">
+<h1>How do we represent a bootable drive?</h1>
+<p>A: An .iso file.</p>
+</section>
+<section id="how-is-it-different-from-an-ami" class="slide level1">
+<h1>How is it different from an AMI?</h1>
+<ul>
+<li>Did you have to install Linux on any AWS instance?</li>
+</ul>
+</section>
+<section id="elastic-ips" class="slide level1">
+<h1>Elastic IPs</h1>
+<ul>
+<li>What is DHCP, by the way?</li>
+<li>What is the opposite of a <em>Dynamic</em> IP address?</li>
+<li>When we are using SSH, what is the downside of your IP address
+always changing?</li>
+</ul>
+</section>
+<section id="elastic-ips-1" class="slide level1">
+<h1>Elastic IPs</h1>
+<ul>
+<li>Elastic IPs <em>cost money</em> when you aren’t using them.</li>
+</ul>
+</section>
+<section id="debugging-port-forwarding" class="slide level1">
+<h1>Debugging Port Forwarding</h1>
+<p>What steps did we follow to allow us to SSH <code>ww</code>?</p>
+</section>
+<section id="making-a-connection-even-more-secure" class="slide level1">
+<h1>Making A Connection Even More Secure</h1>
+<p>Q: What makes something <em>insecure</em>?</p>
+<ul>
+<li>Hackers know the port</li>
+<li>Hackers know the user with root privileges (no password is
+required!)</li>
+<li>System is accessible from anywhere on the Internet</li>
+<li>password is <code>password123</code> or something <a
+href="https://nordpass.com/most-common-passwords-list/">from this
+list</a></li>
+</ul>
+</section>
+<section id="what-steps-do-we-already-take" class="slide level1">
+<h1>What Steps Do We Already Take?</h1>
+<ul>
+<li>Hackers know the port</li>
+<li><del>Hackers know the user with root privileges (no password is
+required!)</del></li>
+<li>System is accessible from anywhere on the Internet</li>
+<li><del>password is <code>password123</code> or something</del></li>
+</ul>
+</section>
+<section id="advantages-and-drawbacks-of-the-cloud"
+class="slide level1">
+<h1>Advantages And Drawbacks of The Cloud</h1>
+<p>If you missed the first lecture, you most likely gave me an answer
+from the perspective of an <em>end user</em>:</p>
+<ul>
+<li>backups are easy</li>
+<li>“efficient”</li>
+<li>“but you need an network connection”</li>
+</ul>
+<p>None of these answers are specific to <em>The Cloud</em> Versus
+<em>Doing It Yourself</em>. Think like a business!</p>
+</section>
+<section id="more-questions" class="slide level1">
+<h1>More Questions?</h1>
+<ul>
+<li>I’m not interested in <em>haggling over single marks.</em></li>
+<li>However, if you think I got it wrong, be prepared to <em>explain
+why</em>.</li>
+<li>If you want more clarification, I’ll be happy to explain more.</li>
+</ul>
+<p>Still confused about subnetting? Another <a
+href="https://youtu.be/ecCuyq-Wprchttps://youtu.be/ecCuyq-Wprc">video</a></p>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Please don’t call this number, btw.<a href="#/fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Eric Brauer">
+  <title>Introduction to the Course</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Introduction to the Course</h1>
+  <p class="author">Eric Brauer</p>
+  <p class="date">OPS345</p>
+</section>
+
+<section id="open-system-application-server" class="slide level1">
+<h1>Open System Application Server</h1>
+<h2 id="fall-2024">Fall 2024</h2>
+</section>
+<section id="overview" class="slide level1">
+<h1>Overview</h1>
+<ul>
+<li>Introduction and Learning Outcomes</li>
+<li>Course Evaluation and Promotion Policy</li>
+<li>Online Format</li>
+<li>Lab Submissions</li>
+<li>Quizzes and Tests</li>
+<li>Assignments</li>
+<li>Course Policies</li>
+</ul>
+</section>
+<section id="introduction" class="slide level1">
+<h1>Introduction</h1>
+<p>This subject teaches the maintenance and administration of a Linux
+server. Students will learn to install and upgrade the operating system
+software, set up user accounts, manage current files systems, back up
+and restore files, install and configure servers, modify system start-up
+sequences, administrate common services and modify basic network
+configurations. Students will also be able to modify the configurations
+using scripting tools.</p>
+</section>
+<section id="learning-outcomes" class="slide level1">
+<h1>Learning Outcomes</h1>
+<ul>
+<li>Install software to provide end-users with access to commonly used
+networking services.</li>
+<li>Configure various client/server software packages to provide
+file-sharing and interoperability between various platforms.</li>
+<li>Diagnose malfunctions with computers and the network to ensure the
+maximum availability of network services.</li>
+<li>Implement data/device recovery policies to ensure minimal network
+downtime and data loss.</li>
+<li>Configure authentication and logging services to ensure secure
+access to a network and provide network monitoring.</li>
+</ul>
+</section>
+<section id="course-evaluation" class="slide level1">
+<h1>Course Evaluation</h1>
+<table>
+<thead>
+<tr class="header">
+<th>Assessment</th>
+<th>Description</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Labs</td>
+<td>8 x 1.5% each</td>
+<td>12%</td>
+</tr>
+<tr class="even">
+<td>Test</td>
+<td>1 x 20% each</td>
+<td>20%</td>
+</tr>
+<tr class="odd">
+<td>Assignments</td>
+<td>2 x 17%</td>
+<td>34%</td>
+</tr>
+<tr class="even">
+<td>Quizzes</td>
+<td>4 x 2.5% each</td>
+<td>10%</td>
+</tr>
+<tr class="odd">
+<td>Final Assessment</td>
+<td>1 x 25%</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="promotion-policy" class="slide level1">
+<h1>Promotion Policy</h1>
+<ul>
+<li>Complete all assignments in a satisfactory manner</li>
+<li>Achieve 50% in the course overall</li>
+</ul>
+</section>
+<section id="class-format" class="slide level1">
+<h1>Class Format</h1>
+<ul>
+<li>Two classes per week</li>
+<li>First (online) class is lecture</li>
+<li>Second class is lab</li>
+</ul>
+</section>
+<section id="lectures" class="slide level1">
+<h1>Lectures</h1>
+<ul>
+<li>Lectures are performed live on some online video platform,
+recordings will be available.</li>
+<li>Attendance is <em>not</em> mandatory, but <em>recommended</em>. If
+you’re not able to attend a live lecture, you don’t have to tell me, but
+do watch the recording when you can in order to not fall behind.</li>
+</ul>
+</section>
+<section id="labs" class="slide level1">
+<h1>Labs</h1>
+<ul>
+<li>Second class is treated as a lab period.</li>
+<li>This is a <em>perfect time for questions</em>, and to get unblocked
+if something’s going wrong.</li>
+<li>This will be in-person.</li>
+<li>there will demonstrations, additional questions, discussion,
+etc.</li>
+</ul>
+</section>
+<section id="lab-instructions" class="slide level1">
+<h1>Lab Instructions</h1>
+<ul>
+<li>This course is about <em>learning by doing</em>. So most of our time
+will be spent on the labs.</li>
+<li>Lab instructions are found on the <strong>Wiki</strong> which you
+should bookmark.</li>
+<li>Pay close attention to the <strong>Submission
+Requirements</strong>.</li>
+<li>Complete the Submission on Blackboard.</li>
+</ul>
+<h2
+id="labs-that-are-partially-complete-will-only-earn-you-partial-marks.">Labs
+that are partially complete will only earn you partial marks.</h2>
+</section>
+<section id="lab-deadlines" class="slide level1">
+<h1>Lab Deadlines</h1>
+<ul>
+<li>Labs are on the weekly schedule. For example Lab 1 is scheduled for
+Week 2.</li>
+<li>If you miss the deadline, you can still submit but there will be a
+late penalty of -50%.</li>
+</ul>
+</section>
+<section id="quizzes-and-tests" class="slide level1">
+<h1>Quizzes and Tests</h1>
+<ul>
+<li>Quizzes are based on labs, so if you are falling behind you won’t do
+well.</li>
+<li>Quizzes will be done in-person. <strong>No Exceptions</strong>.</li>
+<li>No communication between students is allowed. No tools such as LLMs
+are permitted.</li>
+</ul>
+</section>
+<section id="assignments" class="slide level1">
+<h1>Assignments</h1>
+<ul>
+<li>Assignments must be completed in order to pass the course.</li>
+<li>Please ask me for assistance if you get stuck!</li>
+</ul>
+</section>
+<section id="course-policies" class="slide level1">
+<h1>Course Policies</h1>
+<ul>
+<li>Getting Help</li>
+<li>Asking Questions</li>
+<li>Late Policy</li>
+<li>Missed Assessments</li>
+<li>Academic Integrity</li>
+</ul>
+</section>
+<section id="faculty-information" class="slide level1">
+<h1>Faculty Information</h1>
+<p>This is me:</p>
+<p>Eric Brauer <a
+href="eric.brauer@senecapolytechnic.ca">eric.brauer@senecapolytechnic.ca</a>
+<a href="https://ericbrauer.github.io">website</a></p>
+<p>Email me or ask me in class. Please allow <strong>24 hours</strong>
+for a reply.</p>
+</section>
+<section id="getting-help" class="slide level1">
+<h1>Getting Help</h1>
+<p>Getting stuck is all part of the process! I appreciate getting your
+questions and feedback, less so the night before a deadline… 😑</p>
+<p><strong>Come to class</strong>. Additionally, you could:</p>
+<ul>
+<li>Contact the <a
+href="https://www.senecacollege.ca/ce/info/services/learning-centre.html">Learning
+Centre</a> for tutoring, learning groups, etc.</li>
+<li>Ask me! Well before the deadline! We will discuss common issues and
+questions in tutorial.</li>
+</ul>
+</section>
+<section id="getting-help-ii" class="slide level1">
+<h1>Getting Help II</h1>
+<p>In order to resolve your issue, I need information. When you contact
+me for help, please provide:</p>
+<ol type="1">
+<li>What part of the lab/assignment are you working on?</li>
+<li>What output/result are you expecting?</li>
+<li>What are you getting instead of the expected result?</li>
+<li>What specific error messages are you getting?</li>
+<li><strong>What have you already tried?</strong></li>
+</ol>
+</section>
+<section id="asking-questions-about-the-course" class="slide level1">
+<h1>Asking Questions About The Course</h1>
+<h2 id="check-these-introduction-slides-first">Check These Introduction
+Slides First!!</h2>
+<p><em>If your question is answered in these slides, I will not respond
+to your email</em>.</p>
+<h2
+id="if-your-question-isnt-in-these-slides-please-ask-during-class.">If
+your question isn’t in these slides, please ask during class.</h2>
+</section>
+<section id="asking-questions-about-an-assessment" class="slide level1">
+<h1>Asking Questions About An Assessment</h1>
+<ul>
+<li>Quizzes are designed to check your comprehension, and are useful for
+preparing for the big tests! I will always provide feedback.</li>
+<li>If you don’t see feedback, please let me know (it’s probably an
+issue with Blackboard).</li>
+</ul>
+<h2
+id="i-do-not-change-quiztest-scores-unless-there-is-a-problem-with-the-math">I
+DO NOT CHANGE QUIZ/TEST SCORES UNLESS THERE IS A PROBLEM WITH THE
+MATH</h2>
+<p><em>If you believe there’s a problem with the score I gave you,
+<strong>be prepared to demonstrate</strong> that your answer is
+correct</em>.</p>
+<p>Unsolicited emails asking for marks <strong>without cause</strong>
+will be ignored</p>
+</section>
+<section id="email-etiquette" class="slide level1">
+<h1>📭 Email Etiquette 🙄</h1>
+<h2 id="yes-apparently-this-is-needed"><em>Yes, apparently this is
+needed</em></h2>
+<ul>
+<li>Please tell me what <em>section</em> you are in.</li>
+<li>Please keep your message <em>brief</em>. You should include your
+request/question in the subject line.</li>
+<li>Please <em>review</em> the course introduction slides and
+announcements before you send an email.</li>
+<li><em>Don’t use an LLM to generate your message</em>. What it
+communicates to me if that you don’t actually care about whatever you’ve
+asked it to generate words about. (If you did care, you would spend time
+writing the email yourself).</li>
+<li>If you don’t receive a reply, the answer to whatever you asked is
+<strong>NO</strong> or <strong>Come to class and we’ll figure it
+out</strong>.</li>
+</ul>
+</section>
+<section id="what-not-to-do" class="slide level1">
+<h1>What <em>Not</em> To Do</h1>
+<p>If you have problems, <strong>Do Not</strong> delete your instances
+and start over.</p>
+<ul>
+<li>Doesn’t fix the actual issue</li>
+<li>Students will forget an important step the second time</li>
+<li><strong>You can’t do this in the workplace</strong> you will be
+fired</li>
+</ul>
+</section>
+<section id="late-policy" class="slide level1">
+<h1>Late Policy</h1>
+<ul>
+<li>Labs can be submitted late but will only get partial marks
+(50%).</li>
+<li>For assignments, missing a deadline means a -10% deduction in mark
+per business day.</li>
+<li>For special circumstances, please contact me <strong>well in
+advance</strong>.</li>
+</ul>
+</section>
+<section id="missed-quizzestests" class="slide level1">
+<h1>Missed Quizzes/Tests</h1>
+<ul>
+<li>There are a few legitimate reasons for missing an assessment. These
+must be backed up with documentation.</li>
+<li>If you are going to miss an assessment, <strong>you must let me know
+before the assessment has started.</strong></li>
+<li>If you miss a quiz with a legitimate reason, you will be exempt from
+the quiz.</li>
+<li>If you miss a test with a legitimate reason, you will be required to
+write a make-up assessment.</li>
+</ul>
+</section>
+<section id="academic-integrity" class="slide level1">
+<h1>Academic Integrity</h1>
+<p>The college has a <strong>zero tolerance policy</strong> in regards
+to cheating. All work submitted must be your own. There is no
+communication between students allowed during assessments.</p>
+<ul>
+<li>Plagiarism in the workplace will get you fired</li>
+<li>On the other hand, it is expected that junior developers will make
+mistakes</li>
+<li>Ask for help instead. Honest efforts will get partial marks,
+plagiarism will get you an academic integrity violation and a zero / F /
+Discharged from the college.</li>
+</ul>
+</section>
+<section id="what-makes-it-plagiarism" class="slide level1">
+<h1>What Makes It Plagiarism?</h1>
+<ul>
+<li>When providing help to other students, use <em>pseudocode</em> to
+explain a concept. Find a similar example.</li>
+<li>Generally, sharing a line or two of code is not an issue.
+<strong>However if you are sharing a script file, you are committing an
+academic integrity violation.</strong></li>
+</ul>
+</section>
+<section id="next-steps" class="slide level1">
+<h1>Next Steps</h1>
+<ul>
+<li>Complete course introduction quiz</li>
+<li>Bookmark the Wiki</li>
+<li>Set up your Linux VM</li>
+<li>Create AWS account using email sent to you</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="DNS and SSL Certificates">
+  <title>OPS345</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">OPS345</h1>
+  <p class="author">DNS and SSL Certificates</p>
+  <p class="date">Eric Brauer</p>
+</section>
+
+<section id="what-is-dns" class="slide level1">
+<h1>What Is DNS?</h1>
+<p>Machines use IP addresses:</p>
+<p><code>10.3.45.109</code></p>
+<p>Humans prefer URLs:</p>
+<p><code>https://learn.senecacollege.ca</code></p>
+<p>DNS turns one into the other.</p>
+</section>
+<section id="introduction-to-dns" class="slide level1">
+<h1>Introduction to DNS</h1>
+<p><em>Of course, with most things networking, the implementation is
+much more complex than the concept.</em></p>
+<p>DNS isn’t just looking things up in a phone book… it is more
+decentralized than that.</p>
+</section>
+<section id="introduction-to-dns-1" class="slide level1">
+<h1>Introduction to DNS</h1>
+<figure>
+<img data-src="1-dns-hierarchy.png"
+alt="Delegation in a cute zine form" />
+<figcaption aria-hidden="true">Delegation in a cute zine
+form</figcaption>
+</figure>
+<p>BTW, I bought this zine, and you can <a
+href="https://wizardzines.com/comics/">support the artist</a></p>
+</section>
+<section id="in-a-nutshell-what-does-it-mean-for-a-lowly-sysadmin"
+class="slide level1">
+<h1>In A Nutshell, What Does It Mean For A Lowly SysAdmin?</h1>
+<ol type="1">
+<li>If you want to associate an IP address to a URL, it usually costs
+<strong>$$</strong>.</li>
+<li>We can choose to set up a private DNS server for <em>internal
+use</em>, meaning we can associate <em>private</em> IP addresses with
+URLs.</li>
+</ol>
+<p>For this course, you will use the Bindistrar credentials I emailed
+you earlier in the semester.</p>
+</section>
+<section id="cli-tools" class="slide level1">
+<h1>CLI Tools</h1>
+<p>There are several tools demonstrated in the lab, but let’s focus on
+<code>dig</code>.</p>
+<p>The full output can tell you if there was an error, but you can also
+simplify the response:</p>
+<figure>
+<img data-src="easy-dig.png" alt="easy-dig" />
+<figcaption aria-hidden="true">easy-dig</figcaption>
+</figure>
+</section>
+<section id="dns-records" class="slide level1">
+<h1>DNS Records</h1>
+<p>A:: translates URL to <strong>IPv4</strong>.</p>
+<p>AAAA:: translates URL to <strong>IPv6</strong>.</p>
+<p>CNAME:: translates URL to another <strong>domain name</strong>.</p>
+<p>In other words, redirects a URL request to another URL.</p>
+</section>
+<section id="fixing-nextcloud" class="slide level1">
+<h1>Fixing Nextcloud</h1>
+<ul>
+<li>Read the error message carefully.</li>
+<li><strong><em>Read the error message carefully
+always!!</em></strong></li>
+<li>There is a php file, so do you open it from the browser?</li>
+<li>No, use vim.</li>
+<li>Omit the ‘www’ from the beginning of the domain (or don’t, you’ll
+see the difference at the end).</li>
+</ul>
+</section>
+<section id="what-is-encryption" class="slide level1">
+<h1>What Is Encryption?</h1>
+<p>A: Take data, convert it into <strong>junk</strong> that can’t be
+understood. In a way that can be converted <strong>back into
+data</strong>, but only by certain people you trust!</p>
+<p><code>abc</code> 👉 <code>xnc</code></p>
+<p>The pointing hand implies a <em>key</em>, some algorithm that can
+convert <em>sense</em> into <em>nonsense</em>, <strong>and back
+again</strong>, in a way that can’t be understood by an outside
+observer.</p>
+</section>
+<section id="symmetric-encryption" class="slide level1">
+<h1>Symmetric Encryption</h1>
+<p>An example would be a <em>Caesar Cypher</em>, basically the algorithm
+is ‘every character gets turned into the next letter’.</p>
+<p><code>cat</code> 👉 ‘dbu’</p>
+<ul>
+<li>the key to <em>decrypt</em> is just the <em>inverse</em> of the key
+to <em>encrypt</em>.</li>
+<li>this code is cracked by <em>third-graders</em> for <em>fun</em>. So
+it’s not secure.</li>
+</ul>
+</section>
+<section id="asymmetric-encryption" class="slide level1">
+<h1>Asymmetric Encryption</h1>
+<ul>
+<li>Instead of one key, there are <em>two</em>.</li>
+<li>One key <em>encrypts</em>, to other <em>decrypts</em>.</li>
+<li>This makes more interesting things possible!</li>
+</ul>
+</section>
+<section id="encrypting-with-a-public-key" class="slide level1">
+<h1>Encrypting With A Public Key</h1>
+<ul>
+<li>One key becomes my <em>public key</em>. I give this to Bob.</li>
+<li>One key becomes my <em>private key</em>. I keep this one safe.</li>
+<li>Anyone can <em>lock</em> messages, but I’m the only one who can
+<em>unlock</em> it.</li>
+</ul>
+<p><strong>Therefore: people can be confident only I am able to read the
+message.</strong></p>
+</section>
+<section id="encrypting-with-a-public-key-1" class="slide level1">
+<h1>Encrypting With A Public Key</h1>
+<pre class="mermaid"><code>graph LR;
+
+UM[Bob&#39;s Computer]
+PUK{Eric&#39;s Public Key}
+EM[The Internet]
+PRK{Eric&#39;s Private Key}
+UNM[Eric&#39;s Computer]
+
+UM-- &quot;Dear Eric...&quot; --&gt;PUK;
+PUK-- &quot;xrrgsdlkjdfj&quot; --&gt;EM;
+EM-- &quot;xrrgsdlkjdfj&quot; --&gt;PRK;
+PRK-- &quot;Dear Eric...&quot; --&gt;UNM;
+</code></pre>
+</section>
+<section id="encrypting-with-a-private-key" class="slide level1">
+<h1>Encrypting With A Private Key</h1>
+<ul>
+<li>If Bob uses his private key to lock a message, <em>anyone</em> can
+unlock and read it (as long as they have his public key).</li>
+<li>However, if I can unlock his message using his public key, that
+means it could have <em>only been created</em> with Bob’s private
+key.</li>
+</ul>
+<p><strong>Therefore: I can be confident that this message actually came
+from Bob and nobody else.</strong></p>
+</section>
+<section id="encrypting-with-a-private-key-1" class="slide level1">
+<h1>Encrypting With A Private Key</h1>
+<pre class="mermaid"><code>graph LR;
+
+UM[Bob&#39;s Computer]
+PUK{Bob&#39;s Private Key}
+EM[The Internet]
+PRK{Bob&#39;s Public Key}
+UNM[Eric&#39;s Computer]
+
+UM-- &quot;Dear Eric...&quot; --&gt;PUK;
+PUK-- &quot;xrrgsdlkjdfj&quot; --&gt;EM;
+EM-- &quot;xrrgsdlkjdfj&quot; --&gt;PRK;
+PRK-- &quot;Dear Eric...&quot; --&gt;UNM;
+</code></pre>
+</section>
+<section id="putting-it-together" class="slide level1">
+<h1>Putting It Together</h1>
+<ul>
+<li>Bob writes a message, and locks it with both <strong>Bob’s Private
+Key</strong> and <strong>Eric’s Public Key</strong>.</li>
+<li>Only Eric can read it, only Bob could have sent it.</li>
+<li>Eric does the same</li>
+<li><strong>We have established secure two-way
+communication</strong></li>
+</ul>
+</section>
+<section id="even-more" class="slide level1">
+<h1>Even More</h1>
+<h2
+id="wow-the-way-im-going-on-about-this-seems-like-it-might-be-important">Wow,
+the way I’m going on about this, seems like it might be important…</h2>
+<p><a href="https://youtu.be/GSIDS_lvRv4">Watch This Video</a></p>
+</section>
+<section id="asymmetric-encryption-using-ssh" class="slide level1">
+<h1>Asymmetric Encryption Using SSH</h1>
+<ul>
+<li>If you encrypt using your private key, and I have your public key,
+then I can <strong>verify your identity</strong>.</li>
+<li>If I encrypt using <em>my private key and your public key</em>, then
+we can be sure that your traffic is safe.</li>
+<li><em>But what if I can’t be sure I have your actual public
+key?</em></li>
+<li>When we establish an SSH connection, you may get a <strong>Man In
+The Middle</strong> Warning.</li>
+</ul>
+</section>
+<section id="applying-encryption-to-the-internet-https"
+class="slide level1">
+<h1>Applying Encryption To The Internet (HTTPS)</h1>
+<ul>
+<li>What about when we visit a website? We can’t revert to passwords if
+we’ve never visited before.</li>
+<li>We need a third party that can <strong>vouch for a particular
+website</strong> and certify its public key.</li>
+<li>We call these Certificate Authorities (CA)s.</li>
+</ul>
+</section>
+<section id="selecting-a-certificate-authority-ca" class="slide level1">
+<h1>Selecting A Certificate Authority (CA)</h1>
+<ul>
+<li>Most require $$$, but <strong>Let’s Encrypt</strong> does not.</li>
+<li>You can generate a cert using a command line utility</li>
+<li>Package is called <code>certbot</code>, and it should be available
+in <strong>Linux Mint</strong> repos.</li>
+<li>You <em>could</em> install <code>certbot</code> on one of your
+instances (I did), but it takes extra steps and I don’t recommend
+it.</li>
+</ul>
+</section>
+<section id="running-certbot" class="slide level1">
+<h1>Running Certbot</h1>
+<ul>
+<li>In the instructions, you’ll notice some <code>dig</code> commands
+partway through the process.</li>
+<li>I recommend you finish the process before running <code>dig</code>
+(especially if you’re generating certs on an instance).</li>
+</ul>
+</section>
+<section id="http-vs.-https" class="slide level1">
+<h1>HTTP vs. HTTPS</h1>
+<p>Once you have completed Apache configuration changes, you’re not
+done!</p>
+<ul>
+<li>Recall that HTTP uses port <strong>80</strong>, but HTTPS uses port
+<strong>443</strong>.</li>
+<li>That’s right, you’re modifying <code>iptables</code> and security
+groups again </li>
+</ul>
+</section>
+<section id="conclusion" class="slide level1">
+<h1>Conclusion</h1>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

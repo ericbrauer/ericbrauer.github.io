@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Email Server: IMAP">
+  <title>OPS345</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">OPS345</h1>
+  <p class="author">Email Server: IMAP</p>
+  <p class="date">Eric Brauer</p>
+</section>
+
+<section id="reviewing-how-email-works" class="slide level1">
+<h1>Reviewing How Email Works</h1>
+<p><img data-src="Email-servers.png" /></p>
+</section>
+<section id="reviewing-how-email-works-1" class="slide level1">
+<h1>Reviewing How Email Works</h1>
+<ul>
+<li>In lab 6, we completed the top part of the first <em>yellow
+box</em>: we essentially set up our MTA.</li>
+<li>In lab 7, we will complete the middle part, which is to set up up
+<em>IMAP</em>.</li>
+</ul>
+</section>
+<section id="smtp-notes" class="slide level1">
+<h1>SMTP Notes</h1>
+<p>MTA:: <em>Mail Transfer Agent</em>. These essentially handle mail
+between themselves, once receiving the mail from <em>Mail User
+Agents</em> (which would be something like e-mail). SMTP is used.</p>
+<ul>
+<li><strong>Note</strong>: data sent between MTAs is
+<em>unencrypted</em>. Seems dangerous! Check the lab for more
+details.</li>
+</ul>
+</section>
+<section id="imap" class="slide level1">
+<h1>IMAP</h1>
+<p>If SMTP is like when your package is sent between two processing
+centres, IMAP is like when it is put on a mail truck and delivered to
+your door. Essentially it is the first (or last) kilometre before
+delivery.</p>
+</section>
+<section id="imap-vs-pop3" class="slide level1">
+<h1>IMAP vs POP3</h1>
+<p>Both of these protocols allow you to sync email from a server to your
+local machine, where you can interact with it using a program like
+<em>Thunderbird</em>.</p>
+<p>POP3:: Only supports one-way synchronisation. Lets you see the email,
+but doesn’t modify the copy stored on the server.</p>
+<p>IMAP:: Allows such <em>ground-breaking</em> features such as marking
+an email as read, deleting or moving emails, and having those changes be
+pushed to the server as well.</p>
+</section>
+<section id="security" class="slide level1">
+<h1>Security</h1>
+<p>As we have stated, traffic between MTAs is unencrypted, and the world
+waits for a proper solution to this issue (just like we had to wait for
+something like <strong>Let’s Encrypt</strong> to make HTTPS accessible
+to personal sites).</p>
+<p>However, a more likely attach vector is questionable Wifi connections
+such as those you get in a coffee shop (hotspots pretending to be hosted
+by a coffee shop). So we will focus on encrypting that traffic.</p>
+<p>When we speak of security, we <em>very rarely</em> talk in absolutes,
+because there are none. We can only do what we can.</p>
+</section>
+<section id="email-client" class="slide level1">
+<h1>Email Client</h1>
+<p>As stated before, we are going you to install
+<strong>Thunderbird</strong> on your host machine. This email client is
+cross-platform, so it should work on either Linux or Windows.</p>
+<p>Thunderbird requires you to set up both IMAP for incoming messages
+and SMTP for outgoing messages. It will also ask for authentication
+credentials so that these interactions are secure.</p>
+</section>
+<section id="lets-encrypt-again" class="slide level1">
+<h1>Let’s Encrypt (Again)</h1>
+<ul>
+<li>You will need to generate a new public key and certificate for your
+<code>email</code> instance (you can’t re-use the one you used for
+<code>www</code>).</li>
+<li>Certs and Keys are associated with a specific Fully-Qualified Domain
+Name, and <strong>email.user.ops345.ca</strong> is different from
+<strong>www.user.ops345.ca</strong>.</li>
+<li>However, you <em>can</em> reuse the cert for different services on
+<code>email</code>.</li>
+</ul>
+</section>
+<section id="configure-postfix-to-use-encryption-key"
+class="slide level1">
+<h1>Configure Postfix to Use Encryption Key</h1>
+<p>When you compose on email on your host machine and hit ‘send’, you
+begin an interaction with your email server. This will require
+<em>authentication</em>. Postfix needs to be configured to accept
+encryption.</p>
+</section>
+<section id="dovecot-configuration" class="slide level1">
+<h1>Dovecot Configuration</h1>
+<p>This is our IMAP Service, and should allow us to view and modify
+messages stored on our server from Thunderbird. This <em>also</em>
+should require us to log in and to use encryption. Fortunately we can
+use the same key we just generated.</p>
+</section>
+<section id="dovecot-ports" class="slide level1">
+<h1>Dovecot Ports</h1>
+<p>We are not setting up POP3, so Dovecot should only be listening on
+ports 143 and 993. Additionally we are going to ignore port 143 since it
+is unencrypted.</p>
+</section>
+<section id="testing-everything" class="slide level1">
+<h1>Testing Everything</h1>
+<ul>
+<li>The easiest way to test IMAP would be to have our <code>email</code>
+instance send an email. This is unfortunately impossible because
+outbound emails are blocked on AWS.</li>
+<li>This is to discourage spammers.</li>
+<li>So in order to test this system: send yourself an email, or send one
+to another user on <code>user.ops345.ca</code>. Watch the logs to verify
+that the message is received, and then see if it appears on
+Thunderbird.</li>
+</ul>
+</section>
+<section id="conclusion" class="slide level1">
+<h1>Conclusion</h1>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

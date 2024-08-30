@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title>test-review-for-students</title>
+  <meta name="author" content="Web Services On AWS">
+  <title>OPS345</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -36,76 +37,148 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide">
+  <h1 class="title">OPS345</h1>
+  <p class="author">Web Services On AWS</p>
+  <p class="date">Eric Brauer</p>
+</section>
 
-<section>
-<section id="final-test" class="title-slide slide level1">
-<h1>Final Test</h1>
-
+<section id="before-you-start" class="slide level1">
+<h1>Before You Start</h1>
+<p><em>Make Sure That You Can SSH to <code>ww</code> Still</em></p>
+<p>(Did you make iptables rules persistent?)</p>
 </section>
-<section id="overview" class="slide level2">
-<h2>Overview</h2>
+<section id="apache" class="slide level1">
+<h1>Apache</h1>
+<p>You’ve already had some experience running a Web Server in OPS245. We
+are using Apache once again in OPS345.</p>
 <ul>
-<li>Worth 30%</li>
-<li>90 minutes</li>
-<li>Covers <em>All Material</em> from the course, <em>except</em> for
-git/GitHub</li>
+<li>install <code>httpd</code></li>
+<li>Review your <code>systemctl</code> commands!</li>
+<li>If you make a change, remember to <em>restart the service</em>.</li>
 </ul>
 </section>
-<section id="what-to-expect" class="slide level2">
-<h2>What To Expect</h2>
+<section id="elastic-block-store" class="slide level1">
+<h1>Elastic Block Store</h1>
+<p>When we are working in The Cloud©, this is the way that we abstract
+<em>file systems</em>.</p>
 <ul>
-<li>Definitions</li>
-<li>Multiple Choice</li>
-<li>Scripting Question</li>
-<li>Fill In The Blanks/Short Answer</li>
+<li>Some EBSes were created when we launched our instances.</li>
+<li>We are going to create one to store our Web Content.</li>
 </ul>
 </section>
-<section id="what-to-study" class="slide level2">
-<h2>What To Study</h2>
+<section id="micro-everything.." class="slide level1">
+<h1>Micro-Everything..!</h1>
+<p>This idea of breaking things down into <em>microservices</em> has
+gained a lot of traction. So our drives are separated from our
+instances, databases are separated from our drives, and so on.</p>
+<p>Why is this useful?</p>
+</section>
+<section id="lvm" class="slide level1">
+<h1>LVM</h1>
+<p>Fortunately for us, we already have some experience dealing with
+drives in this manner. Recall what you learned in OPS245 in regards to
+LVM.</p>
+<p><em>Logical Volume Management</em> gives us the flexibility we need
+to solve problems (like running out of drive space) on the fly, with
+minimal downtime.</p>
+</section>
+<section id="lvm-concepts-review" class="slide level1">
+<h1>LVM Concepts Review</h1>
+<figure>
+<img data-src="lvm-dia.png" alt="Diagram of LVM" />
+<figcaption aria-hidden="true">Diagram of LVM</figcaption>
+</figure>
+</section>
+<section id="lvm-concepts" class="slide level1">
+<h1>LVM Concepts</h1>
 <ul>
-<li>Lecture Slides / Recordings (Mine)</li>
-<li>Lab Instructions</li>
-<li>Your own notes</li>
+<li><em>Physical Volumes</em> are added to a <em>Volume Group</em>.</li>
+<li>The Volume Group becomes a pool of all available storage space.</li>
+<li><em>Logical Volumes</em> are created from the pool of storage space
+in a particular volume group.</li>
+<li>We still need to <em>partition</em> and <em>mount</em> these logical
+volumes before they are usable.</li>
 </ul>
 </section>
-<section id="labs" class="slide level2">
-<h2>Labs</h2>
+<section id="testing-with-links" class="slide level1">
+<h1>Testing With <code>links</code></h1>
 <ul>
-<li>Review what you did and why</li>
-<li>Look at review questions at the end of each lab</li>
-<li>Use the <strong>Textbooks</strong> for more explanation of
-concepts</li>
+<li><code>links</code> is a terminal-based web browser.</li>
+<li><code>localhost</code> will point to your local machine, it lets us
+test HTML/CSS/PHP/Javascript when it’s not actually on the Web yet.</li>
+<li>The next step will be to make sure we can reach your page on the
+Web.</li>
 </ul>
 </section>
-<section id="review-quizzes" class="slide level2">
-<h2>Review Quizzes</h2>
+<section id="removing-public-ip-addresses" class="slide level1">
+<h1>Removing Public IP addresses</h1>
+<p>Did you consider it strange when we set up port forwarding to
+<code>ww</code> even though it already had a public IP address? Here is
+where we remove that address and make sure everything will continue
+working.</p>
+<p>We want our traffic (SSH <em>and</em> Web) to be going through
+<code>router</code>. Unfortunately we can’t remove a public IP address,
+so we need to remove the <code>ww</code> instance.</p>
+</section>
+<section id="create-www" class="slide level1">
+<h1>Create WWW</h1>
 <ul>
-<li>Review Things You Got Wrong</li>
-<li>Correct the issues: Refer to the <em>Course Material</em></li>
-<li>Ask me if in doubt</li>
+<li>Follow the steps from before to set up <code>www</code>. Repetition
+is the mother of all learning!</li>
+<li>Having to repeat a process because of one small wrinkle is also….
+very common in the workplace. 😼</li>
+<li>Fortunately you <em>don’t</em> need to re-create the drive you
+mounted at <code>/var/www</code>, since that is considered independent
+of the instance!</li>
 </ul>
 </section>
-<section id="concepts" class="slide level2">
-<h2>Concepts</h2>
+<section id="man-in-the-middle-attack" class="slide level1">
+<h1>Man In The Middle Attack?!?</h1>
 <ul>
-<li>Using Python builtin functions, and the Python interpreter</li>
-<li>Printing and f-strings</li>
-<li>Datatypes and datatype conversion</li>
-<li>Using input vs. command line arguments</li>
-<li>Control structures (if statements)</li>
-<li>Iterations (while/for loops)</li>
-<li>Iterables (lists, tuples, sets, dictionaries)</li>
-<li>Running shell commands (os.popen, subprocess.Popen, os.system)</li>
-<li>Using methods for each datatype object</li>
-<li>String/list slices</li>
-<li>File I/O</li>
-<li>Exception Handling</li>
-<li>Classes and Objects</li>
-<li>Dunder (Magic) Methods</li>
-<li>Ansible: configuration, inventory files, ad hoc commands,
-playbooks</li>
+<li>Sometimes (depending on OS and configuration), if the fingerprint of
+a machine changes when the IP address has not, you will get an error
+message.</li>
+<li>If you get a message warning of a possible MITM attack, it is
+because <code>ww</code> is gone and <code>www</code> is located at that
+IP address.</li>
+<li>Follow the steps to remove the <code>ww</code> entry from your
+<code>known_hosts</code> file (on your Linux Mint VM) and try
+again.</li>
 </ul>
-</section></section>
+</section>
+<section id="make-sure-you-test" class="slide level1">
+<h1>Make Sure You Test!</h1>
+<p>Lots of things need to be working to complete the lab. A
+checklist:</p>
+<ul>
+<li>Security Group Rule to allow WWW traffic</li>
+<li><code>iptables</code> Rule to allow same</li>
+<li><code>httpd</code> service is running</li>
+<li><code>www-data</code> mounted correctly</li>
+<li><code>php</code> installed</li>
+</ul>
+</section>
+<section id="make-sure-you-test-1" class="slide level1">
+<h1>Make Sure You Test!</h1>
+<p>In addition, when instances reboot there’s a chance that things
+break.</p>
+<ul>
+<li>Are <code>iptables</code> rules persistent?</li>
+<li>Does <code>www-data</code> mount automatically on startup?</li>
+<li>Is the <code>httpd</code> service enabled?</li>
+</ul>
+</section>
+<section id="elastic-ip-reminder" class="slide level1">
+<h1>Elastic IP Reminder</h1>
+<p>Recall that Elastic IPs will cost you money when they are not in use.
+We needed <code>temporary-ip</code> to install stuff on
+<code>www</code>, but that’s not complete.</p>
+<ul>
+<li>Disassociate the elastic IP once you have tested everything and
+completed the lab.</li>
+</ul>
+</section>
     </div>
   </div>
 

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Email Server: SMTP and Postfix">
+  <title>OPS345</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">OPS345</h1>
+  <p class="author">Email Server: SMTP and Postfix</p>
+  <p class="date">Eric Brauer</p>
+</section>
+
+<section id="introduction-email" class="slide level1">
+<h1>Introduction: Email</h1>
+<ul>
+<li><em>Ain’t Going Anywhere!</em></li>
+<li>Like a lot of early Internet stuff, has evolved over time.</li>
+<li>Used to be we’d read email by logging in to the MTA server and
+reading it from the command line.</li>
+<li>Later on, other protocols for downloading email from MTA to your
+computer was developed.</li>
+<li>These days, we might use POP3/IMAP with a <em>client</em> like
+Thunderbird or Outlook.</li>
+<li>Or we might just use the browser to access email, like Gmail or…
+Outlook.</li>
+</ul>
+</section>
+<section id="understanding-the-diagram" class="slide level1">
+<h1>Understanding The Diagram</h1>
+<ul>
+<li>For this course, we are interested in what happens between the
+<em>Yellow Boxes</em>.</li>
+<li>Communication between MTAs is going to required a DNS query,
+slightly different from HTTPS requests.</li>
+<li>SMTP is still the protocol we use for the actual sending of
+mail.</li>
+<li>POP3/IMAP is covered in a later lab.</li>
+</ul>
+</section>
+<section id="smtp" class="slide level1">
+<h1>SMTP</h1>
+<ul>
+<li>Old</li>
+<li>Still good</li>
+<li>Uses port 25</li>
+<li>To set up an Email server that can handle SMTP, we will use
+<em>Postfix</em>.</li>
+</ul>
+</section>
+<section id="setting-up-your-email-instance" class="slide level1">
+<h1>Setting Up Your <code>email</code> Instance</h1>
+<ul>
+<li>You know these steps already. Just create a new instance, make sure
+it’s reachable, and set up an Elastic IP.</li>
+<li>Let’s assume I’m going to send you an email from my Gmail
+account.</li>
+<li>You’ll need <em>two</em> new DNS entries so that my email can find
+your server:
+<ul>
+<li>We need an MX entry that tells Gmail what URL is handling email that
+ends in <code>@user.ops345.ca</code>.</li>
+<li>Then we need an A entry that tell Gmail what IP Address is
+associated with that URL.</li>
+</ul></li>
+</ul>
+</section>
+<section id="exercise-caution" class="slide level1">
+<h1>Exercise Caution ⚠</h1>
+<p>The steps in the lab here will ask you to mount an EBS, then move the
+contents of <code>/home</code> to that EBS, and then <em>replace</em>
+your home with that EBS. It’s very easy to break your server here, you
+will have to create a new <code>email</code> instance!</p>
+<ol type="1">
+<li>Look at what’s in your <code>/home</code> directory before moving
+files (including ownership and permission).</li>
+<li>Transfer the contents.</li>
+<li>Verify that the contents of <code>/tmp/home</code> match what was
+there before. Including the <strong>Public Key</strong>.</li>
+<li>Test <code>fstab</code> before rebooting.</li>
+</ol>
+</section>
+<section id="postfix" class="slide level1">
+<h1>Postfix</h1>
+<p>The DNS entries mean that now, my Gmail knows where to find your
+<code>email</code> server. It’s knocking on your door. Now we need just
+need to answer it.</p>
+<p>Postfix is already installed on your instances, but by default only
+handles email on <em>localhost</em> (ie, students emailing each other on
+Matrix). Follow the steps in the lab to allow the server to handle any
+email incoming on port 25, with <code>user.ops345.ca</code> as the
+domain.</p>
+<p>Use <code>ss</code> (it has replaced <code>netstat</code>) to check
+your work.</p>
+</section>
+<section id="quick-note-about-the-telnet-test" class="slide level1">
+<h1>Quick Note About the Telnet Test</h1>
+<p>I’m not on Rogers, but it still didn’t work for me. You can
+<em>probably</em> skip this step.</p>
+</section>
+<section id="aliases" class="slide level1">
+<h1>Aliases</h1>
+<p>Basically, when emails get sent to user <code>root</code>, you want
+to redirect that to your username (because you <em>are</em> the admin,
+after all!). This should be a simple step.</p>
+</section>
+<section id="conclusion" class="slide level1">
+<h1>Conclusion</h1>
+<p>If all goes according to plan, you should be able to send an email
+from any account you own, and you should be able to read your
+<code>email</code> logs to see it received by your SMTP server. If
+not:</p>
+<ul>
+<li>Are you seeing any log activity when you expect an email to arrive?
+Is it going to the wrong user?</li>
+<li>Use <code>ss</code> to verify that your SMTP port is open.</li>
+<li>Use <code>systemctl status</code> to make sure that Postfix didn’t
+encounter an error.</li>
+<li>Use <code>dig</code> to make sure that DNS entries are correct.</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Introduction to AWS">
+  <title>OPS345</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">OPS345</h1>
+  <p class="author">Introduction to AWS</p>
+  <p class="date">Eric Brauer</p>
+</section>
+
+<section id="at-this-point" class="slide level1">
+<h1>At This Point…</h1>
+<p>…You should have some sort of Linux platform working and ready to go.
+You should have a terminal, and be able to run SSH commands.</p>
+<p>The rest of our VMs will be hosted <em>in the Cloud</em>.</p>
+</section>
+<section id="just-what-is-the-cloud" class="slide level1">
+<h1>Just What Is The Cloud?</h1>
+<p>A: Somebody else’s computer. Or rather, somebody else’s extensive
+arrangement of computing power.</p>
+<p>Most businesses are moving from <em>onsite solutions</em> (ie. having
+their own servers and infrastructure) to solutions like AWS (where
+Amazon provides them everything). Why?</p>
+</section>
+<section id="history-lesson" class="slide level1">
+<h1>History Lesson</h1>
+<p>When companies first moved into online spaces, they most likely
+setting up their own web servers, email servers and so on.</p>
+<ul>
+<li>Your website was static, it probably just pointed to your telephone
+number maybe a list of stock or services.</li>
+<li>Your web traffic was in the <em>hundreds</em> (if that!)</li>
+<li>One machine (and one employee) might be sufficient!</li>
+</ul>
+</section>
+<section id="history-lesson-1" class="slide level1">
+<h1>History Lesson</h1>
+<ul>
+<li>Pets Versus Livestock.</li>
+<li>This solution doesn’t <em>scale</em>.</li>
+</ul>
+</section>
+<section id="supply-versus-demand" class="slide level1">
+<h1>Supply Versus Demand</h1>
+<ul>
+<li>The majority of our traffic arrives at peak times (daylight
+hours).</li>
+<li>Customers have high expectations of <em>availability</em> for our
+services. 99.99% uptime.</li>
+<li>A computer uses power as long as it is running, whether it is doing
+anything or not. If it’s <em>one</em> machine, this doesn’t matter so
+much, but what about 10,000?</li>
+</ul>
+</section>
+<section id="the-issue" class="slide level1">
+<h1>The Issue</h1>
+<p>You need computing resources to accommodate peak demand, but don’t
+want to waste resources when demand eases. So essentially we want our
+supply of computing to be as flexible as our requirements.</p>
+</section>
+<section id="the-solution-from-a-managers-perspective"
+class="slide level1">
+<h1>The Solution (From A Manager’s Perspective)</h1>
+<p>Why maintain our own hardware and infrastructure when we can just put
+it in the Cloud and pay Amazon per minute? (The same way we pay for
+electricity)</p>
+</section>
+<section id="the-solution-from-our-perspective" class="slide level1">
+<h1>The Solution (From Our Perspective)</h1>
+<ul>
+<li>‘Virtualise’ our hardware so that one configuration can be cloned as
+many times as needed.</li>
+<li>Create ‘instances’ of these virtual machines as needed.</li>
+<li>Use ‘load balancing’ to expand/reduce our instances as needed.</li>
+</ul>
+<p>This is the logic that has driven migration to the Cloud. The
+disadvantage is that you are now dependent on the Cloud provider, and
+trust that they won’t hike their rates, or otherwise leverage their
+platform.</p>
+</section>
+<section id="anyway-enough-of-that" class="slide level1">
+<h1>Anyway, Enough Of That</h1>
+<p>You have been signed up for <strong>AWS Academy Learner Lab
+Foundational Course</strong>. Amazon has envisioned this as a
+preliminary course to prepare you for one of <em>its</em> exams, but
+we’re going to use it for this course. (Just in case you were wondering
+what the other modules and instructions were about).</p>
+</section>
+<section id="important" class="slide level1">
+<h1>Important!</h1>
+<p><strong>⚠Use The Link I Provide You To Log In To AWS⚠</strong></p>
+<ul>
+<li>Don’t use your account from another course</li>
+<li>Don’t enter your credit card information</li>
+<li>Make sure the email address associated with your account is your
+Myseneca account.</li>
+</ul>
+<p><em>I cannot help you with Billing Problems.</em> You shouldn’t need
+to pay AWS any money to complete this course, and you won’t if you pay
+attention and follow instructions.</p>
+</section>
+<section id="starting-the-lab" class="slide level1">
+<h1>Starting The Lab</h1>
+<p>Once you’ve been invited to the course and created an account:</p>
+<ol type="1">
+<li><em>Start Lab</em> to spin up the EC2 Dashboard.</li>
+<li>Click <em>AWS</em> when the light is green.</li>
+<li>Search for <em>EC2</em> to find the Dashboard that we will use.</li>
+</ol>
+</section>
+<section id="incurring-costs" class="slide level1">
+<h1>Incurring Costs</h1>
+<ul>
+<li>You get $100 of free AWS credit. Should be more than enough for the
+course.</li>
+<li>Running instances will cost money, depending on their state.</li>
+<li>Idle instances won’t incur much, but it’s always better to power
+down your instances when you’re finished with them.</li>
+<li>After <strong>4 hours</strong> your instances will be turned off for
+you.</li>
+</ul>
+</section>
+<section id="security" class="slide level1">
+<h1>Security</h1>
+<p>Unlike OPS245, our instances are on the Internet. <strong>You are
+swimming in the Ocean, no longer in a little pond.</strong> Keep that in
+mind! Our approach to security is this:</p>
+<ul>
+<li>Create our instances inside of a <em>security group</em>, with only
+SSH allowed as an inbound connection.</li>
+<li>Create a non-default user account, and delete the
+<code>ec2-user</code> account.</li>
+<li>Use public/private keypair to log in. <strong>No
+passwords!</strong></li>
+</ul>
+</section>
+<section id="security-1" class="slide level1">
+<h1>Security</h1>
+<ul>
+<li>In OPS245, you generated a keypair, and then copied your public key
+to a remote machine.</li>
+<li>In this course, Amazon will generate a keypair, and you will
+download the <strong>private</strong> key to your local machine.</li>
+<li><strong>Note</strong>: your private key won’t work if its
+permissions are too relaxed. <strong>Your key should only be readable by
+your user, and all other permissions should be turned off.</strong></li>
+<li>You <em>can</em> transfer your key to other machines, just make sure
+that permissions are set correctly. (Hint: use 400)</li>
+</ul>
+</section>
+<section id="security-groups" class="slide level1">
+<h1>Security Groups</h1>
+<ul>
+<li>In OPS245, we would create a virtual machine, then modify
+<code>iptables</code> inside that VM to only allow certain types of
+traffic.</li>
+<li>In AWS, you can think of a Security Groups in the same way. It is a
+way of applying similar rules externally.</li>
+<li>Another analogy: this allows us to ‘fence off’ certain instances so
+that they aren’t reachable to outside entities.</li>
+</ul>
+</section>
+<section id="our-first-security-group" class="slide level1">
+<h1>Our First Security Group</h1>
+<ul>
+<li>The only change you are making is to allow <em>Inbound SSH
+connections</em>. Provide a rule name and a description.</li>
+<li>Scroll down to find the ‘Save Changes’ button. Your change will be
+rejected! Check which boxes require an input.</li>
+<li>The instructions specify that SSH should be ‘open to the world’.
+(This helps if you are accessing your instances from both the lab and
+then at home!) What CIDR would cover that?</li>
+</ul>
+</section>
+<section id="your-first-cloud-based-vm" class="slide level1">
+<h1>Your First (Cloud-Based) VM</h1>
+<ul>
+<li>You’ll notice that we don’t force you to go through the process of
+installing an Operating System on one of our AWS instances.</li>
+<li>Instead, we are choosing an <em>AMI</em> called ‘Amazon Linux’. This
+is pre-built virtual machine which we can then begin tweaking.</li>
+<li><em>AMI</em>: Amazon Machine Image. Essentially a VM template. In
+the real world a business would be creating their own AMI.</li>
+</ul>
+</section>
+<section id="modifying-virtual-hardware" class="slide level1">
+<h1>Modifying Virtual Hardware</h1>
+<p>…costs money. Choosing a different type of AMI costs money. We are in
+the ‘Free’ tier essentially!</p>
+</section>
+<section id="configuring-the-instance" class="slide level1">
+<h1>Configuring the Instance</h1>
+<p>Make sure you are using your security group and keypair for this new
+instance! Click ‘Network’ -&gt; ‘Edit’ to modify these settings. The
+instructions make it seem like there’s another screen where you change
+these, <strong>that’s not the case.</strong></p>
+</section>
+<section id="logging-into-the-instance" class="slide level1">
+<h1>Logging Into the Instance</h1>
+<ul>
+<li>Once your instance is ‘running’, check the dashboard for its
+<em>Public IP</em>.</li>
+<li>Use your terminal (not the browser!). Specify the <em>private key’s
+location</em> in your SSH command.</li>
+<li>Use the user account <code>ec2-user</code> and the public IP.</li>
+<li>If anything is failing here, first thing to check: your Security
+Group settings.</li>
+</ul>
+</section>
+<section id="modifying-your-instance" class="slide level1">
+<h1>Modifying Your Instance</h1>
+<ul>
+<li>Delete the <code>ec2-user</code> account and replace it with your
+myseneca username.</li>
+<li>Make the hostname persistent.</li>
+<li>Follow the instructions carefully to perform the relevant
+tasks.</li>
+</ul>
+</section>
+<section id="finishing-the-lab" class="slide level1">
+<h1>Finishing the Lab</h1>
+<p>As always, I recommend that you power down your instance using the
+<code>shutdown</code> command, and click on “End Lab” when you’re
+finished.</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

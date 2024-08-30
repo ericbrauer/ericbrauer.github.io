@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Introduction to AWS Networking">
+  <title>OPS345</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">OPS345</h1>
+  <p class="author">Introduction to AWS Networking</p>
+  <p class="date">Eric Brauer</p>
+</section>
+
+<section id="before-you-start" class="slide level1">
+<h1>Before You Start:</h1>
+<ul>
+<li>Finish Lab 1!</li>
+<li>Review networking concepts if necessary</li>
+</ul>
+</section>
+<section id="diagram" class="slide level1">
+<h1>Diagram</h1>
+<figure>
+<img data-src="AWSVPCComponents.png" alt="Where We’re Going" />
+<figcaption aria-hidden="true">Where We’re Going</figcaption>
+</figure>
+</section>
+<section id="lab-2" class="slide level1">
+<h1>Lab 2</h1>
+<ul>
+<li>VPC</li>
+<li>Subnet</li>
+<li>Internet Gateway</li>
+<li>Route Table</li>
+<li>Router VM</li>
+<li>‘WW’ VM (used for testing)</li>
+</ul>
+</section>
+<section id="aws-abstraction" class="slide level1">
+<h1>AWS Abstraction</h1>
+<p>Since everything is ‘In The Cloud’, we don’t have to do things like
+plug ethernet cables into humming grey boxes. <em>That stuff still
+exists, but it doesn’t exist at the level of abstraction that we’re
+working on.</em> Keep that in mind.</p>
+<p>Working with AWS will be a little different from the networking that
+you’re used to:</p>
+<ul>
+<li>VPC</li>
+<li>Elastic IP</li>
+</ul>
+</section>
+<section id="vpc" class="slide level1">
+<h1>VPC</h1>
+<p><em>Virtual Private Cloud</em>. This is a way for us to abstract a
+LAN, essentially.</p>
+<ul>
+<li>Lets us create a <strong>private, isolated</strong> section of the
+Cloud to work on.</li>
+<li>Once an IP range is specified, we can create subnets and have
+instances communicate with each other</li>
+<li>Once we set up a Gateway, instances in the VPC will be able to
+connect to the outside world.</li>
+</ul>
+</section>
+<section id="vpc-vs.-subnet" class="slide level1">
+<h1>VPC Vs. Subnet</h1>
+<ul>
+<li>Inside our VPC, we will also create a subnet.</li>
+<li>10.3.45.0/24 VS 10.3.45.0/25</li>
+</ul>
+</section>
+<section id="cidr-review" class="slide level1">
+<h1>CIDR Review</h1>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">255</th>
+<th style="text-align: center;">255</th>
+<th style="text-align: center;">255</th>
+<th style="text-align: center;">0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">8 bits</td>
+<td style="text-align: center;">8 bits</td>
+<td style="text-align: center;">8 bits</td>
+<td style="text-align: center;">0 bits</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>8 bits = 1111 1111 = 255 in Decimal.</li>
+<li>8 + 8 + 8 = 24 bits are <em>masked off</em>.</li>
+</ul>
+</section>
+<section id="cidr-review-1" class="slide level1">
+<h1>CIDR Review</h1>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">-</th>
+<th style="text-align: center;">-</th>
+<th style="text-align: center;">-</th>
+<th style="text-align: center;">1111 1111</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">8 bits</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>How many addresses are available in our VPC?</li>
+</ul>
+<aside class="notes">
+<p>255 - network address = 254</p>
+<p>range between 10.3.45.1 and 10.3.45.254.</p>
+</aside>
+</section>
+<section id="cidr-review-2" class="slide level1">
+<h1>CIDR Review</h1>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">255</th>
+<th style="text-align: center;">255</th>
+<th style="text-align: center;">255</th>
+<th style="text-align: center;"><code>1000 0000</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">8 bits</td>
+<td style="text-align: center;">8 bits</td>
+<td style="text-align: center;">8 bits</td>
+<td style="text-align: center;">1 bit</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>8 + 8 + 8 + 1 = 25 bits are <em>masked off</em>.</li>
+</ul>
+</section>
+<section id="cidr-review-3" class="slide level1">
+<h1>CIDR Review</h1>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">-</th>
+<th style="text-align: center;">-</th>
+<th style="text-align: center;">-</th>
+<th style="text-align: center;"><code>0111 111</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">7 bits</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>What is the decimal value of <code>0111 1111</code>?</li>
+<li>What is the address range inside our subnet of 10.3.45.0/25?</li>
+<li>How many addresses available inside our subnet? Outside of it?</li>
+</ul>
+<aside class="notes">
+<p>A: 127 A: 10.3.45.0 - 10.3.45.126 A: 126</p>
+</aside>
+</section>
+<section id="gateway" class="slide level1">
+<h1>Gateway</h1>
+<figure>
+<img data-src="AWSVPCComponents.png" alt="Where We’re Going" />
+<figcaption aria-hidden="true">Where We’re Going</figcaption>
+</figure>
+<p>This will allow machines inside our VPC to connect to the Internet
+(for example, so that we can run <code>yum update</code>!)</p>
+<p>Notice we connect this to the VPC.</p>
+</section>
+<section id="routing-table" class="slide level1">
+<h1>Routing Table</h1>
+<ul>
+<li>This is required to make our Gateway useful. At first:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Destination</th>
+<th style="text-align: center;">Target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">10.3.45.0/24</td>
+<td style="text-align: center;">local</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="routing-table-1" class="slide level1">
+<h1>Routing Table</h1>
+<ul>
+<li>Now we will add the following rule:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Destination</th>
+<th style="text-align: center;">Target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">10.3.45.0/24</td>
+<td style="text-align: center;">local</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.0.0.0/0</td>
+<td style="text-align: center;"><em>your gateway</em></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>In order words, traffic headed for all IP addresses that
+<em>aren’t</em> included in 10.3.45.0 - 10.3.45.255 should be routed to
+the Gateway.</li>
+</ul>
+</section>
+<section id="router" class="slide level1">
+<h1>Router</h1>
+<ul>
+<li>Create a Router instance. Follow (and review!) the steps from Lab
+1.</li>
+<li><strong>Remember to create a new security group for the
+router.</strong> You will return to this security group to modify
+it.</li>
+<li>Give this router a primary IP address of
+<strong>10.3.45.10</strong>.</li>
+</ul>
+</section>
+<section id="public-vs.-private-ip-addresses" class="slide level1">
+<h1>Public Vs. Private IP Addresses</h1>
+<ul>
+<li>10.3.45.10 is a <em>private</em> IP address, it only points to our
+router instance inside our private cloud.</li>
+<li>Private IP addresses are cheap because they only exist inside our
+network. (why do you think everyone’ IP address at home starts with
+192.168.0??)</li>
+<li>Public IPv4 addresses are in short supply! We are running out of
+them!</li>
+<li>Public IPv6 not so much, but inertia is strong and nobody wants to
+deal with IPv6 😎</li>
+<li>Amazon has deep pockets and has a bunch of public IP addresses for
+us.</li>
+</ul>
+</section>
+<section id="dynamic-vs.-static-ip-addresses" class="slide level1">
+<h1>Dynamic Vs. Static IP Addresses</h1>
+<ul>
+<li>Note that the instances we’ve created so far have been given
+<em>public IP addresses</em> that we use to SSH to them.</li>
+<li>Public IPs are reset each time the instance reboots.</li>
+<li>AWS maintains a pool of public IP addresses that it leases out to
+our VMs as they are powered on.</li>
+<li>It would be more convenient to have a static public IP address, so
+that we don’t have to look up the IP each time we start a new lab.</li>
+</ul>
+</section>
+<section id="elastic-ip-address" class="slide level1">
+<h1>Elastic IP Address</h1>
+<ul>
+<li>This is like a more <em>long-term lease</em> of a public IP
+address.</li>
+<li>It comes from the same pool of public IP addresses that AWS has used
+so far.</li>
+<li>When you <strong>Allocate an Elastic IP</strong>, it is removed from
+the pool until you are finished with it.</li>
+<li>So having an elastic IP will cost you money <strong>regardless of
+whether your instances are powered on or not</strong>.</li>
+</ul>
+</section>
+<section id="router-configuration" class="slide level1">
+<h1>Router Configuration</h1>
+<ul>
+<li>Ok, we can SSH into the Router instance because:
+<ul>
+<li>The Security Group Inbound rules allow us (0.0.0.0/0) to reach the
+router, and</li>
+<li>we have the correct private key.</li>
+</ul></li>
+<li>However, when we create the ww instance, we cannot SSH to it.
+<ul>
+<li>The Security Group Inbound rules don’t allow us to reach it.</li>
+<li>The router instance <em>is</em> allowed to SSH into ww, but</li>
+<li>The router doesn’t have our private key on it.</li>
+</ul></li>
+</ul>
+</section>
+<section id="port-forwarding" class="slide level1">
+<h1>Port Forwarding</h1>
+<ul>
+<li>We will set up port forwarding so that port 2211 will be open on the
+router.</li>
+<li>Any traffic sent to port 2211 on router will be forwarded to port 22
+on ww.</li>
+<li>Time to review <code>iptables</code></li>
+</ul>
+</section>
+<section id="port-forwarding-1" class="slide level1">
+<h1>Port Forwarding</h1>
+<p><img data-src="SuseIptablesDiagram.png" /></p>
+</section>
+<section id="iptables-review" class="slide level1">
+<h1><code>iptables</code> Review</h1>
+<p>The <code>iptables</code> commands are provided for you (check the
+screenshot) but you should take a moment to recognize what they are
+doing:</p>
+<ul>
+<li>We are creating one rule in a PREROUTING CHAIN.</li>
+<li>We are removing a blocking rule from the FORWARD table.</li>
+<li>We are creating one rule in a POSTROUTING CHAIN. (we’ll cover
+masquerade later on)</li>
+</ul>
+</section>
+<section id="dont-forget-the-security-group" class="slide level1">
+<h1>Don’t forget the Security Group!</h1>
+<ul>
+<li>Even though routing rules are set up on router instance, nothing
+will happen unless you allow inbound traffic on port 2211 in the correct
+security group.</li>
+</ul>
+</section>
+<section id="test-as-you-go" class="slide level1">
+<h1>Test As You Go!</h1>
+<ul>
+<li>Check your work</li>
+<li>If you encounter an error, fix it before proceeding.</li>
+<li>Otherwise you will never know if it was the latest change that broke
+everything, or something you ignored 7 steps ago.</li>
+<li>Troubleshooting sucks, but backtracking sucks more.</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
