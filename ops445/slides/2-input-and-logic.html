@@ -118,7 +118,7 @@ of three things:</p>
 <h1>User Output</h1>
 <p>You’ve already worked with displaying user output in Lab1:</p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(“Hello world.”)</span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>("Hello world.”)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(variable)</span></code></pre></div>
 </section>
@@ -129,8 +129,8 @@ between strings and the variable. You also need to convert other data
 types to strings:</p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>age <span class="op">=</span> <span class="dv">17</span>  <span class="co"># no quotes, means this is an integer. </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(“Cannot combine strings <span class="kw">and</span> integers like “ <span class="op">+</span> age)  <span class="co"># This will cause error.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(“Hello, you are “ <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> “ years old.”)  <span class="co"># use str() to convert age.</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>("Cannot combine strings <span class="kw">and</span> integers like " <span class="op">+</span> age)  <span class="co"># This will cause error.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>("Hello, you are " <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> " years old.”)  <span class="co"># use str() to convert age.</span></span></code></pre></div>
 </section>
 <section id="datatype-conversion" class="slide level1">
 <h1>Datatype Conversion</h1>
@@ -173,7 +173,7 @@ This function is used to ask the user for data and then store it in an
 object.
 </dd>
 </dl>
-<p><code>year = input(“Enter your year of birth: ”)</code></p>
+<p><code>year = input("Enter your year of birth: ”)</code></p>
 <p>The data in this object can then be used by the script at any
 point.</p>
 <p><code>print(‘You were born in ’ + str(year) + ‘.’)</code></p>
@@ -240,9 +240,9 @@ file, it changes the flow of the program.</p>
 <strong>True</strong>. Take the following:</p>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> condition <span class="op">==</span> <span class="va">True</span>:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Action <span class="dv">1</span>”)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Action <span class="dv">1</span> continued”)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(“everything here runs regardless of the outcome”)</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>("Action <span class="dv">1</span>”)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>("Action <span class="dv">1</span> continued”)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>("everything here runs regardless of the outcome”)</span></code></pre></div>
 <p>Anything that is <em>indented</em> will only be run if the condition
 is true. The end of the indent indicates the end of the if statement’s
 action.</p>
@@ -251,12 +251,12 @@ action.</p>
 <h1>IF/ELSE Statements</h1>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>year <span class="op">=</span> <span class="dv">2023</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dob <span class="op">=</span> <span class="bu">input</span>(“Enter your date of birth: “)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dob <span class="op">=</span> <span class="bu">input</span>("Enter your date of birth: ")</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> year – <span class="bu">int</span>(dob) <span class="op">&lt;</span>  <span class="dv">19</span>:  <span class="co"># Note! &lt; only works with integers, so we need to convert</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Sorry, you are too young.”)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>("Sorry, you are too young.”)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(“Okay, you are old enough.”)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(“Have a nice day<span class="op">!</span>”)</span></code></pre></div>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>("Okay, you are old enough.”)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>("Have a nice day<span class="op">!</span>”)</span></code></pre></div>
 <p>Actions after <code>else</code> will run if the condition is
 <em>False</em>. Only <em>one</em> print statement will be executed.</p>
 </section>
@@ -266,11 +266,11 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 called else/if statements.</p>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> age <span class="op">&lt;</span> <span class="dv">19</span>:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(“You may <span class="kw">not</span> purchase alcohol.”)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>("You may <span class="kw">not</span> purchase alcohol.”)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> <span class="cf">elif</span> age <span class="op">&lt;</span> <span class="dv">25</span>:</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(“You may be asked to show your ID.”)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>("You may be asked to show your ID.”)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a> <span class="cf">else</span>:</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(“You are old. XD”)</span></code></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>("You are old. XD”)</span></code></pre></div>
 </section>
 <section id="the-order-of-conditions" class="slide level1">
 <h1>The Order Of Conditions</h1>
