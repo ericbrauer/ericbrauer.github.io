@@ -18,6 +18,10 @@
     --theme-orange2: hsl( 39, 67%, 69%); 
 }
 
+code span {
+  font-size: 22px;
+}
+
 code span.kw { color: var(--theme-purple); font-weight: bold; } /* Keyword */
 code span.dt { color: var(--theme-red1); } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
