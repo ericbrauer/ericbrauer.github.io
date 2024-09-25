@@ -16,12 +16,22 @@
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +93,6 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
   <link rel="stylesheet" href="css/custom.css"/>
@@ -144,7 +153,7 @@ cause a Syntax Error. If you need to, you can simply use
 <p>For example:</p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hello():  <span class="co"># definition</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>("Hello<span class="op">!</span>")  <span class="co"># body</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Hello!&quot;</span>)  <span class="co"># body</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> goodbye():  <span class="co"># </span><span class="al">TODO</span><span class="co">: finish tomorrow</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
@@ -155,7 +164,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 when you <em>call</em> it. Write the name of the function, and include
 the parentheses.</p>
 <p><code>hello()</code></p>
-<p>By calling this function, the Python interpreter will print "Hello!"
+<p>By calling this function, the Python interpreter will print “Hello!”
 on screen.</p>
 </section>
 <section id="function-types" class="slide level1">
@@ -196,11 +205,11 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a hr
 you can give an argument a <em>default value</em>. Then you can choose
 to pass it a value, or leave it.</p>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_func(name, school<span class="op">=</span>"Seneca"):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name <span class="op">+</span> " attends " <span class="op">+</span> school)</span></code></pre></div>
-<pre><code>&gt;&gt;&gt;&gt; school("Eric")  # 1 arg, default for 2nd arg is used
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_func(name, school<span class="op">=</span><span class="st">&quot;Seneca&quot;</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name <span class="op">+</span> <span class="st">&quot; attends &quot;</span> <span class="op">+</span> school)</span></code></pre></div>
+<pre><code>&gt;&gt;&gt;&gt; school(&quot;Eric&quot;)  # 1 arg, default for 2nd arg is used
 Eric attends Seneca
-&gt;&gt;&gt;&gt; school("Hong", "Centennial")  # 2 args, default is overridden
+&gt;&gt;&gt;&gt; school(&quot;Hong&quot;, &quot;Centennial&quot;)  # 2 args, default is overridden
 Hong attends Centennial</code></pre>
 </section>
 <section id="functions-parameters" class="slide level1">
@@ -213,7 +222,7 @@ and the memory is freed up.</p>
 class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_age(year):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    now <span class="op">=</span> <span class="dv">2024</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> now <span class="op">-</span> year</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;You are &#39;</span> <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> <span class="st">&#39; years old.&#39;&#39;)</span></span></code></pre></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;You are &#39;</span> <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> <span class="st">&#39; years old.&#39;</span>)</span></code></pre></div>
 <pre><code>&gt;&gt;&gt;&gt; get_age(1991)
 You are 33 years old.
 &gt;&gt;&gt;&gt; print(now)
@@ -236,7 +245,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;We will never reach this line&quot;</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Main Program - Run Function</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(calculate_age()) <span class="co"># Prints "54"</span></span></code></pre></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(calculate_age()) <span class="co"># Prints &quot;54&quot;</span></span></code></pre></div>
 </section>
 <section id="functions-arguments-and-return-values"
 class="slide level1">
@@ -267,9 +276,10 @@ values.</li>
 <li><strong>Note</strong>: Depending on your configuration, breaking
 guidelines won’t stop your code. Consider these like comments.</li>
 </ul>
-<pre class="python3"><code>def is_even(number: int) -&gt; bool:
-    &quot;accepts an integer, and returns True or False&quot;
-    ...</code></pre>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_even(number: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;accepts an integer, and returns True or False&quot;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
 </section>
 <section id="function-annotations-1" class="slide level1">
 <h1>Function Annotations</h1>
@@ -277,9 +287,10 @@ guidelines won’t stop your code. Consider these like comments.</li>
 <li>parameter annotation comes after variable:</li>
 <li>return value annotation comes after -&gt;</li>
 </ul>
-<pre class="python3"><code>def student_grade(name: str, gpa: float) -&gt; dict:
-    &quot;Puts name and gpa into a dictionary&quot;
-    ...</code></pre>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> student_grade(name: <span class="bu">str</span>, gpa: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;Puts name and gpa into a dictionary&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
 <ul>
 <li><code>int, float, list, dict, set, str,</code> etc.</li>
 </ul>
