@@ -134,7 +134,7 @@ last item while also returning it)</li>
 <section id="object-mutability" class="slide level1">
 <h1>Object Mutability</h1>
 <p>Most datatypes we’ve worked with are <em>immutable</em>. That means
-they <em>cannot be changed</em> ("mutated") after creation.</p>
+they <em>cannot be changed</em> (“mutated”) after creation.</p>
 <p>The proof:</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> string_obj <span class="op">=</span> <span class="st">&#39;hi&#39;</span>  <span class="co"># creates a string</span></span>
@@ -147,7 +147,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x  <span class="co"># the original value of x unchanged</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span>  <span class="co"># this is why we have to use x = x + 1 here, we are creating a new version of x</span></span></code></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x <span class="op">=</span> x <span class="op">+</span> <span class="dv">1</span>  <span class="co"># this is why we have to use x = x + 1 here, </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we are creating a new version of x</span></span></code></pre></div>
 </section>
 <section id="lists-are-different" class="slide level1">
 <h1>Lists Are Different</h1>
@@ -157,7 +158,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> mylist.append(<span class="st">&#39;bat&#39;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> mylist</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>[ <span class="st">&#39;dog&#39;</span>, <span class="st">&#39;cat&#39;</span>, <span class="st">&#39;aardvark&#39;</span>, <span class="st">&#39;bat&#39;</span> ]</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> mylist.sort()  <span class="co"># notice no need start with</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> mylist.sort()  <span class="co"># notice no need start with mylist = </span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> mylist</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>[<span class="st">&#39;aardvark&#39;</span>, <span class="st">&#39;bat&#39;</span>, <span class="st">&#39;cat&#39;</span>, <span class="st">&#39;dog&#39;</span> ]</span></code></pre></div>
 </section>
@@ -165,7 +166,9 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 <h1>New Datatype: Tuple</h1>
 <ul>
 <li>Tuples have many elements (like lists)</li>
-<li>Tuples areimmutable (can’t be changed)</li>
+<li>Tuples have an index (also like lists)</li>
+<li>However, tuples are <strong>immutable</strong> (can’t be
+changed)</li>
 <li>Use ()</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre
@@ -197,9 +200,10 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 </ul>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> myset <span class="op">=</span> {<span class="st">&#39;orange&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> myset.add(<span class="st">&#39;red&#39;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> myset</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>{<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;orange&#39;</span>, <span class="st">&#39;red&#39;</span>}  <span class="co"># order isn&#39;t remembered, it&#39;s just a group of things</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> myset.add(<span class="st">&#39;red&#39;</span>)  <span class="co"># can be modified</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> myset.add(<span class="st">&#39;orange&#39;</span>)  <span class="co"># but duplicates are ignored!</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> myset</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>{<span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;orange&#39;</span>, <span class="st">&#39;red&#39;</span>}  <span class="co"># order isn&#39;t remembered, it&#39;s just a group of things</span></span></code></pre></div>
 </section>
 <section id="applications-of-sets" class="slide level1">
 <h1>Applications Of Sets</h1>
@@ -262,8 +266,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <ul>
 <li>Dicts contain many elements, like lists</li>
 <li>Assume they don’t have an order (only in recent Python!)</li>
-<li>Instead of index numbers, we use <em>values</em> associated with
-<em>keys</em></li>
+<li>Each element in a dictionary has two parts: a <em>key</em> and a
+<em>value</em></li>
 <li>Can be modified</li>
 <li>Use {}</li>
 </ul>
