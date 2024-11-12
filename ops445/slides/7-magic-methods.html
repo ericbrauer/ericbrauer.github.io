@@ -16,12 +16,22 @@
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +93,6 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
   <link rel="stylesheet" href="css/custom.css"/>
@@ -109,7 +118,7 @@ need</li>
 </ul>
 </section>
 <section id="in-python-everything-is-an-object" class="slide level1">
-<h1>"In Python, Everything Is An Object"</h1>
+<h1>“In Python, Everything Is An Object”</h1>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span><span class="dv">3</span></span>
@@ -124,7 +133,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <section id="what-are-magic-methods" class="slide level1">
 <h1>What are Magic Methods?</h1>
 <p>Notice all the methods that start &amp; end with __? These are
-<em>dunder methods</em> ("double underline"). Otherwise called magic
+<em>dunder methods</em> (“double underline”). Otherwise called magic
 methods.</p>
 <p>We don’t call these methods directly by name.</p>
 <p>Rather these are called when we use the object with different
@@ -142,8 +151,8 @@ False.</p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span><span class="op">==</span>other</span></code></pre></div>
-<p>For operators, "self" will refer to the <em>left</em> side of the
-equation, and "other" will refer to the <em>right</em>.</p>
+<p>For operators, “self” will refer to the <em>left</em> side of the
+equation, and “other” will refer to the <em>right</em>.</p>
 </section>
 <section id="magic-methods" class="slide level1">
 <h1>Magic Methods</h1>
@@ -200,7 +209,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 <section id="printing-objects" class="slide level1">
 <h1>Printing Objects</h1>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> T1 <span class="op">=</span> Timer(<span class="dv">2</span>, <span class="dv">0</span>)</span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> t1 <span class="op">=</span> Timer(<span class="dv">2</span>, <span class="dv">0</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(t1)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Timer <span class="bu">object</span> at <span class="bn">0x7f24b9419940</span><span class="op">&gt;</span></span></code></pre></div>
 <p>This output isn’t very useful to the programmer.</p>
@@ -215,7 +224,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a hr
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.secs <span class="op">=</span> secs</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__str__</span>(<span class="va">self</span>):  <span class="co"># gets called inside print() or str()</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>mins<span class="sc">:02d}</span><span class="ss">:</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>secs<span class="sc">:2d}</span><span class="ss">&quot;</span></span></code></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>mins<span class="sc">:02d}</span><span class="ss">:</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>secs<span class="sc">:02d}</span><span class="ss">&quot;</span></span></code></pre></div>
 <p>This is an example of using <em>f-strings</em>, which are very
 useful! No data conversion is required. <code>:02d</code> will convert
 to a 2 digit decimal number with leading zeros, eg. 02</p>
@@ -225,12 +234,11 @@ to a 2 digit decimal number with leading zeros, eg. 02</p>
 <p><strong>repr</strong> is used inside the Python interpreter. It will
 return a <em>representation</em> of the object, when you call the object
 outside of <code>print()</code> or <code>str()</code>.</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> t <span class="op">=</span> Timer(<span class="dv">2</span>, <span class="dv">0</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> t  <span class="co"># calls __repr__</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>template.Timer <span class="bu">object</span> at <span class="bn">0x7f199cb4f820</span><span class="op">&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(t)  <span class="co"># calls __str__</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span><span class="er">2</span>:<span class="dv">00</span></span></code></pre></div>
+<pre><code>&gt;&gt;&gt;&gt; t = Timer(2, 0)
+&gt;&gt;&gt;&gt; t  # calls __repr__
+&lt;template.Timer object at 0x7f199cb4f820&gt;
+&gt;&gt;&gt;&gt; print(t)  # calls __str__
+02:00</code></pre>
 </section>
 <section id="list-of-magic-methods" class="slide level1">
 <h1>List of Magic Methods</h1>
