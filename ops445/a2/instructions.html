@@ -6,147 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>instructions</title>
   <style>
-    html {
-      color: #1a1a1a;
-      background-color: #fdfdfd;
-    }
-    body {
-      margin: 0 auto;
-      max-width: 36em;
-      padding-left: 50px;
-      padding-right: 50px;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      text-rendering: optimizeLegibility;
-      font-kerning: normal;
-    }
-    @media (max-width: 600px) {
-      body {
-        font-size: 0.9em;
-        padding: 12px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
-    @media print {
-      html {
-        background-color: white;
-      }
-      body {
-        background-color: transparent;
-        color: black;
-        font-size: 12pt;
-      }
-      p, h2, h3 {
-        orphans: 3;
-        widows: 3;
-      }
-      h2, h3, h4 {
-        page-break-after: avoid;
-      }
-    }
-    p {
-      margin: 1em 0;
-    }
-    a {
-      color: #1a1a1a;
-    }
-    a:visited {
-      color: #1a1a1a;
-    }
-    img {
-      max-width: 100%;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 1.4em;
-    }
-    h5, h6 {
-      font-size: 1em;
-      font-style: italic;
-    }
-    h6 {
-      font-weight: normal;
-    }
-    ol, ul {
-      padding-left: 1.7em;
-      margin-top: 1em;
-    }
-    li > ol, li > ul {
-      margin-top: 0;
-    }
-    blockquote {
-      margin: 1em 0 1em 1.7em;
-      padding-left: 1em;
-      border-left: 2px solid #e6e6e6;
-      color: #606060;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
-      font-size: 85%;
-      margin: 0;
-      hyphens: manual;
-    }
-    pre {
-      margin: 1em 0;
-      overflow: auto;
-    }
-    pre code {
-      padding: 0;
-      overflow: visible;
-      overflow-wrap: normal;
-    }
-    .sourceCode {
-     background-color: transparent;
-     overflow: visible;
-    }
-    hr {
-      background-color: #1a1a1a;
-      border: none;
-      height: 1px;
-      margin: 1em 0;
-    }
-    table {
-      margin: 1em 0;
-      border-collapse: collapse;
-      width: 100%;
-      overflow-x: auto;
-      display: block;
-      font-variant-numeric: lining-nums tabular-nums;
-    }
-    table caption {
-      margin-bottom: 0.75em;
-    }
-    tbody {
-      margin-top: 0.5em;
-      border-top: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    th {
-      border-top: 1px solid #1a1a1a;
-      padding: 0.25em 0.5em 0.25em 0.5em;
-    }
-    td {
-      padding: 0.125em 0.5em 0.25em 0.5em;
-    }
-    header {
-      margin-bottom: 4em;
-      text-align: center;
-    }
-    #TOC li {
-      list-style: none;
-    }
-    #TOC ul {
-      padding-left: 1.3em;
-    }
-    #TOC > ul {
-      padding-left: 0;
-    }
-    #TOC a:not(:hover) {
-      text-decoration: none;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -163,6 +22,7 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
+  <link rel="stylesheet" href="css/custom.css" />
 </head>
 <body>
 <h1 id="assignment-2-for-fall-2024">Assignment 2 For Fall 2024</h1>
@@ -195,7 +55,7 @@ should be executed from a file called <code>assignment2.py</code>.</li>
 <li>You can import any modules from the Python standard library, but
 third-party modules are not permitted.</li>
 <li>Your assignment must be able to run on either
-<strong>Matrix</strong> or the <strong>Linux VM</strong> you set up during Lab 1.
+<strong>Matrix</strong> or the <strong>MyVMLab</strong> instance
 provided. You will demonstrate the usage of your assignment on either of
 those two machines.</li>
 <li>All the code and required files will be inside your repository. You
@@ -376,7 +236,7 @@ must write their own.</p>
 <tr class="odd">
 <td>Concept</td>
 <td>Assignment is relevant, useful, and shows ambition</td>
-<td>5</td>
+<td>3</td>
 </tr>
 <tr class="even">
 <td>Format and Style</td>
@@ -389,13 +249,13 @@ must write their own.</p>
 <td>5</td>
 </tr>
 <tr class="even">
-<td>Features and Function</td>
-<td>Code has 1 or more useful options</td>
-<td>3</td>
-</tr>
-<tr class="odd">
 <td>GitHub Use</td>
 <td>Appropriate Code Commits and Use of GitHub</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>Peer Review</td>
+<td>Overall group management</td>
 <td>5</td>
 </tr>
 </tbody>
@@ -411,16 +271,11 @@ must write their own.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Code Review</td>
-<td>Explained Code</td>
-<td>5</td>
-</tr>
-<tr class="even">
 <td>Final Submission</td>
 <td>Contributed Commits</td>
-<td>5</td>
+<td>10</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Post Mortem</td>
 <td>Reflective and Honest Feedback</td>
 <td>5</td>
