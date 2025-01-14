@@ -41,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -109,10 +109,7 @@
 <td>title: ‘Lecture 2 Key Concepts Pt. 2’</td>
 </tr>
 <tr class="even">
-<td>author:</td>
-</tr>
-<tr class="odd">
-<td>- Eric Brauer</td>
+<td>author: Eric Brauer</td>
 </tr>
 </tbody>
 </table>
@@ -134,23 +131,66 @@ of three things:</p>
 <li>Mathematic, logic, conversion, etc.</li>
 </ul>
 </section>
+<section id="measuring-performance" class="slide level1">
+<h1>Measuring Performance</h1>
+<p>We can measure how fast a computer can run code using a calculation
+called “Big Oh”. You don’t need to know the details, but we count the
+number of instructions, and take into account things like how often the
+code has to iterate, etc.</p>
+<p>Processing performance is <em>often not a huge concern</em> for the
+type of scripting that we are doing.</p>
+</section>
+<section id="measuring-performance-1" class="slide level1">
+<h1>Measuring Performance</h1>
+<p>The other way to measure code is in <em>development time</em>. How
+many hours of employee labour does it take to develop, debug, and
+maintain a particular program?</p>
+<p>Development time is a <em>huge factor</em>, because skilled human
+labour is <em>expensive</em> (thus the dream of replacing it all with
+LLMs).</p>
+<h2
+id="to-minimize-development-time-write-clear-human-readable-code.">To
+minimize development time, write clear, human readable code.</h2>
+</section>
+<section id="one-line-one-instruction" class="slide level1">
+<h1>One Line == One Instruction</h1>
+<p>Each line of code should do <em>one thing only</em>. When programmers
+review code, they scan left to right, and stop reading when they (think
+they) understand the point of a line of code.</p>
+<p>Nesting hidden calculations inside of an output instruction is
+<em>bad practice</em>.</p>
+<p>Incorrect:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;The result is &quot;</span> <span class="op">+</span> <span class="bu">str</span>(x <span class="op">*</span> <span class="dv">2</span>))</span></code></pre></div>
+</section>
+<section id="one-line-one-instruction-1" class="slide level1">
+<h1>One Line == One instruction</h1>
+<p>Avoid writing “Clever Code”. There is no performance improvement by
+writing fewer lines, and you run the risk of writing code that is harder
+to debug and maintain. <strong>Each line does one thing.</strong> This
+also makes it easier to <em>step through</em> code.</p>
+<p>Correct:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> x <span class="op">*</span> <span class="dv">2</span>  <span class="co"># create another variable for clarity, you might need it later!</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;The result is &quot;</span> <span class="op">+</span> <span class="bu">str</span>(result))  <span class="co"># technically processing + output, but this is permissible!</span></span></code></pre></div>
+</section>
 <section id="user-output" class="slide level1">
 <h1>User Output</h1>
 <p>You’ve already worked with displaying user output in Lab1:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello world.&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(variable)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello world.&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(variable)</span></code></pre></div>
 </section>
 <section id="printing-with-non-strings" class="slide level1">
 <h1>Printing With Non-Strings</h1>
 <p>To combine two datatypes in one <code>print()</code>, put a plus sign
 between strings and the variable. You also need to convert other data
 types to strings:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>age <span class="op">=</span> <span class="dv">17</span>  <span class="co"># no quotes, means this is an integer. </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Cannot combine strings and integers like &quot;</span> <span class="op">+</span> age)  <span class="co"># This will cause error.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello, you are &quot;</span> <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> <span class="st">&quot; years old.&quot;</span>)  <span class="co"># use str() to convert age.</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>age <span class="op">=</span> <span class="dv">17</span>  <span class="co"># no quotes, means this is an integer. </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Cannot combine strings and integers like &quot;</span> <span class="op">+</span> age)  <span class="co"># This will cause error.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Hello, you are &quot;</span> <span class="op">+</span> <span class="bu">str</span>(age) <span class="op">+</span> <span class="st">&quot; years old.&quot;</span>)  <span class="co"># use str() to convert age.</span></span></code></pre></div>
 </section>
 <section id="datatype-conversion" class="slide level1">
 <h1>Datatype Conversion</h1>
@@ -169,9 +209,9 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 </dd>
 </dl>
 <h2 id="try-these">Try these:</h2>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="st">&#39;apple&#39;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="fl">13.9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="st">&#39;apple&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="fl">13.9</span>)</span></code></pre></div>
 </section>
 <section id="user-input" class="slide level1">
 <h1>User Input</h1>
@@ -204,7 +244,7 @@ point.</p>
 after the name of the script when it’s first run. You may know these as
 positional parameters in the Bash scripting world.</p>
 <h2 id="ex">Ex:</h2>
-<p><code>./awesome.py variable1 variable2</code></p>
+<p><code>cp target.txt ~/destination</code></p>
 <p>Command line arguments are almost always preferable to using
 <code>input()</code> because they are easier to automate.</p>
 </section>
@@ -236,11 +276,11 @@ program with arguments:</p>
 <p><code>./awesome.py variable1 variable2</code></p>
 <p>This data is then passed into a built-in list called
 <code>sys.argv</code>.</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(sys.argv)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="st">&#39;awesome.py&#39;</span>, <span class="st">&#39;variable1&#39;</span>, <span class="st">&#39;variable2&#39;</span>]  <span class="co"># &#39;&#39; indicates that these are strings.</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(sys.argv[<span class="dv">2</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;variable2&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(sys.argv)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="st">&#39;awesome.py&#39;</span>, <span class="st">&#39;variable1&#39;</span>, <span class="st">&#39;variable2&#39;</span>]  <span class="co"># &#39;&#39; indicates that these are strings.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(sys.argv[<span class="dv">2</span>])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;variable2&#39;</span></span></code></pre></div>
 </section>
 <section id="conditional-statements" class="slide level1">
 <h1>Conditional Statements</h1>
@@ -258,25 +298,25 @@ file, it changes the flow of the program.</p>
 <h1>IF Statements</h1>
 <p>If statements allow the program to respond if a specific condition is
 <strong>True</strong>. Take the following:</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> condition <span class="op">==</span> <span class="va">True</span>:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Action 1&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Action 1 continued&quot;</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;everything here runs regardless of the outcome&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> condition <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Action 1&quot;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Action 1 continued&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;everything here runs regardless of the outcome&quot;</span>)</span></code></pre></div>
 <p>Anything that is <em>indented</em> will only be run if the condition
 is true. The end of the indent indicates the end of the if statement’s
 action.</p>
 </section>
 <section id="ifelse-statements" class="slide level1">
 <h1>IF/ELSE Statements</h1>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>year <span class="op">=</span> <span class="dv">2025</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>yob <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your year of birth: &quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> year – <span class="bu">int</span>(yob) <span class="op">&lt;</span>  <span class="dv">19</span>:  <span class="co"># Note! &lt; only works with integers, so we need to convert</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Sorry, you are too young.&quot;</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Okay, you are old enough.&quot;</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Have a nice day!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>year <span class="op">=</span> <span class="dv">2025</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>yob <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter your year of birth: &quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> year – <span class="bu">int</span>(yob) <span class="op">&lt;</span>  <span class="dv">19</span>:  <span class="co"># Note! &lt; only works with integers, so we need to convert</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Sorry, you are too young.&quot;</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Okay, you are old enough.&quot;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Have a nice day!&quot;</span>)</span></code></pre></div>
 <p>Actions after <code>else</code> will run if the condition is
 <em>False</em>. You are creating <em>two possible outcomes</em>, but the
 code will only follow one path.</p>
@@ -287,41 +327,41 @@ code will only follow one path.</p>
 called if/elif/else statements.</p>
 <p>You are creating <em>three or more possible outcomes</em>, the branch
 that is taken is the <em>first condition that returns true</em>.</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> age <span class="op">&lt;</span> <span class="dv">19</span>:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(<span class="st">&quot;You may not purchase alcohol.&quot;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a> <span class="cf">elif</span> age <span class="op">&lt;</span> <span class="dv">25</span>:</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(<span class="st">&quot;You may be asked to show your ID.&quot;</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a> <span class="cf">else</span>:</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(<span class="st">&quot;You are old. XD&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> age <span class="op">&lt;</span> <span class="dv">19</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(<span class="st">&quot;You may not purchase alcohol.&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a> <span class="cf">elif</span> age <span class="op">&lt;</span> <span class="dv">25</span>:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(<span class="st">&quot;You may be asked to show your ID.&quot;</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a> <span class="cf">else</span>:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>     <span class="bu">print</span>(<span class="st">&quot;You are old. XD&quot;</span>)</span></code></pre></div>
 </section>
 <section id="the-order-of-conditions" class="slide level1">
 <h1>The Order Of Conditions</h1>
 <p>When using if/elif/else, remember that order matters. <strong>The
 first condition that is true will be executed, all other conditions will
 be skipped</strong>.</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grade <span class="op">=</span> <span class="dv">82</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> grade <span class="op">&gt;</span> <span class="dv">60</span>:</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a C. Not bad.&quot;</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">70</span>:</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a B. That&#39;s great!&quot;</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">80</span>:</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got an A! Congratulations!!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>grade <span class="op">=</span> <span class="dv">82</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> grade <span class="op">&gt;</span> <span class="dv">60</span>:</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a C. Not bad.&quot;</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">70</span>:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a B. That&#39;s great!&quot;</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">80</span>:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got an A! Congratulations!!&quot;</span>)</span></code></pre></div>
 </section>
 <section id="combining-conditions-andor" class="slide level1">
 <h1>Combining Conditions: And/Or</h1>
 <p>You might also choose to make your conditions <em>more specific</em>
 by using the logical operators <code>and</code> and <code>or</code>.
 These allow you to test more than condition on the same line.</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>grade <span class="op">=</span> <span class="dv">82</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> grade <span class="op">&gt;</span> <span class="dv">60</span> <span class="kw">and</span> grade <span class="op">&lt;=</span> <span class="dv">69</span>:</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a C. Not bad.&quot;</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">70</span> <span class="kw">and</span> grade <span class="op">&lt;=</span> <span class="dv">79</span>:</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a B. That&#39;s great!&quot;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">80</span> <span class="kw">and</span> grade <span class="op">&lt;=</span> <span class="dv">89</span>:</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got an A! Congratulations!!&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>grade <span class="op">=</span> <span class="dv">82</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> grade <span class="op">&gt;</span> <span class="dv">60</span> <span class="kw">and</span> grade <span class="op">&lt;=</span> <span class="dv">69</span>:</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a C. Not bad.&quot;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">70</span> <span class="kw">and</span> grade <span class="op">&lt;=</span> <span class="dv">79</span>:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got a B. That&#39;s great!&quot;</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> grade <span class="op">&gt;</span> <span class="dv">80</span> <span class="kw">and</span> grade <span class="op">&lt;=</span> <span class="dv">89</span>:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;You got an A! Congratulations!!&quot;</span>)</span></code></pre></div>
 </section>
 <section id="combining-conditions-andor-1" class="slide level1">
 <h1>Combining Conditions: And/Or</h1>
@@ -345,12 +385,12 @@ reverses logic. True becomes False, False becomes True
 <p>A loop statement allows us to loop through a section of code a set
 number of times. In a while loop, the script will continue to loop
 through the block of code while a condition is still true.</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> count <span class="op">!=</span> <span class="dv">5</span>:</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(count)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;loop has ended&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> count <span class="op">!=</span> <span class="dv">5</span>:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(count)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> count <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;loop has ended&quot;</span>)</span></code></pre></div>
 <p>In other words, a while loop is very similar to an if condition,
 except that the while loop will continue to run the action for as long
 as the condition is <strong>True</strong>. In this example, we run lines
@@ -362,33 +402,30 @@ as the condition is <strong>True</strong>. In this example, we run lines
 your while loop doesn’t contain a way to change the condition, you will
 never escape the loop (at least until you press <strong>Ctrl+d</strong>
 to terminate your Python program).</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> count <span class="op">!=</span> <span class="dv">5</span>:</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;Enter a number to add to result: &quot;</span>))</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> count <span class="op">+</span> x</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;loop has ended&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> count <span class="op">!=</span> <span class="dv">5</span>:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;Enter a number to add to result: &quot;</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> count <span class="op">+</span> x</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;loop has ended&quot;</span>)</span></code></pre></div>
 </section>
 <section id="using-break" class="slide level1">
 <h1>Using BREAK</h1>
 <p>One way to exit a loop is to use <code>break</code>.</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:  <span class="co"># does true ever equal false? NO!</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter a word. Pressing enter exits.&quot;</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">==</span> <span class="st">&#39;&#39;</span>:</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span>  <span class="co"># breaks out of the containing loop immediately.</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;The word entered was: &quot;</span> <span class="op">+</span> x <span class="op">+</span> <span class="st">&quot;.&quot;</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span>  <span class="co"># this does nothing! But a good place to put a break point.</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:  <span class="co"># does true ever equal false? NO!</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Enter a word. Pressing enter exits.&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">==</span> <span class="st">&#39;&#39;</span>:</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span>  <span class="co"># breaks out of the containing loop immediately.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;The word entered was: &quot;</span> <span class="op">+</span> x <span class="op">+</span> <span class="st">&quot;.&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span>  <span class="co"># this does nothing! But a good place to put a break point.</span></span></code></pre></div>
 </section>
 <section id="conclusion" class="slide level1">
 <h1>Conclusion</h1>
-<h2
-id="all-of-these-interactions-and-flow-control-statements-can-combine-together-in-complex-ways.">All
-of these interactions and flow control statements can combine together
-in complex ways.</h2>
-<h2 id="this-is-what-lab-2-will-help-you-explore-and-practice.">This is
-what Lab 2 will help you explore and practice.</h2>
+<p>All of these interactions and flow control statements can combine
+together in complex ways.</p>
+<p>This is what Lab 2 will help you explore and practice.</p>
 </section>
 <section id="summary-comparisons" class="slide level1">
 <h1>Summary: Comparisons</h1>
