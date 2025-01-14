@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <meta name="author" content="Eric Brauer">
-  <title>Introduction to Computing and Python</title>
+  <title>1-intro-to-computing-and-python.pptx</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -16,12 +15,22 @@
     }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +92,6 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
   <link rel="stylesheet" href="css/custom.css"/>
@@ -92,11 +100,20 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide">
-  <h1 class="title">Introduction to Computing and Python</h1>
-  <p class="author">Eric Brauer</p>
-</section>
 
+<section class="slide level1">
+
+<table>
+<tbody>
+<tr class="odd">
+<td>title: Introduction to Computing and Python</td>
+</tr>
+<tr class="even">
+<td>author: Eric Brauer</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="introduction" class="slide level1">
 <h1>Introduction</h1>
 <p>As discussed, we are introducing the Fundamentals of Programming,
@@ -167,14 +184,6 @@ action immediately, rather than being converted as a file.</li>
 <li>It has a large standard library: basically it can do a lot of
 things, but in many cases is not the ideal tool for the job. Python is
 considered to be a very good general-use programming language.</li>
-</ul>
-</section>
-<section id="installing-python-and-an-ide" class="slide level1">
-<h1>Installing Python and an IDE</h1>
-<ul>
-<li>Create a Virtual Machine (Fedora Workstation is recommended)</li>
-<li>Python is already installed by default on Fedora.</li>
-<li>You will also need to install VS Code</li>
 </ul>
 </section>
 <section id="introduction-to-python-1" class="slide level1">
