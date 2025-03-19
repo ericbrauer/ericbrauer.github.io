@@ -119,14 +119,24 @@ need</li>
 </section>
 <section id="in-python-everything-is-an-object" class="slide level1">
 <h1>“In Python, Everything Is An Object”</h1>
+<p>Integers can be printed (even though they are not strings), and they
+can be compared to floats (even though they are different datatypes).
+This is <em>intuitive behaviour</em>, it makes sense to us even though
+it shouldn’t be possible.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span><span class="dv">3</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(x)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="dv">3</span> <span class="op">&gt;</span> <span class="fl">4.0</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">False</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">help</span>(<span class="bu">int</span>)</span></code></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="dv">3</span> <span class="op">&gt;</span> <span class="fl">2.9</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">True</span></span></code></pre></div>
+</section>
+<section id="object-behaviour" class="slide level1">
+<h1>Object Behaviour</h1>
+<p>How objects behave is defined in their help documentation. Try
+looking at this now.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">help</span>(<span class="bu">int</span>)</span></code></pre></div>
 <p>Running the builtin <code>help()</code> will show you all the
 <em>methods</em> that belong to integer objects.</p>
 </section>
@@ -139,18 +149,21 @@ methods.</p>
 <p>Rather these are called when we use the object with different
 <em>operators</em> or <em>builtin functions</em>.</p>
 </section>
-<section id="eq__" class="slide level1">
-<h1><code>__eq__</code></h1>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x <span class="op">==</span> <span class="fl">4.0</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">False</span></span></code></pre></div>
+<section id="equal-to-operator" class="slide level1">
+<h1>Equal To Operator</h1>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> x <span class="op">==</span> <span class="fl">4.0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">False</span></span></code></pre></div>
 <p>When we use the integer object with a == symbol, we are actually
 calling the <code>__eq__</code> method, which will return a True or
 False.</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span><span class="op">==</span>other</span></code></pre></div>
+</section>
+<section id="eq__" class="slide level1">
+<h1><code>__eq__</code></h1>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span><span class="op">==</span>other</span></code></pre></div>
 <p>For operators, “self” will refer to the <em>left</em> side of the
 equation, and “other” will refer to the <em>right</em>.</p>
 </section>
@@ -164,70 +177,102 @@ intuitive ways.</p>
 </section>
 <section id="a-quick-example" class="slide level1">
 <h1>A Quick Example</h1>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Class Temperature:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, temp, unit):</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.temp <span class="op">=</span> temp</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.unit <span class="op">=</span> unit</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rtrn_celsius(<span class="va">self</span>):</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.unit <span class="op">==</span> <span class="st">&#39;F&#39;</span>:</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp <span class="op">/</span> <span class="fl">1.8</span> <span class="op">-</span> <span class="dv">32</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rtrn_fahrenheit(<span class="va">self</span>):</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.unit <span class="op">==</span> <span class="st">&#39;C&#39;</span>:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp <span class="op">*</span> <span class="fl">1.8</span> <span class="op">+</span> <span class="dv">32</span>  <span class="co"># equation to convert C to F.</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> return_unit(<span class="va">self</span>):</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.unit</span></code></pre></div>
+<p>Let’s say we want to create a new object for storing
+<em>temperature</em>. Most countries measure temperature in Celsius, but
+we might also want to accommodate people who measure in Fahrenheit.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>temp1 <span class="op">=</span> Temperature(<span class="dv">28</span>, <span class="st">&#39;C&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>temp2 <span class="op">=</span> Temperature(<span class="fl">82.4</span>, <span class="st">&#39;F&#39;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> temp1 <span class="op">==</span> temp2:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;It is the same!&#39;</span>)</span></code></pre></div>
 </section>
-<section id="a-quick-example-ii" class="slide level1">
-<h1>A Quick Example II</h1>
+<section id="temperature-class-named-methods" class="slide level1">
+<h1>Temperature Class: Named Methods</h1>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Class Temperature:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, temp, unit):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.temp <span class="op">=</span> temp</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.unit <span class="op">=</span> unit</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rtrn_celsius(<span class="va">self</span>):</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.unit <span class="op">==</span> <span class="st">&#39;F&#39;</span>:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp <span class="op">/</span> <span class="fl">1.8</span> <span class="op">-</span> <span class="dv">32</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rtrn_fahrenheit(<span class="va">self</span>):</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.unit <span class="op">==</span> <span class="st">&#39;C&#39;</span>:</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp <span class="op">*</span> <span class="fl">1.8</span> <span class="op">+</span> <span class="dv">32</span>  <span class="co"># equation to convert C to F.</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.temp</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> return_unit(<span class="va">self</span>):</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.unit</span></code></pre></div>
+</section>
+<section id="implementing-dunder-method-for" class="slide level1">
+<h1>Implementing Dunder Method for <code>==</code></h1>
 <p>It might be more intuitive when comparing temperatures if we let our
 == symbol ‘detect’ the unit of the other temperature.</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> other.return_unit() <span class="op">==</span> <span class="st">&#39;C&#39;</span>:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.rtrn_celsius() <span class="op">==</span> other.rtrn_celsius()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> other.return_unit() <span class="op">==</span> <span class="st">&#39;F&#39;</span>:</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.rtrn_fahrenheit() <span class="op">==</span> other.rtrn_fahrenheit()</span></code></pre></div>
-</section>
-<section id="implementation" class="slide level1">
-<h1>Implementation</h1>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>temp1 <span class="op">=</span> Temperature(<span class="dv">28</span>, <span class="st">&#39;C&#39;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>temp2 <span class="op">=</span> Temperature(<span class="fl">82.4</span>, <span class="st">&#39;F&#39;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> temp1 <span class="op">==</span> temp2:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&#39;It is the same!&#39;</span>)</span></code></pre></div>
-<p>Notice how we don’t have to read the docs to make this work!</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> other.return_unit() <span class="op">==</span> <span class="st">&#39;C&#39;</span>:</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.rtrn_celsius() <span class="op">==</span> other.rtrn_celsius()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> other.return_unit() <span class="op">==</span> <span class="st">&#39;F&#39;</span>:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.rtrn_fahrenheit() <span class="op">==</span> other.rtrn_fahrenheit()</span></code></pre></div>
+<p>Programmers would rather use the operators they already know about,
+than have to read the documentation and discover all of your named
+methods!</p>
 </section>
 <section id="printing-objects" class="slide level1">
 <h1>Printing Objects</h1>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> t1 <span class="op">=</span> Timer(<span class="dv">2</span>, <span class="dv">0</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(t1)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Timer <span class="bu">object</span> at <span class="bn">0x7f24b9419940</span><span class="op">&gt;</span></span></code></pre></div>
-<p>This output isn’t very useful to the programmer.</p>
+<p>Let’s create a timer object. <code>Timer</code> is going to expect
+minutes and seconds. In other words, this is setting up a timer for
+<strong>02:00</strong>.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> t1 <span class="op">=</span> Timer(<span class="dv">2</span>, <span class="dv">0</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;&gt;</span> <span class="bu">print</span>(t1)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>Timer <span class="bu">object</span> at <span class="bn">0x7f24b9419940</span><span class="op">&gt;</span></span></code></pre></div>
+<p>This output isn’t very useful to the programmer. We need to define
+the behaviour for when our object is used with a <em>builtin
+function</em>, in this case the <code>print()</code> function.</p>
 </section>
 <section id="using-str" class="slide level1">
 <h1>Using <strong>str</strong></h1>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Class Timer:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, mins, secs):</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mins <span class="op">=</span> mins</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.secs <span class="op">=</span> secs</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__str__</span>(<span class="va">self</span>):  <span class="co"># gets called inside print() or str()</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>mins<span class="sc">:02d}</span><span class="ss">:</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>secs<span class="sc">:02d}</span><span class="ss">&quot;</span></span></code></pre></div>
-<p>This is an example of using <em>f-strings</em>, which are very
-useful! No data conversion is required. <code>:02d</code> will convert
-to a 2 digit decimal number with leading zeros, eg. 02</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Class Timer:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, mins, secs):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mins <span class="op">=</span> mins</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.secs <span class="op">=</span> secs</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__str__</span>(<span class="va">self</span>):  <span class="co"># gets called inside print() or str()</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>mins<span class="sc">:02d}</span><span class="ss">:</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>secs<span class="sc">:02d}</span><span class="ss">&quot;</span></span></code></pre></div>
+</section>
+<section id="f-strings" class="slide level1">
+<h1>F-Strings</h1>
+<p>f-strings are a more advanced method of printing. They don’t need
+manual conversion! Simply put an ‘f’ <em>outside</em> of your quotes,
+and then variable names <em>inside</em> of curly braces.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>user <span class="op">=</span> <span class="st">&#39;Chris&#39;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> <span class="fl">3.14</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Hello World!&#39;</span>)  <span class="co"># Hello World!</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Hello </span><span class="sc">{</span>user<span class="sc">}</span><span class="ss">, how are you?&#39;</span>)  <span class="co"># Hello Chris, how are you?</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;The value of pi is </span><span class="sc">{</span>pi<span class="sc">}</span><span class="ss">.&#39;</span>)  <span class="co"># The value of pi is 3.14.</span></span></code></pre></div>
+</section>
+<section id="f-string-formatting" class="slide level1">
+<h1>F-String Formatting</h1>
+<ul>
+<li>f-strings also give you options to format your variables. We can’t
+cover everything here, but <code>:02d</code> will convert to a 2 digit
+decimal number with leading zeros, eg. 02.</li>
+<li>Another useful format is specifying the number of decimals, for
+example for currency:</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;$ </span><span class="sc">{</span>x<span class="sc">:.2f}</span><span class="ss">&#39;</span>)  <span class="co"># format as float, with 2 decimals after the dot.</span></span></code></pre></div>
 </section>
 <section id="str-vs.-repr" class="slide level1">
 <h1><strong>str</strong> VS. <strong>repr</strong></h1>
@@ -239,6 +284,9 @@ outside of <code>print()</code> or <code>str()</code>.</p>
 &lt;template.Timer object at 0x7f199cb4f820&gt;
 &gt;&gt;&gt;&gt; print(t)  # calls __str__
 02:00</code></pre>
+<p>If you define only <code>__repr__</code>, it will also be used for
+<code>__str__</code>, so it’s better to just write <code>__repr__</code>
+(unless you want different outputs!)</p>
 </section>
 <section id="list-of-magic-methods" class="slide level1">
 <h1>List of Magic Methods</h1>
@@ -247,7 +295,8 @@ define the behaviour of:</h2>
 <ul>
 <li>Comparison Operators == != &lt; &gt; &lt;= &gt;=</li>
 <li>Math Operators + - * / ** //</li>
-<li>Other Math functions: abs()</li>
+<li>Representation and print functions: print(), str()</li>
+<li>Other builtin functions: len()</li>
 <li>Slicing: card_deck[0:4] # calls <strong>get_item</strong></li>
 <li>And more…..</li>
 </ul>
