@@ -8,8 +8,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reset.css">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
     .reveal .sourceCode {  /* see #7635 */
       overflow: visible;
@@ -30,7 +30,7 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
   <link rel="stylesheet" href="css/custom.css"/>
 </head>
 <body>
@@ -40,7 +40,7 @@
 <section id="title-slide">
   <h1 class="title">OPS 445: Open System Automation</h1>
   <p class="author">Eric Brauer</p>
-  <p class="date">Summer 2025</p>
+  <p class="date">Winter 2025</p>
 </section>
 
 <section id="overview" class="slide level1">
@@ -67,19 +67,13 @@ href="mailto:eric.brauer@senecapolytechnic.ca">eric.brauer@senecapolytechnic.ca<
 </section>
 <section id="introduction" class="slide level1">
 <h1>Introduction</h1>
-<h2
-id="this-is-an-introductory-programming-course-designed-specifically-for-system-and-network-administrators.">This
-is an introductory programming course designed specifically for system
-and network administrators.</h2>
-<h2
-id="students-will-learn-generally-applicable-programming-concepts-and-techniques-using-the-python-programming-language.">Students
-will learn generally-applicable programming concepts and techniques
-using the Python programming language.</h2>
-<h2
-id="following-an-introduction-to-fundamental-programming-principles-the-students-will-write-software-to-automate-deployment-and-configuration-tasks-over-a-network.">Following
-an introduction to fundamental programming principles the students will
-write software to automate deployment and configuration tasks over a
-network.</h2>
+<p>This is an introductory programming course designed specifically for
+system and network administrators.</p>
+<p>Students will learn generally-applicable programming concepts and
+techniques using the Python programming language.</p>
+<p>Following an introduction to fundamental programming principles the
+students will write software to automate deployment and configuration
+tasks over a network.</p>
 </section>
 <section id="learning-outcomes" class="slide level1">
 <h1>Learning Outcomes</h1>
@@ -110,12 +104,13 @@ code.</li>
 </section>
 <section id="course-evaluation" class="slide level1">
 <h1>Course Evaluation</h1>
-<h2 id="labs-and-quizzes-20">Labs and quizzes: 20%</h2>
-<h3 id="labs8-10">Labs(8): 10%</h3>
-<h3 id="quizzes-4-10">Quizzes (4): 10%</h3>
-<h2 id="assignments-2-30">Assignments (2): 30%</h2>
-<h2 id="midterm-assessment-20">Midterm Assessment: 20%</h2>
-<h2 id="final-assessment-30">Final Assessment: 30%</h2>
+<ul>
+<li>Labs(8): 10%</li>
+<li>Quizzes (4): 10%</li>
+<li>Assignments (2): 30%</li>
+<li>Midterm Assessment: 20%</li>
+<li>Final Assessment: 30%</li>
+</ul>
 </section>
 <section id="promotion-requirements" class="slide level1">
 <h1>Promotion Requirements</h1>
@@ -167,55 +162,27 @@ online as well.</p>
 assigned reading. Reading those chapters before each week’s lecture will
 help you understand the lectures and to complete the labs.</p>
 </section>
-<section id="lab-environment-setup" class="slide level1">
-<h1>Lab Environment Setup</h1>
+<section id="lab-submissions" class="slide level1">
+<h1>Lab Submissions</h1>
 <ul>
-<li>Requirement for the course: a Linux development environment with git
-and Python 3.11.</li>
-<li>I recommend creating a VM where you can install a code editor like
-VS Code.</li>
-<li>Instructions can be found on the Wiki.</li>
-</ul>
-</section>
-<section id="github-setup" class="slide level1">
-<h1>GitHub Setup</h1>
-<ul>
-<li>Create a GitHub account</li>
-<li>Generate a public/private keypair for <em>each computer</em> you
-will use for labs</li>
-<li>Copy your public key and paste it into your GitHub:</li>
-<li>Click on profile -&gt; Settings -&gt; GPG &amp; SSH Keys</li>
-</ul>
-</section>
-<section id="lab-submission" class="slide level1">
-<h1>Lab Submission</h1>
-<p>Once you finish the course introduction quiz:</p>
-<ul>
-<li>Click on the lab link from <strong>Blackboard</strong>, and accept
-it.</li>
-<li>Click the green <strong>Code</strong> button on the repository
-landing page.</li>
-<li>Specify <strong>SSH</strong>.</li>
-<li>Copy the URL to your clipboard.</li>
-</ul>
-</section>
-<section id="lab-submission-1" class="slide level1">
-<h1>Lab Submission</h1>
-<ul>
-<li>Run <code>git clone</code> from your terminal and paste the link
-from GitHub.</li>
-<li>Follow Wiki instructions to create your files.</li>
-<li>Run the Lab Check script for each lab to make sure that you complete
-all the required tasks.</li>
-<li>Labs are submitted on GitHub. Follow instructions to push your code
-back into the repository.</li>
+<li>Labs are completed inside a <em>GitHub Repository</em>. You will
+need to create an account (or use an existing GitHub account).</li>
+<li>GitHub repositories contain <em>check scripts</em> which are used to
+check your work and help you fix errors.</li>
+<li>Labs instructions are found on our course Wiki.</li>
+<li>You will follow the Wiki instructions to create several Python
+scripts. Then check your work, and <em>push</em> your Python scripts
+back into the repoistory.</li>
+<li>I will grade the work found on GitHub. <strong>No Blackboard
+submission is necessary</strong>.</li>
 </ul>
 </section>
 <section id="practical-quizzes" class="slide level1">
 <h1>Practical Quizzes</h1>
 <ul>
 <li>The labs will also prepare you for the practical quizzes. These
-quizzes can be considered “open book.” You may use the reference sheet provided on the Wiki.</li>
+quizzes can be considered “open book.” You may use class notes, and the
+Python interpreter.</li>
 <li>However sharing answers is not permitted.</li>
 <li>Two types of questions may appear in each quizzes:
 <ul>
@@ -270,7 +237,7 @@ completed.</li>
 <li>Missed Tests/Quizzes Policy</li>
 <li>Academic Integrity Policy</li>
 <li>Information Technology Acceptable Use Policy</li>
-<li>A Final Note</li>
+<li>Next Steps</li>
 </ul>
 </section>
 <section id="getting-help" class="slide level1">
@@ -308,6 +275,8 @@ the concept!</li>
 <h1>Asking Questions About The Course</h1>
 <h2 id="check-these-introduction-slides-first">Check These Introduction
 Slides First!!</h2>
+<p><em>If your question is answered in these slides, I will not respond
+to your email</em>.</p>
 <h2
 id="if-your-question-isnt-in-these-slides-please-ask-during-class.">If
 your question isn’t in these slides, please ask during class.</h2>
@@ -329,7 +298,7 @@ MATH</h2>
 returning the correct result</em>.</p>
 </section>
 <section id="email-etiquette" class="slide level1">
-<h1>📭 Email Etiquette </h1>
+<h1>📭 Email Etiquette</h1>
 <ul>
 <li>Please tell me what <em>section</em> you are in.</li>
 <li>Please keep your message <em>brief</em>. You should include your
@@ -338,16 +307,15 @@ request/question in the subject line.</li>
 announcements before you send an email.</li>
 <li><em>Don’t use an LLM to generate your message</em>. What it
 communicates to me if that you don’t actually care about whatever you’ve
-asked it to excrete words about. (If you did care, you would spend time
-writing the email yourself).</li>
+asked it to ask me. (If you did care, you would spend time writing the
+email yourself).</li>
 <li>If you don’t receive a reply, the answer to whatever you asked is
-<strong>NO</strong> or <strong>Come to class and we’ll figure it
-out</strong>.</li>
+<strong>Come to class and we’ll figure it out</strong>.</li>
 </ul>
 </section>
 <section id="how-do-i-get-better-at-programming" class="slide level1">
 <h1>“How do I get better at programming?”</h1>
-<p><img data-src="pptimages/image4.jpeg" height="50%"/></p>
+<p><img data-src="pptimages/image4.jpeg" /></p>
 </section>
 <section class="slide level1">
 
@@ -405,10 +373,10 @@ credit for this course.</li>
 <h1>Quizzes</h1>
 <ul>
 <li><p>There are five quizzes this semester.</p></li>
-<li><p>I will be dropping the lowest quiz mark.</p></li>
+<li><p><strong>I will be dropping the lowest quiz
+mark.</strong></p></li>
 <li><p>The rest of the quizzes are worth 2.5%.</p></li>
-<li><p>There are no makeups or second chances on quizzes, so don’t
-bother emailing me.</p></li>
+<li><p>There are no makeups or second chances on quizzes.</p></li>
 <li><p>If you miss one quiz, not to worry, it won’t affect your grade.
 But you’ll have to be sure to write the next 4.</p></li>
 </ul>
@@ -447,18 +415,27 @@ is not directly from a lab or assignment.</li>
 <p><img
 data-src="pptimages/chatgpt-is-actually-a-problem-for-developers.png" /></p>
 </section>
-<section id="regarding-llms" class="slide level1">
-<h1>Regarding LLMs</h1>
+<section id="regarding-large-language-models-llms" class="slide level1">
+<h1>Regarding Large Language Models (LLMs)</h1>
+<p><em>The I in LLM Stands For Intelligence.</em></p>
 <ul>
+<li>LLMs are decent at creating <em>boilerplate code</em> (that is,
+simple problems with a common solution).</li>
+<li>LLMs fall apart at other jobs: they can’t understand client needs,
+they fail at systems design and architecture, and don’t understand how
+to interface with proprietary systems.</li>
 <li>LLMs are a fine resource for <em>experienced devs</em>, because we
-can evaluate and troubleshoot the solutions that ChatGPT provides.</li>
-<li>Before you can evaluate and troubleshoot these solutions, you need
-to practice solving easier problems.</li>
-<li>This course provides you with this practice, but the problems we
-train you on are easily solved with LLMs. In my experience, practice
-problems are the <em>only</em> types of problems that LLMs excel at.
-(Real life is messy).</li>
+can evaluate and work around the limitations of LLMs.</li>
+<li>Before you can become an experienced dev, you have to be a beginner
+dev. <strong>As a beginner dev, you are competing against LLMs for
+jobs</strong>.</li>
+<li>This course provides you with practice to become a beginner dev, but
+with ability to solve problems (and evaluate solutions) that LLMs get
+wrong.</li>
 </ul>
+<p><em>My honest hope is that you will come out of this course with the
+skills to compete against LLMs and to justify your worth to
+employers.</em></p>
 </section>
 <section id="and-so" class="slide level1">
 <h1>And So</h1>
@@ -479,6 +456,63 @@ href="https://locusmag.com/2023/12/commentary-cory-doctorow-what-kind-of-bubble-
 if it goes away</a>!</li>
 </ul>
 </section>
+<section id="next-steps" class="slide level1">
+<h1>Next Steps</h1>
+<ul>
+<li>Complete the quiz on Course Expectations</li>
+<li>Find the lab 1 instructions on the Wiki to:
+<ul>
+<li>Set up your development environment</li>
+<li>Create a GitHub account</li>
+<li>Clone your repo to get started on Lab 1</li>
+</ul></li>
+</ul>
+</section>
+<section id="lab-environment-setup" class="slide level1">
+<h1>Lab Environment Setup</h1>
+<ul>
+<li>Requirement for the course: a Linux development environment with git
+and Python 3.11</li>
+<li>Linux Mint is an excellent choice for this course</li>
+<li>Install VS Code, which is a code editor with an excellent built-in
+debugger</li>
+</ul>
+</section>
+<section id="github-setup" class="slide level1">
+<h1>GitHub Setup</h1>
+<ul>
+<li>Create a GitHub account</li>
+<li>Generate a public/private keypair for <em>each computer</em> you
+will use for labs</li>
+<li>Copy your public key and paste it into your GitHub:</li>
+<li>Click on profile -&gt; Settings -&gt; GPG &amp; SSH Keys</li>
+</ul>
+</section>
+<section id="lab-submission" class="slide level1">
+<h1>Lab Submission</h1>
+<p>Once you finish the course introduction quiz:</p>
+<ul>
+<li>Click on the lab link from <strong>Blackboard</strong>, and accept
+it</li>
+<li>Click the green <strong>Code</strong> button on the repository
+landing page</li>
+<li>Specify <strong>SSH</strong>. HTTPS <strong>will not
+work</strong></li>
+<li>Copy the URL to your clipboard</li>
+</ul>
+</section>
+<section id="lab-submission-ii" class="slide level1">
+<h1>Lab Submission II</h1>
+<ul>
+<li>Run <code>git clone</code> from your terminal and paste the link
+from GitHub</li>
+<li>Follow Wiki instructions to create your files</li>
+<li>Run the Lab Check script for each lab to make sure that you complete
+all the required tasks</li>
+<li>Labs are submitted on GitHub. Follow instructions to push your code
+back into the repository</li>
+</ul>
+</section>
 <section id="assigned-reading-for-next-class" class="slide level1">
 <h1>Assigned Reading for Next Class</h1>
 <p>Think Python: Chapter 1 Automate the Boring Stuff with Python:
@@ -487,12 +521,12 @@ Chapter 1 and 2</p>
     </div>
   </div>
 
-  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
 
   <!-- reveal.js plugins -->
-  <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
-  <script src="https://unpkg.com/reveal.js/plugin/search/search.js"></script>
-  <script src="https://unpkg.com/reveal.js/plugin/zoom/zoom.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
 
   <script>
 
