@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>instructions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css"/>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section>
+<section id="assignment-2-for-fall-2024"
+class="title-slide slide level1">
+<h1>Assignment 2 For Fall 2024</h1>
+
+</section>
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
+<p>This will be a group assignment. You will be working in a group of 4
+- 5 students. Every student will need to contribute code to their
+assignment.</p>
+<p>You are asked to <strong>choose a task</strong> for this assignment.
+Consider the topics you have learned during your college career. What
+topics could be completed using a Python script? What are some common
+jobs you might expect to do on a Linux machine running in the
+workplace?</p>
+<p>Consider some possibilities:</p>
+<ul>
+<li>Data backups and restore</li>
+<li>System monitoring and alerts</li>
+<li>System reports and metrics</li>
+<li>Diagnostics and health</li>
+<li>Automated system configuration</li>
+<li>Network configuration and subnetting</li>
+<li>User reports and management</li>
+<li>Security auditing</li>
+</ul>
+<p>Other options are possible. Bring your ideas to the first meeting for
+approval.</p>
+</section>
+<section id="restrictions" class="slide level2">
+<h2>Restrictions</h2>
+<ul>
+<li>Your assignment should be contained in one or more .py files, but
+should be executed from a file called <code>assignment2.py</code>.</li>
+<li>You can import any modules from the Python standard library, but
+third-party modules are not permitted.</li>
+<li>Your assignment must be able to run on either
+<strong>Matrix</strong> or the <strong>MyVMLab</strong> instance
+provided. You will demonstrate the usage of your assignment on either of
+those two machines.</li>
+<li>All the code and required files will be inside your repository. You
+should clone your repo onto the Linux you are using to demonstrate your
+assignment, and I should be able to run <code>git log</code> to see the
+commits you’ve made.</li>
+<li>Any additional configuration needed to get your assignment working
+(ie. you need to make changes to system configuration files) must be
+documented and included in your repository.</li>
+</ul>
+</section>
+<section id="process" class="slide level2">
+<h2>Process</h2>
+<p>This assignment will take some time to complete. Be sure to start
+early and identify obstacles as quickly as possible.</p>
+<h3 id="initial-meetup">Initial Meetup</h3>
+<ul>
+<li>You will be assigned to a group. Meet with your group members, and
+arrange methods of communication (email, Teams, etc.)</li>
+<li>You will be given a group repository for your work. Verify that all
+members have permission to clone the repository.</li>
+<li>Begin discussing a topic for your assignment. <strong>It is strongly
+recommended you have 2-3 ideas</strong> in case your first choice isn’t
+suitable.</li>
+</ul>
+<h3 id="milestone-1-topic-approval">Milestone 1: Topic Approval</h3>
+<p>We will begin approval meetings one week after deployment. These will
+be done either online or in-person, and it is expected that <strong>all
+group members are attending and ready to contribute</strong>.</p>
+<ul>
+<li>Provide your 2 - 3 topic ideas</li>
+<li>Be prepared to answer some questions:
+<ul>
+<li>How will your program gather required input?</li>
+<li>How will your program accomplish its requirements?</li>
+<li>How will output be presented?</li>
+<li>What arguments or options will be included?</li>
+<li>What aspects of development do you think will present the most
+challenge?</li>
+</ul></li>
+</ul>
+<p>This meeting will be a dialogue, since there might be some changes or
+suggestions that come up during our initial meeting. Once you have
+gotten approval for your script, <strong>include the description,
+overview and summary of the above questions</strong> inside your
+repository’s <code>README.md</code> file.</p>
+<p>If your group misses the deadline for milestone 1, you will be given
+a zero and will still have to submit a proposal. <strong>Book your
+meeting early to avoid disappointment!</strong></p>
+<h3 id="completing-the-assignment">Completing the Assignment</h3>
+<p>Once approved, you should start making commits to your group
+repository. You can work on your code from any computer, but remember
+that as a final step, you will need to <strong>demonstrate</strong> your
+assignment working correctly on either <strong>Matrix</strong> or
+<strong>MyVMLab</strong>.</p>
+<p>There is an additional restrction: <strong>Don’t push to the main
+branch</strong>. This is a common restriction in the workplace, where
+the main branch is protected.</p>
+<p>Group members should decide which functions they are working on, and
+then create a branch to commit to. Once a function is complete, they
+will open a pull request and their group members can approve it. The
+code then becomes part of the ‘main’ branch.</p>
+<p>Once the code is considered complete, you will use a new feature to
+define the final version of your code: tag your commit ‘final’ when you
+have completed the assignment.</p>
+<p>Instructions for these processes are listed below.</p>
+<h4 id="setting-up-branches">Setting Up Branches</h4>
+<ul>
+<li>From GitHub, it is recommended that you create a branch for each
+member of your group. Click the ‘main’ drop-down and select ‘Create a
+new branch’. Enter your name, or a label for the feature you are working
+on.</li>
+<li>From your local computer, run <code>git clone</code> to clone your
+repo.</li>
+<li>Now you will need to checkout your specific branch in order to
+commit. Run <code>git checkout &lt;name of branch&gt;</code></li>
+<li>You will now be able to commit and push to that branch.</li>
+</ul>
+<h4 id="pull-requests">Pull Requests</h4>
+<p>When group members finish a feature that will become part of the
+assignment, they will need to open a <em>pull request</em>.</p>
+<ul>
+<li>From GitHub, select the ‘main’ branch. You will see a message that
+your branch is ‘X commits ahead of main’ and an option to ‘Open a Pull
+Request’. Click that.</li>
+<li>Describe your changes. You will now need 3 members of the group to
+approve your pull request.</li>
+</ul>
+<h4 id="adding-the-final-tag">Adding The Final Tag</h4>
+<p>This should be your final step, once you have completed your work,
+approved all pull requests, and your ‘main’ branch now contains all
+required code and documentation.</p>
+<ul>
+<li>From GitHub, find the section called ‘Releases’ inside the right
+panel.</li>
+<li>Click on ‘Create A New Release’.</li>
+<li>Click on ‘Choose a tag’ and create a new tag called ‘v1.0’. Make
+sure that branch is set to ‘main’.</li>
+<li>Complete the form to give the release a title of ‘Final’ and add a
+description of what’s working and what isn’t.</li>
+<li>Click on ‘Publish Release’.</li>
+<li>Use this version of the code for your demonstration. From your
+demonstration machine, do a <code>git pull</code> command. Use
+<code>git log</code> to verify that you have checked out the main
+branch, and that the tag for the most recent commit is ‘v1.0’.</li>
+</ul>
+<p>I will be verifying this when it’s time to demonstrate your
+assignment.</p>
+<h3 id="milestone-2-assignment-demonstration">Milestone 2: Assignment
+Demonstration</h3>
+<p>On the day of your demonstration, again <strong>all group members are
+expected to attend</strong>.</p>
+<ul>
+<li>The assignment should be running on either Matrix or MyVMLab.</li>
+<li>Students can demonstrate what the assignment does, and why it’s
+useful.</li>
+<li>Demonstrate additional options and arguments. Please also note what
+configuration changes were needed (if any)</li>
+<li>Use <code>git status</code> and <code>git log</code> in the
+repository directory.</li>
+<li>I will ask you specific questions about how your code works. If you
+wrote the code, you will be required to explain.</li>
+<li>Code that cannot be explained will <strong>result in a penalty for
+the entire group</strong>.</li>
+</ul>
+<h3 id="final-submission">Final Submission</h3>
+<p>At the conclusion of your Code Review, the assignment is considered
+complete. I will use the commit tagged ‘final’ on
+<strong>GitHub</strong> to evaluate your work.</p>
+<h3 id="post-mortem">Post-Mortem</h3>
+<p>There is an additional <strong>Post-Mortem</strong> due on
+Blackboard. These forms are <strong>individual</strong> each student
+must write their own.</p>
+</section>
+<section id="rubric" class="slide level2">
+<h2>Rubric</h2>
+<h3 id="group-mark">Group Mark</h3>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 43%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Criteria</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Milestone 1</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Proposal</td>
+<td>Group is prepared, and brings good ideas</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>Milestone 2</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Demonstration</td>
+<td>Script is demonstrated</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>Code Review</td>
+<td>Authors can explain their code</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Final Submission</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Concept</td>
+<td>Assignment is relevant, useful, and shows ambition</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Format and Style</td>
+<td>No redundant code, good structure and variable names</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Comments and Documentation</td>
+<td>Code is well documented</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Features and Function</td>
+<td>Code has 1 or more useful options</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>GitHub Use</td>
+<td>Appropriate Code Commits and Use of GitHub</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="individual">Individual</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Part</th>
+<th>Criteria</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Code Review</td>
+<td>Explained Code</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Final Submission</td>
+<td>Contributed Commits</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>Post Mortem</td>
+<td>Reflective and Honest Feedback</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
