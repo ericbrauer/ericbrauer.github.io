@@ -669,9 +669,9 @@ Chapter 1 and 2</p>
 
         // reveal.js plugins
         plugins: [
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
+          // RevealNotes,
+          // RevealSearch,
+          // RevealZoom
         ]
       });
     </script>
