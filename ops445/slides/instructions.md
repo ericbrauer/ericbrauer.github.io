@@ -469,9 +469,9 @@ must write their own.</p>
 
         // reveal.js plugins
         plugins: [
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
+          // RevealNotes,
+          // RevealSearch,
+          // RevealZoom
         ]
       });
     </script>
